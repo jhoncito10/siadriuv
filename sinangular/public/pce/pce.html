@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>PCE Docencia</title>
+
+	<!-- BOOTSTRAP CSS -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+
+	<!-- JQUERY UI CSS -->
+	<link rel="stylesheet" href="css/jquery-ui.css">
+
+	<!-- ESTILOS PROPIOS
+	<link rel="stylesheet" href="css/style.css">-->
+
+	<!-- FIREBASE CONFIG -->
+	<script type="text/javascript" src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+
+	<!-- JQUERY -->
+	<script type="text/javascript" src="js/jquery-3.2.0.min.js"></script>
+
+	<!-- JQUERY UI-->
+	<script type="text/javascript" src="js/jquery-ui.js"></script>
+
+	<!-- BOOTSTRAP JavaScript -->
+	<script src="js/bootstrap.min.js"></script>
+
+	<!-- SCRIPT DE FUNCIONALIDAD
+	<script type="text/javascript" src="js/jsAjax.js"></script>-->
+	<script type="text/javascript" src="js/jsMichael.js">
+
+	<!-- SCRIPT PARA CALCULAR EL DIA JULIANO -->
+	<script type="text/javascript" src="js/diaJuliano.js"></script>
+
+	<!-- SCRIPT QUE CONTIENE INFORMACION TEXTUAL PARA LAS VENTANAS EMERGENTES -->
+	<script type="text/javascript" src="js/ObjWindowsHelp.js"></script>
+	<script type="text/javascript" src="js/ObjWindowsTest.js"></script>
+
+	<!-- FUNCIONALIDADES FIREBASE -->
+	<script type="text/javascript" src="js/loadData.js"></script>
+	<script type="text/javascript" src="js/saveData.js"></script>
+
+	<style type="text/css">
+		div.panel-group{
+			width: 800px;
+		}
+		/* ----------------------------------------- */
+		/* ESTILOS PARA LA TABLA */
+		/* ----------------------------------------- */
+		.borderless td {
+		    border: none !important;
+		}
+		div.centerTable{
+			text-align: center;
+			padding:0;
+			margin: 0;
+		}
+
+		div.centerTable table {
+		       margin: 0 auto;
+		       text-align: left;
+		}
+
+		.table{
+			text-align: center;
+			padding:0;
+			margin: 0;
+			width: 600px;
+		}
+
+		table th{
+			text-align: center;
+			width: 150px;
+		}
+
+		td{
+			font-size:11px;
+			text-align: center;
+			vertical-align:middle;
+			/*width: 75px;
+			height: 150px;*/
+			padding: 0;
+			margin: 0;
+		}
+		/* ----------------------------------------- */
+
+		/* ----------------------------------------- */
+		/* EFECTOS PARA LOS BOTONES */
+		/* ----------------------------------------- */
+		input[name="upFile"]{
+			display: none;
+			z-index: -1;
+			position:fixed;
+			width:0px;
+			height: 0px;
+		}
+
+		div[name="calendario"]{
+			position: absolute;
+			z-index: 99;
+			padding-top:50px;
+			padding-left:50px;
+		}
+
+		.btn>span{
+			font-size:35px;
+			color:rgb(232, 28, 37);
+			margin: 0;
+			padding: 0;
+		}
+
+		/* Underline From Center */
+		.hvr-underline-from-center {
+			display: inline-block;
+			vertical-align: middle;
+			-webkit-transform: perspective(1px) translateZ(0);
+			transform: perspective(1px) translateZ(0);
+			box-shadow: 0 0 1px transparent;
+			position: relative;
+			overflow: hidden;
+		}
+		.hvr-underline-from-center:before {
+			content: "";
+			position: absolute;
+			z-index: -1;
+			left: 50%;
+			right: 50%;
+			bottom: 0;
+			background: rgb(232, 28, 37);
+			height: 4px;
+			-webkit-transition-property: left, right;
+			transition-property: left, right;
+			-webkit-transition-duration: 0.3s;
+			transition-duration: 0.3s;
+			-webkit-transition-timing-function: ease-out;
+			transition-timing-function: ease-out;
+		}
+		.hvr-underline-from-center:hover:before, .hvr-underline-from-center:focus:before, .hvr-underline-from-center:active:before {
+			left: 0;
+			right: 0;
+		}
+		/* ----------------------------------------- */
+
+		/* ----------------------------------------- */
+		/* APARIENCIA DEL FORMULARIO */
+		/* ----------------------------------------- */
+		a>i{
+			margin-right: 5px;
+			margin-top: 2px;
+			font-size: 22px;
+		}
+
+		.tareaCompletada{
+			color: rgb(148,255,108);
+		}
+
+		.tareaPendiente{
+			color: rgb(232,202,114);
+		}
+
+		.tareaPorRealizar{
+			color: rgb(255,104,79);
+		}
+
+		h4.panel-title>a{
+			font-size: 25px;
+			text-decoration: none;
+			vertical-align: center;
+		}
+
+		.panel-default>.panel-heading{
+			background-color: white;
+			border-bottom: 1px solid;
+		}
+
+		.panel-default>.item1{
+			border-left: 8px solid rgb(145,197,255);
+		}
+
+		.panel-default>.item2{
+			border-left: 8px solid rgb(73,99,127);
+		}
+
+		.panel-default>.item3{
+			border-left: 8px solid rgb(36,49,64);
+		}
+
+		.panel-default>.item4{
+			border-left: 8px solid rgb(108,255,107);
+		}
+
+		.panel-default>.item5{
+			border-left: 8px solid rgb(54,127,54);
+		}
+
+		.panel-default>.item6{
+			border-left: 8px solid rgb(27,64,27);
+		}
+
+		.panel-default>.item7{
+			border-left: 8px solid rgb(255,249,130);
+		}
+
+		.panel-default>.item8{
+			border-left: 8px solid rgb(127,125,65);
+		}
+
+		.panel-default>.item9{
+			border-left: 8px solid rgb(64,62,33);
+		}
+
+		.panel{
+			border: 0;
+		}
+
+		.panel-collapse{
+			background-color: white;
+			/*#F0F0F0*/
+		}
+
+		span.caret{
+			margin-left: 15px;
+		}
+		/* ----------------------------------------- */
+
+		/* ----------------------------------------- */
+		/* APARIENCIA DEL TEXTO DE CADA TAREA */
+		/* ----------------------------------------- */
+		p.textAux{
+			font-size: 12px;
+			padding: 0;
+			margin: 0;
+		}
+
+		p.tituloInferior{
+			font-size: 20px;
+			padding-left: 0;
+			padding-top: 5px;
+			padding-bottom: 5px;
+			padding-right: 0;
+			margin: 0;
+		}
+		p.textoInferior{
+			font-size: 15px;
+			padding-left: 35px;
+		}
+
+		p.resultado{
+			color:#565454;
+			font-size: 11;
+			font-style: italic;
+			margin: 0;
+			padding-top: 5px;
+			padding-left: 0;
+			padding-right: 0;
+			padding-bottom: 0;
+		}
+		/* ----------------------------------------- */
+
+		/* ----------------------------------------- */
+		/* CONTENIDO DE VENTANAS MODALES */
+		/* ----------------------------------------- */
+		textarea{
+			width: 90%;
+			height: 150px;
+			text-decoration: none;
+			border: 1px solid: #C4C4C4;
+			margin: 0;
+			padding: 0;
+			resize:none;
+		}
+		div.modal-body{
+			text-align: center;
+			vertical-align: center;
+		}
+		.textNota{
+			text-align: center;
+			font-size: 12px;
+			color: #565454;
+			font-style: italic;
+			margin: 0;
+			padding: 0;
+		}
+		/* ----------------------------------------- */
+
+		/* ----------------------------------------- */
+		/* APARIENCIA DE LAS VENTANAS MODALES */
+		/* ----------------------------------------- */
+		.modal-header{
+			background:rgb(232, 28, 37);
+			color:white;
+		}
+
+		.modal-header>button{
+			color:white;
+		}
+
+		.modal-header>h4{
+			font-weight: bold;
+		}
+
+		.modal-footer{
+			background: rgb(235, 235, 235);
+		}
+
+		div.progress{
+			padding:0;
+			margin: 0;
+		}
+		/* ----------------------------------------- */
+
+
+	</style>
+<body>
+	
+
+	<!-- ***************************************************************************************** -->
+
+	<div class="container">
+
+	</div>
+</body>
+</html>

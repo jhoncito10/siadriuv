@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="Convenios DRI" content="">
+  <meta name="univalle" content="">
+  <link href="http://www.univalle.edu.co/templates/t3_bs3_blank/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+
+
+  <title>DRI | Convenios</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link href="../dist/css/autocomplete/easy-autocomplete.min.css" rel="stylesheet" type="text/css" />
+  <link href="../dist/css/autocomplete/easy-autocomplete.themes.min.css" rel="stylesheet" type="text/css" />
+  <!-- Bootstrap CSS  -->
+  <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" type="text/css" media="screen">
+  <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+  <script src="../tokens.js"></script>
+
+
+
+  <script type="text/javascript" src="../dist/js/jquery/jquery.min.js"></script>
+
+  <!-- leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+  integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+  crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+  integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+  crossorigin=""></script>
+  <link href="../dist/css/stylemap.css" rel="stylesheet" type="text/css" />
+  <!-- Bootstrap 3.3.6 -->
+  <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="../dist/js/blockUIjquery/jquery.blockUI.js"></script>
+
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="../dist/css/skins/skin-red-light.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/modal.css">
+
+  <!-- SweetAlert -->
+  <link rel="stylesheet" href="../dist/css/sweetalert/sweetalert.css">
+<style>
+	
+	.css-icon {
+
+	}
+
+	.gps_ring {	
+		border: 3px solid #FF0000;
+		 -webkit-border-radius: 30px;
+		 height: 50px;
+		 width: 50px;		
+	    -webkit-animation: pulsate 1s ease-out;
+	    -webkit-animation-iteration-count: infinite; 
+	    /*opacity: 0.0*/
+	}
+	
+	@-webkit-keyframes pulsate {
+		    0% {-webkit-transform: scale(0.1, 0.1); opacity: 0.0;}
+		    50% {opacity: 1.0;}
+		    100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+	}
+	</style>
+
+
+
+
+
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class="hold-transition skin-red-light sidebar-mini">
+  <div class="wrapper">
+
+    <header class="main-header">
+      <!-- Logo -->
+      <a href="#" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels
+      <span class="logo-mini"><b>A</b>LT</span>-->
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><b>DRI</b></span>
+      </a>
+      <!-- Header Navbar: style can be found in header.less -->
+      <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            
+            </li>
+            <li class="dropdown notifications-menu">
+              <a href="../index.html" title="Salir" id="logout">
+              <i class="fa fa-sign-out">Salir</i>
+            </a>
+
+            </li>
+            <li class="dropdown notifications-menu">
+              <div class="logo-image hidden-xs">
+                <a id="logo" href="http://www.univalle.edu.co/">
+                       <img longdesc="http://www.seapp724.com/" class="img-responsive"  src="../images/logo.jpg" width="424" height="51" alt="Universidad del Valle">
+
+                     </a>
+
+              </div>
+            </li>
+            <li>
+              <a href="#" id="btn-sidebar" data-toggle="control-sidebar"><i class="fa fa-cube"></i></a>
+            </li>
+
+          </ul>
+
+        </div>
+      </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar">
+
+
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+          <li class="header">Menu de navegacion</li>
+          <li class=" treeview">
+            <a href="#">
+            <i class="fa  fa-flask"></i> <span>Convenios</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+            <ul class="treeview-menu">
+              <li><a class='menubusqueda ' tabindex="-1" href="#" id="menu-convenios-pais"><i class="fa fa-circle-o"></i> Convenios por país</a></li>
+              <li><a class='menubusqueda' tabindex="-1" href="#" id="menu-busqueda-por-tipo"><i class="fa fa-circle-o"></i>Tipo de convenio</a></li> 
+              <li><a class='menubusqueda' tabindex="-1" href="#" id="menu-busqueda-por-academia"><i class="fa fa-circle-o"></i>Por programa</a></li> 
+              
+            </ul>
+          </li>
+        
+          <!--
+          <li class=" treeview">
+            <a href="#">
+            <i class="fa fa-gears"></i> <span>Equipo robusto</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+            <ul class="treeview-menu">
+              <li class="active"><a class='menubusqueda' tabindex="-1" href="#" id="menu-busqueda-equipo-robustos"><i class="fa fa-circle-o"></i> Búsqueda por<br> equipo robusto</a></li>
+              <li><a class='menubusqueda' tabindex="-1" href="#" id="menu-equipos-robustos"><i class="fa fa-circle-o"></i> Laboratorios con<br> equipo robusto</a></li>
+            </ul>
+          </li>
+          -->
+          <li><a class='menubusqueda' tabindex="-1" href="#" id="menu-contacto"><i class="fa fa-mouse-pointer"></i>  <span>Contactenos</span></a></li>
+
+        </ul>
+      </section>
+      <!-- /.sidebar -->
+    </aside>
+      <!-- Control Sidebar -->
+  <aside id="sidebar-right-contenido" class="control-sidebar control-sidebar-dark">
+    <!-- Create the tabs -->
+    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+      <li class = "active"><a href="#control-sidebar-home-tab" data-toggle="tab" aria-expanded = "true"><i class="fa fa-home"></i></a></li>
+      <!--<li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>-->
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane active" id="control-sidebar-home-tab">
+        <h3 class="control-sidebar-heading" id = "titulo_resultados"></h3>
+        <div id = "contenedor_resultados"></div>
+        <!-- /.control-sidebar-menu -->
+
+      </div>
+      <!-- /.tab-pane -->
+  
+      <!-- Settings tab content -->
+      <div class="tab-pane" id="control-sidebar-settings-tab">
+        
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+
+
+      <!-- Main content -->
+      <section class="content">
+        <!-- Small boxes (Stat box) -->
+
+        <!-- Main row -->
+        <div class="row">
+          <!-- Left col -->
+
+          <!-- /.Left col -->
+          <!-- right col (We are only adding the ID to make the widgets sortable)-->
+          <section class="col-lg-12 connectedSortable">
+
+            <!-- Map box -->
+            <div class="box box-solid ">
+              <!-- tools box -->
+              <div id="map" style="height: 500px; width: 100%;"></div>
+
+
+            </div>
+            <!-- right col -->
+        </div>
+        <!-- /.row (main row) -->
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Búsqueda</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-2 col-xs-12">
+
+              </div>
+              <div class="col-md-10 col-xs-12">
+                <form id="form" role="form">
+                  <div class="form-group">
+                    <input type="text" class="form-control" aria-describedby="basic-addon1" placeholder="Nombre del laboratorio" id="infolab-ubicacion-laboratorio-por-nombre">
+
+
+                  </div>
+                  <div id="btns-buscar">
+                    
+                  </div>
+                      <div id="btns-buscar2">
+
+                      </div>
+                </form>
+
+              </div>
+
+            </div>
+
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+
+
+
+    <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- BEGIN # MODAL LOGIN -->
+  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" align="center">
+          <img class="img-circle" id="img_logo" src="../images/logo-footer.png">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</button>
+        </div>
+
+        <!-- Begin # DIV Form -->
+        <div id="div-forms">
+
+          <!-- Begin # Login Form -->
+          <form id="login-form">
+            <div class="modal-body">
+              <div id="div-login-msg">
+                <div id="icon-login-msg" class="glyphicon glyphicon-chevron-right"></div>
+                <span id="text-login-msg">Ingresa tu correo y password.</span>
+              </div>
+              <input id="login_username" class="form-control" type="text" placeholder="Email" required>
+              <input id="login_password" class="form-control" type="password" placeholder="Password" required>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox"> Recordarme
+                </label>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Ingresar</button>
+                <a id='btn-interno' class="btn btn-primary btn-lg btn-block">CorreoUnivalle</a>
+              </div>
+              <div>
+                <button id="login_lost_btn" type="button" class="btn btn-link">Olvido su contraseña?</button>
+                <button id="login_register_btn" type="button" class="btn btn-link">Registro</button>
+
+              </div>
+            </div>
+          </form>
+          <!-- End # Login Form -->
+
+          <!-- Begin | Lost Password Form -->
+          <form id="lost-form" style="display:none;">
+            <div class="modal-body">
+              <div id="div-lost-msg">
+                <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
+                <span id="text-lost-msg">Ingresa tu e-mail.</span>
+              </div>
+              <input id="lost_email" class="form-control" type="text" placeholder="E-Mail" required>
+            </div>
+            <div class="modal-footer">
+              <div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Enviar</button>
+              </div>
+              <div>
+                <button id="lost_login_btn" type="button" class="btn btn-link">Ingresar</button>
+                <button id="lost_register_btn" type="button" class="btn btn-link">Registro</button>
+              </div>
+            </div>
+          </form>
+          <!-- End | Lost Password Form -->
+
+          <!-- Begin | Register Form -->
+          <form id="register-form" style="display:none;">
+            <div class="modal-body">
+              <div id="div-register-msg">
+                <div id="icon-register-msg" class="glyphicon glyphicon-chevron-right"></div>
+                <span id="text-register-msg">Registra tu cuenta.</span>
+              </div>
+              <input id="register_email" class="form-control" type="text" placeholder="E-Mail" required>
+              <input id="register_password" class="form-control" type="password" placeholder="Password" required>
+              <input id="register_passwordv" class="form-control" type="password" placeholder="Confirma tu Password" required>
+            </div>
+            <div class="modal-footer">
+              <div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Registro</button>
+              </div>
+              <div>
+                <button id="register_login_btn" type="button" class="btn btn-link">Ingresar</button>
+                <button id="register_lost_btn" type="button" class="btn btn-link">Olvido su contraseña?</button>
+              </div>
+            </div>
+          </form>
+          <!-- End | Register Form -->
+
+        </div>
+        <!-- End # DIV Form -->
+
+      </div>
+    </div>
+  </div>
+  <!-- END # MODAL LOGIN -->
+
+  <!-- BEGIN # MODAL COMPRAR -->
+  <div class="modal fade " id="compra-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" align="center">
+          
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</button>
+          <h2> Diligencia tu informacion por favor </h2> 
+        </div>
+
+        <!-- Begin # DIV Form -->
+        <div id="div-forms">
+
+          <!-- Begin # FORMULARIO DE COMPRA-->
+            <form>
+            <div class="modal-body">
+              
+              <!-- informacion de la prueba para el pedido-->
+              <label for="prueba_ensayo_e">Nombre de la prueba</label>
+              <input id="prueba_ensayo_e" class="form-control" type="text" placeholder=""readonly="true" >
+              <input id="cod_ensayo_e" class="form-control" type="text" placeholder="" readonly="true" style="display:none;">
+              <input id="cod_lab_e" class="form-control" type="text" placeholder="" readonly="true" style="display:none;">
+              <label for="costo_prueba_e">Costo de la prueba C/U</label>
+              <input id="costo_prueba_e" class="form-control" type="text" placeholder="Costo" readonly="true">
+              <label for="descripcion_e">Descripcion</label>
+              <textarea id="descripcion_e" class="form-control" type="text" placeholder="Descripcion" readonly="true"></textarea>
+              <label for="nombre_laboratorio_e">Laboratorio que realiza la prueba</label>
+              <input id="nombre_laboratorio_e" class="form-control" type="text" placeholder="Email" readonly="true">
+              <label for="normas_prueba_e">Normas que rigen la prueba</label>
+              <input id="normas_prueba_e" class="form-control" type="text" placeholder="Normas"readonly="true" >
+              <label for="palabras_clave_e">Palabras clave de la prueba</label>
+              <input id="palabras_clave_e" class="form-control" type="text" placeholder="Palabras" readonly="true">
+              <label for="servicios_fuerauv_e">Se presta este servicio fuera de Univalle</label>
+              <input id="servicios_fuerauv_e" class="form-control" type="text" placeholder="Fuera" readonly="true">
+              
+
+
+              <!-- informacion del usuario para el pedido-->
+              
+              <input id="email_u" class="form-control" type="text" placeholder="email de usuario" required >
+              <label for="nombre_u">Nombre del usuario solicitante</label>
+              <input id="nombre_u" class="form-control" type="text" placeholder="Nombre" required>
+              <label for="telefono_u">Telefono solicitante</label>
+              <input id="telefono_u" class="form-control" type="text" placeholder="Telefono" required>
+              <label for="empresa_u">Empresa</label>
+              <input id="empresa_u" class="form-control" type="text" placeholder="Empresa" required>
+              <label for="direccion_u">Direccion</label>
+              <input id="direccion_u" class="form-control" type="text" placeholder="direccion" required>
+              
+              <input id="uid_u" class="form-control" type="text" placeholder="" required style="display:none;">
+              
+
+              <!-- informacion de la empresa para el pedido-->
+              <label for="nit_empresa_e">Documento de id</label>
+              <input id="nit_empresa_e" class="form-control" type="text" placeholder="NIT,CC,Pasaporte" required>
+              <label for="telefono_fijo_e">Telefono de la empresa</label>
+              <input id="telefono_fijo_e" class="form-control" type="text" placeholder="Empresa y/o persona" required>
+              <label for="tipo_empresa_e">Tipo de empresa</label>
+                <select id="tipo_empresa_e" class="form-control"  required>
+                  
+                  <option>Publica</option>
+                  <option>Privada</option>
+                  <option>Mixta</option>
+                  <option>Educativa</option>
+                  <option>Industria</option>
+                  <option>Otra</option>
+                </select>
+              <label for="catidad_pruebas_e">Cantidad de pruebas que necesita</label>
+              <input id="catidad_pruebas_e" class="form-control" type="number" placeholder="numero" required>
+              <label for="Observaciones_e">Observaciones</label>
+              <textarea id="Observaciones_e" class="form-control"  placeholder="" ></textarea>
+
+
+            </div>
+            <div class="modal-footer">
+              <div>
+                <button id = "btn-enviar-pedido" class="btn btn-primary btn-lg btn-block">Solicitar</button>
+              </div>
+              <div>
+
+
+              </div>
+            </div>
+          </form>
+          <!-- End # FORMULARIO DE COMPRA -->
+        </div>
+        <!-- End # DIV Form -->
+
+      </div>
+    </div>
+  </div>
+  <!-- END # MODAL COMPRAR -->
+
+
+
+
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+  <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+  <script>
+    $.widget.bridge('uibutton', $.ui.button);
+  </script>
+  <!-- Bootstrap 3.3.6 -->
+  <script src="../bootstrap/js/bootstrap.min.js"></script>
+
+  <!-- Slimscroll -->
+  <script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+  <!-- FastClick -->
+  <script src="../plugins/fastclick/fastclick.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../dist/js/app.js"></script>
+  <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+  <script src="../dist/js/pages/dashboard.js"></script>
+  <!-- SweetAlert   -->
+  <script lenguaje='text/javascript' src="../dist/js/sweetalert/sweetalert.min.js"></script>
+
+  <!-- AdminLTE for demo purposes -->
+  <script lenguaje='text/javascript' src="../dist/js/jquery.sidebar.min.js"></script>
+  <script lenguaje='text/javascript' src="../dist/js/spin/spin.min.js"></script>
+  <script lenguaje='text/javascript' src="../dist/js/spin/spinerconfig.js"></script>
+  <script lenguaje='text/javascript' src="../dist/js/map/countries.geo.js"></script>
+  <script lenguaje='text/javascript' src="../dist/js/map/map.js"></script>
+    <script src="../dist/js/map/Leaflet.CountrySelect.js"></script>
+  <script lenguaje='text/javascript' src="../dist/js/autocomplete/jquery.easy-autocomplete.min.js"></script>
+  <script lenguaje='text/javascript' src="../dist/js/autocomplete/scriptautcomplete.js"></script>
+  
+  <script lenguaje='text/javascript'>
+    $(document).ready(function () {
+
+      $('#logout').click(function () {
+        firebase.auth().signOut().then(function () {
+          // Sign-out successful.
+          window.location = "../index.html";
+
+        }, function (error) {
+
+          window.location = "../index.html";
+        });
+      });
+
+        $(".login-button").click(function (event) {
+                  event.preventDefault();
+
+            $("#login-modal").modal();
+        });
+
+   $("#map").on("click", ".btn-solicitar",function (event) {
+     event.preventDefault();
+    if ($buttonCompra) {
+        $("#compra-modal").modal();
+    }else{
+        $("#login-modal").modal();
+    }
+  });
+    });
+  </script>
+  <script src="../dist/js/modal.js"></script>
+  <script src="../dist/js/map/estadoAuthMap.js"></script>
+  <script src="../dist/js/map/pedidoMap.js"></script>
+
+</body>
+
+</html>

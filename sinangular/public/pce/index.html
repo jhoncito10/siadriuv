@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="Administrador SIGELAB" content="">
+  <meta name="univalle" content="">
+  <link href="http://www.univalle.edu.co/templates/t3_bs3_blank/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+
+
+  <title>SIGElab | Administrador</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <!-- Bootstrap CSS  -->
+    <link rel="stylesheet" href="../plugins/datatables/dataTables.bootstrap.css">
+
+
+    <!-- BOOTSTRAP CSS -->
+  	<link rel="stylesheet" href="css/bootstrap.min.css">
+
+  	<!-- JQUERY UI CSS -->
+  	<link rel="stylesheet" href="css/jquery-ui.css">
+
+  	<!-- ESTILOS PROPIOS
+  	<link rel="stylesheet" href="css/style.css">-->
+
+  	<!-- FIREBASE CONFIG -->
+  	<script type="text/javascript" src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+
+  	<!-- JQUERY -->
+  	<script type="text/javascript" src="js/jquery-3.2.0.min.js"></script>
+
+  	<!-- JQUERY UI-->
+  	<script type="text/javascript" src="js/jquery-ui.js"></script>
+
+  	<!-- BOOTSTRAP JavaScript -->
+  	<script src="js/bootstrap.min.js"></script>
+
+  	<!-- SCRIPT DE FUNCIONALIDAD
+  	<script type="text/javascript" src="js/jsAjax.js"></script>-->
+  	<script type="text/javascript" src="js/jsMichael.js"></script>
+
+  	<!-- SCRIPT PARA CALCULAR EL DIA JULIANO -->
+  	<script type="text/javascript" src="js/diaJuliano.js"></script>
+
+  	<!-- SCRIPT QUE CONTIENE INFORMACION TEXTUAL PARA LAS VENTANAS EMERGENTES -->
+  	<script type="text/javascript" src="js/ObjWindowsHelp.js"></script>
+  	<script type="text/javascript" src="js/ObjWindowsTest.js"></script>
+
+  	<!-- FUNCIONALIDADES FIREBASE -->
+  	<script type="text/javascript" src="js/loadData.js"></script>
+  	<script type="text/javascript" src="js/saveData.js"></script>
+
+
+    <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+    <script src="../tokens.js"></script>
+    <script>
+  
+  var email;
+  function initApp() {
+    // Listening for auth state changes.
+    // [START authstatelistener]
+    firebase.auth().onAuthStateChanged(function(user) {
+
+      if (user) {
+        // User is signed in.
+        var displayName = user.displayName;
+            email = user.email;
+        var emailVerified = user.emailVerified;
+        var photoURL = user.photoURL;
+        var isAnonymous = user.isAnonymous;
+        var uid = user.uid;
+        var providerData = user.providerData;
+          user.getToken().then(function(accessToken) {
+            $("#msg").text(displayName);
+           $("#my_image").attr("src",photoURL);
+            detalailscount = JSON.stringify({
+              displayName: displayName,
+              email: email,
+              emailVerified: emailVerified,
+              photoURL: photoURL,
+              uid: uid,
+              accessToken: accessToken,
+              providerData: providerData
+            }, null, '  ');
+          });
+        } else {
+        // User is signed out.
+          window.location="../index.html";
+
+          $('body').html('');
+
+      }
+
+    });
+
+  }
+  window.onload = function() {
+    initApp();
+
+  };
+  </script>
+
+    <link href="../dist/css/stylemap.css" rel="stylesheet" type="text/css" />
+
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="../dist/css/skins/skin-red-light.css">
+  <!-- DataTables -->
+  <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="../plugins/datatables/dataTables.bootstrap.min.js"></script>
+
+
+  <style type="text/css">
+    div.panel-group{
+      width: 800px;
+    }
+    /* ----------------------------------------- */
+    /* ESTILOS PARA LA TABLA */
+    /* ----------------------------------------- */
+    .borderless td {
+        border: none !important;
+    }
+    div.centerTable{
+      text-align: center;
+      padding:0;
+      margin: 0;
+    }
+
+    div.centerTable table {
+           margin: 0 auto;
+           text-align: left;
+    }
+
+    .table{
+      text-align: center;
+      padding:0;
+      margin: 0;
+      width: 600px;
+    }
+
+    table th{
+      text-align: center;
+      width: 150px;
+    }
+
+    td{
+      font-size:11px;
+      text-align: center;
+      vertical-align:middle;
+      /*width: 75px;
+      height: 150px;*/
+      padding: 0;
+      margin: 0;
+    }
+    /* ----------------------------------------- */
+
+    /* ----------------------------------------- */
+    /* EFECTOS PARA LOS BOTONES */
+    /* ----------------------------------------- */
+    input[name="upFile"]{
+      display: none;
+      z-index: -1;
+      position:fixed;
+      width:0px;
+      height: 0px;
+    }
+
+    div[name="calendario"]{
+      position: absolute;
+      z-index: 99;
+      padding-top:50px;
+      padding-left:50px;
+    }
+
+    .btn>span{
+      font-size:35px;
+      color:rgb(232, 28, 37);
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Underline From Center */
+    .hvr-underline-from-center {
+      display: inline-block;
+      vertical-align: middle;
+      -webkit-transform: perspective(1px) translateZ(0);
+      transform: perspective(1px) translateZ(0);
+      box-shadow: 0 0 1px transparent;
+      position: relative;
+      overflow: hidden;
+    }
+    .hvr-underline-from-center:before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      left: 50%;
+      right: 50%;
+      bottom: 0;
+      background: rgb(232, 28, 37);
+      height: 4px;
+      -webkit-transition-property: left, right;
+      transition-property: left, right;
+      -webkit-transition-duration: 0.3s;
+      transition-duration: 0.3s;
+      -webkit-transition-timing-function: ease-out;
+      transition-timing-function: ease-out;
+    }
+    .hvr-underline-from-center:hover:before, .hvr-underline-from-center:focus:before, .hvr-underline-from-center:active:before {
+      left: 0;
+      right: 0;
+    }
+    /* ----------------------------------------- */
+
+    /* ----------------------------------------- */
+    /* APARIENCIA DEL FORMULARIO */
+    /* ----------------------------------------- */
+    a>i{
+      margin-right: 5px;
+      margin-top: 2px;
+      font-size: 22px;
+    }
+
+    .tareaCompletada{
+      color: rgb(148,255,108);
+    }
+
+    .tareaPendiente{
+      color: rgb(232,202,114);
+    }
+
+    .tareaPorRealizar{
+      color: rgb(255,104,79);
+    }
+
+    h4.panel-title>a{
+      font-size: 25px;
+      text-decoration: none;
+      vertical-align: center;
+    }
+
+    .panel-default>.panel-heading{
+      background-color: white;
+      border-bottom: 1px solid;
+    }
+
+    .panel-default>.item1{
+      border-left: 8px solid rgb(145,197,255);
+    }
+
+    .panel-default>.item2{
+      border-left: 8px solid rgb(73,99,127);
+    }
+
+    .panel-default>.item3{
+      border-left: 8px solid rgb(36,49,64);
+    }
+
+    .panel-default>.item4{
+      border-left: 8px solid rgb(108,255,107);
+    }
+
+    .panel-default>.item5{
+      border-left: 8px solid rgb(54,127,54);
+    }
+
+    .panel-default>.item6{
+      border-left: 8px solid rgb(27,64,27);
+    }
+
+    .panel-default>.item7{
+      border-left: 8px solid rgb(255,249,130);
+    }
+
+    .panel-default>.item8{
+      border-left: 8px solid rgb(127,125,65);
+    }
+
+    .panel-default>.item9{
+      border-left: 8px solid rgb(64,62,33);
+    }
+
+    .panel{
+      border: 0;
+    }
+
+    .panel-collapse{
+      background-color: white;
+      /*#F0F0F0*/
+    }
+
+    span.caret{
+      margin-left: 15px;
+    }
+    /* ----------------------------------------- */
+
+    /* ----------------------------------------- */
+    /* APARIENCIA DEL TEXTO DE CADA TAREA */
+    /* ----------------------------------------- */
+    p.textAux{
+      font-size: 12px;
+      padding: 0;
+      margin: 0;
+    }
+
+    p.tituloInferior{
+      font-size: 20px;
+      padding-left: 0;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      padding-right: 0;
+      margin: 0;
+    }
+    p.textoInferior{
+      font-size: 15px;
+      padding-left: 35px;
+    }
+
+    p.resultado{
+      color:#565454;
+      font-size: 11;
+      font-style: italic;
+      margin: 0;
+      padding-top: 5px;
+      padding-left: 0;
+      padding-right: 0;
+      padding-bottom: 0;
+    }
+    /* ----------------------------------------- */
+
+    /* ----------------------------------------- */
+    /* CONTENIDO DE VENTANAS MODALES */
+    /* ----------------------------------------- */
+    textarea{
+      width: 90%;
+      height: 150px;
+      text-decoration: none;
+      border: 1px solid: #C4C4C4;
+      margin: 0;
+      padding: 0;
+      resize:none;
+    }
+    div.modal-body{
+      text-align: center;
+      vertical-align: center;
+    }
+    .textNota{
+      text-align: center;
+      font-size: 12px;
+      color: #565454;
+      font-style: italic;
+      margin: 0;
+      padding: 0;
+    }
+    /* ----------------------------------------- */
+
+    /* ----------------------------------------- */
+    /* APARIENCIA DE LAS VENTANAS MODALES */
+    /* ----------------------------------------- */
+    .modal-header{
+      background:rgb(232, 28, 37);
+      color:white;
+    }
+
+    .modal-header>button{
+      color:white;
+    }
+
+    .modal-header>h4{
+      font-weight: bold;
+    }
+
+    .modal-footer{
+      background: rgb(235, 235, 235);
+    }
+
+    div.progress{
+      padding:0;
+      margin: 0;
+    }
+    /* ----------------------------------------- */
+
+
+  </style>
+
+
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body class="hold-transition skin-red-light sidebar-mini">
+<div class="wrapper">
+
+  <header class="main-header">
+    <!-- Logo -->
+    <a href="#" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels
+      <span class="logo-mini"><b>A</b>LT</span>-->
+      <!-- logo for regular state and mobile devices -->
+      <span  class="logo-lg"><b>SIGE</b>lab</span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+
+          <li class="dropdown notifications-menu">
+            <a href="../qrgen/index.html" title="Generador de codigos QR">
+              <i class="fa fa-qrcode">Gen QR</i>
+            </a>
+          </li>
+          <li class="dropdown notifications-menu">
+            <a href="../nivel2/index.html" title="Acceso a tu laboratorio">
+              <i class="fa fa-home">laboratorio</i>
+            </a>
+          </li>
+          <li class="dropdown notifications-menu">
+            <a href="../admin/informes.html" title="Reportes">
+              <i class="fa  fa-bar-chart">Reportes</i>
+            </a>
+          </li>
+          <li class="dropdown notifications-menu">
+            <a href="../pages/admon.html" title="Administracion">
+              <i class="fa  fa-gears">Administracion</i>
+            </a>
+          </li>
+          <li class="dropdown notifications-menu">
+            <a href="#" title="Salir" id="logout">
+              <i class="fa fa-sign-out">Salir</i>
+            </a>
+          </li>
+          <li class="dropdown notifications-menu">
+            <div class="logo-image hidden-xs">
+                     <a id="logo" href="http://www.univalle.edu.co/" >
+                       <img longdesc="http://www.seapp724.com/" class="img-responsive"  src="../images/logo.jpg" width="424" height="51" alt="Universidad del Valle">
+
+                     </a>
+
+                   </div>
+          </li>
+
+        </ul>
+
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+     <div class="user-panel">
+       <div class="pull-left image">
+         <img src="" id="my_image" class="img-circle" alt="User Image">
+       </div>
+       <div class="pull-left info">
+         <p id="msg" class="text-justify"></p>
+         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+       </div>
+     </div>
+
+      <!-- /.search form -->
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      <ul class="sidebar-menu">
+        <li class="header">Menu de navegacion</li>
+        <li class=" treeview">
+          <a href="#">
+            <i class="fa  fa-flask"></i> <span>Administrar laboratorios</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a class='menubusqueda' tabindex="-1" href="#" id=""><i class="fa fa-circle-o"></i> Generar listado</a></li>
+          </ul>
+        </li>
+
+
+        <li><a href="#"><i class="fa fa-book"></i> <span>Manual de usuario</span></a></li>
+      </ul>
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+        <!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="box box-danger">
+        <div class="box-header with-border">
+          <h3 class="box-title">PCE</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body" id="container" style="overflow-x: scroll; overflow-y: scroll; height: 450px;" >
+
+
+
+          <br><br>
+
+          <div class="panel-group" id="acordion" role="tablist" >
+            <div class="panel panel-default" >
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 010101 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item1" role="tab">
+                <h4 class="panel-title">
+                  <a href="#010101" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Ficha Tecnica</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <!-- CONTENIDO 1 -->
+              <div id="010101" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div class="table-responsive centerTable">
+                    <table class="table borderless table-condensed">
+                      <tr>
+                        <td>
+                          <a id="Help" name="windowsHelp" class="btn btn-lh hvr-underline-from-center" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>
+                        </td>
+                        <td>
+                          <a id="btnEntUp" name="btnUpFile" class="btn btn-lh hvr-underline-from-center"><span class="glyphicon glyphicon-plus-sign"></span></a>
+                        </td>
+                        <td>
+                          <a id="fechaInicio" name='btnCalendario' class="btn btn-lh hvr-underline-from-center"><span class="glyphicon glyphicon-calendar"></span></a>
+                        </td>
+                        <td>
+                          <a id="fechaFin" name='btnCalendario' class="btn btn-lh hvr-underline-from-center"><span class="glyphicon glyphicon-calendar"></span></a>
+                        </td>
+                        <td>
+                          <a id="Obs" name='observacion' class="btn btn-lh hvr-underline-from-center" data-toggle="modal" data-target="#modalObserv"><span class="glyphicon glyphicon-option-horizontal"></span></a>
+                        </td>
+                      </tr>
+                      <!-- TEXTO AUXILIAR PARA EL USUARIO -->
+                      <tr>
+                        <td><p class="textAux">Ayuda</p></td>
+                        <td><p class="textAux">Adjuntar<br>Archivo</p></td>
+                        <td><p class="textAux">Fecha de Inicio</p></td>
+                        <td><p class="textAux">Fecha de Fin</p></td>
+                        <td><p class="textAux">Observación</p></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td><p id="rEntUp" class="resultado">...</p></td>
+                        <td><p id="rfechaInicio" class="resultado">...</p></td>
+                        <td><p id="rfechaFin" class="resultado">...</p></td>
+                        <td></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <blockquote>
+                    <p class="tituloInferior">Duración en días habiles</p>
+                    <p id="rDurDiasH" class="bg-danger textoInferior">...</p>
+                    <p class="tituloInferior">Estado de la Tarea</p>
+                    <p id="rEst" class="bg-danger textoInferior">Pendiente</p>
+                    <p class="tituloInferior">Observaciones</p>
+                    <p id="rObs" class="bg-danger textoInferior">...</p>
+                  </blockquote>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 020101 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item2" role="tab">
+                <h4 class="panel-title">
+                  <a href="#020101" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-minus-sign tareaPorRealizar"></i><span>Fotografías</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <!-- CONTENIDO 2 -->
+              <div id="020101" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable">
+                    <table class="table borderless table-condensed">
+                      <tr>
+                        <td>
+                          <a id="Help" name="windowsHelp" class="btn btn-lh hvr-underline-from-center" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>
+                        </td>
+                        <td>
+                          <a id="quiz" name='test' class="btn btn-lh hvr-underline-from-center" data-toggle="modal" data-target="#modalTest"><span class="glyphicon glyphicon-list-alt"></span></a>
+                        </td>
+                        <td>
+                          <a id="Obs" name='observacion' class="btn btn-lh hvr-underline-from-center" data-toggle="modal" data-target="#modalObserv"><span class="glyphicon glyphicon-option-horizontal"></span></a>
+                        </td>
+                      </tr>
+                      <!-- TEXTO AUXILIAR PARA EL USUARIO -->
+                      <tr>
+                        <td><p class="textAux">Ayuda</p></td>
+                        <td><p class="textAux">Realizar<br>Test</p></td>
+                        <td><p class="textAux">Observación</p></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td><p id="rTest" class="resultado">0</p></td>
+                        <td></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <blockquote>
+                    <p class="tituloInferior">Valoración del Test</p>
+                    <p id="rEst" class="bg-danger textoInferior">No aprobado</p>
+                    <p class="tituloInferior">Observaciones</p>
+                    <p id="rObs" class="bg-danger textoInferior">...</p>
+                  </blockquote>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 020102 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item2" role="tab">
+                <h4 class="panel-title">
+                  <a href="#020102" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-ok-sign tareaCompletada"></i><span>Plan de Trabajo</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <!-- CONTENIDO 3 -->
+              <div id="020102" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable">
+                    <table class="table borderless table-condensed">
+                      <tr>
+                        <td>
+                          <a id="Help" name="windowsHelp" class="btn btn-lh hvr-underline-from-center" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>
+                        </td>
+                        <td>
+                          <a id="quiz" name='test' class="btn btn-lh hvr-underline-from-center" data-toggle="modal" data-target="#modalTest"><span class="glyphicon glyphicon-list-alt"></span></a>
+                        </td>
+                        <td>
+                          <a id="Obs" name='observacion' class="btn btn-lh hvr-underline-from-center" data-toggle="modal" data-target="#modalObserv"><span class="glyphicon glyphicon-option-horizontal"></span></a>
+                        </td>
+                      </tr>
+                      <!-- TEXTO AUXILIAR PARA EL USUARIO -->
+                      <tr>
+                        <td><p class="textAux">Ayuda</p></td>
+                        <td><p class="textAux">Realizar<br>Test</p></td>
+                        <td><p class="textAux">Observación</p></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td><p id="rTest" class="resultado">0</p></td>
+                        <td></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <blockquote>
+                    <p class="tituloInferior">Valoración del Test</p>
+                    <p id="rEst" class="bg-danger textoInferior">No aprobado</p>
+                    <p class="tituloInferior">Observaciones</p>
+                    <p id="rObs" class="bg-danger textoInferior">...</p>
+                  </blockquote>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 020103 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item2" role="tab">
+                <h4 class="panel-title">
+                  <a href="#020103" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Materiales y Equipos Para Dar de Baja</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="020103" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 020201 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item2" role="tab">
+                <h4 class="panel-title">
+                  <a href="#020201" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Materiales y Equipos Ordendos</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="020201" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 020301 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item2" role="tab">
+                <h4 class="panel-title">
+                  <a href="#020301" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Focos de Suciedad y Contaminación</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="020301" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 020302 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item2" role="tab">
+                <h4 class="panel-title">
+                  <a href="#020302" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Materiales y Equipos Identificados</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="020302" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 020303 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item2" role="tab">
+                <h4 class="panel-title">
+                  <a href="#020303" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Zonas de Trabajo y de Paso Definidas</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="020303" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 020304 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item2" role="tab">
+                <h4 class="panel-title">
+                  <a href="#020304" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Distribución del Laboratorio</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="020304" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 020401 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item2" role="tab">
+                <h4 class="panel-title">
+                  <a href="#020401" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Programa de Limpieza</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="020401" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 020402 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item2" role="tab">
+                <h4 class="panel-title">
+                  <a href="#020402" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Distribución de Áreas Verificadas</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="020402" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 020403 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item2" role="tab">
+                <h4 class="panel-title">
+                  <a href="#020403" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Fotografias del Proceso</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="020403" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 020404 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item2" role="tab">
+                <h4 class="panel-title">
+                  <a href="#020404" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Informe de Auditoria ACPM</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="020404" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 030101 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item3" role="tab">
+                <h4 class="panel-title">
+                  <a href="#030101" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Manual de Control de Documentos y Registros</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="030101" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable">
+                    <table class="table borderless table-condensed">
+                      <tr>
+                        <td>
+                          <a id="Help" name="windowsHelp" class="btn btn-lh hvr-underline-from-center" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-question-sign"></span></a>
+                        </td>
+                        <td>
+                          <a id="quiz" name='test' class="btn btn-lh hvr-underline-from-center" data-toggle="modal" data-target="#modalTest"><span class="glyphicon glyphicon-list-alt"></span></a>
+                        </td>
+                        <td>
+                          <a id="Obs" name='observacion' class="btn btn-lh hvr-underline-from-center" data-toggle="modal" data-target="#modalObserv"><span class="glyphicon glyphicon-option-horizontal"></span></a>
+                        </td>
+                      </tr>
+                      <!-- TEXTO AUXILIAR PARA EL USUARIO -->
+                      <tr>
+                        <td><p class="textAux">Ayuda</p></td>
+                        <td><p class="textAux">Realizar<br>Test</p></td>
+                        <td><p class="textAux">Observación</p></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td><p id="rTest" class="resultado">0</p></td>
+                        <td></td>
+                      </tr>
+                    </table>
+                  </div>
+                  <blockquote>
+                    <p class="tituloInferior">Valoración del Test</p>
+                    <p id="rEst" class="bg-danger textoInferior">No aprobado</p>
+                    <p class="tituloInferior">Observaciones</p>
+                    <p id="rObs" class="bg-danger textoInferior">...</p>
+                  </blockquote>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 030102 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item3" role="tab">
+                <h4 class="panel-title">
+                  <a href="#030102" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Manual de Calidad y Operaciones</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="030102" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 030103 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item3" role="tab">
+                <h4 class="panel-title">
+                  <a href="#030103" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Administración, Radicación y Distribución de Correspondencia</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="030103" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 030104 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item3" role="tab">
+                <h4 class="panel-title">
+                  <a href="#030104" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>TRD de la Escuela o Departamento</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="030104" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 030105 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item3" role="tab">
+                <h4 class="panel-title">
+                  <a href="#030105" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>listado Maestro de Instructivos y de Formatos</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="030105" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 030106 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item3" role="tab">
+                <h4 class="panel-title">
+                  <a href="#030106" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Capacitación</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="030106" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 030201 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item3" role="tab">
+                <h4 class="panel-title">
+                  <a href="#030106" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Guías de Prácticas del Laboratorio</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="030106" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 030202 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item3" role="tab">
+                <h4 class="panel-title">
+                  <a href="#030106" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Guías de Aseo y Desinfección</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="030106" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 030203 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item3" role="tab">
+                <h4 class="panel-title">
+                  <a href="#030106" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Procedimiento</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="030106" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 030204 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item3" role="tab">
+                <h4 class="panel-title">
+                  <a href="#030106" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Instructivos de Operación de Equipos</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="030106" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 040101 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item4" role="tab">
+                <h4 class="panel-title">
+                  <a href="#040101" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Roles y Responsabilidades</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="040101" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 040102 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item4" role="tab">
+                <h4 class="panel-title">
+                  <a href="#040102" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Listado, Programación y Evidencia de Asistencia</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="040102" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 040103 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item4" role="tab">
+                <h4 class="panel-title">
+                  <a href="#040103" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Evaluación de Transferencia de Impacto</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="040103" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 050101 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item5" role="tab">
+                <h4 class="panel-title">
+                  <a href="#050101" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Requerimientos para la Infraestructura</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="050101" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 050102 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item5" role="tab">
+                <h4 class="panel-title">
+                  <a href="#050102" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Registros de Condiciones Ambientales</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="050102" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 050103 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item5" role="tab">
+                <h4 class="panel-title">
+                  <a href="#050103" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Control de Acceso al Laboratorio</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="050103" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 060101 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item6" role="tab">
+                <h4 class="panel-title">
+                  <a href="#060101" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Mapa de Riesgo</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="060101" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 060102 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item6" role="tab">
+                <h4 class="panel-title">
+                  <a href="#060102" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Matriz de Impactos Ambientales</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="060102" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 060201 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item6" role="tab">
+                <h4 class="panel-title">
+                  <a href="#060201" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Estado del Espacio</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="060201" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 060301 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item6" role="tab">
+                <h4 class="panel-title">
+                  <a href="#060301" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Almacenamiento de Reactivos</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="060301" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 060401 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item6" role="tab">
+                <h4 class="panel-title">
+                  <a href="#060401" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Hábitos Seguros</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="060401" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 060501 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item6" role="tab">
+                <h4 class="panel-title">
+                  <a href="#060501" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Residuos Peligrosos</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="060501" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 070101 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item7" role="tab">
+                <h4 class="panel-title">
+                  <a href="#070101" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Planeación</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="070101" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 070201 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item7" role="tab">
+                <h4 class="panel-title">
+                  <a href="#070201" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Programación de las Asignaturas, Prácticas y Guias </span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="070201" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 070202 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item7" role="tab">
+                <h4 class="panel-title">
+                  <a href="#070202" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Canales de Comunicación</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="070202" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 070301 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item7" role="tab">
+                <h4 class="panel-title">
+                  <a href="#070301" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Prestación del Servicio</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="070301" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 070401 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item7" role="tab">
+                <h4 class="panel-title">
+                  <a href="#070401" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Verificación</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="070401" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 080101 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item8" role="tab">
+                <h4 class="panel-title">
+                  <a href="#080101" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Plan de Aseguramiento Metrológico</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="080101" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 080102 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item8" role="tab">
+                <h4 class="panel-title">
+                  <a href="#080102" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Programa de Mantenimiento, Verificación y/o Calibración</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="080102" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 080103 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item8" role="tab">
+                <h4 class="panel-title">
+                  <a href="#080103" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Procedimientos de Uso y Verificación. </span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="080103" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 080104 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item8" role="tab">
+                <h4 class="panel-title">
+                  <a href="#080104" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Hojas de Vida de Equipos e Instrumentos de Medición</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="080104" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 090101 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item9" role="tab">
+                <h4 class="panel-title">
+                  <a href="#090101" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Manual Gestión del Mejoramiento</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="090101" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 090201 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item9" role="tab">
+                <h4 class="panel-title">
+                  <a href="#090201" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Registro de PQRS</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="090201" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 090301 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item9" role="tab">
+                <h4 class="panel-title">
+                  <a href="#090301" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Control de no Conformes</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="090301" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 090401 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item9" role="tab">
+                <h4 class="panel-title">
+                  <a href="#090401" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Registros</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="090401" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 090501 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item9" role="tab">
+                <h4 class="panel-title">
+                  <a href="#090501" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Auditorias Internas de Calidad</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="090501" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 090601 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item9" role="tab">
+                <h4 class="panel-title">
+                  <a href="#090601" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>ACPM´S</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="090601" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+              <!-- ***************************************************************************************** -->
+              <!-- TAREA 090602 -->
+              <!-- ***************************************************************************************** -->
+              <div class="panel-heading item9" role="tab">
+                <h4 class="panel-title">
+                  <a href="#090602" name="item" data-toggle="collapse" data-parent="#acordion">
+                    <i class="glyphicon glyphicon-remove-sign tareaPorRealizar"></i><span>Resultados Auditorías Internas y/o Externas</span><span class="caret"></span>
+                  </a>
+                </h4>
+              </div>
+              <div id="090602" name="item" class="panel-collapse collapse">
+                <div class="panel-body">
+                  <div name="needScroll" class="table-responsive centerTable"></div>
+                </div>
+              </div>
+
+
+
+
+            </div>
+          </div>
+
+
+
+        </div>
+        <!-- right col -->
+      </div>
+    </div>
+  </div>
+      <!-- /.row (main row) -->
+
+  </section>
+    <!-- /.content -->
+  </div>
+  <!-- ***************************************************************************************** -->
+	<!-- ESQUEMA DE LA VENTANA MODAL (VENTANA EMERGENTE) -->
+	<!-- ***************************************************************************************** -->
+
+	<!-- VENTANA DE AYUDA -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" aria-describedby="Ventana de Información">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Descripción</h4>
+				</div>
+				<div class="modal-body">
+					<p name="descTextAux"></p>
+				</div>
+				<div class="modal-footer">
+					<p align="center"><b>SIGElab</b></p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- VENTANA PARA ADICIONAR OBSERVACIONES -->
+	<div class="modal fade" id="modalObserv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" aria-describedby="Ventana de Información">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Inserte una observación</h4>
+				</div>
+				<div class="modal-body">
+					<textarea id="observacion"></textarea>
+				</div>
+				<div class="modal-footer">
+			        <button id="guardarYSalir" type="button" class="btn btn-primary" data-dismiss="modal">Guardar y Salir</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- VENTANA PARA REALIZAR TEST -->
+	<div class="modal fade" id="modalTest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" aria-describedby="Ventana de Información">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Evaluación de Conocimiento</h4>
+				</div>
+				<div class="modal-body">
+					<div align="left">
+						<p id="pregunta"></p>
+						<form id="test"  style="padding-bottom:15px;">
+							<input type="radio" name="optionsRadios" id="opcion1" value="1" checked=/><label for="opcion1" style="padding-left:15px;"></label><br>
+							<input type="radio" name="optionsRadios" id="opcion2" value="2"/><label for="opcion2" style="padding-left:15px;"></label><br>
+							<input type="radio" name="optionsRadios" id="opcion3" value="3"/><label for="opcion3" style="padding-left:15px;"></label><br>
+							<input type="radio" name="optionsRadios" id="opcion4" value="4"/><label for="opcion4" style="padding-left:15px;"></label><br>
+						</form>
+						<p class="textNota">Pregunta de opción múltiple con respuesta única. Responda correctamente para aprobar esta tarea. Puede realizar este test las veces que considere neccesario. Dispones de 25 segundos para responder.</p>
+						<!-- BARRA DE TIEMPO -->
+						<div class="progress">
+							<div id="progressBarTest" class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="25" style="width: 100%;">25
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+			        <button id="enviarYSalir" type="button" class="btn btn-primary" data-dismiss="modal">Guardar y Salir</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+  <!-- Add the sidebar's background. This div must be placed
+       immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
+<!-- ./wrapper -->
+
+
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button);
+</script>
+
+
+<!-- Slimscroll -->
+<script src="../plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="../plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="../dist/js/app.min.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="../dist/js/pages/dashboard.js"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="../dist/js/demo.js"></script>
+<script lenguaje='text/javascript' src="../dist/js/spin/spin.min.js"></script>
+<script lenguaje='text/javascript' src="../dist/js/spin/spinerconfig.js"></script>
+<!--<script lenguaje='text/javascript' src="../dist/js/map/maplvl3.js"></script>-->
+<script lenguaje='text/javascript' >
+
+$('#logout').click(function(){
+  firebase.auth().signOut().then(function() {
+// Sign-out successful.
+  window.location="../index.html";
+
+}, function(error) {
+
+window.location="../index.html";
+});
+});
+
+</script>
+</body>
+</html>

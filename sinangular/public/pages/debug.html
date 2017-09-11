@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+  <script src="../tokens.js" ></script>
+  <script>
+    var db = firebase.database();
+    var provider = new firebase.auth.GoogleAuthProvider();
+ </script>
+</head>
+<body>
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="../bootstrap/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function () {
+    Array.prototype.unique = function (a) { // funcion para eliminar los valores duplicados en un array
+      return function () { return this.filter(a) }
+    }(function (a, b, c) {
+      return c.indexOf(a, b + 1) < 0
+    });
+    var refUser = db.ref("/usuarios/");
+    var refConvenios = db.ref("/convenios/");
+    var newConvenios = db.ref("/newConvenios/");
+    
+    
+    /*
+    refConvenios
+      .once('value')
+      .then(function (convenios) {
+        var carreras = [];
+        convenios.forEach(function(convenio) {
+          object = convenio.val().programas_escuelas;
+          for (var key in object) {
+            if (object.hasOwnProperty(key)) {
+              var element = object[key];
+              element = element.replace(/\, \b/ig, ",");
+              //console.log(element);
+              element = element.split(",");
+              for (x=0;x<element.length;x++){
+                    console.log(element[x]);
+                    carreras.push(element[x]);
+                  }
+             //console.log(element);
+              
+            }
+          }
+
+          
+        });
+         console.log(carreras.unique());
+      });
+    */
+    
+    
+    /*
+    newConvenios
+      .once('value')
+      .then(function (convenios) {
+        refConvenios.set(convenios.val()).then(function (done) {
+          console.log("done");
+        }).catch(function (error) {
+          console.log("error", error);
+        });
+      });
+      */
+     
+/*
+   refConvenios
+      .once('value')
+      .then(function (convenios) {
+        var i = 0;
+        console.log(convenios.numChildren());
+        convenios.forEach(function(convenio) {
+          
+          var newconvenio = newConvenios.push();
+          newconvenio.set({
+            
+            
+            cod_georef: convenio.val().cod_georef || "No disponible",
+            country: convenio.val().country || "No disponible",
+            department: convenio.val().department || "No disponible",
+            description: convenio.val().description || "No disponible",
+            expires: convenio.val().expires || "No disponible",
+            faculty: convenio.val().faculty || "No disponible",
+            institution: convenio.val().institution || "No disponible",
+            pdf: convenio.val().pdf || "No disponible",
+            type: convenio.val().type || "No disponible",
+            web: convenio.val().web || "No disponible",
+            programas_escuelas:{
+              ciencias: convenio.val().ciencias || "Ninguno",
+              ciencias_de_la_administracion: convenio.val().ciencias_de_la_administracion || "Ninguno" ,
+              ciencias_politicas_y_economias:   convenio.val().ciencias_politicas_y_economias || "Ninguno",            
+              fai: convenio.val().fai || "Ninguno",
+              humanidades: convenio.val().humanidades || "Ninguno",
+              ingenieria: convenio.val().ingenieria || "Ninguno",
+              instituto_de_psicologia_y_pedagogia: convenio.val().instituto_de_psicologia_y_pedagogia || "Ninguno",
+              salud: convenio.val().salud || "Ninguno"
+            }
+            
+
+
+          }
+        
+        ).then(function (params) {
+            console.log('done');
+          }).catch(function (error) {
+            console.log('error', error);
+          });
+        });
+      });
+
+*/
+
+
+
+
+
+/*
+        //  ************** convierte geo_ref:'x' en 0
+        var i = 0;
+        reflaboratorios     
+        .once('value')
+        .then(function (laboratorios) {
+          laboratorios.forEach(function(lab) {
+            if (isNaN(lab.val().cod_georef)) {
+              i++;
+              console.log(lab.val().cod_georef, i);
+              reflaboratorios.child(lab.key).update({cod_georef:0});
+            }
+           
+          });
+        });
+    */
+    
+   
+  /*
+    reflaboratorios.once('value').then(function (laboratorios) {
+      var i = 0;
+      laboratorios.forEach(function(lab) {
+        console.log(lab.val().cod_georef, lab.key);
+        refEdificios.orderByChild('cod_georef').equalTo(lab.val().cod_georef).once('child_added').then(function (edificio) {
+            if (edificio.numChildren() === 0  ) {
+              console.log(lab.key);
+            }
+          
+          var newEdif = firebase.database().ref('edificios_nuevos');
+          var newEdifRef = newEdif.push();
+          newEdifRef.set(edificio.val()).then(function (params) {
+            i++;
+            newEdifRef.update({cod_georef:i}).then(function (param) {
+              console.log('done');
+            });
+            reflaboratorios.child(lab.key).update({cod_georef:i});
+          }).catch(function (error) {
+            console.log('error', error);
+          });
+            
+        });
+      });
+    });
+   */
+
+
+/*************************************** mueve nuevos edificios a edificios*/
+/*
+refEdificiosNuevos
+    .once('value').then(function (edificios_nuevos) {
+      refEdificios.set(edificios_nuevos.val()).then(function (done) {
+        console.log('hecho');
+      });
+    });
+*/
+
+
+
+
+
+/*
+    // Borra nodo con equipos
+    db.ref('/EquiposEncontrados/')
+        .remove()
+            .then(function() {
+                console.log('borrado');
+            })
+            .catch(function(error) {
+                console.log("Remove failed: " + error.message);
+            });
+*/
+            
+            // script actualiza ensayos codigo de laboratorio y key 
+           /*
+            reflaboratorios
+                  .once('value').then(function (laboratorios) {
+                    laboratorios.forEach(function(lab) {
+                      //console.log(lab.val().nombre_de_laboratorio);
+                      refensayos
+                        .orderByChild('nombre_laboratorio')
+			              		.equalTo(lab.val().nombre_de_laboratorio)
+                        .once('value').then(function (ensayos) {
+                          ensayos.forEach(function(ensayo) {
+                            //console.log(lab.key, ensayo.key, ensayo.val().nombre_laboratorio);
+                            refensayos.child(ensayo.key).update({
+                                cod_lab:lab.val().cod_lab,
+                                key_lab:lab.key
+                              }).then(function (params) {
+                                console.log("done", lab.key, ensayo.key, ensayo.val().nombre_laboratorio);
+                              }).catch(function (error) {
+                                console.log("error", ensayo.key, ensayo.val().nombre_laboratorio);
+                              });
+                           });
+                          });
+                      
+                    });
+                   
+                  });
+              */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
+    reflaboratorios
+                  .once('value').then(function (laboratorios) {
+                    const tokens = Object.keys(laboratorios.val());
+                    console.log(tokens);
+                  });*/
+
+   
+
+
+
+
+
+
+
+    /*
+     Object.size = function(obj) {
+        var size = 0, key;
+        for (key in obj) {
+            if (obj.hasOwnProperty(key)) size++;
+        }
+        return size;
+    };
+
+
+    objCompletas = {};
+
+    
+    
+      refUser
+        .once("value").then(function(tarea) {
+          var i = 0,
+              children = tarea.numChildren();
+          return new Promise(function(resolve){
+          tarea.forEach(function(usuario) {
+            usuario.forEach(function(tareausuario) {              
+              console.log(tareausuario.val().estado);
+
+              if (tareausuario.val().estado=="completa") {
+
+                if (objCompletas[tareausuario.val().usuario]!==undefined) {
+                    objCompletas[tareausuario.val().usuario].cantTareas ++ ;
+                    }else {
+                      
+                    objCompletas[tareausuario.val().usuario] = {};
+                    objCompletas[tareausuario.val().usuario].cantTareas =1 ; 
+                    objCompletas[tareausuario.val().usuario].usuario = tareausuario.val().estado ; 
+                    objCompletas[tareausuario.val().usuario].keyusuario = usuario.key ;
+                    objCompletas[tareausuario.val().usuario].keytarea = tareausuario.key;
+                    objCompletas[tareausuario.val().usuario].fecha = tareausuario.val().fecha ;
+                  }
+                  
+                    i++;
+                    if (i==children) {
+                      resolve(objCompletas);
+                    }
+                    
+
+              }
+                              
+
+
+            });
+
+        
+          
+          
+      });
+
+      });
+
+    }).then(function (params) {
+      
+      console.log(Object.size(params));
+      for (usuario in params){
+        if (params[usuario].cantTareas === 3) {
+          reflaboratorios
+          .orderByChild('email_univalle')
+					.equalTo(usuario)
+					.once("value").then(function(laboratorios) {
+            laboratorios.forEach(function(laboratorio) {
+            //console.log(laboratorio.val().email_univalle, laboratorio.val());
+            
+             reflaboratorios.child(laboratorio.key).update({
+                estado:"activo",
+                fecha_actualizacion:params[laboratorio.val().email_univalle].fecha
+                
+
+              }, function (error) {
+                //console.log(error)
+                if (error) {
+
+                
+                } else {
+
+                }
+              }).then(function (done) {
+                              //console.log(done);
+                               //console.log(params[laboratorio.val().email_univalle]);
+              });
+
+
+
+
+              refensayos
+              .orderByChild('nombre_laboratorio')
+              .equalTo(laboratorio.val().nombre_de_laboratorio)
+              .once("value").then(function(ensayos) {
+                 ensayos.forEach(function(ensayo) {
+              //if (ensayo.val().estado  !==undefined || ensayo.val().estado  !=="inoperante") {
+                refensayos.child(ensayo.key).update({
+                  estado:"activo",
+                  fecha_actualizacion:params[laboratorio.val().email_univalle].fecha,
+                  precio_interno:0
+                  
+
+               });
+              //}
+              console.log(ensayo.val());
+            });
+
+              });
+
+             
+            });
+
+          });
+          
+          //console.log(usuario,params[usuario].cantTareas )
+        }
+      }
+    });*/
+    /*
+    reflaboratorios
+          .once("value").then(function(laboratorios) {
+            
+            laboratorios.forEach(function(laboratorio) {
+              if (laboratorio.val().estado === "inactivo" || laboratorio.val().estado  !==undefined || laboratorio.val().estado  !=="activo") {
+                console.log(laboratorio.val());
+                reflaboratorios.child(laboratorio.key).update({
+                  estado:"inoperante",
+                  fecha_actualizacion:""
+                  
+
+                });
+              }
+              
+            });
+          });
+
+        
+refensayos
+          .once("value").then(function(ensayos) {
+            
+            ensayos.forEach(function(ensayo) {
+              //if (ensayo.val().estado  !==undefined || ensayo.val().estado  !=="inoperante") {
+                console.log(ensayo.val());
+                refensayos.child(ensayo.key).update({
+                  estado:"inoperante",
+                  fecha_actualizacion:"",
+                  precio_interno:0
+                  
+
+               });
+             // }
+              
+            });
+          });
+          */
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      //envia correo
+      /*
+      $.ajax({
+              method: "POST",
+              url: "https://us-central1-develop-univalle.cloudfunctions.net/testEmail",
+              data: {
+                  para: "francisco.hurtado@geoprocess.com.co",
+                  asunto: "Prueba laboratorios sig",
+                  mensaje: "Hola Francisco, esto es una prueba de envio de Emails desde Cloud Functions de Firebase."
+                  }
+            }).done(function() {
+              console.log( "second success" );
+            })
+            .fail(function() {
+              console.log( "error" );
+            });
+
+            */
+
+
+
+
+
+
+
+  });
+  </script>
+</body>
+</html>

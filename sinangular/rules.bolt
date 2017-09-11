@@ -1,0 +1,9 @@
+path /informacion_laboratorios {
+  read() { true }
+}
+
+// All individual Posts are writable by anyone.
+path /usuarios/{id} {
+  write() { true }
+}
+
