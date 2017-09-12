@@ -1,0 +1,24 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}
+
+
+/*
+  {
+  "rules": {
+    ".read": "auth != null",
+    "gmailUsers": {
+      "$uid": {
+        ".write": "auth.token.email_verified == true && 
+                   auth.token.email.matches(/.*@gmail.com$/)"
+      }
+    }
+  }
+}
+
+
+wget -r -np https://<YOURAPPNAME>.firebaseapp.com
+*/
