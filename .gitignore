@@ -1,0 +1,43 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/angular/siadri/dist
+/angular/siadri/tmp
+/angular/siadri/out-tsc
+
+# dependencies
+/angular/siadri/node_modules
+/angular/siadri/functions/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/angular/siadri/.sass-cache
+/angular/siadri/connect.lock
+/angular/siadri/coverage
+/angular/siadri/libpeerconnection.log
+/angular/siadri/npm-debug.log
+/angular/siadri/testem.log
+/angular/siadri/typings
+
+# e2e
+/angular/siadri/e2e/*.js
+/angular/siadri/e2e/*.map
+
+# System Files
+.DS_Store
+Thumbs.db
