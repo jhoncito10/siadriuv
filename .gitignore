@@ -8,6 +8,9 @@
 # dependencies
 /angular/siadri/node_modules
 /angular/siadri/functions/node_modules
+/sinangular/node_modules
+/sinangular/functions/node_modules
+
 
 # IDEs and editors
 /.idea
