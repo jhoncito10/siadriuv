@@ -8,6 +8,12 @@
 # dependencies
 /angular/siadri/node_modules
 /angular/siadri/functions/node_modules
+/sinangular/node_modules
+/sinangular/functions/node_modules
+
+#firebase config
+/angular/siadri/.firebaserc
+/sinangular/.firebaserc
 
 # IDEs and editors
 /.idea
