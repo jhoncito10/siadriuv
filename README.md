@@ -54,9 +54,13 @@ Como parte del trabajo del equipo de desarrollo, el equipo debe adoptar una meto
 ## Terminal del sistema (Resolver problema issue)
 
 'npm celan cache'
+
 'npm init'
+
 'npm install node-sass'
+
 'npm install node-sass --no-bin-links'
+
 'npm update -g'
 
 'npm start'
