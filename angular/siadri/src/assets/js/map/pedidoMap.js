@@ -31,8 +31,12 @@
           if (isNaN(costo)) {
             costo = 0;// asigna a 0 el valor de costo si la variable costo no es un numero
           }
+<<<<<<< HEAD
 
           var datosPedido = {//genera un nuevo nodo de pedido en el nodo pedidios y asigna la key a la variable newPostKey 
+=======
+          newPostKey = firebase.database().ref("pedidos").push({//genera un nuevo nodo de pedido en el nodo pedidios y asigna la key a la variable newPostKey 
+>>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
             //datos de usuario para la solicitud
             email_solicitante: $("#email_u").val(),
             empresa: $("#empresa_u").val(),
@@ -56,8 +60,12 @@
             normas_prueba: $("#normas_prueba_e").val(),
             palabras_clave: $("#palabras_clave_e").val(),
             servicios_fuerauv: $("#servicios_fuerauv_e").val()
+<<<<<<< HEAD
           }
           newPostKey = firebase.database().ref("pedidos").push(datosPedido).then(function (done) {
+=======
+          }).then(function (done) {
+>>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
             var objEmail = {};
             objEmail.email = $("#email_u").val();
             objEmail.asunto = "Solicitud: "+$("#prueba_ensayo_e").val();
@@ -71,6 +79,7 @@
                 data: {
                   para: objEmail.email,
                   asunto: objEmail.asunto,
+<<<<<<< HEAD
                   mensaje: 'Hola, <br>  El usuario "'+datosPedido.displayname+'" ha solicitado el servicio con el nombre de : "'+datosPedido.prueba_ensayo+'" con el codigo de servicio : "'+datosPedido.cod_ensayo+'". <br> ' +
                             'Estos son los datos de contacto : <br> '+
                             'Email: '+datosPedido.email_solicitante+' <br> '+ 
@@ -93,6 +102,10 @@
                             'Normas de la prueba: '+datosPedido.normas_prueba+'<br>'
                             
                           }
+=======
+                  mensaje: "Hola Francisco, esto es una prueba de envio de Emails desde Cloud Functions de Firebase."
+                  }
+>>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
             })
             .done(function(msg) {
                 console.log("Correo Enviado: " + msg);
@@ -106,6 +119,7 @@
  
             $("#btn-enviar-pedido").removeAttr("disabled");
             $("#btn-enviar-pedido").text("Solicitar");
+<<<<<<< HEAD
             swal({
               title: "Completado",
               text: 'Datos guardados correctamente.',
@@ -122,6 +136,13 @@
               html: true,
               type: "error",
             });
+=======
+
+            alert("Datos guardados correctamente.");
+          }, function (error_prueba) {
+            console.log(error_prueba);
+            alert("Error al gaurdas los datos, verifique los campos e intentelo de nuevo.");
+>>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
 
           }).key;
 

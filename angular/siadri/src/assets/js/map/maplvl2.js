@@ -419,11 +419,16 @@ $(document).ready(function () {
                     "</div>" +
 
                     "<div class='form-group'>" +
+<<<<<<< HEAD
                     "<label class='control-label col-sm-2' for='ntelefono_lab'>Teléfono laboratorio:</label>" +
+=======
+                    "<label class='control-label col-sm-2' for='ntelefono'>Teléfono laboratorio:</label>" +
+>>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
                     "<div class='col-sm-10'>" +
                     " <input type='number' class='actualizar-datos form-control' id='ntelefono_lab' value='" + laboratorio.val().telefono_lab + "' title = 'Teléfono  de contacto' >" +
                     "</div>" +
                     "</div>" +
+<<<<<<< HEAD
                     "<div class='form-group'>" +
                     "<label class='control-label col-sm-2' for='ntelefono_ext_lab'>Extensión teléfono laboratorio:</label>" +
                     "<div class='col-sm-10'>" +
@@ -433,6 +438,11 @@ $(document).ready(function () {
 
                     "<div class='form-group'>" +
                     "<label class='control-label col-sm-2' for='ngrupoinves'>Línea de investigación:</label>" +
+=======
+
+                    "<div class='form-group'>" +
+                    "<label class='control-label col-sm-2' for='ngrupoinves'>Linea de investigacion:</label>" +
+>>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
                     "<div class='col-sm-10'>" +
                     "<input type='text' class='actualizar-datos form-control' id='ngrupoinves' value='" + laboratorio.val().grupo_de_investigacion + "' >" +
                     "</div>" +
@@ -644,6 +654,7 @@ $(document).ready(function () {
 
     });
 
+<<<<<<< HEAD
     $('#menu-nuevo-usuario').on('click', function () {// crea la lista de equipos
       $('.modal-title').text("Agrega un colaborador de laboratorio");
       $('.modal-body').html('');
@@ -694,6 +705,8 @@ $(document).ready(function () {
 
 
     });
+=======
+>>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
 
 
 
@@ -715,6 +728,10 @@ $(document).ready(function () {
         updates['/informacion_laboratorios/' + key + '/telefono/'] = $("[class='" + key + "']").find('#ntelefono').val();
         updates['/informacion_laboratorios/' + key + '/fecha_actualizacion/'] = funfecha();
         updates['/informacion_laboratorios/' + key + '/estado/'] = "activo";
+<<<<<<< HEAD
+=======
+////console.log(updates);
+>>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
 
         return firebase.database().ref().update(updates, function(error) {
           if (error) {
@@ -759,7 +776,10 @@ $(document).ready(function () {
         updates['/informacion_laboratorios/' + key + '/grupo_de_investigacion/'] = $("[class='" + key + "']").find('#ngrupoinves').val();
         updates['/informacion_laboratorios/' + key + '/email/'] = $("[class='" + key + "']").find('#notroemail').val();
         updates['/informacion_laboratorios/' + key + '/telefono_lab/'] = $("[class='" + key + "']").find('#ntelefono_lab').val();
+<<<<<<< HEAD
         updates['/informacion_laboratorios/' + key + '/telefono_ext_lab/'] = $("[class='" + key + "']").find('#ntelefono_ext_lab').val();
+=======
+>>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
         updates['/informacion_laboratorios/' + key + '/fecha_actualizacion/'] = funfecha();
         updates['/informacion_laboratorios/' + key + '/estado/'] = "activo";
 
@@ -788,6 +808,7 @@ $(document).ready(function () {
 
     });
 
+<<<<<<< HEAD
     $(document).on('click', '.btn-actualizar-colaborador', function (event) {//actualiza datos generales del laboratorio
       event.preventDefault();
       var key = $(this).attr('id');
@@ -835,6 +856,8 @@ $(document).ready(function () {
 
   });
 
+=======
+>>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
 
 
     $(document).on('click', '.btn-actualizar-ensayo', function (event) {//actualiza ensayos  de laboratorio
@@ -918,7 +941,11 @@ $(document).ready(function () {
                 normas_prueba:$('#nnormas_prueba').val(),
                 costo_prueba: costo,
                 fecha_actualizacion: funfecha(),
+<<<<<<< HEAD
                 estado: "activo"
+=======
+                estado: "inoperantes"
+>>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
             };
 
             if ($('input[name=nservicios]:checked').val()==="si") {
@@ -945,7 +972,11 @@ $(document).ready(function () {
     });
 
 
+<<<<<<< HEAD
    
+=======
+
+>>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
 
 
 
