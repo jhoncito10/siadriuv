@@ -457,10 +457,7 @@ $(document).ready(function () {
                                                 "<select class='actualizar-datos form-control' id='nrol'>"+
                                                     "<option value = 'pages/map.html'>Basico</option>"+
                                                     "<option value = 'nivel2/index.html'>Director laboratorio</option>"+
-<<<<<<< HEAD
                                                     "<option value = 'nivel2sub/index.html'>Colaborador laboratorio</option>"+
-=======
->>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
                                                     "<option value = 'pages/admon.html'>Administrador</option>"+
                                                 "</select>"+
                                             "</div>" +
@@ -642,19 +639,10 @@ $('#menu-generar-listado-estado').on('click', function (event) {// crea la lista
                
            $(".overlay").remove();
             var encodedUri = encodeURI(csvContent);
-<<<<<<< HEAD
             //document.body // Required for FF
             $("#boxtitle").html('<a href = "'+encodedUri+'" download= "my_data.csv" class="btn btn-primary pull-right" href="#" role="button"><span class="glyphicon glyphicon-download-alt " aria-hidden="true"></span> Descargar</a>');
 
             //link.click(); 
-=======
-            var link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "my_data.csv");
-            document.body.appendChild(link); // Required for FF
-
-            link.click(); 
->>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
             });
         });
 
@@ -785,18 +773,9 @@ $('#menu-generar-listado-estado').on('click', function (event) {// crea la lista
             $(".overlay").remove();
 
             var encodedUri = encodeURI(csvContent);
-<<<<<<< HEAD
             //document.body // Required for FF
             $("#boxtitle").html('<a href = "'+encodedUri+'" download= "my_data.csv" class="btn btn-primary pull-right" href="#" role="button"><span class="glyphicon glyphicon-download-alt " aria-hidden="true"></span> Descargar</a>');
 
-=======
-            var link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "my_data.csv");
-            document.body.appendChild(link); // Required for FF
-
-            link.click(); 
->>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
             });
         });
 //*************************************fin labortorios inoperantes************************ */
@@ -962,17 +941,8 @@ $('#menu-generar-listado-estado').on('click', function (event) {// crea la lista
             
 
             var encodedUri = encodeURI(csvContent);
-<<<<<<< HEAD
             //document.body // Required for FF
             $("#boxtitle").html('<a href = "'+encodedUri+'" download= "my_data.csv" class="btn btn-primary pull-right" href="#" role="button"><span class="glyphicon glyphicon-download-alt " aria-hidden="true"></span> Descargar</a>');
-=======
-            var link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "my_data.csv");
-            document.body.appendChild(link); // Required for FF
-
-            link.click(); 
->>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
 
             var refEnsayos = db.ref("/ensayos/");
 
