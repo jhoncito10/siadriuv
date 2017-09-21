@@ -50,7 +50,7 @@ Se recomienda ejecutar un **push cada vez que el desarrollador termina trabajo a
 
 Como parte del trabajo del equipo de desarrollo, el equipo debe adoptar una metodología para organizar su trabajo en el repositorio, solo el equípo de desarrollo es el responsable de administrar su trabajo en el repositorio para reducir tanto como sea posible la generación de conflictos en los cambios hechos en el repositorio al momento de realizar tareas de push o pull.
 
-------------
+------------PRUEBA! NATIVO
 
 #### Estructura del Repositorio
 
