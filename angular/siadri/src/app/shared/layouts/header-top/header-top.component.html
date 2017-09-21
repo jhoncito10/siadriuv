@@ -4,7 +4,7 @@
     <!-- mini logo for sidebar mini 50x50 pixels
       <span class="logo-mini"><b>A</b>LT</span>-->
     <!-- logo for regular state and mobile devices -->
-    <span class="logo-lg"><b>SIGE</b>lab</span>
+    <span class="logo-lg"><b>DRI</b></span>
   </a>
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top">
@@ -13,14 +13,24 @@
       </a>
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-        <!-- Notifications: style can be found in dropdown.less
-         <app-navbar-button [botones]="botones"></app-navbar-button>-->
-
+        <!-- Notifications: style can be found in dropdown.less -->
+        <li class="dropdown notifications-menu" id="login-li-button">
+          <!--<a href="#" class="login-button">-->
+          <a href="#" class="btn-interno">
+          <i class="fa fa-sign-in">Ingresar</i>
+        </a>
+        </li>
         <li class="dropdown notifications-menu">
+          <a (click)="salir()" title="Salir" id="logout">
+          <i class="fa fa-sign-out">Salir</i>
+        </a>
+        </li>
+        <li class="dropdown notifications-menu">
+
           <div class="logo-image hidden-xs">
             <a id="logo" href="http://www.univalle.edu.co/">
-              <img longdesc="http://www.seapp724.com/" class="img-responsive"  src="assets/images/logo.jpg" width="424" height="51" alt="Universidad del Valle">
-            </a>
+                        <img longdesc="http://www.seapp724.com/" class="img-responsive"  src="assets/images/logo.jpg" width="424" height="51" alt="Universidad del Valle">
+                      </a>
           </div>
         </li>
       </ul>
