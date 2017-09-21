@@ -26,10 +26,16 @@
         "../node_modules/font-awesome/css/font-awesome.min.css"
       ],
       "scripts": [
-        "../node_modules/jquery/dist/jquery.min.js",
+<<<<<<< HEAD
+        "../assets/js/jquery.min.js",
         "../node_modules/bootstrap/dist/js/bootstrap.min.js",
         "assets/js/app.js"
+=======
+        "../node_modules/jquery/dist/jquery.min.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.min.js",
+        "assets/js/app.js"   
 
+>>>>>>> 42ca7d2ea14e3cd9df2b6208a68bbe259a0cdc4a
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
