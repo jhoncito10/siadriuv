@@ -1,3 +1,6 @@
+import { PopupModule } from 'ng2-opd-popup';
+import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
@@ -20,7 +23,9 @@ import { DashboardCentralComponent } from './shared/layouts/dashboard-central/da
   ],
   imports: [
     BrowserModule,
-    LeafletModule.forRoot()
+    LeafletModule.forRoot(),
+    HttpModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
