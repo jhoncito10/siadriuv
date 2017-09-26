@@ -29,7 +29,6 @@
     "font-awesome": "^4.7.0",
     "jquery": "^2.2.4",
     "leaflet": "^1.2.0",
-    "ng2-opd-popup": "^1.1.21",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   },
