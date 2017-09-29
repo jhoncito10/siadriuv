@@ -3,9 +3,12 @@
     <a href="#"><i class="fa fa-flask"></i> <span>Convenios</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
 
-      <li><a class="menubusqueda" data-toggle="modal" data-target="#modal1" tabindex="-1" href="#" id="menu-convenios-pais"><i class="fa fa-circle-o"></i>Convenios por país</a></li>
-      <li><a class="menubusqueda" data-toggle="modal" data-target="#modal2" tabindex="-1" href="#" id="menu-busqueda-por-tipo"><i class="fa fa-circle-o"></i>Tipo de convenio</a></li>
-      <li><a class="menubusqueda" data-toggle="modal" data-target="#modal3" tabindex="-1" href="#" id="menu-busqueda-por-academia"><i class="fa fa-circle-o"></i>Por programa</a></li>
+      <li><a (click)="enviar(text1.id)" #text1 data-toggle="modal" data-target="#modal1" class='menubusqueda' tabindex="-1" href="#"
+          id="busquedaporpais"><i class="fa fa-circle-o"></i>Convenios por pais</a></li>
+      <li><a (click)="enviar(text2.id)" #text2 data-toggle="modal" data-target="#modal1" class='menubusqueda' tabindex="-1" href="#"
+          id="busquedaporconvenio"><i class="fa fa-circle-o"></i>Tipo de convenio</a></li>
+      <li><a (click)="enviar(text3.id)" #text3 data-toggle="modal" data-target="#modal1" class='menubusqueda' tabindex="-1" href="#"
+          id="busquedaporprograma"><i class="fa fa-circle-o"></i>Por programa</a></li>
 
     </ul>
   </li>
