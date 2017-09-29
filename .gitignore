@@ -11,12 +11,9 @@
 /sinangular/node_modules
 /sinangular/functions/node_modules
 
-<<<<<<< HEAD
 #firebase config
 /angular/siadri/.firebaserc
 /sinangular/.firebaserc
-=======
->>>>>>> 2408dc5c17af77cb8c2780cb84c5b1b7062be693
 
 # IDEs and editors
 /.idea

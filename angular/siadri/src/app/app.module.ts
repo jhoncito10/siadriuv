@@ -13,6 +13,7 @@ import { DashboardCentralComponent } from './shared/layouts/dashboard-central/da
 import { AgreementsComponent } from './shared/layouts/sidebar-left-components/agreements/agreements.component';
 
 import { ModalPopupComponent } from './shared/layouts/modal-popup/modal-popup.component';
+import { RightComponent } from './shared/layouts/right/right.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ModalPopupComponent } from './shared/layouts/modal-popup/modal-popup.co
     AgreementsComponent,
     DashboardMapComponent,
     DashboardCentralComponent,
-    ModalPopupComponent
+    ModalPopupComponent,
+    RightComponent
   ],
   imports: [
     BrowserModule,
