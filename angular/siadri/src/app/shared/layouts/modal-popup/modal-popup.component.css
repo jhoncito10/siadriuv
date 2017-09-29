@@ -1,14 +1,9 @@
-.modal-header
-{
-    padding:9px 15px;
-    border-bottom:1px solid #eee;
-    background-color: #d73925;
-}
+
 
 .modal.right .modal-dialog {
   position: fixed;
   margin: auto;
-  width: 320px;
+  width: auto;
   height: 100%;
   -webkit-transform: translate3d(0%, 0, 0);
       -ms-transform: translate3d(0%, 0, 0);

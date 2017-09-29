@@ -1,3 +1,4 @@
+import { ModalService } from './../servicio/modalservice';
 import { Component, OnInit } from '@angular/core';
 
 
@@ -8,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalPopupComponent implements OnInit {
 
-  constructor() { }
-
+  message = 'hola';
+  constructor(private data: ModalService) { }
   ngOnInit() {
+    this.data.currentMessage.subscribe(message => this.message = message);
   }
 
 }

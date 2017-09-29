@@ -17,8 +17,8 @@ export class DashboardMapComponent implements OnInit {
       layers: [
         L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
       ],
-      zoom: 5,
-      center: L.latLng([ 46.879966, -121.726909 ])
+      zoom: 16,
+      center: L.latLng([ 3.37501, -76.53445 ])
     };
    }
 
