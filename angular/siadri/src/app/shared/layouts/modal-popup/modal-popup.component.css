@@ -91,3 +91,9 @@ color: #fff;
 .control-sidebar.control-sidebar-open, .control-sidebar.control-sidebar-open+.control-sidebar-bg {
   right: 0;
 }
+
+.divScroll {
+  overflow:scroll;
+  height:200px;
+  /* width:100px; */
+}

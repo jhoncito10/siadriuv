@@ -26,7 +26,8 @@ export class ModalPopupComponent implements OnInit {
 
   search($event) {
     if ($event.timeStamp - this.lastKeypress > 200) {
-      const q = $event.target.value
+      // tslint:disable-next-line:prefer-const
+      let q = $event.target.value
       this.startAt.next(q)
       this.endAt.next(q + '\uf8ff')
     }

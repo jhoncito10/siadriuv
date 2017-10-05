@@ -125,24 +125,28 @@
 </div>
 <!-- ///////////////////////////PANEL RIGHT//////////////////////// -->
 
-<aside id="sidebar-right-contenido" class="control-sidebar control-sidebar-dark">
+<aside  id="sidebar-right-contenido" class="control-sidebar control-sidebar-dark">
   <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
     <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab" aria-expanded="true"><i class="fa fa-home"></i></a></li>
   </ul>
-  <div class="tab-content">
+  <div class="tab-content" >
     <div class="tab-pane active" id="control-sidebar-home-tab">
       <h3 class="control-sidebar-heading" id="titulo_resultados"></h3>
       <div id="contenedor_resultados">
         <h1>Busqueda por convenios</h1>
-        <input type="text" (keydown)="search($event)" placeholder="Convenio" class="input">
+
+        <input type="text" (keydown)="search($event)" placeholder="Convenio" class="input" style="text-transform:uppercase;" onkeyup="javascript:this.value=this.value.toUpperCase();">
+        <div class="divScroll">
         <div *ngFor="let convenio of convenios">
+
           <h1>{{convenio?.country}}</h1>
           <h4>{{convenio?.description}}</h4>
           <p>
             {{convenio?.pdf}}
           </p>
         </div>
-        <div *ngIf="convenios?.length <1">
+        </div>
+        <div *ngIf="convenios?.length < 1">
           <hr>
           <p>
             Cero resultados
