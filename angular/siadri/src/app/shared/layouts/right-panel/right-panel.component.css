@@ -1,0 +1,20 @@
+.control-sidebar-dark .nav-tabs.control-sidebar-tabs>li.active>a, .control-sidebar-dark .nav-tabs.control-sidebar-tabs>li.active>a:hover, .control-sidebar-dark .nav-tabs.control-sidebar-tabs>li.active>a:focus, .control-sidebar-dark .nav-tabs.control-sidebar-tabs>li.active>a:active {
+  background: #e81c25;
+  color: #fff;
+}
+.control-sidebar-dark .nav-tabs.control-sidebar-tabs {
+  border-bottom: #e81c25;
+}
+
+.tab-content{
+  background: #fff;
+}
+
+.control-sidebar-bg, .control-sidebar {
+   right: -30%;
+  width: 30%;
+}
+.control-sidebar.control-sidebar-open, .control-sidebar.control-sidebar-open+.control-sidebar-bg {
+  right: 0;
+}
+

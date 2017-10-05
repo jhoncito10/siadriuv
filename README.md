@@ -64,7 +64,16 @@ Como parte del trabajo del equipo de desarrollo, el equipo debe adoptar una meto
 'npm update -g'
 
 'npm start'
-------------PRUEBA! NATIVO
+
+## Como regresar aun punto en el repositorio
+git checkout (ID del commit)
+git branch -b (Nombre de rama commit) 
+
+## Mezclar la rama del punto anterior con la develop
+
+git checkout develop
+git merge (Nombre rama commit)
+git branch -d (Nombre rama commit)
 
 #### Estructura del Repositorio
 
