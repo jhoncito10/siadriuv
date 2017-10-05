@@ -5,12 +5,13 @@
 
 export const environment = {
   production: false,
-   config : {
-    apiKey: 'AIzaSyBR-ZtznvsEPR82zpJMYGBwNhSy2UYA7Ao',
-    authDomain: 'database-3e211.firebaseapp.com',
-    databaseURL: 'https://database-3e211.firebaseio.com',
-    projectId: 'database-3e211',
-    storageBucket: 'database-3e211.appspot.com',
-    messagingSenderId: '583062472848'
+
+  config : {
+    apiKey: 'AIzaSyBQVHt5ci_AE_YfFknzl22DpxbOdJ2MFbY',
+    authDomain: 'siadri-99b02.firebaseapp.com',
+    databaseURL: 'https://siadri-99b02.firebaseio.com',
+    projectId: 'siadri-99b02',
+    storageBucket: 'siadri-99b02.appspot.com',
+    messagingSenderId: '338005619047'
   }
 };
