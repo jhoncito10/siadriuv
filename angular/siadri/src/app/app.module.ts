@@ -1,4 +1,6 @@
-import { ServiceService } from './shared/layouts/modal-popup/service.service';
+import { LoginService } from './shared/services/login.service';
+import { AutocompleteService } from './shared/services/autocomplete.service';
+
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,6 +19,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import { ModalPopupComponent } from './shared/layouts/modal-popup/modal-popup.component';
 import { RightPanelComponent } from './shared/layouts/right-panel/right-panel.component';
+
 
 @NgModule({
   declarations: [
@@ -37,7 +40,7 @@ import { RightPanelComponent } from './shared/layouts/right-panel/right-panel.co
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  providers: [ServiceService],
+  providers: [AutocompleteService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

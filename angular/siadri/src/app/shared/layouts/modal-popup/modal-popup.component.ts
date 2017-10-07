@@ -1,4 +1,4 @@
-import { ServiceService } from './service.service';
+import { AutocompleteService } from './../../services/autocomplete.service';
 import { Subject } from 'rxjs/Rx';
 import { query } from '@angular/core/src/animation/dsl';
 import { any } from 'codelyzer/util/function';
@@ -17,7 +17,7 @@ export class ModalPopupComponent implements OnInit {
   startAt = new Subject()
   endAt = new Subject()
   lastKeypress = 0;
-  constructor(private servicio: ServiceService) { }
+  constructor(private servicio: AutocompleteService) { }
 
   ngOnInit() {
     this.servicio.getConvenios(this.startAt, this.endAt)
