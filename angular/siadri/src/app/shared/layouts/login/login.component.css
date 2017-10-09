@@ -1,0 +1,21 @@
+.panel-custom-l-red {
+  border-color:rgb(232,28,37);
+}
+.panel-custom-l-red > .panel-heading {
+  /* background: rgb(232,28,37); */
+  color: #0000;
+  font-weight: 800;
+
+}
+.mainbox{
+/* border-color: rgb(232,28,37); */
+
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+color: #F5EDED;
+cursor: default;
+background-color: rgb(232,28,37);
+border: 1px solid  rgb(232,28,37);
+border-bottom-color: transparent;
+font-weight: 700;
+}

@@ -93,7 +93,6 @@ color: #fff;
 }
 
 .divScroll {
-  overflow:scroll;
+  overflow: scroll;
   height:200px;
-  /* width:100px; */
-}
+  }

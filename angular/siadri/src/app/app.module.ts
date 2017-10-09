@@ -1,3 +1,4 @@
+import { RegistroService } from './shared/services/registro.service';
 import { LoginService } from './shared/services/login.service';
 import { AutocompleteService } from './shared/services/autocomplete.service';
 
@@ -19,6 +20,9 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import { ModalPopupComponent } from './shared/layouts/modal-popup/modal-popup.component';
 import { RightPanelComponent } from './shared/layouts/right-panel/right-panel.component';
+import { LoginComponent } from './shared/layouts/login/login.component';
+import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in.component';
+import { app_routing } from './app.route';
 
 
 @NgModule({
@@ -30,9 +34,13 @@ import { RightPanelComponent } from './shared/layouts/right-panel/right-panel.co
     DashboardMapComponent,
     DashboardCentralComponent,
     ModalPopupComponent,
-    RightPanelComponent
+    RightPanelComponent,
+    LoginComponent,
+    DashboardInComponent
   ],
   imports: [
+    FormsModule,
+    app_routing,
     BrowserModule,
     LeafletModule.forRoot(),
     HttpModule,
@@ -40,7 +48,7 @@ import { RightPanelComponent } from './shared/layouts/right-panel/right-panel.co
     AngularFireDatabaseModule,
     AngularFireAuthModule
   ],
-  providers: [AutocompleteService, LoginService],
+  providers: [AutocompleteService, LoginService, RegistroService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

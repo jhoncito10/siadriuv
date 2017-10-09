@@ -11,32 +11,28 @@
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <li class="dropdown notifications-menu" id="login-li-button">
-          <a href="#" class="btn-interno" data-toggle="modal" data-target="#loginmodal" >
+          <a href="#" class="btn-interno">
             <i class="fa fa-sign-in"> Ingresar</i>
            </a>
         </li>
         <li class="dropdown notifications-menu">
-          <a href="../index.html" title="Salir" id="logout">
+          <a href="../index.html" title="Salir" id="logout" (click)="logout()">
             <i class="fa fa-sign-out"> Salir</i>
           </a>
           <li class="dropdown notifications-menu">
 
-          <div class="logo-image hidden-xs">
-            <a id="logo" href="http://www.univalle.edu.co/">
+            <div class="logo-image hidden-xs">
+              <a id="logo" href="http://www.univalle.edu.co/">
                         <img longdesc="http://www.seapp724.com/" class="img-responsive"  src="assets/images/logo.jpg" width="424" height="51" alt="Universidad del Valle">
                       </a>
-          </div>
-        </li>
-        <li>
-          <a href="#" id="btn-sidebar" data-toggle="control-sidebar"><i class="fa fa-cube"></i></a>
-        </li>
+            </div>
+          </li>
+          <li>
+            <a href="#" id="btn-sidebar" data-toggle="control-sidebar"><i class="fa fa-cube"></i></a>
+          </li>
       </ul>
     </div>
     <li>
     </li>
   </nav>
 </div>
-
-
-
-

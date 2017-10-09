@@ -1,0 +1,88 @@
+<div class="container animated fadeIn">
+  <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+    <!-- menu -->
+    <ul class="nav nav-tabs ">
+      <li class="active "><a href="#">Inicio</a></li>
+      <li><a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">Registrar</a></li>
+    </ul>
+    <div class="panel panel-custom-l-red animated fadeIn">
+      <div class="panel-heading">
+        <div class="panel-title text-center">BIENVENIDOS A DRI </div>
+        <div style="float:right; font-size: 80%; position: relative; top:-10px ; font-weight : 600;"><a href="#">Olvido su contraseña?</a></div>
+      </div>
+      <div style="padding-top:30px" class="panel-body">
+        <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+        <form id="loginform" class="form-horizontal" role="form">
+          <div style="margin-bottom: 25px" class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input [(ngModel)]="dataAuten.email" id="login-username" type="text" class="form-control" name="username" value="" placeholder="username or email">
+          </div>
+          <div style="margin-bottom: 25px" class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input [(ngModel)]="dataAuten.pass" id="login-password" type="password" class="form-control" name="password" placeholder="password">
+          </div>
+          <div class="input-group">
+            <div class="checkbox">
+              <label>
+                                        <input id="login-remember" type="checkbox" name="remember" value="1"> Recordarme
+                                      </label>
+            </div>
+          </div>
+          <div style="margin-top:10px" class="form-group">
+            <!-- Button -->
+            <div class="col-sm-12 controls">
+              <a (click)="ingresar()" id="btn-login" href="#" class="btn btn-success">Entrar </a>
+              <button (click)="ingresar('google')" type="button" class="btn btn-default"><span ><i class="fa fa-google-plus" ></i></span></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Registro de usuarios    -->
+  <div id="signupbox" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 animate fadeIn">
+    <ul class="nav nav-tabs">
+      <li><a href="#" onclick="$('#signupbox').hide(); $('#loginbox').show()">Inicio</a></li>
+      <li class="active"><a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">Registrar</a></li>
+    </ul>
+    <div class="panel panel-custom-l-red animated fadeIn">
+      <div class="panel-heading">
+        <div class="panel-title text-center">Registro de Usuario </div>
+      </div>
+      <div class="panel-body">
+        <form id="signupform" class="form-horizontal" role="form">
+
+          <div id="signupalert" style="display:none" class="alert alert-danger">
+            <p>Error:</p>
+            <span></span>
+          </div>
+          <div class="form-group">
+            <label for="firstname" class="col-md-3 control-label">Email</label>
+            <div class="col-md-9">
+              <input [(ngModel)]="dataRes.email" type="text" class="form-control" name="email" placeholder="Email">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="lastname" class="col-md-3 control-label">Contraseña</label>
+            <div class="col-md-9">
+              <input [(ngModel)]="dataRes.pass" type="password" class="form-control" name="lastname" placeholder="contraseña">
+            </div>
+          </div>
+          <p class="text-center">Ingrese de nuevo su contraseña</p>
+          <div class="form-group">
+            <label for="password" class="col-md-3 control-label">Contraseña</label>
+            <div class="col-md-9">
+              <input [(ngModel)]="dataRes.passconfirm" type="password" class="form-control" name="passwd" placeholder="contraseña">
+            </div>
+          </div>
+          <div class="form-group">
+            <!-- Button -->
+            <div class="col-md-offset-3 col-md-9">
+              <button (click)="registrar()" id="btn-signup" type="button" class="btn btn-success"><i class="icon-hand-right"></i>Registrarse</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

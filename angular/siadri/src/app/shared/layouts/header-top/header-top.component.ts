@@ -1,6 +1,5 @@
 import { LoginService } from './../../services/login.service';
 import { error } from 'util';
-
 import { Component, OnInit } from '@angular/core';
 
 
@@ -10,20 +9,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header-top.component.css']
 })
 export class HeaderTopComponent {
-
-  constructor(private acceso: LoginService) {
-
+  constructor() {
   }
-  login() {
-    this.acceso.login()
-    .then((data) => {
-      console.log(data);
-      alert('Acceso');
-    })
-    .catch((error) => {
-      console.log(error);
-      alert('Error, Verifique datos');
-    })
+  logout () {
   }
-
 }
