@@ -24,7 +24,6 @@ import { LoginComponent } from './shared/layouts/login/login.component';
 import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in.component';
 import { app_routing } from './app.route';
 
-
 @NgModule({
   declarations: [
     AppComponent,

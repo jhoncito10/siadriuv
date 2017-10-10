@@ -12,10 +12,12 @@ export class RegistroService {
           let promise = new Promise((resolve, reject) => {
             this.afAuth.auth.createUserWithEmailAndPassword(email, pass).then(
               () => {
-                console.log('usuario anonimo creado');
+                console.log('Usuario creado');
+                alert('Registrado exitosamente');
                 resolve();
             }).catch(function(error){
                 console.log(error.message);
+                alert('Clave o usuario invalido')
             });
           });
          return promise;

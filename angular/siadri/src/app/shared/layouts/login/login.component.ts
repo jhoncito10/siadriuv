@@ -1,3 +1,4 @@
+import { error } from 'util';
 import { RegistroService } from './../../services/registro.service';
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
@@ -22,17 +23,19 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 /* INICIO SESION */
-  ingresar(proveedor?: string) {
+ingresar(proveedor?: string) {
     if (proveedor === 'google') {
       this.login.login();
     } else {
-      this.login.loginEmail( this.dataAuten.email, this.dataAuten.pass);
+     return this.login.loginEmail( this.dataAuten.email, this.dataAuten.pass);
 }
 }
 /* REGISTRO USUARIO */
 registrar() {
           if (this.dataRes.pass === this.dataRes.passconfirm) {
             this.rs.createUser( this.dataRes.email, this.dataRes.pass).then(() => { console.log('Usuario creado'); });
-          } else { console.log('la contraseña no coincide '); }
+          } else { console.log(error);
+          alert ('No coincide la contrasena');
+          }
        }
 }

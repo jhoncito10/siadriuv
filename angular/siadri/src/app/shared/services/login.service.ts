@@ -1,3 +1,4 @@
+import { error } from 'util';
 import { Router } from '@angular/router';
 import { Component, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -12,7 +13,7 @@ export class LoginService {
       if (localStorage.getItem('usuario')) {
         this.usuario = JSON.parse(localStorage.getItem('usuario'));
       }else {
-        this.ruta.navigate(['']);
+        this.ruta.navigate(['login']);
       }
     }
     login() {
@@ -35,12 +36,18 @@ export class LoginService {
             let promise = new Promise((resolve, reject) => {
               this.afAuth.auth.signInWithEmailAndPassword(email, pass)
               .then(data => {
-                console.log('login');
+                console.log(data);
+                alert('Loggeado exitosamente');
                 this.usuario = data;
                 localStorage.setItem('usuario', JSON.stringify(data));
                 this.ruta.navigate(['/dash']);
                 resolve();
-              });
+              })
+              .catch((error) => {
+                console.log(error);
+                alert('Clave o usuario invalido');
+              })
+              ;
             });
    }
     logout() {
