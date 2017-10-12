@@ -34,4 +34,8 @@ export class ModalPopupComponent implements OnInit {
     }
     this.lastKeypress = $event.timeStamp
   }
+  mostrar(item: any) {
+    console.log(item)
+    /* this.convenios = null; */
+  }
 }

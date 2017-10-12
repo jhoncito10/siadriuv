@@ -123,7 +123,7 @@
         <input type="text" size="35" (keydown)="search($event)" placeholder=" Busqueda" class="input" style="text-transform:uppercase;"
           onkeyup="javascript:this.value=this.value.toUpperCase();">
         <div class="divScroll">
-          <div *ngFor="let convenio of convenios">
+          <div class="sombra" (click)="mostrar(convenio)" *ngFor="let convenio of convenios">
 
             <h1>{{convenio?.country}}</h1>
             <h4>{{convenio?.description}}</h4>

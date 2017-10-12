@@ -1,7 +1,9 @@
+import { RouterModule } from '@angular/router';
+
 import { RegistroService } from './shared/services/registro.service';
 import { LoginService } from './shared/services/login.service';
 import { AutocompleteService } from './shared/services/autocomplete.service';
-nofound
+
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
@@ -22,7 +24,7 @@ import { ModalPopupComponent } from './shared/layouts/modal-popup/modal-popup.co
 import { RightPanelComponent } from './shared/layouts/right-panel/right-panel.component';
 import { LoginComponent } from './shared/layouts/login/login.component';
 import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in.component';
-import { app_routing } from './app.route';
+/* import { app_routing } from './app.route'; */
 
 @NgModule({
   declarations: [
@@ -39,13 +41,26 @@ import { app_routing } from './app.route';
   ],
   imports: [
     FormsModule,
-    app_routing,
+   /*  app_routing, */
     BrowserModule,
     LeafletModule.forRoot(),
     HttpModule,
     AngularFireModule.initializeApp(environment.config),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    RouterModule.forRoot([
+      {
+      path: 'login',
+      component: LoginComponent
+      },
+      {
+      path: 'dashin',
+      component: DashboardInComponent
+      },
+      { path: '**',
+       component: LoginComponent
+      },
+    ])
   ],
   providers: [AutocompleteService, LoginService, RegistroService],
   bootstrap: [AppComponent]

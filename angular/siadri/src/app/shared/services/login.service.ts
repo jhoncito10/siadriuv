@@ -26,7 +26,7 @@ export class LoginService {
           this.usuario = resp.user;
           console.log(this.usuario.uid);
           localStorage.setItem('usuario', JSON.stringify(this.usuario));
-           this.ruta.navigate(['/dash']);
+           this.ruta.navigate(['/dashin']);
           resolve();
         });
       });
@@ -40,7 +40,7 @@ export class LoginService {
                 alert('Loggeado exitosamente');
                 this.usuario = data;
                 localStorage.setItem('usuario', JSON.stringify(data));
-                this.ruta.navigate(['/dash']);
+                this.ruta.navigate(['/dashin']);
                 resolve();
               })
               .catch((error) => {
