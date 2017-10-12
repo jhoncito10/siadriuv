@@ -1,6 +1,5 @@
 import { AutocompleteService } from './../../services/autocomplete.service';
 import { Subject } from 'rxjs/Rx';
-import { query } from '@angular/core/src/animation/dsl';
 import { any } from 'codelyzer/util/function';
 import { FirebaseListObservable, AngularFireDatabase } from 'angularfire2/database';
 import { Component, OnInit } from '@angular/core';
@@ -17,11 +16,13 @@ export class ModalPopupComponent implements OnInit {
   startAt = new Subject()
   endAt = new Subject()
   lastKeypress = 0;
+
   constructor(private servicio: AutocompleteService) { }
 
   ngOnInit() {
     this.servicio.getConvenios(this.startAt, this.endAt)
-                  .subscribe(convenios => this.convenios = convenios)
+                  .subscribe(convenios => {this.convenios = convenios;
+                  console.log(this.convenios)} );
   }
 
   search($event) {

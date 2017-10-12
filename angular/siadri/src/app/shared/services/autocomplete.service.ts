@@ -6,6 +6,7 @@ export class AutocompleteService {
 
   constructor(private af: AngularFireDatabase) {}
   getConvenios(start, end): FirebaseListObservable<any> {
+    console.log('PRUEBA')
     return this.af.list('/convenios', {
       query: {
         orderByChild: 'country',

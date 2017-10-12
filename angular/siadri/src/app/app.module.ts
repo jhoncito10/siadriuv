@@ -1,7 +1,7 @@
 import { RegistroService } from './shared/services/registro.service';
 import { LoginService } from './shared/services/login.service';
 import { AutocompleteService } from './shared/services/autocomplete.service';
-
+nofound
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';

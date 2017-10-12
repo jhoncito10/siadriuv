@@ -5,6 +5,7 @@ import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
+
   { path: 'login', component: LoginComponent },
   { path: 'dash', component: DashboardInComponent,
   children:
