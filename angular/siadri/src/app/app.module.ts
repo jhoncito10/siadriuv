@@ -57,8 +57,9 @@ import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in
       path: 'dashin',
       component: DashboardInComponent
       },
-      { path: '**',
-       component: LoginComponent
+      {
+      path: '**',
+      component: LoginComponent
       },
     ])
   ],

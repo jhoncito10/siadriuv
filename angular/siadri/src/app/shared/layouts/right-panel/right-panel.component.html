@@ -7,6 +7,26 @@
     <div class="tab-pane active" id="control-sidebar-home-tab">
       <h3 class="control-sidebar-heading" id="titulo_resultados"></h3>
       <div id="contenedor_resultados"></div>
+      <div id="contenedor_resultados">
+        <input type="text" size="35" (keydown)="search($event)" placeholder=" Busqueda" class="input" style="text-transform:uppercase;"
+          onkeyup="javascript:this.value=this.value.toUpperCase();">
+        <div class="divScroll">
+          <div class="sombra" (click)="mostrar(convenio)" *ngFor="let convenio of convenios">
+
+            <h1>{{convenio?.country}}</h1>
+            <h4>{{convenio?.description}}</h4>
+            <p>
+              {{convenio?.pdf}}
+            </p>
+          </div>
+        </div>
+        <div *ngIf="convenios?.length < 1">
+          <hr>
+          <p>
+            DRI Univalle
+          </p>
+        </div>
+      </div>
     </div>
     <div class="tab-pane" id="control-sidebar-settings-tab">
     </div>

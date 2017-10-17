@@ -12,30 +12,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalPopupComponent implements OnInit {
 
-  convenios;
-  startAt = new Subject()
-  endAt = new Subject()
-  lastKeypress = 0;
+  constructor() { }
 
-  constructor(private servicio: AutocompleteService) { }
-
-  ngOnInit() {
-    this.servicio.getConvenios(this.startAt, this.endAt)
-                  .subscribe(convenios => {this.convenios = convenios;
-                  console.log(this.convenios)} );
-  }
-
-  search($event) {
-    if ($event.timeStamp - this.lastKeypress > 200) {
-      // tslint:disable-next-line:prefer-const
-      let q = $event.target.value
-      this.startAt.next(q)
-      this.endAt.next(q + '\uf8ff')
+    ngOnInit() {
     }
-    this.lastKeypress = $event.timeStamp
+
   }
-  mostrar(item: any) {
-    console.log(item)
-    /* this.convenios = null; */
-  }
-}
