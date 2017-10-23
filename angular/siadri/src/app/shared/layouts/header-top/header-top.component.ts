@@ -1,3 +1,4 @@
+import { LoginComponent } from './../login/login.component';
 import { LoginService } from './../../services/login.service';
 import { error } from 'util';
 import { Component, OnInit } from '@angular/core';
@@ -9,8 +10,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header-top.component.css']
 })
 export class HeaderTopComponent {
-  constructor() {
+  constructor(private ls: LoginService ) {
   }
   logout () {
+   this.ls.logout();
   }
 }

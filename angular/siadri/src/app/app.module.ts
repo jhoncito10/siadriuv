@@ -1,5 +1,6 @@
+import { PublicGuard } from './shared/services/public.guard';
+import { AuthGuard } from './shared/services/auth.guard';
 import { RouterModule } from '@angular/router';
-
 import { RegistroService } from './shared/services/registro.service';
 import { LoginService } from './shared/services/login.service';
 import { AutocompleteService } from './shared/services/autocomplete.service';
@@ -51,19 +52,25 @@ import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in
     RouterModule.forRoot([
       {
       path: 'login',
-      component: LoginComponent
+      component: LoginComponent, canActivate : [PublicGuard]
       },
       {
       path: 'dashin',
-      component: DashboardInComponent
+      component: DashboardInComponent, canActivate : [AuthGuard]
       },
       {
       path: '**',
-      component: LoginComponent
+      component: LoginComponent, canActivate : [PublicGuard]
       },
     ])
   ],
-  providers: [AutocompleteService, LoginService, RegistroService],
+  providers: [
+      AutocompleteService,
+      LoginService,
+      RegistroService,
+      PublicGuard,
+      AuthGuard
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
