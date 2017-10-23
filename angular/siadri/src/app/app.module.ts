@@ -1,3 +1,4 @@
+import { app_routing } from './app.route';
 import { PublicGuard } from './shared/services/public.guard';
 import { AuthGuard } from './shared/services/auth.guard';
 import { RouterModule } from '@angular/router';
@@ -25,7 +26,7 @@ import { ModalPopupComponent } from './shared/layouts/modal-popup/modal-popup.co
 import { RightPanelComponent } from './shared/layouts/right-panel/right-panel.component';
 import { LoginComponent } from './shared/layouts/login/login.component';
 import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in.component';
-/* import { app_routing } from './app.route'; */
+
 
 @NgModule({
   declarations: [
@@ -41,28 +42,28 @@ import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in
     DashboardInComponent
   ],
   imports: [
+    app_routing,
     FormsModule,
-   /*  app_routing, */
     BrowserModule,
     LeafletModule.forRoot(),
     HttpModule,
     AngularFireModule.initializeApp(environment.config),
     AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    RouterModule.forRoot([
-      {
-      path: 'login',
-      component: LoginComponent, canActivate : [PublicGuard]
-      },
-      {
-      path: 'dashin',
-      component: DashboardInComponent, canActivate : [AuthGuard]
-      },
-      {
-      path: '**',
-      component: LoginComponent, canActivate : [PublicGuard]
-      },
-    ])
+    AngularFireAuthModule
+    // RouterModule.forRoot([
+    //   {
+    //   path: 'login',
+    //   component: LoginComponent, canActivate : [PublicGuard]
+    //   },
+    //   {
+    //   path: 'dashin',
+    //   component: DashboardInComponent, canActivate : [AuthGuard]
+    //   },
+    //   {
+    //   path: '**',
+    //   component: LoginComponent, canActivate : [PublicGuard]
+    //   },
+    // ])
   ],
   providers: [
       AutocompleteService,
