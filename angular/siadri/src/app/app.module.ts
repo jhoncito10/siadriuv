@@ -1,3 +1,4 @@
+import { LeaftletmapService } from './shared/layouts/dashboard-map/leaftletmap.service';
 import { app_routing } from './app.route';
 import { PublicGuard } from './shared/services/public.guard';
 import { AuthGuard } from './shared/services/auth.guard';
@@ -70,7 +71,8 @@ import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in
       LoginService,
       RegistroService,
       PublicGuard,
-      AuthGuard
+      AuthGuard,
+      LeaftletmapService
     ],
   bootstrap: [AppComponent]
 })
