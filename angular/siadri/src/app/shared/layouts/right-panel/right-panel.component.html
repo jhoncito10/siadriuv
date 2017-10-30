@@ -1,30 +1,41 @@
 
 <aside id="sidebar-right-contenido" class="control-sidebar control-sidebar-dark">
   <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-    <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab" aria-expanded="true"><i class="fa fa-home"></i></a></li>
+    <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab" aria-expanded="true"></a></li>
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="control-sidebar-home-tab">
-      <h3 class="control-sidebar-heading" id="titulo_resultados"></h3>
-      <div id="contenedor_resultados"></div>
+     <br/>
       <div id="contenedor_resultados">
-        <input type="text" size="35" (keydown)="search($event)" placeholder=" Busqueda" class="input" style="text-transform:uppercase;"
+        <input type="text" size="80" (keydown)="search($event)" class="input" style="text-transform:uppercase;"
           onkeyup="javascript:this.value=this.value.toUpperCase();">
-        <div class="divScroll">
+        <div class="divScroll" >
           <div class="sombra" (click)="mostrar(convenio)" *ngFor="let convenio of convenios">
+            <br/>
 
-            <h1>{{convenio?.country}}</h1>
-            <h4>{{convenio?.description}}</h4>
+            <div class="box box-widget widget-user-2">
+              <div class="widget-user-header bg-yellow">
+               <h3>{{convenio?.country}}</h3>
+                <h5>{{convenio?.institution}}</h5>
+               </div>
+               <div class="box-footer no-padding">
+                  <ul class="nav nav-stacked">
+                    <li>{{convenio?.description}}</li>
+                    <li><a href={{convenio?.pdf}}
+                        target="_blank">Documentacion <span class="pull-right badge bg-aqua">PDF</span></a></li>
+                    <li><a href={{convenio?.web}} target="_blank">Site <span class="pull-right badge bg-green">web</span></a></li>
+                    <li>Tipo: {{convenio?.type}} </li>
+                    <li>Expira: {{convenio?.expires}} </li>
+                  </ul>
+                </div>
+            </div>
+          </div>
+          <div *ngIf="convenios?.length < 1">
+            <hr>
             <p>
-              {{convenio?.pdf}}
+              DRI Univalle
             </p>
           </div>
-        </div>
-        <div *ngIf="convenios?.length < 1">
-          <hr>
-          <p>
-            DRI Univalle
-          </p>
         </div>
       </div>
     </div>
@@ -32,3 +43,28 @@
     </div>
   </div>
 </aside>
+
+
+<!-- <div class="tab-content">
+    <div class="tab-pane active" id="control-sidebar-home-tab">
+      <h3 class="control-sidebar-heading" id="titulo_resultados"></h3>
+      <div id="contenedor_resultados"><div class="box box-widget widget-user-2">
+          <div class="widget-user-header bg-yellow">
+            
+            <h3 class="widget-user-username">Universidad Experimental Libertador de la República Bolivariana de Venezuela</h3>
+            <h5 class="widget-user-desc">Pais: VENEZUELA</h5>
+          </div>
+          <div class="box-footer no-padding">
+            <ul class="nav nav-stacked">
+              <li>Descripcion: Mantener, profundizar y desarrollar actividades académicas, científicas y técnicas conjuntas que posibiliten el intercambio de conocimientos y la ayuda mutua en el desarrollo institucional de la educación superior.</li>
+              <li><a href="https://drive.google.com/a/correounivalle.edu.co/file/d/0B0NpPf9M-neIVTJuU0xBenpEUm8/view?usp=sharing" target="_blank">Documentacion <span class="pull-right badge bg-aqua">PDF</span></a></li>
+              <li><a href="http://www.upel.edu.ve/index.php/lineamientos" target="_blank">Site <span class="pull-right badge bg-green">web</span></a></li>
+              <li>Tipo: Cooperación </li>
+              <li>Expira: No disponible </li>
+            </ul>
+          </div>
+        </div></div>
+    </div>
+    <div class="tab-pane" id="control-sidebar-settings-tab">
+          </div>
+  </div> -->
