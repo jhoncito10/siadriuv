@@ -50,7 +50,7 @@ export class LoginService {
               ;
             });
    }
-    logout() {
+   logout() {
       localStorage.removeItem('usuario');
       this.usuario = null ;
       this.afAuth.auth.signOut();
