@@ -45,19 +45,19 @@ export class ModalPopupComponent implements OnInit {
 
     
   busquedas(message){
-  ModalPopupComponent.conveniostatic = this.busqueda.getConvenio();
- console.log(ModalPopupComponent.conveniostatic);
-     if(message=='Tipo Convenio'){
-       var noduplicadosTipoConvenio = this.removeDuplicates(ModalPopupComponent.conveniostatic,"type");     
-       this.options.data = noduplicadosTipoConvenio;
-       this.options.getValue="type";
-       this.options.list.onClickEvent = function(){ModalPopupComponent.busquedaPorTipo();};
-       ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#inputBusqueda'),this.options);
-       ModalPopupComponent.easybusqueda.init();
+    ModalPopupComponent.conveniostatic = this.busqueda.getConvenio();
+    console.log(ModalPopupComponent.conveniostatic);
+      if(message=='Tipo Convenio'){
+        var noduplicadosTipoConvenio = this.removeDuplicates(ModalPopupComponent.conveniostatic,"type");     
+        this.options.data = noduplicadosTipoConvenio;
+        this.options.getValue="type";
+        this.options.list.onClickEvent = function(){ModalPopupComponent.busquedaPorTipo();};
+        ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#inputBusqueda'),this.options);
+        ModalPopupComponent.easybusqueda.init();
 
-     }else if(message=='Academia'){
-       console.log('academia');
-     }
+      }else if(message=='Academia'){
+        console.log('');
+      }
     
    }
 

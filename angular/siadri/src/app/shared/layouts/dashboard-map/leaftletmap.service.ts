@@ -106,7 +106,8 @@ export class LeaftletmapService {
       for (var index = 0; index < world.features.length; index++) {
         var element = world.features[index]; 
         var latlngs = element.geometry.coordinates;
-        var polygon = L.polygon(latlngs, {color: 'red', label:element.properties.name});
+        var polygon = L.polygon(latlngs, {color: '#DF7977', label:element.properties.name});
+        polygon.bindPopup(element.properties.name);
         poligons.push(polygon);
         polygon.on('click', function(e){
           var layer = e.target;
@@ -117,7 +118,7 @@ export class LeaftletmapService {
             if(poligons[i] != e.target){
               var layer = poligons[i];
               layer.setStyle({
-                  color: 'red'
+                  color: '#DF7977'
               });
             }
             
