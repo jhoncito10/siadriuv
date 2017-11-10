@@ -1,3 +1,5 @@
+import { BuscadorService } from './shared/layouts/modal-popup/buscador.service';
+import { ModalService } from './shared/modal.service';
 import { LeaftletmapService } from './shared/layouts/dashboard-map/leaftletmap.service';
 import { app_routing } from './app.route';
 import { PublicGuard } from './shared/services/public.guard';
@@ -24,7 +26,6 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import { ModalPopupComponent } from './shared/layouts/modal-popup/modal-popup.component';
-import { RightPanelComponent } from './shared/layouts/right-panel/right-panel.component';
 import { LoginComponent } from './shared/layouts/login/login.component';
 import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in.component';
 
@@ -38,7 +39,6 @@ import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in
     DashboardMapComponent,
     DashboardCentralComponent,
     ModalPopupComponent,
-    RightPanelComponent,
     LoginComponent,
     DashboardInComponent
   ],
@@ -72,7 +72,10 @@ import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in
       RegistroService,
       PublicGuard,
       AuthGuard,
-      LeaftletmapService
+      LeaftletmapService,
+      ModalService,
+      BuscadorService,
+      DashboardMapComponent
     ],
   bootstrap: [AppComponent]
 })

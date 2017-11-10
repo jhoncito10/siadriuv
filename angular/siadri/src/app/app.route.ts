@@ -1,6 +1,5 @@
 import { AuthGuard } from './shared/services/auth.guard';
 import { PublicGuard } from './shared/services/public.guard';
-import { RightPanelComponent } from './shared/layouts/right-panel/right-panel.component';
 import { Component } from '@angular/core';
 import { LoginComponent } from './shared/layouts/login/login.component';
 import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in.component';
