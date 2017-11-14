@@ -12,10 +12,9 @@ export class LoginService {
   constructor(public afAuth: AngularFireAuth, public ruta: Router) {
       if (localStorage.getItem('usuario')) {
         this.usuario = JSON.parse(localStorage.getItem('usuario'));
-      }else {
-        this.ruta.navigate(['login']);
       }
     }
+
     login() {
       // tslint:disable-next-line:prefer-const
       let promise = new Promise((resolve, reject) => {
@@ -26,10 +25,11 @@ export class LoginService {
           this.usuario = resp.user;
           console.log(this.usuario.uid);
           localStorage.setItem('usuario', JSON.stringify(this.usuario));
-           this.ruta.navigate(['/dashin']);
+           this.ruta.navigate(['/dash']);
           resolve();
         });
       });
+      return promise;
       }
       loginEmail(email: string, pass: string) {
             // tslint:disable-next-line:prefer-const
@@ -40,21 +40,22 @@ export class LoginService {
                 alert('Loggeado exitosamente');
                 this.usuario = data;
                 localStorage.setItem('usuario', JSON.stringify(data));
-                this.ruta.navigate(['/dashin']);
+                this.ruta.navigate(['/dash']);
                 resolve();
               })
-              .catch((error) => {
+              .catch(() => {
                 console.log(error);
                 alert('Clave o usuario invalido');
               })
               ;
             });
+            return promise;
    }
    logout() {
       localStorage.removeItem('usuario');
       this.usuario = null ;
       this.afAuth.auth.signOut();
-      this.ruta.navigate(['login']);
+      this.ruta.navigate(['/login']);
       }
   }
 

@@ -1,3 +1,4 @@
+import { DashboardMapComponent } from './shared/layouts/dashboard-map/dashboard-map.component';
 import { AuthGuard } from './shared/services/auth.guard';
 import { PublicGuard } from './shared/services/public.guard';
 import { Component } from '@angular/core';
@@ -7,12 +8,13 @@ import { Routes, RouterModule } from '@angular/router';
 
  const routes: Routes = [
 
-  { path: 'login', component: LoginComponent, canActivate : [PublicGuard] },
-  { path: 'dashin', component: DashboardInComponent, canActivate : [AuthGuard]},
-  {
-      path: '**',
-      component: LoginComponent, canActivate : [PublicGuard]
-     },
+  { path: 'login', component: LoginComponent },
+  { path: 'dash', component: DashboardInComponent,
+   children : [
+    { path: 'mapa', component: DashboardMapComponent},
+    { path: '', pathMatch: 'full', redirectTo: 'mapa'}
+    ]},
+     { path: '', pathMatch: 'full', redirectTo: 'dash'}
 ];
 export const app_routing = RouterModule.forRoot(routes, { useHash: true });
 

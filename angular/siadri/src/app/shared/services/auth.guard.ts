@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
       if (this.ls.usuario ) {
         return true;
     } else {
-     this.ruta.navigate(['login']);
+
               return false;
     }
   }
