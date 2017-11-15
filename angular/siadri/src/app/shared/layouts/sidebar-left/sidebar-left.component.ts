@@ -6,8 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar-left.component.css']
 })
 export class SidebarLeftComponent implements OnInit {
-
-  constructor() { }
+  datosUser: any;
+  constructor() {
+    if (localStorage.getItem('usuario')) {
+      this.datosUser = JSON.parse(localStorage.getItem('usuario'));
+    }
+     }
 
   ngOnInit() {
   }

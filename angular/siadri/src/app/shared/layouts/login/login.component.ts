@@ -2,12 +2,13 @@ import { error } from 'util';
 import { RegistroService } from './../../services/registro.service';
 import { LoginService } from './../../services/login.service';
 import { Component, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+
 })
 export class LoginComponent implements OnInit {
   dataAuten = {
@@ -19,17 +20,26 @@ export class LoginComponent implements OnInit {
     pass: null,
     passconfirm: null
   };
-  constructor(public login: LoginService, public rs: RegistroService) { }
+  constructor(public _ls: LoginService, public rs: RegistroService,
+              private ruta: Router                                   ) { }
   ngOnInit() {
   }
 /* INICIO SESION */
 ingresar(proveedor?: string) {
-    if (proveedor === 'google') {
-      this.login.login();
-    } else {
-     return this.login.loginEmail( this.dataAuten.email, this.dataAuten.pass);
-}
-}
+  if (proveedor === 'google') {
+
+    this._ls.login().then(() => {
+      this.ruta.navigate(['dash']);
+   });
+
+  } else {
+
+    this._ls.loginEmail( this.dataAuten.email, this.dataAuten.pass).then(() => {
+       this.ruta.navigate(['dash']);
+    });
+
+  }
+  }
 /* REGISTRO USUARIO */
 registrar() {
           if (this.dataRes.pass === this.dataRes.passconfirm) {

@@ -66,8 +66,10 @@ Como parte del trabajo del equipo de desarrollo, el equipo debe adoptar una meto
 'npm start'
 
 ## Como regresar aun punto en el repositorio
+git reset --hard
+
 git checkout (ID del commit)
-git branch -b (Nombre de rama commit) 
+git checkout -b (Nombre de rama commit) 
 
 ## Mezclar la rama del punto anterior con la develop
 

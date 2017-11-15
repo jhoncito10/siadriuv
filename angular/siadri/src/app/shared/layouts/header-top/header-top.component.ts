@@ -10,7 +10,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header-top.component.css']
 })
 export class HeaderTopComponent {
+  session = false;
   constructor(private ls: LoginService ) {
+    if (this.ls.usuario) {
+      this.session = true;
+    }
   }
   logout () {
    this.ls.logout();
