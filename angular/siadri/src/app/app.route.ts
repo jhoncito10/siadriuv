@@ -1,3 +1,5 @@
+import { DashboardCentralComponent } from './shared/layouts/dashboard-central/dashboard-central.component';
+import { DashNivel2Component } from './shared/layouts/dash-nivel2/dash-nivel2.component';
 import { DashboardMapComponent } from './shared/layouts/dashboard-map/dashboard-map.component';
 import { AuthGuard } from './shared/services/auth.guard';
 import { PublicGuard } from './shared/services/public.guard';
@@ -11,7 +13,8 @@ import { Routes, RouterModule } from '@angular/router';
   { path: 'login', component: LoginComponent },
   { path: 'dash', component: DashboardInComponent,
    children : [
-    { path: 'mapa', component: DashboardMapComponent},
+    { path: 'mapa', component: DashboardCentralComponent},
+    { path: 'dashnivel2', component: DashNivel2Component},
     { path: '', pathMatch: 'full', redirectTo: 'mapa'}
     ]},
      { path: '', pathMatch: 'full', redirectTo: 'dash'}
