@@ -13,7 +13,7 @@ import { Routes, RouterModule } from '@angular/router';
   { path: 'login', component: LoginComponent },
   { path: 'dash', component: DashboardInComponent,
    children : [
-    { path: 'mapa', component: DashboardCentralComponent},
+    { path: 'mapa', component: DashboardMapComponent},
     { path: 'dashnivel2', component: DashNivel2Component},
     { path: '', pathMatch: 'full', redirectTo: 'mapa'}
     ]},

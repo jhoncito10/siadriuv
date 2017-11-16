@@ -1,5 +1,6 @@
 import { ModalService } from './../../../modal.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agreements',
@@ -8,12 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AgreementsComponent implements OnInit {
 
-  constructor(private data:ModalService) { }
+  constructor(private data:ModalService, private ruta: Router) { }
 
   ngOnInit() {
   }
 
   enviar (id: any) {
+    this.ruta.navigate(['/dash/mapa']);
     let valor: string;
    if (id === 'menu-busqueda-por-tipo') {
         valor = 'Tipo Convenio';
