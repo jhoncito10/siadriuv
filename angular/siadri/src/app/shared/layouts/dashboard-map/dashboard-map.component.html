@@ -1,78 +1,79 @@
 
-          <!-- Map box -->
-          <div class="box box-solid ">
-            <div id="content-box" class="box box-danger">
-              <div class="box-header with-border">
-                <h3 class="box-title">Mapa</h3>
-
-                <div class="box-tools pull-right">
-                  <button id="buton1" type="button" class="btn btn-box-tool" data-widget="collapse">
-                    <i class="fa fa-minus"></i>
-                  </button>
-                </div>
-              </div>
-              <div id="div1" class="box-body">
-                <div id="map"></div>
-              </div>
-            </div>
-            </div>
-            <div class="box box-solid ">
-                <div id="content-box2" class="box box-danger">
-                  <div class="box-header with-border">
-                    <h3 class="box-title">Informacion</h3>
-    
-                    <div class="box-tools pull-right">
-                      <button id="buton2" type="button" class="btn btn-box-tool" data-widget="collapse">
-                        <i class="fa fa-minus"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="divScroll" >
-                  <div id="div2" class="box-body">
-                      <div  *ngFor="let item of this.convenios | async" class="box box-widget widget-user">
-                          <!-- Add the bg color to the header using any of the bg-* classes -->
-                          <div class="widget-user-header bg-red" style="background: red;">
-                            <h2 class="widget-user-username">{{item.country}}</h2>
-                            <h4 class="widget-user-desc">{{item.description}}</h4>
-                          </div>
-                          <div class="box-footer">
-                            <div class="row">
-                              <div class="col-sm-4 border-right">
-                                <div class="description-block">
-                                  <h5 class="description-header">{{item.institution}}</h5>
-                                  <span class="description-text"></span>
-                                </div>
-                                <!-- /.description-block -->
-                              </div>
-                              <!-- /.col -->
-                              <div class="col-sm-4 border-right">
-                                <div class="box-footer no-padding">
-                                    <ul class="nav nav-stacked">
-                                      <li><a href={{item?.pdf}}
-                                          target="_blank">Documentacion <span class="pull-right badge bg-aqua">PDF</span></a></li>
-                                      <li><a href={{item?.web}} target="_blank">Site <span class="pull-right badge bg-green">web</span></a></li>
-                                    </ul>
-                                </div>
-                  
-                  
-                                <!-- /.description-block -->
-                              </div>
-                              <!-- /.col -->
-                              <div class="col-sm-4">
-                                <div class="description-block">
-                                  <h5 class="description-header">{{item.type}}</h5>
-                                  <span class="description-text">{{item.faculty}}</span>
-                                </div>
-                                <!-- /.description-block -->
-                              </div>
-                              <!-- /.col -->
-                            </div>
-                            <!-- /.row -->
-                          </div>
-                        </div>
-                  </div>
-                </div>
-                </div>
-                </div>
-
                 
+  <!-- Map box -->
+<div class="box box-solid ">
+  <div id="content-box" class="box box-danger">
+    <div class="box-header with-border">
+      <h3 class="box-title">Mapa</h3>
+
+      <div class="box-tools pull-right">
+        <button id="buton1" type="button" class="btn btn-box-tool" data-widget="collapse">
+          <i class="fa fa-minus"></i>
+        </button>
+      </div>
+    </div>
+    <div id="div1" class="box-body">
+      <div id="map"></div>
+    </div>
+  </div>
+
+  <div id="content-box2" class="box box-danger">
+    <div class="box-header with-border">
+      <h3 class="box-title">Informacion</h3>
+
+      <div class="box-tools pull-right">
+        <button id="buton2" type="button" class="btn btn-box-tool" data-widget="collapse">
+          <i class="fa fa-minus"></i>
+        </button>
+      </div>
+    </div>
+
+    <div id="div2" class="box-body">
+        <div class="divScroll" >
+        <div  *ngFor="let item of this.convenios | async" class="box box-widget widget-user">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+            <div class="widget-user-header bg-red" style="background: red;">
+              <h2 class="widget-user-username">{{item.country}}</h2>
+              <h4 class="widget-user-desc">{{item.description}}</h4>
+            </div>
+            <div class="box-footer">
+              <div class="row">
+                <div class="col-sm-4 border-right">
+                  <div class="description-block">
+                    <h5 class="description-header">{{item.institution}}</h5>
+                    <span class="description-text"></span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 border-right">
+                  <div class="box-footer no-padding">
+                      <ul class="nav nav-stacked">
+                        <li><a href={{item?.pdf}}
+                            target="_blank">Documentacion <span class="pull-right badge bg-aqua">PDF</span></a></li>
+                        <li><a href={{item?.web}} target="_blank">Site <span class="pull-right badge bg-green">web</span></a></li>
+                      </ul>
+                  </div>
+    
+    
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4">
+                  <div class="description-block">
+                    <h5 class="description-header">{{item.type}}</h5>
+                    <span class="description-text">{{item.faculty}}</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+          </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+  

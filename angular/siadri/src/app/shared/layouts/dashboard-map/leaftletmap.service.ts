@@ -55,7 +55,7 @@ export class LeaftletmapService {
       attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
     }).addTo(this.map);
 
-  console.log(world.features);
+  //console.log(world.features);
    this.organizarGeo();
    this.pintarPoligonos();
 

@@ -30,7 +30,7 @@ export class DashboardMapComponent implements OnInit {
 
    ngOnInit() {
     this.modal.currentObject.subscribe(data=>{
-      console.log(data);
+      //console.log(data);
       this.convenios = Observable.of(data);
     });
 
@@ -45,12 +45,18 @@ export class DashboardMapComponent implements OnInit {
     $('#buton1').on('click',function(){ 
       if($('#buton1 i').attr('class')=='fa fa-plus'){
         $('#content-box2').addClass("collapsed-box");
+        $('#div').attr('style','display:block;');
+        $('#div2').attr('style','display:none;');
+
         $('#div2').hide();
         $('#buton2 i').attr('class','fa fa-plus');
+
       }else{
-        $('#content-box2').removeClass("collapsed-box");
+  
+       $('#content-box2').removeClass("collapsed-box");
         $('#div2').show();
         $('#buton2 i').attr('class','fa fa-minus');
+
       }
     });
    }
@@ -59,6 +65,7 @@ export class DashboardMapComponent implements OnInit {
     $('#buton2').on('click',function(){ 
       if($('#buton2 i').attr('class')=='fa fa-plus'){
         $('#content-box').addClass("collapsed-box");
+        $('#div2').attr('style','display: none;');
         $('#div1').hide();
         $('#buton1 i').attr('class','fa fa-plus');
       }else{

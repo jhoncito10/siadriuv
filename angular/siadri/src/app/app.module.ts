@@ -28,6 +28,8 @@ import { AngularFireModule } from 'angularfire2';
 import { ModalPopupComponent } from './shared/layouts/modal-popup/modal-popup.component';
 import { LoginComponent } from './shared/layouts/login/login.component';
 import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in.component';
+import { InscripcionesComponent } from './shared/layouts/sidebar-left-components/inscripciones/inscripciones.component';
+import { DashNivel2Component } from './shared/layouts/dash-nivel2/dash-nivel2.component';
 
 
 @NgModule({
@@ -40,7 +42,9 @@ import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in
     DashboardCentralComponent,
     ModalPopupComponent,
     LoginComponent,
-    DashboardInComponent
+    DashboardInComponent,
+    InscripcionesComponent,
+    DashNivel2Component
   ],
   imports: [
     app_routing,
