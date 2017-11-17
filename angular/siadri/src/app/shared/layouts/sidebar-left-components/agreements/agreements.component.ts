@@ -8,19 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AgreementsComponent implements OnInit {
 
-  constructor(private data:ModalService) { }
+  constructor(private data: ModalService) { }
 
   ngOnInit() {
   }
 
-  enviar (id: any) {
+  enviar(id: any) {
     let valor: string;
-   if (id === 'menu-busqueda-por-tipo') {
-        valor = 'Tipo Convenio';
-      } else if (id === 'menu-busqueda-por-academia') {
-        valor = 'Academia';
-      }
-     this.data.changeMessage(valor);
+    if (id === 'menu-busqueda-por-tipo') {
+      valor = 'Tipo Convenio';
+    } else if (id === 'menu-busqueda-por-academia') {
+      valor = 'Academia';
+    }
+    this.data.changeMessage(valor);
 
-}
+  }
 }

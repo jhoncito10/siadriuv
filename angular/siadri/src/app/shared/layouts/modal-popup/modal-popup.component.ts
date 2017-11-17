@@ -7,6 +7,7 @@ import { Subject } from 'rxjs/Rx';
 import { any } from 'codelyzer/util/function';
 import { FirebaseListObservable, AngularFireDatabase } from 'angularfire2/database';
 import { Component, OnInit } from '@angular/core';
+import { Promise } from 'q';
 
 declare var EasyAutocomplete:any;
 declare var $:any;
@@ -46,17 +47,73 @@ export class ModalPopupComponent implements OnInit {
     
   busquedas(message){
     ModalPopupComponent.conveniostatic = this.busqueda.getConvenio();
-    console.log(ModalPopupComponent.conveniostatic);
+    // console.log(ModalPopupComponent.conveniostatic);
       if(message=='Tipo Convenio'){
-        var noduplicadosTipoConvenio = this.removeDuplicates(ModalPopupComponent.conveniostatic,"type");     
+        console.log('Tipo Convenio');
+        let noduplicadosTipoConvenio = Array.from(new Set(ModalPopupComponent.conveniostatic));    
+        
+         noduplicadosTipoConvenio = this.removeDuplicates(ModalPopupComponent.conveniostatic,"type"); 
         this.options.data = noduplicadosTipoConvenio;
         this.options.getValue="type";
         this.options.list.onClickEvent = function(){ModalPopupComponent.busquedaPorTipo();};
-        ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#inputBusqueda'),this.options);
-        ModalPopupComponent.easybusqueda.init();
+        $("#inputBusqueda").easyAutocomplete(this.options);
+        //ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#inputBusqueda'),this.options);
+        //ModalPopupComponent.easybusqueda.init();
 
       }else if(message=='Academia'){
-        console.log('');
+        console.log("academia")
+        var array_programasAcademicos:Array<any> = [];
+        var i=0;
+        return Promise (function (resolve) {
+          ModalPopupComponent.conveniostatic.forEach(function(convenio) {
+            var object = convenio.programas_escuelas;
+            for (var key in object) {
+              if (object.hasOwnProperty(key)) {
+                var element = object[key];
+                element = element.replace(/\, \b/ig, ",");
+                element = element.replace(".", "");
+                element = element.replace("-", "");
+                element = element.replace(" ", "");
+                //console.log(element);
+                element = element.split(",");
+                if (element!="") {
+                  for (var x=0;x<element.length;x++){
+                    //console.log(element[x]);
+                    array_programasAcademicos.push(element[x]);
+                  }
+                }
+              
+              }
+              
+            }
+              i++;
+              
+              
+            if (i == ModalPopupComponent.conveniostatic.length) {
+              let programas_without_duplicates = Array.from(new Set(array_programasAcademicos));
+              
+             // programas_without_duplicates = this.removeDuplicados(programas_without_duplicates,"type");
+              
+              resolve(programas_without_duplicates);
+            }
+            
+           
+          });
+        }).then(function (programas_without_duplicates) {
+          //console.log(programas_without_duplicates);
+           this.options.data = programas_without_duplicates;
+           console.log("2");
+           this.options.getValue="type";
+           console.log("1");
+           this.options.list.onClickEvent = function(){ console.log("click");};
+           console.log("3");
+          // $("#inputBusqueda").easyAutocomplete(this.options);
+           ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#inputBusqueda'),this.options);
+           ModalPopupComponent.easybusqueda.init();
+        });
+        
+        
+        
       }
     
    }
@@ -74,6 +131,15 @@ export class ModalPopupComponent implements OnInit {
         newArray.push(lookupObject[i]);
     }
      return newArray;
+  }
+  removeDuplicados(originalArray, prop) {
+    console.log("entra duplicados");
+    var array  = [];
+
+    for(var i in originalArray) {
+      array.push({prop:originalArray[i]});
+    }
+    return array;
   }
 
   static busquedaPorTipo(){
