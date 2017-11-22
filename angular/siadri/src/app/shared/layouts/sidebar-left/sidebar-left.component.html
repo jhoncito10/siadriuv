@@ -17,7 +17,7 @@
     <ul class="sidebar-menu">
       <li class="header" align="center">Menu de navegacion</li>
       <!-- Componentes traidos del sidebar componentes -->
-      <app-agreements *ngIf="datosUser==null"></app-agreements>
+      <app-agreements *ngIf="datosUser!=null"></app-agreements>
       <app-inscripciones *ngIf="datosUser!=null"></app-inscripciones>
 
       <li><a href="Manual_Usuario_Externo.pdf"><i class="fa fa-book"></i> <span>Manual de usuario</span></a></li>

@@ -261,21 +261,21 @@
                             colspan="3" rowspan="2" align="center" valign="middle">
                             <b>
                                 <br>
-                                <input class="input-texto" style="margin: 5px" type="text" size="2" id="input-dia">
+                                <input name="input-dia" [(ngModel)]="this.formulario.fecha.dia" class="input-texto" style="margin: 5px" type="text" size="2" id="input-dia">
                             </b>
                         </td>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="3" rowspan="2" align="center" valign="middle" sdnum="3082;0;@">
                             <b>
                                 <br>
-                                <input class="input-texto" style="margin: 5px" type="text" size="2" id="input-mes">
+                                <input class="input-texto" [(ngModel)]="this.formulario.fecha.mes" style="margin: 5px" type="text" size="2" id="input-mes">
                             </b>
                         </td>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="3" rowspan="2" align="center" valign="middle" sdnum="3082;0;@">
                             <b>
                                 <br>
-                                <input class="input-texto" style="margin: 5px" type="text" size="2" id="input-ano">
+                                <input class="input-texto" [(ngModel)]="this.formulario.fecha.ano" style="margin: 5px" type="text" size="2" id="input-ano">
                             </b>
                         </td>
                     </tr>
@@ -486,12 +486,12 @@
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="20" rowspan="2" height="37" align="left" valign="middle">
                             <br>
-                            <input class="input-texto" style="margin: 5px" type="text" size="60" id="input-nombre-solic">
+                            <input class="input-texto" name="input-nombre-solic" [(ngModel)]="this.formulario.solicitante.nombre" style="margin: 5px" type="text" size="60" id="input-nombre-solic">
                         </td>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="16" rowspan="2" align="left" valign="middle">
                             <br>
-                            <input class="input-texto" style="margin: 5px" type="text" size="45" id="input-programa-solic">
+                            <input class="input-texto" name="input-programa-solic" [(ngModel)]="this.formulario.solicitante.programa" style="margin: 5px" type="text" size="45" id="input-programa-solic">
                         </td>
                     </tr>
                     <tr>
@@ -615,7 +615,7 @@
                     <tr>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="36" rowspan="5" height="85" align="left" valign="middle">
-                            <textarea  class="input-texto" style="margin: 5px" name="" id="input-objetivo-solic" cols="140" rows="4"></textarea> </td>
+                            <textarea  class="input-texto" name="input-objetivo-solic" [(ngModel)]="this.formulario.solicitante.objetivo" style="margin: 5px" name="" id="input-objetivo-solic" cols="140" rows="4"></textarea> </td>
                     </tr>
                     <tr>
                     </tr>
@@ -744,7 +744,7 @@
                     <tr>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="36" rowspan="5" height="85" align="left" valign="middle">
-                            <textarea class="input-texto" style="margin: 5px" name="" id="input-alcance-solic" cols="140" rows="4"></textarea> </td>
+                            <textarea class="input-texto" name="input-alcance-solic" [(ngModel)]="this.formulario.solicitante.alcance" style="margin: 5px" name="" id="input-alcance-solic" cols="140" rows="4"></textarea> </td>
                     </tr>
                     <tr>
                     </tr>
@@ -873,7 +873,7 @@
                     <tr>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="36" rowspan="5" height="85" align="left" valign="middle">
-                            <textarea class="input-texto" style="margin: 5px" name="" id="input-justificacion-solic" cols="140" rows="4"></textarea>
+                            <textarea class="input-texto" name="input-justificacion-solic" [(ngModel)]="this.formulario.solicitante.justificacion" style="margin: 5px" name="" id="input-justificacion-solic" cols="140" rows="4"></textarea>
                             <br>
                         </td>
                     </tr>
@@ -1004,7 +1004,7 @@
                     <tr>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="36" rowspan="5" height="85" align="left" valign="middle">
-                            <textarea class="input-texto" style="margin: 5px" name="" id="input-beneficios-solic" cols="140" rows="4"></textarea>
+                            <textarea class="input-texto" name="input-beneficios-solic" [(ngModel)]="this.formulario.solicitante.beneficios" style="margin: 5px" name="" id="input-beneficios-solic" cols="140" rows="4"></textarea>
                             <br>
                         </td>
                     </tr>
@@ -1135,7 +1135,7 @@
                     <tr>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="36" rowspan="2" height="32" align="left" valign="middle">
-                            <textarea class="input-texto" style="margin: 5px" name="" id="input-coordinador-solic" cols="140" rows="4"></textarea>
+                            <textarea class="input-texto" name="input-coordinador-solic" [(ngModel)]="this.formulario.solicitante.coordinador" style="margin: 5px" name="" id="input-coordinador-solic" cols="140" rows="4"></textarea>
                             <b>
                                 <br>
                             </b>
@@ -1266,14 +1266,14 @@
                     <tr>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" colspan="19"
                             rowspan="2" height="34" align="left" valign="middle">
-                            <input class="input-texto" style="margin: 5px" size="70" type="text" id="input-institucion-convenio">
+                            <input class="input-texto" name="input-institucion-convenio" [(ngModel)]="this.formulario.solicitante.institucion" style="margin: 5px" size="70" type="text" id="input-institucion-convenio">
                             <b>
                                 <br>
                             </b>
                         </td>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="17" rowspan="2" align="left" valign="middle">
-                            <input class="input-texto" style="margin: 5px" size="70" type="text" id="input-representante-solic">
+                            <input class="input-texto" name="input-representante-solic" [(ngModel)]="this.formulario.solicitante.replegal" style="margin: 5px" size="70" type="text" id="input-representante-solic">
                             <b>
                                 <br>
                             </b>
@@ -1406,16 +1406,16 @@
                     <tr>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="7" rowspan="2" align="center" valign="middle">
-                            <input class="input-texto" type="text" id="input-telefono-solic">
+                            <input class="input-texto" name="input-telefono-solic" [(ngModel)]="this.formulario.solicitante.telefono" type="text" id="input-telefono-solic">
                         </td>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="7" rowspan="2" align="center" valign="middle">
-                            <input class="input-texto" type="text" id="input-fax-solic">
+                            <input class="input-texto" name="input-fax-solic" [(ngModel)]="this.formulario.solicitante.fax" type="text" id="input-fax-solic">
                             <br>
                         </td>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="18" rowspan="2" align="center" valign="middle">
-                            <input class="input-texto" style="margin: 5px" size="70" type="text" id="input-correo-solic">
+                            <input class="input-texto" name="input-correo-solic" [(ngModel)]="this.formulario.solicitante.correo" style="margin: 5px" size="70" type="text" id="input-correo-solic">
                             <br>
                         </td>
                     </tr>
@@ -1536,14 +1536,14 @@
                             colspan="8" rowspan="2" height="34" align="right" valign="middle" bgcolor="#BFBFBF">Duración del convenio o contrato:</td>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="8" rowspan="2" align="left" valign="middle">
-                            <input class="input-texto" style="margin: 5px" size="40" type="text" id="input-duracion-convenio">
+                            <input class="input-texto" name="input-duracion-convenio" [(ngModel)]="this.formulario.conveniocontrato.duracion" style="margin: 5px" size="40" type="text" id="input-duracion-convenio">
                             <br>
                         </td>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="6" rowspan="2" align="right" valign="middle" bgcolor="#BFBFBF">Valor del convenio o contrato:</td>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="14" rowspan="2" align="center" valign="middle" sdnum="3082;0;#.##0">
-                            <input class="input-texto" style="margin: 5px" size="50" type="text" id="input-valor-convenio">
+                            <input class="input-texto" name="input-valor-convenio" [(ngModel)]="this.formulario.conveniocontrato.valor" style="margin: 5px" size="50" type="text" id="input-valor-convenio">
                             <br>
                         </td>
                     </tr>
@@ -1665,7 +1665,7 @@
                             o contrato (en caso de que aplique):</td>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="16" rowspan="2" align="center" valign="middle">
-                            <input class="input-texto" style="margin: 5px" size="60" type="text" id="input-no-resolucion">
+                            <input class="input-texto" name="input-no-resolucion" [(ngModel)]="this.formulario.conveniocontrato.resolucion" style="margin: 5px" size="60" type="text" id="input-no-resolucion">
                             <br>
                         </td>
                     </tr>
@@ -1841,7 +1841,7 @@
                         <td style="border-top: 1px solid #000000" align="left">
                         </td>
                         <td style="margin: 5px; border-top: 1px solid #000000" align="left" valign="left">
-                            <input type="checkbox" id="input-tipo-marco" name="tipo-convenio">
+                            <input type="checkbox" name="input-tipo-marco" [(ngModel)]="this.formulario.conveniocontrato.tipo.convenio.marco" id="input-tipo-marco" >
                             <br>
                         </td>
                         <td style="border-top: 1px solid #000000" align="left" valign="bottom">
@@ -1858,7 +1858,7 @@
                             <b>Contrato</b>
                         </td>
                         <td style="border-top: 1px solid #000000" align="left" valign="top">
-                            <input style="margin-top: 15px" type="checkbox" id="input-tipo-contrato">
+                            <input style="margin-top: 15px" name="input-tipo-contrato" [(ngModel)]="this.formulario.conveniocontrato.tipo.contrato" type="checkbox" id="input-tipo-contrato">
                         </td>
                         <td style="border-top: 1px solid #000000" align="left" valign="bottom">
                             <br>
@@ -1946,7 +1946,7 @@
                             <br>
                         </td>
                         <td style="border-bottom: 1px solid #000000" align="left" valign="bottom">
-                            <input type="checkbox" id="input-tipo-especifico" name="tipo-convenio">
+                            <input type="checkbox" name="input-tipo-especifico" [(ngModel)]="this.formulario.conveniocontrato.tipo.convenio.especifico" id="input-tipo-especifico" >
                             <br>
                         </td>
                         <td style="border-bottom: 1px solid #000000" align="left" valign="bottom">
@@ -2110,21 +2110,21 @@
                             <font size="1">Internacional</font>
                         </td>
                         <td style="margin-right: 5px; border-top: 1px solid #000000" align="left" valign="bottom">
-                            <input style="margin-top: 15px" type="checkbox" id="input-internacional" name="clasificacion-convenio">
+                            <input style="margin-top: 15px" name="input-internacional" [(ngModel)]="this.formulario.conveniocontrato.clasificacion.internacional" type="checkbox" id="input-internacional" >
                             <br>
                         </td>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" colspan="2" rowspan="2" align="center" valign="middle">
                             <font size="1">Nacional</font>
                         </td>
                         <td style="margin-right: 5px; border-top: 1px solid #000000" align="left" valign="bottom">
-                            <input style="margin-top: 15px" type="checkbox" id="input-nacional" name="clasificacion-convenio">
+                            <input style="margin-top: 15px" name="input-nacional" [(ngModel)]="this.formulario.conveniocontrato.clasificacion.nacional" type="checkbox" id="input-nacional">
                             <br>
                         </td>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" colspan="2" rowspan="2" align="left" valign="middle">
                             <font size="1">Departamental</font>
                         </td>
                         <td style="margin-right: 5px; border-top: 1px solid #000000" align="left" valign="bottom">
-                            <input style="margin-top: 15px" type="checkbox" id="input-departamental" name="clasificacion-convenio">
+                            <input style="margin-top: 15px" name="input-departamental" [(ngModel)]="this.formulario.conveniocontrato.clasificacion.departamental" type="checkbox" id="input-departamental" >
                             <br>
                         </td>
                         <td style="margin-right: 10px; border-top: 1px solid #000000; border-bottom: 1px solid #000000" colspan="2" rowspan="2" align="left"
@@ -2132,7 +2132,7 @@
                             <font size="1">Municipal</font>
                         </td>
                         <td style="border-top: 1px solid #000000" align="left" valign="bottom">
-                            <input style="margin-top: 15px; margin-left: 6px" type="checkbox" id="input-municipal" name="clasificacion-convenio">
+                            <input style="margin-top: 15px; margin-left: 6px" name="input-municipal" [(ngModel)]="this.formulario.conveniocontrato.clasificacion.municipal" type="checkbox" id="input-municipal" >
                             <br>
                         </td>
                         <td style="border-top: 1px solid #000000" align="center" valign="middle">
@@ -2149,7 +2149,7 @@
                             <br>
                         </td>
                         <td style="border-top: 1px solid #000000" align="left" valign="top">
-                            <input style="margin-top: 7px" type="checkbox" id="input-publica" name="entidad">
+                            <input style="margin-top: 7px" name="input-publica" [(ngModel)]="this.formulario.conveniocontrato.clasificacion.entidad.publica" type="checkbox" id="input-publica" >
                             <br>
                         </td>
                         <td style="border-top: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle">
@@ -2179,7 +2179,7 @@
                             <br>
                         </td>
                         <td style="border-bottom: 1px solid #000000" align="left" valign="middle">
-                            <input style="margin-bottom: 4px" type="checkbox" id="input-privada" name="entidad">
+                            <input style="margin-bottom: 4px" name="input-privada" [(ngModel)]="this.formulario.conveniocontrato.clasificacion.entidad.privada" type="checkbox" id="input-privada">
                             <br>
                         </td>
                         <td style="border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="center" valign="middle">
@@ -5715,7 +5715,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <button type="button" class="btn btn-success center-block" id="btn-enviar-estudio">
+                <button type="button" (click)="enviar()" class="btn btn-success center-block" id="btn-enviar-estudio" data-toggle='modal' data-target='#modal1'>
                     <span class="glyphicon glyphicon-print" aria-hidden="true"></span> enviar
                 </button>
             </div>

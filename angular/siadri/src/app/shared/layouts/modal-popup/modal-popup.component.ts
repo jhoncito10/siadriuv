@@ -34,10 +34,13 @@ export class ModalPopupComponent implements OnInit {
   static mapstatic: any;
   static modalstatic: any;
 
+  correosolicitante:any;
+
   constructor(private data: ModalService, private busqueda: BuscadorService) {
     ModalPopupComponent.modalstatic = data;
     this.data.currentMessage.subscribe(message => {
       this.message = message;
+      console.log(this.message);
       this.busquedas(this.message);
     });
   }
@@ -48,11 +51,10 @@ export class ModalPopupComponent implements OnInit {
 
   busquedas(message) {
     ModalPopupComponent.conveniostatic = this.busqueda.getConvenio();
-    // console.log(ModalPopupComponent.conveniostatic);
+
     if (message == 'Tipo Convenio') {
       let noduplicadosTipoConvenio = Array.from(new Set(ModalPopupComponent.conveniostatic));
       noduplicadosTipoConvenio = this.removeDuplicates(ModalPopupComponent.conveniostatic, "type");
-      console.log(noduplicadosTipoConvenio);
       this.options.data = noduplicadosTipoConvenio;
       this.options.getValue = "type";
       this.options.list.onClickEvent = function () { ModalPopupComponent.busquedaPorTipo(); };
@@ -192,6 +194,15 @@ export class ModalPopupComponent implements OnInit {
     $('#buton2 i').attr('class', 'fa fa-minus');
 
     $('#inputBusqueda').val("");
+  }
+
+
+  enviar(){
+    console.log(this.correosolicitante);
+    this.data.currentformulario.subscribe(forma => {
+      var form = forma;
+      console.log(form);
+    });
   }
 }
 

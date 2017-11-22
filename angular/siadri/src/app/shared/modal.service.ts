@@ -16,4 +16,10 @@ export class ModalService {
     this.object.next(object);
   }
 
+  private formulario = new BehaviorSubject<any>([]);
+  currentformulario = this.formulario.asObservable();
+  changeformulario(form:any){
+    this.formulario.next(form);
+  }
+
 }
