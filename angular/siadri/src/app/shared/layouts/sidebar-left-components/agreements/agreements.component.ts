@@ -17,12 +17,12 @@ export class AgreementsComponent implements OnInit {
   enviar (id: any) {
     this.ruta.navigate(['/dash/mapa']);
     let valor: string;
-   if (id === 'menu-busqueda-por-tipo') {
-        valor = 'Tipo Convenio';
-      } else if (id === 'menu-busqueda-por-academia') {
-        valor = 'Academia';
-      }
-     this.data.changeMessage(valor);
+    if (id === 'menu-busqueda-por-tipo') {
+      valor = 'Tipo Convenio';
+    } else if (id === 'menu-busqueda-por-academia') {
+      valor = 'Academia';
+    }
+    this.data.changeMessage(valor);
 
-}
+  }
 }

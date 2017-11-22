@@ -30,7 +30,7 @@ export class DashboardMapComponent implements OnInit {
 
    ngOnInit() {
     this.modal.currentObject.subscribe(data=>{
-      console.log(data);
+      //console.log(data);
       this.convenios = Observable.of(data);
     });
 

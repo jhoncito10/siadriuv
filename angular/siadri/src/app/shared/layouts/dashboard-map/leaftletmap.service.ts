@@ -55,8 +55,15 @@ export class LeaftletmapService {
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
       attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
     }).addTo(this.map);
+<<<<<<< HEAD
  
     this.pintarPoligonos();
+=======
+
+  //console.log(world.features);
+   this.organizarGeo();
+   this.pintarPoligonos();
+>>>>>>> afbf746259d3beebdc2bbe62eb4a7615fc0ea51b
 
     var customLayer = L.geoJson(null, {
       style: myStyle
