@@ -34,6 +34,13 @@ export class DashboardMapComponent implements OnInit {
       this.convenios = Observable.of(data);
     });
 
+    // $('#icongo').mouseover(function(){
+    //   console.log('ererer');
+    // });
+    $("#div89").on('click',function(){
+      console.log('click');
+    });
+
     this.actionCaja1();
 
     this.actionCaja2();
