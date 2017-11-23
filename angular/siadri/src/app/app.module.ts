@@ -20,7 +20,7 @@ import { HeaderTopComponent } from './shared/layouts/header-top/header-top.compo
 import { SidebarLeftComponent } from './shared/layouts/sidebar-left/sidebar-left.component';
 import { DashboardMapComponent } from './shared/layouts/dashboard-map/dashboard-map.component';
 import { DashboardCentralComponent } from './shared/layouts/dashboard-central/dashboard-central.component';
-import { environment } from './../environments/environment';
+import { firebaseconfig } from './config';
 import { AgreementsComponent } from './shared/layouts/sidebar-left-components/agreements/agreements.component';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -45,6 +45,7 @@ import { DashNivel2Component } from './shared/layouts/dash-nivel2/dash-nivel2.co
     DashboardInComponent,
     InscripcionesComponent,
     DashNivel2Component
+    
   ],
   imports: [
     app_routing,
@@ -52,7 +53,7 @@ import { DashNivel2Component } from './shared/layouts/dash-nivel2/dash-nivel2.co
     BrowserModule,
     LeafletModule.forRoot(),
     HttpModule,
-    AngularFireModule.initializeApp(environment.config),
+    AngularFireModule.initializeApp(firebaseconfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule
     // RouterModule.forRoot([

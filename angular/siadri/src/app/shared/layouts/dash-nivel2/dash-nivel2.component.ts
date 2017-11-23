@@ -13,7 +13,7 @@ declare var $:any;
 export class DashNivel2Component implements OnInit {
 
 
-  formulario = {
+   formulario:any = {
     fecha:{dia:"",mes:"",ano:""},
     solicitante:{nombre:"", programa:"", objetivo:"",alcance:"",justificacion:"",beneficios:"",coordinador:"",institucion:"",replegal:"",telefono:"",fax:"",correo:""},
     conveniocontrato:{duracion:"",valor:"",resolucion:"",tipo:{convenio:{marco:false,especifico:false},contrato:false},clasificacion:{internacional:false,nacional:false,departamental:false,municipal:false,entidad:{publica:false,privada:false}}},
@@ -32,7 +32,7 @@ export class DashNivel2Component implements OnInit {
   }
 
   enviar(){
-    this.data.changeMessage("correo");
+    this.data.changeMessage("Ingrese el correo del responsable de esta solicitud");
     this.data.changeformulario(this.formulario);
   }
 
