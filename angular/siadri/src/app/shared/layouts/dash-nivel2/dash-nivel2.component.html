@@ -2501,7 +2501,7 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="11" align="left" valign="top">*Movilidad estudiantil:
-                            <input style="margin-top: 6px; margin-left: 130px" type="checkbox" id="input-mov-estudiantil" name="estudio-convenio">
+                            <input style="margin-top: 6px; margin-left: 130px" name="input-mov-estudiantil" [(ngModel)]="this.formulario.tipoconvcont.academico.mov" type="checkbox" id="input-mov-estudiantil">
                         </td>
                         <td align="center" valign="top">
                             <br>
@@ -2581,7 +2581,7 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="11" align="left" valign="top">*Convenios con IES:
-                            <input style="margin-top: 6px; margin-left: 135px" type="checkbox" id="input-conv-ies"  name="estudio-convenio">
+                            <input style="margin-top: 6px; margin-left: 135px"  name="input-conv-ies" [(ngModel)]="this.formulario.tipoconvcont.academico.ies" type="checkbox" id="input-conv-ies">
                         </td>
                         <td align="center" valign="top">
                             <br>
@@ -2609,7 +2609,7 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="11" align="left" valign="middle">*Actividades de educación continua
-                            <input style="margin-top: 6px; margin-left: 69px" type="checkbox" id="input-act-edu"  name="estudio-convenio">
+                            <input style="margin-top: 6px; margin-left: 69px" name="input-act-edu" [(ngModel)]="this.formulario.tipoconvcont.academico.act" type="checkbox" id="input-act-edu">
                             <br>y permanente1
                         </td>
                         <td align="center" valign="top">
@@ -2627,7 +2627,7 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="11" align="left" valign="top">*Servicios Académicos2:
-                            <input style="margin-top: 6px; margin-left: 117px" type="checkbox" id="input-serv-aca"  name="estudio-convenio">
+                            <input style="margin-top: 6px; margin-left: 117px" name="input-serv-aca" [(ngModel)]="this.formulario.tipoconvcont.academico.sac" type="checkbox" id="input-serv-aca">
                         </td>
                         <td align="center" valign="top">
                             <br>
@@ -2707,7 +2707,7 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="11" align="left" valign="top">*Prácticas y Pasantía Profesionales
-                            <input style="margin-top: 6px; margin-left: 68px" type="checkbox" id="input-prac-pas"  name="estudio-convenio">
+                            <input style="margin-top: 6px; margin-left: 68px" name="input-prac-pas" [(ngModel)]="this.formulario.tipoconvcont.academico.ppp" type="checkbox" id="input-prac-pas">
                         </td>
                         <td align="center" valign="top">
                             <br>
@@ -2738,7 +2738,7 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="11" align="left" valign="top">*Contratos de Aprendizaje:
-                            <input style="margin-top: 6px; margin-left: 107px" type="checkbox" id="input-con-apre"  name="estudio-convenio">
+                            <input style="margin-top: 6px; margin-left: 107px" name="input-con-apre" [(ngModel)]="this.formulario.tipoconvcont.academico.cap" type="checkbox" id="input-con-apre">
                         </td>
                         <td align="center" valign="top">
                             <br>
@@ -2755,7 +2755,7 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="11" align="left" valign="top">*Compromiso Social3:
-                            <input style="margin-top: 6px; margin-left: 128px" type="checkbox" id="input-comp-soc"  name="estudio-convenio">
+                            <input style="margin-top: 6px; margin-left: 128px" name="input-comp-soc" [(ngModel)]="this.formulario.tipoconvcont.academico.cos" type="checkbox" id="input-comp-soc">
                         </td>
                         <td align="center" valign="top">
                             <br>
@@ -2772,7 +2772,7 @@
                             <br>
                         </td>
                         <td style="border-bottom: 2px solid #000000; border-left: 2px solid #000000" colspan="11" align="left" valign="top">*Otras Actividades Académicas:
-                            <input style="margin-top: 6px; margin-left: 84px" type="checkbox" id="input-otr-act"  name="estudio-convenio">
+                            <input style="margin-top: 6px; margin-left: 84px" name="input-otr-act" [(ngModel)]="this.formulario.tipoconvcont.academico.oaa" type="checkbox" id="input-otr-act">
                         </td>
                         <td style="border-bottom: 2px solid #000000" align="center" valign="top">
                             <br>
@@ -3106,7 +3106,7 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="12" align="left" valign="top">Proyectos de Investigación:
-                            <input style="margin-top: 6px; margin-left: 100px" type="checkbox" id="input-proy-inv" name="investigacion">
+                            <input style="margin-top: 6px; margin-left: 100px" name="input-proy-inv" [(ngModel)]="this.formulario.tipoconvcont.investigacion.pdi" type="checkbox" id="input-proy-inv">
                         </td>
                         <td align="left" valign="bottom">
                             <br>
@@ -3130,7 +3130,7 @@
                             <br>
                         </td>
                         <td style="border-bottom: 2px solid #000000; border-left: 2px solid #000000" colspan="12" align="left" valign="top">Otras Actividades de Investigación:
-                            <input style="margin-top: 6px; margin-left: 66px" type="checkbox" id="input-otrac-inves" name="investigacion">
+                            <input style="margin-top: 6px; margin-left: 66px" name="input-otrac-inves" [(ngModel)]="this.formulario.tipoconvcont.investigacion.oai" type="checkbox" id="input-otrac-inves">
                         </td>
                         <td style="border-bottom: 2px solid #000000" align="left" valign="bottom">
                             <br>
@@ -3267,7 +3267,7 @@
                         </td>
                         <td style="border-top: 1px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000" colspan="12"
                             rowspan="2" align="left" valign="top">Asuntos del Bienestar Universitario o de su portafolio de servicios:
-                            <input style="margin-top: 15px; margin-left: 10px" type="checkbox" id="input-bien-univ">
+                            <input style="margin-top: 15px; margin-left: 10px" name="input-bien-univ" [(ngModel)]="this.formulario.tipoconvcont.bienestar.abu" type="checkbox" id="input-bien-univ">
                         </td>
                         <td align="left" valign="bottom">
                             <br>
@@ -3425,7 +3425,7 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="12" align="left" valign="top">Movilidad Internacional:
-                            <input style="margin-top: 6px; margin-left: 130px" type="checkbox" id="input-movil-int" name="internacionalizacion">
+                            <input style="margin-top: 6px; margin-left: 130px" name="input-movil-int" [(ngModel)]="this.formulario.tipoconvcont.interna.mi" type="checkbox" id="input-movil-int">
                         </td>
                         <td align="left" valign="bottom">
                             <br>
@@ -3451,7 +3451,7 @@
                             <br>
                         </td>
                         <td style="border-bottom: 2px solid #000000; border-left: 2px solid #000000" colspan="12" align="left" valign="top">Proyectos de Cooperación Internacional:
-                            <input style="margin-top: 6px; margin-left: 54px" type="checkbox" id="input-proy-coopin">
+                            <input style="margin-top: 6px; margin-left: 54px" name="input-proy-coopin" [(ngModel)]="this.formulario.tipoconvcont.interna.pci" type="checkbox" id="input-proy-coopin">
                         </td>
                         <td style="border-bottom: 2px solid #000000" align="left" valign="bottom">
                             <br>
@@ -3585,7 +3585,7 @@
                             <br>(cuando aplique)</td>
                         <td style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-right: 2px solid #000000" colspan="12"
                             rowspan="2" align="center" valign="middle">
-                            <input style="margin: 5px" type="text" size="40" id="input-vicerectoria-administrativa">
+                            <input style="margin: 5px" name="input-vicerectoria-administrativa" [(ngModel)]="this.formulario.vicerectoria" type="text" size="40" id="input-vicerectoria-administrativa">
                             <br>
                         </td>
                         <td align="left" valign="middle">
@@ -4075,7 +4075,7 @@
     
                                 </font>
                             </b>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-ingresos">
+                            <input class="valor-numerico" name="input-ingresos" [(ngModel)]="this.formulario.presupuesto.ing" style=" border:none;" type="text" size="40" id="input-ingresos">
                         </td>
                     </tr>
                     <tr>
@@ -4098,7 +4098,7 @@
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="9" align="center" valign="middle" sdnum="3082;0;#.##0">
                             <font size="1"></font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-ingresos-proyecto">
+                            <input class="valor-numerico" name="input-ingresos-proyecto" [(ngModel)]="this.formulario.presupuesto.idp" style=" border:none;" type="text" size="40" id="input-ingresos-proyecto">
                         </td>
                     </tr>
                     <tr>
@@ -4126,7 +4126,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-total-ingresos">
+                            <input class="valor-numerico" style=" border:none;" name="input-total-ingresos" [(ngModel)]="this.formulario.presupuesto.ti" type="text" size="40" id="input-total-ingresos">
                         </td>
                     </tr>
                     <tr>
@@ -4302,7 +4302,7 @@
     
                                 </font>
                             </b>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-gastos">
+                            <input class="valor-numerico" style=" border:none;" name="input-gastos" [(ngModel)]="this.formulario.presupuesto.gas" type="text" size="40" id="input-gastos">
                         </td>
                     </tr>
                     <tr>
@@ -4325,7 +4325,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-materiales-suministros">
+                            <input class="valor-numerico" style=" border:none;" name="input-materiales-suministros" [(ngModel)]="this.formulario.presupuesto.mys" type="text" size="40" id="input-materiales-suministros">
                         </td>
                     </tr>
                     <tr>
@@ -4348,7 +4348,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-gastos-alojamiento">
+                            <input class="valor-numerico" style=" border:none;" name="input-gastos-alojamiento" [(ngModel)]="this.formulario.presupuesto.galoj" type="text" size="40" id="input-gastos-alojamiento">
                         </td>
                     </tr>
                     <tr>
@@ -4371,7 +4371,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-gastos-alimentacion">
+                            <input class="valor-numerico" style=" border:none;" name="input-gastos-alimentacion" [(ngModel)]="this.formulario.presupuesto.gali" type="text" size="40" id="input-gastos-alimentacion">
                         </td>
                     </tr>
                     <tr>
@@ -4394,7 +4394,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-gastos-transporte">
+                            <input class="valor-numerico" name="input-gastos-transporte" style=" border:none;" [(ngModel)]="this.formulario.presupuesto.gtran" type="text" size="40" id="input-gastos-transporte">
                         </td>
                     </tr>
                     <tr>
@@ -4417,7 +4417,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-gastos-personal">
+                            <input class="valor-numerico" style=" border:none;" name="input-gastos-personal" [(ngModel)]="this.formulario.presupuesto.cper" type="text" size="40" id="input-gastos-personal">
                         </td>
                     </tr>
                     <tr>
@@ -4440,7 +4440,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-personal-nombrado">
+                            <input class="valor-numerico" style=" border:none;" name="input-personal-nombrado" [(ngModel)]="this.formulario.presupuesto.pnu" type="text" size="40" id="input-personal-nombrado">
                         </td>
                     </tr>
                     <tr>
@@ -4463,7 +4463,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-personal-externo">
+                            <input class="valor-numerico" style=" border:none;" name="input-personal-externo" [(ngModel)]="this.formulario.presupuesto.peu" type="text" size="40" id="input-personal-externo">
                         </td>
                     </tr>
                     <tr>
@@ -4485,7 +4485,7 @@
                             colspan="9" align="center" valign="middle" sdnum="3082;0;#.##0">
                             <font size="1">
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-otro-personal">
+                            <input class="valor-numerico" style=" border:none;" name="input-otro-personal" [(ngModel)]="this.formulario.presupuesto.ops" type="text" size="40" id="input-otro-personal">
                         </td>
                     </tr>
                     <tr>
@@ -4508,7 +4508,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-equipos-alquiler">
+                            <input class="valor-numerico" style=" border:none;" name="input-equipos-alquiler" [(ngModel)]="this.formulario.presupuesto.eqac" type="text" size="40" id="input-equipos-alquiler">
                         </td>
                     </tr>
                     <tr>
@@ -4531,7 +4531,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-inversion-infraestructura">
+                            <input class="valor-numerico" style=" border:none;" name="input-inversion-infraestructura" [(ngModel)]="this.formulario.presupuesto.iif" type="text" size="40" id="input-inversion-infraestructura">
     
                         </td>
                     </tr>
@@ -4555,7 +4555,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-gastos-generales">
+                            <input class="valor-numerico" style=" border:none;" name="input-gastos-generales" [(ngModel)]="this.formulario.presupuesto.gasg" type="text" size="40" id="input-gastos-generales">
                         </td>
                     </tr>
                     <tr>
@@ -4577,7 +4577,7 @@
                             colspan="9" align="center" valign="middle">
                             <font size="1">
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-infraestructura-universitaria">
+                            <input class="valor-numerico" style=" border:none;" name="input-infraestructura-universitaria" [(ngModel)]="this.formulario.presupuesto.viu" type="text" size="40" id="input-infraestructura-universitaria">
                         </td>
                     </tr>
                     <tr>
@@ -4599,7 +4599,7 @@
                             colspan="9" align="center" valign="middle" sdnum="3082;0;#.##0">
                             <font size="1">
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-imprevistos">
+                            <input class="valor-numerico" style=" border:none;" name="input-imprevistos" [(ngModel)]="this.formulario.presupuesto.imp" type="text" size="40" id="input-imprevistos">
                         </td>
                     </tr>
                     <tr>
@@ -4622,7 +4622,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-costos-administrativos">
+                            <input class="valor-numerico" style=" border:none;" name="input-costos-administrativos" [(ngModel)]="this.formulario.presupuesto.cap" type="text" size="40" id="input-costos-administrativos">
                         </td>
                     </tr>
                     <tr>
@@ -4649,7 +4649,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-total-costos">
+                            <input class="valor-numerico" style=" border:none;" name="input-total-costos" [(ngModel)]="this.formulario.presupuesto.totcos" type="text" size="40" id="input-total-costos">
                         </td>
                     </tr>
                     <tr>
@@ -4676,7 +4676,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-diferencia">
+                            <input class="valor-numerico" style=" border:none;" name="input-diferencia" [(ngModel)]="this.formulario.presupuesto.dif" type="text" size="40" id="input-diferencia">
                         </td>
                     </tr>
                     <tr>
@@ -4703,7 +4703,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-saldo-acomulado">
+                            <input class="valor-numerico" style=" border:none;" name="input-saldo-acomulado" [(ngModel)]="this.formulario.presupuesto.sala" type="text" size="40" id="input-saldo-acomulado">
                         </td>
                     </tr>
                     <tr>
@@ -4730,7 +4730,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-recursos-universidad">
+                            <input class="valor-numerico" style=" border:none;" name="input-recursos-universidad" [(ngModel)]="this.formulario.presupuesto.repu" type="text" size="40" id="input-recursos-universidad">
                         </td>
                     </tr>
                     <tr>
@@ -4755,7 +4755,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-personal-nombrado">
+                            <input class="valor-numerico" style=" border:none;" name="input-personal-nombrado" [(ngModel)]="this.formulario.presupuesto.per30" type="text" size="40" id="input-personal-nombrado">
                         </td>
                     </tr>
                     <tr>
@@ -4780,7 +4780,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-costos-totales">
+                            <input class="valor-numerico" style=" border:none;" name="input-costos-totales" [(ngModel)]="this.formulario.presupuesto.cpt17" type="text" size="40" id="input-costos-totales">
                         </td>
                     </tr>
                     <tr>
@@ -4805,7 +4805,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-valor-equipos">
+                            <input class="valor-numerico" style=" border:none;" name="input-valor-equipos" [(ngModel)]="this.formulario.presupuesto.valemi" type="text" size="40" id="input-valor-equipos">
                         </td>
                     </tr>
                     <tr>
@@ -4830,7 +4830,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-contribucion-hardware">
+                            <input class="valor-numerico" style=" border:none;" name="input-contribucion-hardware" [(ngModel)]="this.formulario.presupuesto.conciu" type="text" size="40" id="input-contribucion-hardware">
                         </td>
                     </tr>
                     <tr>
@@ -4855,7 +4855,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="40" id="input-rendimiento-financiamiento">
+                            <input class="valor-numerico" style=" border:none;" name="input-rendimiento-financiamiento" [(ngModel)]="this.formulario.presupuesto.rendf" type="text" size="40" id="input-rendimiento-financiamiento">
                         </td>
                     </tr>
                     <tr>
@@ -4908,7 +4908,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="48" id="input-distribucion-recursos">
+                            <input class="valor-numerico" style=" border:none;" name="input-distribucion-recursos" [(ngModel)]="this.formulario.presupuesto.disr" type="text" size="48" id="input-distribucion-recursos">
                         </td>
                         <td align="left" valign="middle">
                             <font size="1">
@@ -4947,7 +4947,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="48" id="input-fondo-comun">
+                            <input class="valor-numerico" style=" border:none;" name="input-fondo-comun" [(ngModel)]="this.formulario.presupuesto.fc" type="text" size="48" id="input-fondo-comun">
                         </td>
                         <td align="left" valign="middle">
                             <font size="1">
@@ -4985,7 +4985,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="48" id="input-facultad-instituto">
+                            <input class="valor-numerico" style=" border:none;" name="input-facultad-instituto" [(ngModel)]="this.formulario.presupuesto.foi" type="text" size="48" id="input-facultad-instituto">
                         </td>
                         <td align="left" valign="middle">
                             <font size="1">
@@ -5031,7 +5031,7 @@
                             <font size="1">
     
                             </font>
-                            <input class="valor-numerico" style=" border:none;" type="text" size="48" id="input-total-recursos">
+                            <input class="valor-numerico" style=" border:none;" name="input-total-recursos" [(ngModel)]="this.formulario.presupuesto.totalrec" type="text" size="48" id="input-total-recursos">
                         </td>
                         <td style="border-bottom: 1px solid #000000; border-right: 1px solid #000000" align="left" valign="middle">
                             <b>
@@ -5190,7 +5190,7 @@
                     <tr>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                             colspan="36" rowspan="4" height="68" align="left" valign="middle">
-                            <textarea style="margin: 2px" name="" id="observaciones" cols="170" rows="5"></textarea>
+                            <textarea style="margin: 2px" name="observaciones" [(ngModel)]="this.formulario.observaciones" id="observaciones" cols="170" rows="5"></textarea>
                         </td>
                     </tr>
                     <tr>
