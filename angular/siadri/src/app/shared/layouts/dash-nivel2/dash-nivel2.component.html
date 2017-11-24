@@ -2,7 +2,7 @@
 <div class="box box-solid ">
   <div id="content-box" class="box box-danger">
     <div class="box-header with-border">
-      <h3 class="box-title">Mapa</h3>
+      <h3 class="box-title">FORMULARIO</h3>
 
       <div class="box-tools pull-right">
         <button id="buton1" type="button" class="btn btn-box-tool" data-widget="collapse">
@@ -10,9 +10,15 @@
         </button>
       </div>
     </div>
+    <div class="form-group">
+        <select name="borradores" id="borradores" class="form-control" #select1 (click)="mostrarBorrador(select1.value)">
+            <option>SELECCIONA TUS BORRADORES</option>
+            <option *ngFor="let item of this.borradores" [value]="item.$key">{{item.nombreBorrador}}</option>
+        </select>
+    </div>
     <div id="div1" class="box-body">
 
-      <div class="container">
+      <div class="container text-center">
         <div id="form" class="row" style="overflow-y: scroll; height: 400px; padding-bottom:50px;" id="formulario-convenio">
             <style type="text/css">
                 body,
@@ -5714,9 +5720,13 @@
     
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <button type="button" (click)="enviar()" class="btn btn-success center-block" id="btn-enviar-estudio" data-toggle='modal' data-target='#modal1'>
-                    <span class="glyphicon glyphicon-print" aria-hidden="true"></span> enviar
+            <div class="col-md-12 text-center">
+            <div class="btn-group">
+                <button type="button" (click)="enviarBorrador()" class="btn btn-danger" id="btn-enviar-borrador" data-toggle='modal' data-target='#modal1'>
+                  <span class="glyphicon glyphicon-print" aria-hidden="true"></span>Borrador
+                </button>
+                <button type="button" (click)="enviarSolicitud()" class="btn btn-success" id="btn-enviar-estudio" data-toggle='modal' data-target='#modal1'>
+                    <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Enviar
                 </button>
             </div>
         </div>

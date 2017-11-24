@@ -55,20 +55,6 @@ import { DashNivel2Component } from './shared/layouts/dash-nivel2/dash-nivel2.co
     AngularFireModule.initializeApp(environment.config),
     AngularFireDatabaseModule,
     AngularFireAuthModule
-    // RouterModule.forRoot([
-    //   {
-    //   path: 'login',
-    //   component: LoginComponent, canActivate : [PublicGuard]
-    //   },
-    //   {
-    //   path: 'dashin',
-    //   component: DashboardInComponent, canActivate : [AuthGuard]
-    //   },
-    //   {
-    //   path: '**',
-    //   component: LoginComponent, canActivate : [PublicGuard]
-    //   },
-    // ])
   ],
   providers: [
       AutocompleteService,

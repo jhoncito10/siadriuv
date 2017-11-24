@@ -36,6 +36,9 @@ export class ModalPopupComponent implements OnInit {
 
   correosolicitante:any;
 
+  user = JSON.parse(localStorage.getItem('usuario'));
+  borrador="";
+
   constructor(private data: ModalService, private busqueda: BuscadorService) {
     ModalPopupComponent.modalstatic = data;
     this.data.currentMessage.subscribe(message => {
@@ -198,11 +201,27 @@ export class ModalPopupComponent implements OnInit {
 
 
   enviar(){
-    console.log(this.correosolicitante);
     this.data.currentformulario.subscribe(forma => {
       var form = forma;
-      console.log(form);
+      form.correo_solicitante = this.correosolicitante;
+      form.uid_diligenciado = this.user.uid;
+      form.correo_diligenciado = this.user.email;
+      this.busqueda.crearSolicitud(form);
     });
+  }
+
+  enviarBorrador(){
+    this.data.currentformulario.subscribe(forma => {
+      var form = forma;
+      form.uid_diligenciado = this.user.uid;
+      form.correo_diligenciado = this.user.email;
+     
+      this.busqueda.crearBorrador(form,this.borrador);
+
+      console.log(form)
+      console.log(this.borrador);
+    });
+    
   }
 }
 
