@@ -3,7 +3,7 @@
     <a href="#"><i class="fa fa-flask"></i> <span>Borradores</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
     
-      <li *ngFor="let item of this.borradores" [value]="item.$key"><a [routerLink]="['dashnivel2']" class='menubusqueda ' #valor (click)="mostrarBorrador(valor.value)" id="borradores"><i class="fa fa-circle-o"></i>{{item.nombreBorrador}}</a></li>
+      <li *ngFor="let item of this.borradores"  (click)="mostrarBorrador(item.$key)"><a [routerLink]="['dashnivel2']" class='menubusqueda' id="borradores"><i class="fa fa-circle-o"></i>{{item.nombreBorrador}}</a></li>
 
     </ul>
   </li>

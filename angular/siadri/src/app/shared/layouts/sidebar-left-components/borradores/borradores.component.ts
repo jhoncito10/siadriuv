@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { ModalService } from 'app/shared/modal.service';
 
 @Component({
   selector: 'app-borradores',
@@ -11,15 +12,19 @@ export class BorradoresComponent implements OnInit {
   borradores:any;
   user =  JSON.parse(localStorage.getItem('usuario'));
 
-  constructor(private ad:AngularFireDatabase) { 
+  constructor(private ad:AngularFireDatabase, private data:ModalService) {
+    console.log('constructor');
     
-    this.cargarBorradores(this.user.uid);
+    
   }
 
   ngOnInit() {
+    this.cargarBorradores(this.user.uid);
   }
 
   cargarBorradores(uid:any){
+
+  console.log(uid);
     this.ad.list('/borradores', {
       query: {
         orderByChild: 'uid_diligenciado',
@@ -27,21 +32,17 @@ export class BorradoresComponent implements OnInit {
       }
     }).subscribe(data=>{
       this.borradores = data;
-      console.log(this.borradores);
+      console.log(data);
   });
 
   }
 
   mostrarBorrador(key:any){
-
-    console.log(key);
-
     for (let index = 0; index < this.borradores.length; index++) {
       if (this.borradores[index]['$key'] === key) {
-       
+        this.data.changeformulario(this.borradores[index]);
        }
     }
-
-    
   }
+
 }

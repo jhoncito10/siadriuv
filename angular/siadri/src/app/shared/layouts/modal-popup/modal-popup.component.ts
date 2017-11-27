@@ -201,27 +201,36 @@ export class ModalPopupComponent implements OnInit {
 
 
   enviar(){
+    var form;
     this.data.currentformulario.subscribe(forma => {
-      var form = forma;
-      form.correo_solicitante = this.correosolicitante;
-      form.uid_diligenciado = this.user.uid;
-      form.correo_diligenciado = this.user.email;
-      this.busqueda.crearSolicitud(form);
+      form = forma;
     });
+
+    form.correo_solicitante = this.correosolicitante;
+    form.uid_diligenciado = this.user.uid;
+    form.correo_diligenciado = this.user.email;   
+
+    this.busqueda.crearSolicitud(form);
+    if(form.$key){
+      this.busqueda.EliminarBorrador(form.$key);
+    }
+
+    $('#modal1').modal('hide');
+    $('#inputBusqueda').val("");
   }
 
   enviarBorrador(){
+    var form;
     this.data.currentformulario.subscribe(forma => {
-      var form = forma;
-      form.uid_diligenciado = this.user.uid;
-      form.correo_diligenciado = this.user.email;
-     
-      this.busqueda.crearBorrador(form,this.borrador);
-
-      console.log(form)
-      console.log(this.borrador);
+      form = forma;
     });
-    
+
+    form.uid_diligenciado = this.user.uid;
+    form.correo_diligenciado = this.user.email;
+   
+    this.busqueda.crearBorrador(form,this.borrador);
+    $('#modal1').modal('hide');
+    $('#inputBusqueda').val("");
   }
 }
 
