@@ -26,11 +26,12 @@ export class DashNivel2Component implements OnInit {
     correo_diligenciado:""
   }
 
-  borradores:any;
-
   constructor(private data:ModalService, private ad:AngularFireDatabase) {
-    var user =  JSON.parse(localStorage.getItem('usuario'));
-    this.cargarBorradores(user.uid);
+
+    var date = new Date();
+    this.formulario.fecha.dia = ""+date.getDate();
+    this.formulario.fecha.mes = ""+(1+date.getMonth());
+    this.formulario.fecha.ano = ""+date.getFullYear();
 
   }
 
@@ -49,29 +50,7 @@ export class DashNivel2Component implements OnInit {
   }
 
 
-  cargarBorradores(uid:any){
-    this.ad.list('/borradores', {
-      query: {
-        orderByChild: 'uid_diligenciado',
-        equalTo:uid
-      }
-    }).subscribe(data=>{
-      this.borradores = data;
-  });
-
-  }
-
-  mostrarBorrador(key:any){
-
-    for (let index = 0; index < this.borradores.length; index++) {
-      if (this.borradores[index]['$key'] === key) {
-        this.formulario = this.borradores[index];
-        console.log(this.formulario);
-       }
-    }
-
-    
-  }
+ 
 
 
 
