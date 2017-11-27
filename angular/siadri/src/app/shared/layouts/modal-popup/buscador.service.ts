@@ -27,7 +27,7 @@ export class BuscadorService {
 
 
   crearSolicitud(solicitud:any){
-    this.ad.database.ref('/solicitudes').push(solicitud).then(()=>{
+    this.ad.database.ref('/solicitudes').push(solicitud).then(data=>{
       console.log('solicitud exitosa');
     });
   }
@@ -39,6 +39,10 @@ export class BuscadorService {
         console.log('borrador ingresado');
       });
     });
+  }
+
+  EliminarBorrador(key:any){
+    this.ad.database.ref('borradores/'+key).remove();
   }
 
  

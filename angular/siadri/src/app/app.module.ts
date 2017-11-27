@@ -30,6 +30,7 @@ import { LoginComponent } from './shared/layouts/login/login.component';
 import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in.component';
 import { InscripcionesComponent } from './shared/layouts/sidebar-left-components/inscripciones/inscripciones.component';
 import { DashNivel2Component } from './shared/layouts/dash-nivel2/dash-nivel2.component';
+import { BorradoresComponent } from './shared/layouts/sidebar-left-components/borradores/borradores.component';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { DashNivel2Component } from './shared/layouts/dash-nivel2/dash-nivel2.co
     LoginComponent,
     DashboardInComponent,
     InscripcionesComponent,
-    DashNivel2Component
+    DashNivel2Component,
+    BorradoresComponent
     
   ],
   imports: [

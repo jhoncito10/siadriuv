@@ -9,8 +9,8 @@ export const firebaseconfig = {
          projectId: 'siadri-99b02',
          storageBucket: 'siadri-99b02.appspot.com',
          messagingSenderId: '338005619047'
-
-            */
+      */
+            
 
       /** llaves francisco */
       /*
