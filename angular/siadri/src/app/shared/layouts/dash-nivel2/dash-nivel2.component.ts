@@ -38,7 +38,7 @@ export class DashNivel2Component implements OnInit {
  
   }
 
-  enviar(){
+  enviarSolicitud(){
     this.data.changeMessage("Ingrese el correo del responsable de esta solicitud");
     this.data.changeformulario(this.formulario);
   }

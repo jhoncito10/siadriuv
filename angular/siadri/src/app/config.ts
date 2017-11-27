@@ -13,15 +13,22 @@ export const firebaseconfig = {
             */
 
       /** llaves francisco */
+      /*
       apiKey: "AIzaSyCc-cRag4llh7ZOjFfDRk8uNN9Rn9188bI",
       authDomain: "univalledri.firebaseapp.com",
       databaseURL: "https://univalledri.firebaseio.com",
       projectId: "univalledri",
       storageBucket: "univalledri.appspot.com",
       messagingSenderId: "958099703375"
-
-
-
+      */
+      /*   llaves produccion  */
+      apiKey: "AIzaSyD4ELfRLxMTx4mNZp4Cw3uAOmUg3algWWM",
+      authDomain: "siadriuv.firebaseapp.com",
+      databaseURL: "https://siadriuv.firebaseio.com",
+      projectId: "siadriuv",
+      storageBucket: "",
+      messagingSenderId: "275977166524"
+  
 
 }
 

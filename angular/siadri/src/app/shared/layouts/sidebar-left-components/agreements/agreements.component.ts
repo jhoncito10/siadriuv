@@ -17,7 +17,9 @@ export class AgreementsComponent implements OnInit {
   enviar (id: any) {
     this.ruta.navigate(['/dash/mapa']);
     let valor: string;
-    if (id === 'menu-busqueda-por-tipo') {
+    if (id === 'menu-convenios-pais') {
+      valor = 'Pais';
+    } else if (id === 'menu-busqueda-por-tipo') {
       valor = 'Tipo Convenio';
     } else if (id === 'menu-busqueda-por-academia') {
       valor = 'Academia';

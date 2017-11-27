@@ -34,10 +34,10 @@ export class ModalPopupComponent implements OnInit {
   static mapstatic: any;
   static modalstatic: any;
 
-  correosolicitante:any;
+  correosolicitante: any;
 
   user = JSON.parse(localStorage.getItem('usuario'));
-  borrador="";
+  borrador = "";
 
   constructor(private data: ModalService, private busqueda: BuscadorService) {
     ModalPopupComponent.modalstatic = data;
@@ -54,14 +54,43 @@ export class ModalPopupComponent implements OnInit {
 
   busquedas(message) {
     ModalPopupComponent.conveniostatic = this.busqueda.getConvenio();
+    console.log(message);
+/*
+    if (message == 'Pais') {
+      console.log('1');
+      let noduplicadosTipoConvenio = Array.from(new Set(ModalPopupComponent.conveniostatic));
+      console.log('2');
+      noduplicadosTipoConvenio = this.removeDuplicates(ModalPopupComponent.conveniostatic, "country");
+      this.options.data = noduplicadosTipoConvenio;
+      this.options.getValue = "country";
+      //this.options.list.onClickEvent = function () { ModalPopupComponent.busquedaPorPais(); };
+      console.log('3');
+      ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#inputBusqueda'), this.options);
+      console.log('4');
+      ModalPopupComponent.easybusqueda.init();
 
-    if (message == 'Tipo Convenio') {
+    } else*/ if (message == 'Tipo Convenio') {/*
       let noduplicadosTipoConvenio = Array.from(new Set(ModalPopupComponent.conveniostatic));
       noduplicadosTipoConvenio = this.removeDuplicates(ModalPopupComponent.conveniostatic, "type");
       this.options.data = noduplicadosTipoConvenio;
       this.options.getValue = "type";
       this.options.list.onClickEvent = function () { ModalPopupComponent.busquedaPorTipo(); };
-      ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#inputBusqueda'),this.options);
+      ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#modal1 #inputBusqueda'), this.options);
+      */
+      let noduplicadosTipoConvenio = Array.from(new Set(ModalPopupComponent.conveniostatic));
+      noduplicadosTipoConvenio = this.removeDuplicates(ModalPopupComponent.conveniostatic, "type");
+      let config = {
+        data: noduplicadosTipoConvenio,
+        getValue : "type",
+        list: {
+          onClickEvent: function () {
+            ModalPopupComponent.busquedaPorAcademia();
+          },
+          match: { enabled: true }
+        }
+      }
+
+      ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#modal1 #inputBusqueda'), config);
       ModalPopupComponent.easybusqueda.init();
 
     } else if (message == 'Academia') {
@@ -108,8 +137,8 @@ export class ModalPopupComponent implements OnInit {
           }
         }
 
-          ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#inputBusqueda'),config);
-          ModalPopupComponent.easybusqueda.init();
+        ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#modal1 #inputBusqueda'), config);
+        ModalPopupComponent.easybusqueda.init();
       });
 
 
@@ -132,13 +161,21 @@ export class ModalPopupComponent implements OnInit {
     }
     return newArray;
   }
-  removeDuplicados(originalArray, prop) {
-    var array = [];
-    for (var i in originalArray) {
-      array.push({ prop: originalArray[i] });
+
+  static busquedaPorPais() {
+    var resultado = [];
+    var item = ModalPopupComponent.easybusqueda.getSelectedItemData();
+    console.log(item);
+    for (var index = 0; index < ModalPopupComponent.conveniostatic.length; index++) {
+      var element = ModalPopupComponent.conveniostatic[index];
+      if (element.country == item.country) {
+        resultado.push(element);
+      }
     }
-    return array;
+    ModalPopupComponent.modalstatic.changeObject(resultado);
+    ModalPopupComponent.cerrarModal();
   }
+
 
   static busquedaPorTipo() {
     var resultado = [];
@@ -165,7 +202,8 @@ export class ModalPopupComponent implements OnInit {
         var n = nobjuescuelas[x].search(item);;
         if (n != -1) {
           console.log(element.programas_escuelas);
-          resultado.push(element); }
+          resultado.push(element);
+        }
       }
 
 
@@ -200,7 +238,7 @@ export class ModalPopupComponent implements OnInit {
   }
 
 
-  enviar(){
+  enviar() {
     this.data.currentformulario.subscribe(forma => {
       var form = forma;
       form.correo_solicitante = this.correosolicitante;
@@ -210,18 +248,18 @@ export class ModalPopupComponent implements OnInit {
     });
   }
 
-  enviarBorrador(){
+  enviarBorrador() {
     this.data.currentformulario.subscribe(forma => {
       var form = forma;
       form.uid_diligenciado = this.user.uid;
       form.correo_diligenciado = this.user.email;
-     
-      this.busqueda.crearBorrador(form,this.borrador);
+
+      this.busqueda.crearBorrador(form, this.borrador);
 
       console.log(form)
       console.log(this.borrador);
     });
-    
+
   }
 }
 
