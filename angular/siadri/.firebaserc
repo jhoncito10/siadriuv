@@ -1,6 +1,7 @@
 {
   "projects": {
     "default": "siadri-99b02",
-    "francisco": "univalledri"
+    "francisco": "univalledri",
+    "produccion": "siadriuv"
   }
 }

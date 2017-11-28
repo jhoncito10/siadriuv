@@ -27,22 +27,22 @@ export class BuscadorService {
 
 
   crearSolicitud(solicitud:any){
-    this.ad.database.ref('/solicitudes').push(solicitud).then(data=>{
+    this.ad.app.database().ref('/solicitudes').push(solicitud).then(data=>{
       console.log('solicitud exitosa');
     });
   }
 
   crearBorrador(formulario:any, nombreBorr:any){
-    this.ad.database.ref('/borradores').push(formulario).then(data=>{
+    this.ad.app.database().ref('/borradores').push(formulario).then(data=>{
       console.log(data.path.o[1]);
-      this.ad.database.ref('/borradores/'+data.path.o[1]+'/nombreBorrador').set(nombreBorr).then(()=>{
+      this.ad.app.database().ref('/borradores/'+data.path.o[1]+'/nombreBorrador').set(nombreBorr).then(()=>{
         console.log('borrador ingresado');
       });
     });
   }
 
   EliminarBorrador(key:any){
-    this.ad.database.ref('borradores/'+key).remove();
+    this.ad.app.database().ref('borradores/'+key).remove();
   }
 
  

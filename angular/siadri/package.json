@@ -26,7 +26,7 @@
     "@types/html2canvas": "0.5.32",
     "@types/jasmine": "^2.6.3",
     "@types/leaflet": "^1.2.2",
-    "angularfire2": "4.0.0-rc.2",
+    "angularfire2": "^4.0.0-rc0",
     "bootstrap": "^3.3.7",
     "codelyzer": "^3.2.2",
     "core-js": "^2.5.1",
