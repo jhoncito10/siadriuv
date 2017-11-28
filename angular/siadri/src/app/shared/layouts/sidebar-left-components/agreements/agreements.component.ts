@@ -15,15 +15,17 @@ export class AgreementsComponent implements OnInit {
   }
 
   enviar (id: any) {
+    
     this.ruta.navigate(['/dash/mapa']);
     let valor: string;
-    if (id === 'menu-convenios-pais') {
+    if (id == 'menu-pais') {
       valor = 'Pais';
-    } else if (id === 'menu-busqueda-por-tipo') {
+    } else if (id == 'menu-tipo') {
       valor = 'Tipo Convenio';
-    } else if (id === 'menu-busqueda-por-academia') {
+    } else if (id == 'menu-academia') {
       valor = 'Academia';
     }
+    
     this.data.changeMessage(valor);
 
   }

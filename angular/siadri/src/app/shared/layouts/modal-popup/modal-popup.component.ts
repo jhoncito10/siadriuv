@@ -42,8 +42,9 @@ export class ModalPopupComponent implements OnInit {
   constructor(private data: ModalService, private busqueda: BuscadorService) {
     ModalPopupComponent.modalstatic = data;
     this.data.currentMessage.subscribe(message => {
+      console.log(message);
+      
       this.message = message;
-      console.log(this.message);
       this.busquedas(this.message);
     });
   }
@@ -54,45 +55,82 @@ export class ModalPopupComponent implements OnInit {
 
   busquedas(message) {
     ModalPopupComponent.conveniostatic = this.busqueda.getConvenio();
-    console.log(message);
-/*
-    if (message == 'Pais') {
-      console.log('1');
+
+    if (message == 'busqueda-pais') {
+      // console.log('1');
+      // console.log('2');
+      // noduplicadosTipoConvenio = this.removeDuplicates(ModalPopupComponent.conveniostatic, "country");
+      // this.options.data = noduplicadosTipoConvenio;
+      // this.options.getValue = "country";
+      // //this.options.list.onClickEvent = function () { ModalPopupComponent.busquedaPorPais(); };
+      // console.log('3');
+      // ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#inputBusqueda'), this.options);
+      // console.log('4');
+      // ModalPopupComponent.easybusqueda.init();
+
       let noduplicadosTipoConvenio = Array.from(new Set(ModalPopupComponent.conveniostatic));
-      console.log('2');
       noduplicadosTipoConvenio = this.removeDuplicates(ModalPopupComponent.conveniostatic, "country");
-      this.options.data = noduplicadosTipoConvenio;
-      this.options.getValue = "country";
-      //this.options.list.onClickEvent = function () { ModalPopupComponent.busquedaPorPais(); };
-      console.log('3');
-      ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#inputBusqueda'), this.options);
-      console.log('4');
-      ModalPopupComponent.easybusqueda.init();
+      var array_tipos: Array<any> = [];
+      var i = 0;
+      return Promise(function (resolve) {
+        ModalPopupComponent.conveniostatic.forEach(function (convenio) {
+          var object = convenio.country;
+          array_tipos.push(object);
 
-    } else*/ if (message == 'Tipo Convenio') {/*
-      let noduplicadosTipoConvenio = Array.from(new Set(ModalPopupComponent.conveniostatic));
-      noduplicadosTipoConvenio = this.removeDuplicates(ModalPopupComponent.conveniostatic, "type");
-      this.options.data = noduplicadosTipoConvenio;
-      this.options.getValue = "type";
-      this.options.list.onClickEvent = function () { ModalPopupComponent.busquedaPorTipo(); };
-      ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#modal1 #inputBusqueda'), this.options);
-      */
-      let noduplicadosTipoConvenio = Array.from(new Set(ModalPopupComponent.conveniostatic));
-      noduplicadosTipoConvenio = this.removeDuplicates(ModalPopupComponent.conveniostatic, "type");
-      let config = {
-        data: noduplicadosTipoConvenio,
-        getValue : "type",
-        list: {
-          onClickEvent: function () {
-            ModalPopupComponent.busquedaPorAcademia();
-          },
-          match: { enabled: true }
+          i++;
+          if (i == ModalPopupComponent.conveniostatic.length) {
+            let tipos_without_duplicates = Array.from(new Set(array_tipos));
+
+            resolve(tipos_without_duplicates);
+          }
+        });
+      }).then(function (tipos_without_duplicates) {
+        let config = {
+          data: tipos_without_duplicates,
+          list: {
+            onClickEvent: function () {
+              ModalPopupComponent.busquedaPorPais();
+            },
+            match: { enabled: true }
+          }
         }
-      }
 
-      ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#modal1 #inputBusqueda'), config);
-      ModalPopupComponent.easybusqueda.init();
+        ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#modal1 #inputBusqueda'), config);
+        ModalPopupComponent.easybusqueda.init();
+      });
 
+    } else if (message == 'Tipo Convenio') {
+
+      let noduplicadosTipoConvenio = Array.from(new Set(ModalPopupComponent.conveniostatic));
+      noduplicadosTipoConvenio = this.removeDuplicates(ModalPopupComponent.conveniostatic, "type");
+      var array_tipos: Array<any> = [];
+      var i = 0;
+      return Promise(function (resolve) {
+        ModalPopupComponent.conveniostatic.forEach(function (convenio) {
+          var object = convenio.type;
+          array_tipos.push(object);
+
+          i++;
+          if (i == ModalPopupComponent.conveniostatic.length) {
+            let tipos_without_duplicates = Array.from(new Set(array_tipos));
+
+            resolve(tipos_without_duplicates);
+          }
+        });
+      }).then(function (tipos_without_duplicates) {
+        let config = {
+          data: tipos_without_duplicates,
+          list: {
+            onClickEvent: function () {
+              ModalPopupComponent.busquedaPorTipo();
+            },
+            match: { enabled: true }
+          }
+        }
+
+        ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#modal1 #inputBusqueda'), config);
+        ModalPopupComponent.easybusqueda.init();
+      });
     } else if (message == 'Academia') {
       var array_programasAcademicos: Array<any> = [];
       var i = 0;
@@ -238,7 +276,7 @@ export class ModalPopupComponent implements OnInit {
   }
 
 
-  enviar(){
+  enviar() {
     var form;
     this.data.currentformulario.subscribe(forma => {
       form = forma;
@@ -246,10 +284,10 @@ export class ModalPopupComponent implements OnInit {
 
     form.correo_solicitante = this.correosolicitante;
     form.uid_diligenciado = this.user.uid;
-    form.correo_diligenciado = this.user.email;   
+    form.correo_diligenciado = this.user.email;
 
     this.busqueda.crearSolicitud(form);
-    if(form.$key){
+    if (form.$key) {
       this.busqueda.EliminarBorrador(form.$key);
     }
 
@@ -257,7 +295,7 @@ export class ModalPopupComponent implements OnInit {
     $('#inputBusqueda').val("");
   }
 
-  enviarBorrador(){
+  enviarBorrador() {
     var form;
     this.data.currentformulario.subscribe(forma => {
       form = forma;
@@ -265,8 +303,8 @@ export class ModalPopupComponent implements OnInit {
 
     form.uid_diligenciado = this.user.uid;
     form.correo_diligenciado = this.user.email;
-   
-    this.busqueda.crearBorrador(form,this.borrador);
+
+    this.busqueda.crearBorrador(form, this.borrador);
     $('#modal1').modal('hide');
     $('#inputBusqueda').val("");
   }
