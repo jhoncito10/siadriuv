@@ -111,11 +111,12 @@ export class LeaftletmapService {
       for (var index = 0; index < world.features.length; index++) {
         var element = world.features[index]; 
         var latlngs = element.geometry.coordinates;
-        var polygon = L.polygon(latlngs, {color: '#DF7977', label:element.properties.name});
+        var polygon = L.polygon(latlngs, {color: '#E81C25', label:element.properties.name});
 
         poligons.push(polygon);
 
         polygon.on('click', function(e){
+          console.log(e);
           var popup = L.popup();
           popup.setLatLng(e.latlng).setContent('<div class="text-center"><h3>'+e.target.options.label+'</h3><button class="btn btn-danger">Ver informacion</button></div>').openOn(LeaftletmapService.mapsta);
 
@@ -127,7 +128,7 @@ export class LeaftletmapService {
             if(poligons[i] != e.target){
               var layer = poligons[i];
               layer.setStyle({
-                  color: '#DF7977'
+                  color: '#E81C25'
               });
             }
             
