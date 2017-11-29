@@ -43,7 +43,7 @@ export class ModalPopupComponent implements OnInit {
     ModalPopupComponent.modalstatic = data;
     this.data.currentMessage.subscribe(message => {
       console.log(message);
-      
+
       this.message = message;
       this.busquedas(this.message);
     });
@@ -56,37 +56,29 @@ export class ModalPopupComponent implements OnInit {
   busquedas(message) {
     ModalPopupComponent.conveniostatic = this.busqueda.getConvenio();
 
-    if (message == 'busqueda-pais') {
-      // console.log('1');
-      // console.log('2');
-      // noduplicadosTipoConvenio = this.removeDuplicates(ModalPopupComponent.conveniostatic, "country");
-      // this.options.data = noduplicadosTipoConvenio;
-      // this.options.getValue = "country";
-      // //this.options.list.onClickEvent = function () { ModalPopupComponent.busquedaPorPais(); };
-      // console.log('3');
-      // ModalPopupComponent.easybusqueda = new EasyAutocomplete.main($('#inputBusqueda'), this.options);
-      // console.log('4');
-      // ModalPopupComponent.easybusqueda.init();
+    if (message == 'Pais') {
 
-      let noduplicadosTipoConvenio = Array.from(new Set(ModalPopupComponent.conveniostatic));
-      noduplicadosTipoConvenio = this.removeDuplicates(ModalPopupComponent.conveniostatic, "country");
-      var array_tipos: Array<any> = [];
+
+      let noduplicadosPais = Array.from(new Set(ModalPopupComponent.conveniostatic));
+      noduplicadosPais = this.removeDuplicates(ModalPopupComponent.conveniostatic, "country");
+      var array_pais: Array<any> = [];
       var i = 0;
       return Promise(function (resolve) {
         ModalPopupComponent.conveniostatic.forEach(function (convenio) {
           var object = convenio.country;
-          array_tipos.push(object);
+
+          array_pais.push(object);
 
           i++;
           if (i == ModalPopupComponent.conveniostatic.length) {
-            let tipos_without_duplicates = Array.from(new Set(array_tipos));
+            let pais_without_duplicates = Array.from(new Set(array_pais));
 
-            resolve(tipos_without_duplicates);
+            resolve(pais_without_duplicates);
           }
         });
-      }).then(function (tipos_without_duplicates) {
+      }).then(function (pais_without_duplicates) {
         let config = {
-          data: tipos_without_duplicates,
+          data: pais_without_duplicates,
           list: {
             onClickEvent: function () {
               ModalPopupComponent.busquedaPorPais();
@@ -203,10 +195,9 @@ export class ModalPopupComponent implements OnInit {
   static busquedaPorPais() {
     var resultado = [];
     var item = ModalPopupComponent.easybusqueda.getSelectedItemData();
-    console.log(item);
     for (var index = 0; index < ModalPopupComponent.conveniostatic.length; index++) {
       var element = ModalPopupComponent.conveniostatic[index];
-      if (element.country == item.country) {
+      if (element.country == item) {
         resultado.push(element);
       }
     }
@@ -218,10 +209,9 @@ export class ModalPopupComponent implements OnInit {
   static busquedaPorTipo() {
     var resultado = [];
     var item = ModalPopupComponent.easybusqueda.getSelectedItemData();
-
     for (var index = 0; index < ModalPopupComponent.conveniostatic.length; index++) {
       var element = ModalPopupComponent.conveniostatic[index];
-      if (element.type == item.type) {
+      if (element.type == item) {
         resultado.push(element);
       }
     }
@@ -232,7 +222,6 @@ export class ModalPopupComponent implements OnInit {
   static busquedaPorAcademia() {
     var resultado = [];
     var item = ModalPopupComponent.easybusqueda.getSelectedItemData();
-
     for (var index = 0; index < ModalPopupComponent.conveniostatic.length; index++) {
       var element = ModalPopupComponent.conveniostatic[index];
       var nobjuescuelas = element.programas_escuelas//.search(item);
@@ -243,8 +232,6 @@ export class ModalPopupComponent implements OnInit {
           resultado.push(element);
         }
       }
-
-
     }
     ModalPopupComponent.modalstatic.changeObject(resultado);
     ModalPopupComponent.cerrarModal();
@@ -253,7 +240,6 @@ export class ModalPopupComponent implements OnInit {
   busquedaconveniosPais(pais) {
     ModalPopupComponent.conveniostatic = this.busqueda.getConvenio();
     var resultado = [];
-
     for (var index = 0; index < ModalPopupComponent.conveniostatic.length; index++) {
       var element = ModalPopupComponent.conveniostatic[index];
       if (element.country == pais) {
