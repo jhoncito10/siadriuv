@@ -102,6 +102,7 @@ export class DashNivel2Component implements OnInit {
 
       //document.body.style.webkitTransform =  scale;
       w.print();
+      w.close();
 
   }
 
