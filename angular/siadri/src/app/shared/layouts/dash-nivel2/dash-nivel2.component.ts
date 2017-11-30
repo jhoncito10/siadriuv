@@ -94,7 +94,7 @@ export class DashNivel2Component implements OnInit {
     });
     
  var printContents = document.getElementById('formulario-convenio').innerHTML;
- var scale = 'scale(0.98)'; 
+ var scale = 'scale(0.999)'; 
    var w=window.open();
       w.document.write(printContents);
       w.document.head.style.transform = scale; 
