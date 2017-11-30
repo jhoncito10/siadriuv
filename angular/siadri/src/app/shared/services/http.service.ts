@@ -18,16 +18,14 @@ export class HttpService {
     return this._http.get(url, options).map(response => response.json());
   }
 
-  public post(url, params, token?): Observable<any> {
-    const headers = !!token ? new Headers({
-      'Content-Type': 'application/json',
-      'Api-Token': token
-    }) : new Headers({'Content-Type': 'application/json'});
+  public post(url, params): Observable<any> {
+    const headers =   new Headers({'Content-Type': 'application/json'});
 
     const options = new RequestOptions({headers: headers});
     const body = JSON.stringify(params);
 
-    return this._http.post(url, body, options).map(response => response.json());
+    return this._http.post(url, body, options).map(response => {response.json();
+    console.log('email')});
   }
 
   public delete(url, token): Observable<any> {

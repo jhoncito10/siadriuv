@@ -114,3 +114,14 @@ export class DashNivel2Component implements OnInit {
  
 
 }
+
+/*
+ public logIn(username: string, password: string) {
+    const url = `${this.apiBaseURL}/users/login`;
+
+    return this._http.post(url, {
+      'username': username,
+      'password': password
+    });
+  }
+*/
