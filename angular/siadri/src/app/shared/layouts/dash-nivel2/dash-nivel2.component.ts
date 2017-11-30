@@ -2,6 +2,7 @@ import { ModalService } from './../../modal.service';
 import { Component, OnInit } from '@angular/core';
 import * as jsPDF from 'jspdf';
 import { AngularFireDatabase } from 'angularfire2/database';
+import {HttpService} from './../../services/http.service';
 
 declare var $:any;
 

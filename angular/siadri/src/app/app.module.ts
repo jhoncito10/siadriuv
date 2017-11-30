@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { RegistroService } from './shared/services/registro.service';
 import { LoginService } from './shared/services/login.service';
 import { AutocompleteService } from './shared/services/autocomplete.service';
+import { HttpService } from './shared/services/http.service';
 
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -62,6 +63,7 @@ import { BorradoresComponent } from './shared/layouts/sidebar-left-components/bo
   providers: [
       AutocompleteService,
       LoginService,
+      HttpService,
       RegistroService,
       PublicGuard,
       AuthGuard,
