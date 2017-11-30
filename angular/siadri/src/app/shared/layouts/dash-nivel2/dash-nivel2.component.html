@@ -14,7 +14,7 @@
     <div id="div1" class="box-body">
 
       <div class="container text-center">
-        <div id="form" class="row" style="overflow-y: scroll; height: 400px; padding-bottom:50px;" id="formulario-convenio">
+        <div class="row" style="overflow-y: scroll; height: 400px; padding-bottom:50px;" id="formulario-convenio">
             <style type="text/css">
                 body,
                 div,
@@ -3586,7 +3586,7 @@
                             <br>(cuando aplique)</td>
                         <td style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-right: 2px solid #000000" colspan="12"
                             rowspan="2" align="center" valign="middle">
-                            <input style="margin: 5px" name="input-vicerectoria-administrativa" [(ngModel)]="this.formulario.vicerectoria" type="text" size="40" id="input-vicerectoria-administrativa">
+                            <input class="input-texto" style="margin: 5px" name="input-vicerectoria-administrativa" [(ngModel)]="this.formulario.vicerectoria" type="text" size="40" id="input-vicerectoria-administrativa">
                             <br>
                         </td>
                         <td align="left" valign="middle">
@@ -5718,7 +5718,7 @@
             <div class="col-md-12 text-center">
             <div class="btn-group">
                 <button type="button" (click)="enviarBorrador()" class="btn btn-danger" id="btn-enviar-borrador" data-toggle='modal' data-target='#modal1'>
-                  <span class="glyphicon glyphicon-print" aria-hidden="true"></span>Borrador
+                  <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Borrador
                 </button>
                 <button type="button" (click)="enviarSolicitud()" class="btn btn-success" id="btn-enviar-estudio" data-toggle='modal' data-target='#modal1'>
                     <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Enviar
@@ -5726,11 +5726,10 @@
             </div>
         </div>
       </div>
-      <!-- <button (click)="download()">download </button> -->
-      <!-- <button (click)="test()">test </button> -->
+      <button (click)="download()">download </button>
     </div>
-    <div id="box">
-
+    <div id="box" style="height: 2000">
+       
     </div>
   </div>
 </div>
