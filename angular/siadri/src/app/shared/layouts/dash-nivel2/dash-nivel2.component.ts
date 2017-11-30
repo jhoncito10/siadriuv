@@ -92,6 +92,10 @@ export class DashNivel2Component implements OnInit {
     $.each(inputs2,function (index,value) {
       $(this).html($(this).val());
     });
+    var inputs3 = $('.checkbox');
+    $.each(inputs3,function (index,value) {
+      $(this).attr('checked',$(this).is(':checked'));
+    });
     
  var printContents = document.getElementById('formulario-convenio').innerHTML;
  var scale = 'scale(0.999)'; 
