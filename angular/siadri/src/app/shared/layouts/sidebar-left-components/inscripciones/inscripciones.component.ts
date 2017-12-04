@@ -13,6 +13,9 @@ export class InscripcionesComponent implements OnInit {
   ngOnInit() {
   }
 
+  //METODO QUE INICIALIZA EL FORMULARIO, CREANDO EL OBJETO JSON QUE GUARDA LOS DATOS DE LOS INPUTS
+  //GENERA LA FECHA ACTUAL, (37) CAMBIA LOS VALORES DEL FORMULARIO EN EL OBSERVABLE QUE SE ENCUENTRA EN MODALSERVICE
+  //(38) CAMBIA EL VALOR DE LA VARIABLE OBSERVABLE IMPRIMIR QUE SE ENCUENTRA EN MODALSERVICE
   inicializarFormulario(){
     var formulario = {
       fecha:{dia:"",mes:"",ano:""},
@@ -32,5 +35,6 @@ export class InscripcionesComponent implements OnInit {
     formulario.fecha.ano = ""+date.getFullYear();
 
     this.data.changeformulario(formulario);
+    this.data.changeImprimir(false);
   }
 }

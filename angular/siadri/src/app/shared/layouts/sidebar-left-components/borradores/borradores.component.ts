@@ -13,18 +13,14 @@ export class BorradoresComponent implements OnInit {
   user =  JSON.parse(localStorage.getItem('usuario'));
 
   constructor(private ad:AngularFireDatabase, private data:ModalService) {
-    console.log('constructor');
-    
-    
   }
 
   ngOnInit() {
     this.cargarBorradores(this.user.uid);
   }
 
+  //METODO QUE CARGA LOS BORRADORES DE EL USUARIO QUE ESTA AUTENTICADO EN ESE MOMENTO
   cargarBorradores(uid:any){
-
-  console.log(uid);
     this.ad.list('/borradores', {
       query: {
         orderByChild: 'uid_diligenciado',
@@ -32,15 +28,16 @@ export class BorradoresComponent implements OnInit {
       }
     }).subscribe(data=>{
       this.borradores = data;
-      console.log(data);
   });
 
   }
 
+  //METODO QUE PERMITE MOSTRAR LOS BORRADORES DE EL USUARIO DEPENDIENDO EL BORRADOR AL QUE LE DE CLICK
   mostrarBorrador(key:any){
     for (let index = 0; index < this.borradores.length; index++) {
       if (this.borradores[index]['$key'] === key) {
         this.data.changeformulario(this.borradores[index]);
+        this.data.changeImprimir(false);
        }
     }
   }

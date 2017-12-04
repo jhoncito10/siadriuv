@@ -30,13 +30,10 @@ export class DashboardMapComponent implements OnInit {
 
    ngOnInit() {
     this.modal.currentObject.subscribe(data=>{
-      //console.log(data);
       this.convenios = Observable.of(data);
     });
 
-    // $('#icongo').mouseover(function(){
-    //   console.log('ererer');
-    // });
+ 
     $("#div89").on('click',function(){
       console.log('click');
     });

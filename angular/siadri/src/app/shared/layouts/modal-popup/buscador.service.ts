@@ -26,9 +26,11 @@ export class BuscadorService {
   }
 
 
-  crearSolicitud(solicitud:any){
+  crearSolicitud(solicitud:any,nombreSol:any){
     this.ad.app.database().ref('/solicitudes').push(solicitud).then(data=>{
-      console.log('solicitud exitosa');
+      this.ad.app.database().ref('/solicitudes/'+data.path.o[1]+'/nombreSolicitud').set(nombreSol).then(()=>{
+        console.log('solicitud exitosa');
+      });
     });
   }
 

@@ -28,10 +28,14 @@ export class DashNivel2Component implements OnInit {
     correo_diligenciado:""
   }
 
-  constructor(private data:ModalService, private ad:AngularFireDatabase) {
-    
-  }
+  imprimir = false;
 
+  constructor(private data:ModalService, private ad:AngularFireDatabase) {
+    this.data.changeImprimir(false);
+  }
+// (38) METODO QUE MANTIENE REFRESCANDO LA VARIABLE FORMULARIO , DEPENDIENDO LO QUE CONTENGA LAVARIABLE OBSERVABLE DE MODALSERVICE
+// (52) METODO QUE MANTIENE REFRESCANDO LA VARIABLE IMPRIMIR , DEPENDIENDO LO QUE CONTENGA LAVARIABLE OBSERVABLE DE MODALSERVICE,
+// PARA MOSTRAR O NO EL BOTON IMPRIMIR
   ngOnInit() {
     this.data.currentformulario.subscribe(forma => {
      
@@ -45,18 +49,27 @@ export class DashNivel2Component implements OnInit {
       this.formulario.fecha.ano = ""+date.getFullYear();
      
     });
+
+    this.data.currentImprimir.subscribe(imp => {
+      this.imprimir = imp;
+    });
   }
 
+   //METODO QUE CAMBIA LA VARIABLE OBSERVABLE FORMULARIO QUE SE ENCUENTRA EN EL MODALSERVICE
+  //PARA QUE POSTERIORMENTE PUEDA SER ENVIADA COMO SOLICITUD DESDE MODAL-POPUP
   enviarSolicitud(){
     this.data.changeMessage("Ingrese el correo del responsable de esta solicitud");
     this.data.changeformulario(this.formulario);
   }
 
+  //METODO QUE CAMBIA LA VARIABLE OBSERVABLE FORMULARIO QUE SE ENCUENTRA EN EL MODALSERVICE
+  //PARA QUE POSTERIORMENTE PUEDA SER ENVIADA COMO BORRADOR DESDE MODAL-POPUP
   enviarBorrador(){
     this.data.changeMessage("nombre");
     this.data.changeformulario(this.formulario);
   }
 
+  //METODO QUE INICIALIZA EL FORMULARIO LA PRIMERA VEZ QUE INGRESA A DASH-NIVEL2 
   inicializarFormulario(){
     this.formulario = {
       fecha:{dia:"",mes:"",ano:""},
@@ -77,8 +90,8 @@ export class DashNivel2Component implements OnInit {
   }
 
 
-
-  download() { 
+//METODO QUE IMPRIME LA SOLICITUD
+  imprimirSolicitud() { 
 
     var inputs = $('.input-texto');
     $.each(inputs,function (index,value) {
@@ -97,18 +110,39 @@ export class DashNivel2Component implements OnInit {
       $(this).attr('checked',$(this).is(':checked'));
     });
     
- var printContents = document.getElementById('formulario-convenio').innerHTML;
- var scale = 'scale(0.999)'; 
-   var w=window.open();
+      var printContents = document.getElementById('formulario-convenio').innerHTML;
+      var scale = 'scale(0.999)'; 
+      var w=window.open();
       w.document.write(printContents);
       w.document.head.style.transform = scale; 
       w.document.body.style.transform = scale;  
-
-      //document.body.style.webkitTransform =  scale;
       w.print();
       w.close();
 
   }
+
+
+  //  var jspdf = new jsPDF();
+
+//       console.log(w.document.documentElement);
+
+    //  html2canvas($('#formulario-convenio')).then(function(canvas){
+    //   var canvasImg = canvas.toDataURL("image/jpg");
+    //   $('#box').html('<img height=\'500\' src="'+canvasImg+'" alt="">');
+      
+    //  });
+
+
+      // var specialElementHandlers = {
+      //   '#box': function (element, renderer) {
+      //       return true;
+      //   }
+      // };
+      // jspdf.fromHTML($('#box').html(),150,150,{'elementHandlers': specialElementHandlers});
+
+      // jspdf.save('auto.pdf');
+      //document.body.style.webkitTransform =  scale;
+
 
  
 

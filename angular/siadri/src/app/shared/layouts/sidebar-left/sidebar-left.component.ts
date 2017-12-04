@@ -5,6 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './sidebar-left.component.html',
   styleUrls: ['./sidebar-left.component.css']
 })
+
+//CLASE CONTENEDORA DE LOS COMPONENTES AGGREMENTS (PARTE PUBLICA), BORRADORES, INSCRIPCIONES Y SOLICITUDES (SEGUNDO NIVEL)
 export class SidebarLeftComponent implements OnInit {
   datosUser = null;
   constructor() {

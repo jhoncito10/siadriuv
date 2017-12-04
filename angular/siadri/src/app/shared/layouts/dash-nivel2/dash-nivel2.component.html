@@ -5717,7 +5717,7 @@
     
     
         </div>
-        <div class="row">
+        <div *ngIf="!this.imprimir" class="row">
             <div class="col-md-12 text-center">
             <div class="btn-group">
                 <button type="button" (click)="enviarBorrador()" class="btn btn-danger" id="btn-enviar-borrador" data-toggle='modal' data-target='#modal1'>
@@ -5727,14 +5727,17 @@
                     <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Enviar
                 </button>
             </div>
+            </div>
         </div>
-      </div>
-    <div class="row">
-    </div>
-        <button type="button" (click)="download()" class="btn btn-warning" id="btn-imprimir">
-            <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir
+    <div *ngIf="this.imprimir" class="row">
+        <button type="button" (click)="imprimirSolicitud()" class="btn btn-warning" id="btn-imprimir">
+           <span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir
         </button>
+    </div>
+        
     </div>
 
   </div>
+  </div>
+  
 </div>

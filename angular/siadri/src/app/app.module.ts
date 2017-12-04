@@ -7,7 +7,6 @@ import { AuthGuard } from './shared/services/auth.guard';
 import { RouterModule } from '@angular/router';
 import { RegistroService } from './shared/services/registro.service';
 import { LoginService } from './shared/services/login.service';
-import { AutocompleteService } from './shared/services/autocomplete.service';
 
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -31,6 +30,7 @@ import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in
 import { InscripcionesComponent } from './shared/layouts/sidebar-left-components/inscripciones/inscripciones.component';
 import { DashNivel2Component } from './shared/layouts/dash-nivel2/dash-nivel2.component';
 import { BorradoresComponent } from './shared/layouts/sidebar-left-components/borradores/borradores.component';
+import { SolicitudesComponent } from './shared/layouts/sidebar-left-components/solicitudes/solicitudes.component';
 
 
 @NgModule({
@@ -46,7 +46,8 @@ import { BorradoresComponent } from './shared/layouts/sidebar-left-components/bo
     DashboardInComponent,
     InscripcionesComponent,
     DashNivel2Component,
-    BorradoresComponent
+    BorradoresComponent,
+    SolicitudesComponent
     
   ],
   imports: [
@@ -60,7 +61,6 @@ import { BorradoresComponent } from './shared/layouts/sidebar-left-components/bo
     AngularFireAuthModule
   ],
   providers: [
-      AutocompleteService,
       LoginService,
       RegistroService,
       PublicGuard,

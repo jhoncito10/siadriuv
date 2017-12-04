@@ -7,6 +7,8 @@ import * as firebase from 'firebase/app';
 @Injectable()
 export class RegistroService {
   constructor(public afAuth: AngularFireAuth) { }
+
+  //metodo que se utiliza para la creacion de un nuevo usuario en el sistema
     createUser(email: string, pass: string) {
          // tslint:disable-next-line:prefer-const
           let promise = new Promise((resolve, reject) => {

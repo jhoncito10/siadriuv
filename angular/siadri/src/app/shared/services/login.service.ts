@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 
+
+//ESTA CLASE CONTIENE LOS METODOS QUE PERMITEN EL LOGIN Y LOGOUT DE LOS USUARIOS AL SISTEMA
 @Injectable()
 export class LoginService {
   public usuario: any = null;
@@ -15,6 +17,7 @@ export class LoginService {
       }
     }
 
+    //LOGIN CON GOOGLE
     login() {
       // tslint:disable-next-line:prefer-const
       let promise = new Promise((resolve, reject) => {
@@ -31,6 +34,8 @@ export class LoginService {
       });
       return promise;
       }
+
+      //LOGIN CON EMAIL Y PASSWORD
       loginEmail(email: string, pass: string) {
             // tslint:disable-next-line:prefer-const
             let promise = new Promise((resolve, reject) => {
@@ -51,6 +56,8 @@ export class LoginService {
             });
             return promise;
    }
+
+   //CERRAR SESION EN EL SISTEMA
    logout() {
       localStorage.removeItem('usuario');
       this.usuario = null ;

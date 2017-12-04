@@ -2,7 +2,6 @@ import { Observable } from 'rxjs/Observable';
 import { DashboardMapComponent } from './../dashboard-map/dashboard-map.component';
 import { BuscadorService } from './buscador.service';
 import { ModalService } from './../../modal.service';
-import { AutocompleteService } from './../../services/autocomplete.service';
 import { Subject } from 'rxjs/Rx';
 import { any } from 'codelyzer/util/function';
 import { FirebaseListObservable, AngularFireDatabase } from 'angularfire2/database';
@@ -271,8 +270,9 @@ export class ModalPopupComponent implements OnInit {
     form.correo_solicitante = this.correosolicitante;
     form.uid_diligenciado = this.user.uid;
     form.correo_diligenciado = this.user.email;
+    var parametro = form.fecha.dia + "/" + form.fecha.mes + "/" + form.fecha.ano + "/#" + Math.floor(Math.random() * (1000));
 
-    this.busqueda.crearSolicitud(form);
+    this.busqueda.crearSolicitud(form,parametro);
     if (form.$key) {
       this.busqueda.EliminarBorrador(form.$key);
     }
