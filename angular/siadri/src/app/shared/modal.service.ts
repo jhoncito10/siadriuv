@@ -27,6 +27,7 @@ export class ModalService {
   currentformulario = this.formulario.asObservable();
   changeformulario(form:any){
     this.formulario.next(form);
+    console.log(form);
   }
 
   //variable que permite controlar la aparicion o desaparicion del boton imprimir de la interfaz

@@ -2,6 +2,7 @@ import { ModalService } from './../../modal.service';
 import { Component, OnInit } from '@angular/core';
 import * as jsPDF from 'jspdf';
 import { AngularFireDatabase } from 'angularfire2/database';
+import {HttpService} from './../../services/http.service';
 import * as html2canvas from 'html2canvas';
 
 declare var $:any;
@@ -147,3 +148,14 @@ export class DashNivel2Component implements OnInit {
  
 
 }
+
+/*
+ public logIn(username: string, password: string) {
+    const url = `${this.apiBaseURL}/users/login`;
+
+    return this._http.post(url, {
+      'username': username,
+      'password': password
+    });
+  }
+*/

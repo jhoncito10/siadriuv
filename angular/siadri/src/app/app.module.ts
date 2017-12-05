@@ -7,6 +7,7 @@ import { AuthGuard } from './shared/services/auth.guard';
 import { RouterModule } from '@angular/router';
 import { RegistroService } from './shared/services/registro.service';
 import { LoginService } from './shared/services/login.service';
+import { HttpService } from './shared/services/http.service';
 
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -62,6 +63,7 @@ import { SolicitudesComponent } from './shared/layouts/sidebar-left-components/s
   ],
   providers: [
       LoginService,
+      HttpService,
       RegistroService,
       PublicGuard,
       AuthGuard,
