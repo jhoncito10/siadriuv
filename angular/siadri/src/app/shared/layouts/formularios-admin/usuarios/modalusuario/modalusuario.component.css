@@ -1,0 +1,34 @@
+input {
+    border-radius: 0px 5px 5px 0px;
+    border: 1px solid rgba(207, 207, 207, 0.842);
+    margin-bottom: 15px;
+    width: 85%;
+    height: 30px;
+    padding: 0px 15px;
+    font-family: 'Open Sans', sans-serif;
+  }
+  select{
+    border-radius: 0px 5px 5px 0px;
+    border: 1px solid rgba(194, 190, 190, 0.842);
+    margin-bottom: 15px;
+    width: 85%;
+    height: 30px;
+    padding: 0px 15px;
+    font-family: 'Open Sans', sans-serif;
+  }
+  
+  .leftcontact {
+    width:49.5%;
+    float:left;
+    border-right: 1px dotted #CCC;
+    box-sizing: border-box;
+    padding: 0px 15px 0px 0px;
+  }
+  
+  .rightcontact {
+    width:49.5%;
+    float:right;
+    box-sizing: border-box;
+    padding: 0px 0px 0px 15px;
+  }
+  

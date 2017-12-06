@@ -1,0 +1,36 @@
+<div class="principal animated fadeIn ">
+    <div id="modrolebox"  >
+      <div class="contentform">
+        <div class="panel panel-custom-l-red ">
+          <div class="panel-heading">Usuarios</div>
+          <div class="panel-body ">
+              <div class="table-responsive">
+            <table datatable class="table table-hover table-condensed" [dtTrigger]= "dtTrigger" >
+              <thead>
+                <tr>
+                  <th>Correo</th>
+                  <th>Nombre</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="cursor:pointer" *ngFor="let item of this.user" (click)="viewUser(item)" data-toggle="modal" data-target="#modal2">
+                  <td>
+                     {{item.email}}
+                  </td>
+                  <td>
+                     {{item.displayname}}
+                  </td>
+                  <td>
+                     {{item.estado}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  

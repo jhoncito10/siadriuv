@@ -13,24 +13,25 @@ admin.initializeApp(functions.config().firebase);
 
 const ref = admin.database().ref();
 
-
-    exports.createUserAccount = functions.auth.user().onCreate(event => {
-        const uid = event.data.uid;
-        const email = event.data.email;
-        const dominio = email.split("@");
-        const displayName = event.data.displayName || "Nombre Usuario";
-        if (dominio[1]=== 'correounivalle.edu.co') {
-            const newUserRef = ref.child(`/usuarios/${uid}`);
-            newUserRef.set({
-                direccion: "",
-                displayname: displayName,
-                email:email,
-                empresa:"",                            
+        exports.CreateUser = functions.auth.user().onCreate(event=>{
+            
+            const uid = event.data.uid;
+            const displayName = event.data.displayName || "";
+            //  console.log(event);
+            const email = event.data.email;
+            const newUser = ref.child(`/usuarios/${uid}`);
+            newUser.set({
+                direccion:"",
+                displayname:displayName,
+                email: email,
+                roles:"PUBLICO",
+                empresa:"",
                 telefono:"",
-                url:"nivel2/index.html"
-                });
-            }
-        });
+                estado: ""
+            });
+            
+            });
+    
 
         exports.enviarCorreo = functions.https.onRequest((req, res) => {
             //res.send('Inicia enviarCorreo');

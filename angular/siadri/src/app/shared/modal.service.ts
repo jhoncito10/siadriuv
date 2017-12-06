@@ -27,7 +27,6 @@ export class ModalService {
   currentformulario = this.formulario.asObservable();
   changeformulario(form:any){
     this.formulario.next(form);
-    console.log(form);
   }
 
   //variable que permite controlar la aparicion o desaparicion del boton imprimir de la interfaz
@@ -36,5 +35,12 @@ export class ModalService {
   currentImprimir = this.imprimir.asObservable();
   changeImprimir(imp:any){
     this.imprimir.next(imp);
+  }
+
+  //variable que contiene el mensaje que se muestra en el Modal-Popup
+  private UserSource = new BehaviorSubject<any>('default message');
+  currentUser = this.UserSource.asObservable();
+  changeUser(user: any) {
+    this.UserSource.next(user);
   }
 }
