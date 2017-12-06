@@ -1,0 +1,122 @@
+<div class="modal fade" id="modal2">
+    <div class="modal-dialog" style="width:800px;">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: rgb(232,28,37);color:#F5EDED; ">
+          <button type="button" class="close" data-dismiss="modal">×</button>
+          <h4 class="modal-title text-center"> Editar Usuario </h4>
+        </div>
+        <div class="modal-body" style="margin-top:30px">
+          <div class="row">
+            <div class="col-md-12 col-xs-12">
+              <form>
+                <div class="contentform">
+                  <div class="leftcontact">
+  
+                    <div class="form-group">
+                      <p>Nombre
+                        <span>*</span>
+                      </p>
+                      <span class="icon-case">
+                        <i class="fa fa-user"></i>
+                      </span>
+                      <input type="text" name="input1" [(ngModel)]="user.displayname" id="prenom" data-rule="required" data-msg="Vérifiez votre saisie sur les champs : Le champ 'Prénom' doit être renseigné."
+                      />
+                      <div class="validation"></div>
+                    </div>
+  
+                    <div class="form-group">
+                      <p>Email
+                        <span>*</span>
+                      </p>
+                      <span class="icon-case">
+                        <i class="fa fa-location-arrow"></i>
+                      </span>
+                      <input type="text" name="adresse" [(ngModel)]="user.email" id="adresse" data-rule="required" data-msg="Vérifiez votre saisie sur les champs : Le champ 'Adresse' doit être renseigné."
+                      />
+                      <div class="validation"></div>
+                    </div>
+  
+                    <div class="form-group">
+                      <p>Direccion
+                        <span>*</span>
+                      </p>
+                      <span class="icon-case">
+                        <i class="fa fa-map-marker"></i>
+                      </span>
+                      <input type="text" name="postal" [(ngModel)]="user.direccion" id="postal" data-rule="required" data-msg="Vérifiez votre saisie sur les champs : Le champ 'Code postal' doit être renseigné."
+                      />
+                      <div class="validation"></div>
+                    </div>
+  
+  
+  
+                  </div>
+  
+                  <div class="rightcontact">
+  
+  
+                    <div class="form-group">
+                      <p>Telefono
+                        <span>*</span>
+                      </p>
+                      <span class="icon-case">
+                        <i class="fa fa-phone"></i>
+                      </span>
+                      <input type="text" name="phone" [(ngModel)]="user.telefono" id="phone" data-rule="maxlen:10" data-msg="Vérifiez votre saisie sur les champs : Le champ 'Téléphone' doit être renseigné. Minimum 10 chiffres"
+                      />
+                      <div class="validation"></div>
+                    </div>
+  
+                    <div class="form-group">
+                      <p>Rol
+                        <span>*</span>
+                      </p>
+                      <span class="icon-case">
+                        <i class="fa fa-info"></i>
+                      </span>
+                      <select [(ngModel)]="user.roles" name="role" id="">
+                        <option *ngFor="let item of this.roles" [value]="item.$key">
+                          {{item.$key}}</option>
+                      </select>
+  
+                      <div class="validation"></div>
+                    </div>
+  
+                    <div class="form-group">
+                      <p>Estado
+                        <span>*</span>
+                      </p>
+                      <span class="icon-case">
+                        <i class="fa fa-info"></i>
+                      </span>
+                      <select [(ngModel)]="user.estado" name="estado" id="">
+                        <option value="HABILITADO">HABILITADO</option>
+                        <option value="PENDIENTE">PENDIENTE</option>
+                        <option value="INHABILITADO">INHABILITADO</option>
+                      </select>
+  
+                      <div class="validation"></div>
+                    </div>
+  
+  
+                  </div>
+                </div>
+  
+  
+              </form>
+  
+            </div>
+  
+  
+          </div>
+  
+        </div>
+        <div class="modal-footer">
+          <button data-dismiss="modal" (click)="editaUser()" class="btn btn-info">
+            <span class="fa fa-refresh"></span> Editar</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+  

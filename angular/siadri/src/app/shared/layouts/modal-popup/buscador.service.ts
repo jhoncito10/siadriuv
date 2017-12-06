@@ -64,9 +64,8 @@ export class BuscadorService {
 
   crearBorrador(formulario:any, nombreBorr:any){
     this.ad.app.database().ref('/borradores').push(formulario).then(data=>{
-      console.log(data.path.o[1]);
       this.ad.app.database().ref('/borradores/'+data.path.o[1]+'/nombreBorrador').set(nombreBorr).then(()=>{
-        console.log('borrador ingresado');
+        alert('borrador ingresado');
       });
     });
   }

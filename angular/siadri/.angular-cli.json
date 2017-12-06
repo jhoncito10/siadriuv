@@ -24,6 +24,7 @@
         "assets/css/AdminLTE.min.css",
         "assets/css/skins/skin-red-light.css",
         "../node_modules/font-awesome/css/font-awesome.min.css",
+        "../node_modules/datatables.net-dt/css/jquery.dataTables.css",
         "../node_modules/leaflet/dist/leaflet.css",
         "../node_modules/easy-autocomplete/dist/easy-autocomplete.min.css",
         "../node_modules/easy-autocomplete/dist/easy-autocomplete.themes.min.css"
@@ -33,6 +34,7 @@
         "../node_modules/bootstrap/dist/js/bootstrap.min.js",
         "../node_modules/easy-autocomplete/dist/jquery.easy-autocomplete.min.js",
         "../node_modules/jspdf/dist/jspdf.min.js",
+        "../node_modules/datatables.net/js/jquery.dataTables.js",
         "../node_modules/html2canvas/dist/html2canvas.min.js",
         "../node_modules/html2canvas/dist/html2canvas.svg.min.js",
         "assets/js/app.js"

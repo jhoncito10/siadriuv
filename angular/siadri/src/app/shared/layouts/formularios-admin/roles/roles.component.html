@@ -1,0 +1,128 @@
+<div class="principal animated fadeIn">
+    
+      <div id="rolebox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 animated fadeIn">
+        <ul class="nav nav-tabs" style="cursor:pointer;">
+          <li class="active"><a onClick="$('#modrolebox').hide(); $('#rolebox').show()" >Crear</a></li>
+          <li ><a  onClick="$('#rolebox').hide(); $('#modrolebox').show()">Modificar</a></li>
+        </ul>
+        <form id="modform">
+          <h2 class="text-center">Crear nuevo Rol</h2>
+    
+          <div class="contentform" >
+    
+              <div class="leftcontact">
+              <div class="form-group">
+                <p>Nombre <span>*</span></p>
+                <span class="icon-case"><i class="fa fa-user"></i></span>
+                <input name="input1" [(ngModel)]="rolenombre" class="clase"type="text" id="prenom" data-rule="required"
+                />
+                <div class="validation"></div>
+              </div>
+              </div>
+              <div class="rightcontact">
+              <div class="form-group">
+                  <p>ID<span>*</span></p>
+                  <span class="icon-case"><i class="fa fa-key"></i></span>
+                  <input name="input2" [(ngModel)]="role.componentes.ids" class="clase"type="text" id="prenom" data-rule="required"
+                  />
+                  <div class="validation"></div>
+                </div>
+              </div>
+              <table class="table table-condensed">
+                  <thead>
+                    <tr>
+                      <th>Nodo</th>
+                      <th>Lectura</th>
+                      <th>Escritura</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of this.nodes">
+                      <td>
+                          <input  class="clase" readonly value="{{item}}" type="text"  id="prenom" data-rule="required">
+                        </td>
+                      <td><input name="lec{{item}}" [(ngModel)]="role.permisos[item].lectura"  style="height: 19px;" type="checkbox" ></td>
+                      <td><input name="esc{{item}}" [(ngModel)]="role.permisos[item].escritura"  style="height: 19px;" type="checkbox" ></td>
+                    </tr>
+                  </tbody>
+                </table>
+                <button (click)="crearRol()" class="btn btn-success"><span class="fa fa-check"></span> Crear</button>
+    
+            </div>
+    
+    
+        </form>
+      </div>
+    
+    
+         <!-- Modificar Roles   -->
+         <div id="modrolebox" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 animated fadeIn">
+          <ul class="nav nav-tabs">
+            <li ><a (click)="cancelar()" onclick="$('#modrolebox').hide(); $('#rolebox').show()">Crear</a></li>
+            <li class="active"><a  onClick="$('#rolebox').hide(); $('#modrolebox').show()">Modificar</a></li>
+          </ul>
+    
+            <form id="modform">
+                <h2 class="text-center">Modificar Rol</h2>
+    
+                <div class="form-group">
+                    <label>Seleccione Rol<span>*</span></label>
+                    <select #select (click)="mostrar(select.value)" name="select" class="form-control" id="">
+                      <option>ROLES UNIVALLE</option>
+                      <option *ngFor="let item of this.roles" [value]="item.$key">{{item.$key}}</option>
+                    </select>
+                </div>
+    
+    
+                  <div *ngIf="show_form" >
+                      <div class="contentform" >
+                          <div class="leftcontact">
+                          <div class="form-group">
+                            <p>Nombre <span>*</span></p>
+                            <span class="icon-case"><i class="fa fa-user"></i></span>
+                            <input name="input1" [(ngModel)]="rolenombre" class="clase"type="text" id="prenom" data-rule="required"
+                            />
+                            <div class="validation"></div>
+                          </div>
+                          </div>
+                          <div class="rightcontact">
+                          <div class="form-group">
+                              <p>ID<span>*</span></p>
+                              <span class="icon-case"><i class="fa fa-key"></i></span>
+                              <input name="input2" [(ngModel)]="role.componentes.ids" class="clase"type="text" id="prenom" data-rule="required"
+                              />
+                              <div class="validation"></div>
+                            </div>
+                          </div>
+                          <table class="table table-condensed">
+                              <thead>
+                                <tr>
+                                  <th>Nodo</th>
+                                  <th>Lectura</th>
+                                  <th>Escritura</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of this.nodes">
+                                  <td>
+                                      <input  class="clase" readonly value="{{item}}" type="text"  id="prenom" data-rule="required">
+                                    </td>
+                                  <td><input name="lec{{item}}" [(ngModel)]="role.permisos[item].lectura"  style="height: 19px;" type="checkbox" ></td>
+                                  <td><input name="esc{{item}}" [(ngModel)]="role.permisos[item].escritura"  style="height: 19px;" type="checkbox" ></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <button (click)="editaRol()" class="btn btn-success"><span class="fa fa-check"></span>Modificar</button>
+                            <button (click)="removeRol()" class="btn btn-danger"><span class="fa fa-check"></span>Eliminar</button>
+                      </div>
+                    </div>
+    
+    
+            </form>
+    
+    
+    
+         </div>
+    
+    </div>
+    

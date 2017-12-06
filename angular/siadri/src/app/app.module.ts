@@ -1,3 +1,5 @@
+import { FunuserService } from './shared/layouts/formularios-admin/usuarios/funuser.service';
+import { RuleservicesService } from './shared/layouts/formularios-admin/roles/rule.service';
 import { BuscadorService } from './shared/layouts/modal-popup/buscador.service';
 import { ModalService } from './shared/modal.service';
 import { LeaftletmapService } from './shared/layouts/dashboard-map/leaftletmap.service';
@@ -32,7 +34,13 @@ import { InscripcionesComponent } from './shared/layouts/sidebar-left-components
 import { DashNivel2Component } from './shared/layouts/dash-nivel2/dash-nivel2.component';
 import { BorradoresComponent } from './shared/layouts/sidebar-left-components/borradores/borradores.component';
 import { SolicitudesComponent } from './shared/layouts/sidebar-left-components/solicitudes/solicitudes.component';
+import { RolesComponent } from './shared/layouts/formularios-admin/roles/roles.component';
+import { UsuariosComponent } from './shared/layouts/formularios-admin/usuarios/usuarios.component';
+import { AdminComponent } from './shared/layouts/sidebar-left-components/admin/admin.component';
 
+import {DataTablesModule} from 'angular-datatables';
+import { ModalusuarioComponent } from './shared/layouts/formularios-admin/usuarios/modalusuario/modalusuario.component';
+import { DashNivel3Component } from './shared/layouts/dash-nivel3/dash-nivel3.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +56,12 @@ import { SolicitudesComponent } from './shared/layouts/sidebar-left-components/s
     InscripcionesComponent,
     DashNivel2Component,
     BorradoresComponent,
-    SolicitudesComponent
+    SolicitudesComponent,
+    RolesComponent,
+    UsuariosComponent,
+    AdminComponent,
+    ModalusuarioComponent,
+    DashNivel3Component
     
   ],
   imports: [
@@ -59,7 +72,8 @@ import { SolicitudesComponent } from './shared/layouts/sidebar-left-components/s
     HttpModule,
     AngularFireModule.initializeApp(firebaseconfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    DataTablesModule
   ],
   providers: [
       LoginService,
@@ -70,7 +84,9 @@ import { SolicitudesComponent } from './shared/layouts/sidebar-left-components/s
       LeaftletmapService,
       ModalService,
       BuscadorService,
-      DashboardMapComponent
+      DashboardMapComponent,
+      RuleservicesService,
+      FunuserService
     ],
   bootstrap: [AppComponent]
 })
