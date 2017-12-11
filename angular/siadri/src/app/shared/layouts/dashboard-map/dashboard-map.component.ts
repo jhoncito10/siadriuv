@@ -22,6 +22,7 @@ export class DashboardMapComponent implements OnInit {
 
   constructor( private _mapService: LeaftletmapService, private modal:ModalService) {
 
+
    }
 
    ngAfterViewInit() {
