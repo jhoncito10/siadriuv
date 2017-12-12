@@ -44,6 +44,10 @@ import { ModalusuarioComponent } from './shared/layouts/formularios-admin/usuari
 import { DashNivel3Component } from 'app/shared/layouts/dash-nivel3/dash-nivel3.component';
 import { GraficosComponent } from './shared/layouts/sidebar-left-components/graficos/graficos.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BarraComponent } from './shared/layouts/dash-nivel3/graficos/barra/barra.component';
+import { DonaComponent } from './shared/layouts/dash-nivel3/graficos/dona/dona.component';
+import { AreaComponent } from './shared/layouts/dash-nivel3/graficos/area/area.component';
+import { LineaComponent } from './shared/layouts/dash-nivel3/graficos/linea/linea.component';
 
 
 @NgModule({
@@ -66,7 +70,11 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     AdminComponent,
     ModalusuarioComponent,
     DashNivel3Component,
-    GraficosComponent
+    GraficosComponent,
+    BarraComponent,
+    DonaComponent,
+    AreaComponent,
+    LineaComponent
     
   ],
   imports: [
