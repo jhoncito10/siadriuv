@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FunuserService } from './shared/layouts/formularios-admin/usuarios/funuser.service';
 import { RuleservicesService } from './shared/layouts/formularios-admin/roles/rule.service';
 import { BuscadorService } from './shared/layouts/modal-popup/buscador.service';
@@ -40,7 +41,14 @@ import { AdminComponent } from './shared/layouts/sidebar-left-components/admin/a
 
 import {DataTablesModule} from 'angular-datatables';
 import { ModalusuarioComponent } from './shared/layouts/formularios-admin/usuarios/modalusuario/modalusuario.component';
-import { DashNivel3Component } from './shared/layouts/dash-nivel3/dash-nivel3.component';
+import { DashNivel3Component } from 'app/shared/layouts/dash-nivel3/dash-nivel3.component';
+import { GraficosComponent } from './shared/layouts/sidebar-left-components/graficos/graficos.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BarraComponent } from './shared/layouts/dash-nivel3/graficos/barra/barra.component';
+import { DonaComponent } from './shared/layouts/dash-nivel3/graficos/dona/dona.component';
+import { AreaComponent } from './shared/layouts/dash-nivel3/graficos/area/area.component';
+import { LineaComponent } from './shared/layouts/dash-nivel3/graficos/linea/linea.component';
+
 
 @NgModule({
   declarations: [
@@ -61,19 +69,26 @@ import { DashNivel3Component } from './shared/layouts/dash-nivel3/dash-nivel3.co
     UsuariosComponent,
     AdminComponent,
     ModalusuarioComponent,
-    DashNivel3Component
+    DashNivel3Component,
+    GraficosComponent,
+    BarraComponent,
+    DonaComponent,
+    AreaComponent,
+    LineaComponent
     
   ],
   imports: [
     app_routing,
     FormsModule,
     BrowserModule,
+    BrowserAnimationsModule,
     LeafletModule.forRoot(),
     HttpModule,
     AngularFireModule.initializeApp(firebaseconfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    DataTablesModule
+    DataTablesModule,
+    NgxChartsModule
   ],
   providers: [
       LoginService,
