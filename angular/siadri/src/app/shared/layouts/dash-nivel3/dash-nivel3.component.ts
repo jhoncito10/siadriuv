@@ -1,3 +1,5 @@
+import { ModalService } from './../../modal.service';
+import { BuscadorService } from 'app/shared/layouts/modal-popup/buscador.service';
 import { Component, OnInit } from '@angular/core';
 
 
@@ -10,8 +12,10 @@ export class DashNivel3Component implements OnInit {
 
  
 
-  constructor() {
-    
+  constructor(private ad:BuscadorService, private modal:ModalService) {
+    this.ad.getdataConvenio();
+    this.modal.changeConveniosGraficos(this.ad.getConvenio());
+
   }
 
   ngOnInit() {

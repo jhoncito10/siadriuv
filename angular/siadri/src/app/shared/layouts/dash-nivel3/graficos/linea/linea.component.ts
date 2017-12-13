@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalService } from 'app/shared/modal.service';
+
 
 @Component({
   selector: 'app-linea',
@@ -15,43 +17,45 @@ export class LineaComponent implements OnInit {
     gradient = false;
     showLegend = true;
     showXAxisLabel = true;
-    xAxisLabel = 'Country';
+    xAxisLabel = 'CONVENIOS';
     showYAxisLabel = true;
-    yAxisLabel = 'Population';
+    yAxisLabel = 'MESES DE VIGENCIA';
   
     colorScheme = {
-      domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+      domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA', '#2E2EFE','#FF0000','#00FF00','#088A85','#BF00FF','#00FFFF','#D7DF01','#FF0040','#D76915','#099FF5','#FD3DB7']
     };
   
     // line, area
     autoScale = true;
 
-  constructor() { 
-    this.chart1();
+    multi:any;
+    single:any;
+
+    conveniosTotales:any;
+  constructor(private modal:ModalService) { 
+
   }
 
   ngOnInit() {
+    this.modal.currentPrueba.subscribe(data=>{
+      this.multi = data;
+      this.chart2(this.multi);
+    });
+
   }
 
-  chart1(){
+  chart1(singled:any,multi:any){
+   Object.assign(this, {singled, multi});
+  }
+  chart2(multi:any){
+    Object.assign(this, {multi});
+   }
     
-        var singled = [{"name": "Germany","value": 50},{"name": "USA","value": 100},{"name": "France","value": 70}];
-        var multi = [
-          {"name": "Germany", "series": [{"name": "2010","value": 70},{"name": "2011","value": 50}]},
-          {"name": "USA","series": [{"name": "2010","value": 72},{"name": "2011","value": 80}]},
-          {"name": "France","series": [{"name": "2010","value": 50},{"name": "2011","value": 58}]}
-          ];
-    
-          console.log(this);
-    
-       Object.assign(this, {singled, multi});
-    
-    
-    
-      }
-      
-      onSelect(event) {
-        console.log(event);
-      }
+  onSelect(event) {
+    console.log(event);
+  }
+
+  
+
 
 }

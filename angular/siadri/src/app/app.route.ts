@@ -23,7 +23,7 @@ import { DashNivel3Component } from 'app/shared/layouts/dash-nivel3/dash-nivel3.
     { path: 'usuarios', component: UsuariosComponent},
     { path: '', pathMatch: 'full', redirectTo: 'mapa'}
     ]},
-     { path: '', pathMatch: 'full', redirectTo: 'dash'}
+     { path: '', pathMatch: 'full', redirectTo: 'dash/mapa'}
 ];
 export const app_routing = RouterModule.forRoot(routes, { useHash: true });
 
