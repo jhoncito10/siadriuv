@@ -1,3 +1,5 @@
+import { Grafico2Component } from './shared/layouts/dash-nivel3/component-graficos/grafico2/grafico2.component';
+import { Grafico1Component } from './shared/layouts/dash-nivel3/component-graficos/grafico1/grafico1.component';
 import { RolesComponent } from './shared/layouts/formularios-admin/roles/roles.component';
 import { DashboardCentralComponent } from './shared/layouts/dashboard-central/dashboard-central.component';
 import { DashNivel2Component } from './shared/layouts/dash-nivel2/dash-nivel2.component';
@@ -18,7 +20,11 @@ import { DashNivel3Component } from 'app/shared/layouts/dash-nivel3/dash-nivel3.
    children : [
     { path: 'mapa', component: DashboardMapComponent},
     { path: 'dashnivel2', component: DashNivel2Component},
-    { path: 'dashnivel3', component: DashNivel3Component},
+    { path: 'dashnivel3', component: DashNivel3Component,
+    children: [
+        {path: 'grafico1',component:Grafico1Component},
+        {path: 'grafico2',component:Grafico2Component}
+    ]},
     { path: 'roles', component: RolesComponent},
     { path: 'usuarios', component: UsuariosComponent},
     { path: '', pathMatch: 'full', redirectTo: 'mapa'}

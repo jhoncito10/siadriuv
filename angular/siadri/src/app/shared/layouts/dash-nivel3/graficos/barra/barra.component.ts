@@ -28,6 +28,7 @@ export class BarraComponent implements OnInit {
     yAxisLabel = 'PAISES';
     single:any;
     multi:any;
+    222 = 'PAISES';
   
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA', '#2E2EFE','#FF0000','#00FF00','#088A85','#BF00FF','#00FFFF','#D7DF01','#FF0040','#D76915','#099FF5','#FD3DB7']
@@ -100,6 +101,27 @@ export class BarraComponent implements OnInit {
   }
 
   datosGraficoVencer(name:any){
+    var arregloSingle = [];
+    //var arregloMulti = [];
+  
+      for(var j=0;j<this.conveniosTotales.length;j++){
+        if(this.conveniosTotales[j].country == name){
+          if(this.conveniosTotales[j].expires != "No disponible"){
+            var fecha = this.obtenerFecha(this.conveniosTotales[j].expires);
+            if(fecha <= 12 && fecha >= 0){
+              arregloSingle.push({name:this.conveniosTotales[j].institution,value:fecha,objeto:this.conveniosTotales[j],xlabel:"CONVENIOS",ylabel:"MESES QUE QUEDAN DE VIGENCIA",title:"INSTITUCIONES"});
+              //arregloMulti.push({name:this.conveniosTotales[j].country,series:[{name:"Inicio",value:0},{name:"Actual",value:fecha}]});
+            }
+          }
+        }
+      }
+
+      arregloSingle.push();
+    
+      this.modal.changePrueba(arregloSingle);
+  }
+
+  datosGraficoAno(name:any){
     var arregloSingle = [];
     //var arregloMulti = [];
   

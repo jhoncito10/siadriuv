@@ -15,6 +15,13 @@ export class ModalService {
     this.messageSource.next(message);
   }
 
+   //variable que contiene el mensaje que se muestra en el Modal-Popup
+   private GraficoSource = new BehaviorSubject<any>('default message');
+   currentGrafico = this.GraficoSource.asObservable();
+   changeGrafico(grafico: any){
+     this.GraficoSource.next(grafico);
+   }
+
   //variable que contiene las consultas de los convenios
   private object = new BehaviorSubject<any>([]);
   currentObject = this.object.asObservable();
@@ -44,7 +51,7 @@ export class ModalService {
     this.UserSource.next(user);
   }
 
-    //variable que contiene el mensaje que se muestra en el Modal-Popup
+    //variable que contiene el arreglo del grafico de barras horizontales
     private  conveniosGraficos = new BehaviorSubject<any>([]);
     currentGraficos = this.conveniosGraficos.asObservable();
     changeConveniosGraficos(convenios: any) {
@@ -52,8 +59,8 @@ export class ModalService {
     }
 
 
-      //variable que contiene el mensaje que se muestra en el Modal-Popup
-      private  prueba = new BehaviorSubject<any>([]);
+      //variable que contiene el arreglo del grafico de barras verticales
+      private  prueba = new BehaviorSubject<any>([{name:"",value:0,xlabel:"",ylabel:"",title:""}]);
       currentPrueba = this.prueba.asObservable();
       changePrueba(pru: any) {
         this.prueba.next(pru);

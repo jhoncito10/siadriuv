@@ -51,6 +51,8 @@ import { LineaComponent } from './shared/layouts/dash-nivel3/graficos/linea/line
 
 import { MomentModule } from 'angular2-moment';
 import { BarraverticalComponent } from './shared/layouts/dash-nivel3/graficos/barravertical/barravertical.component';
+import { Grafico1Component } from './shared/layouts/dash-nivel3/component-graficos/grafico1/grafico1.component';
+import { Grafico2Component } from './shared/layouts/dash-nivel3/component-graficos/grafico2/grafico2.component';
 
 
 @NgModule({
@@ -78,7 +80,9 @@ import { BarraverticalComponent } from './shared/layouts/dash-nivel3/graficos/ba
     DonaComponent,
     AreaComponent,
     LineaComponent,
-    BarraverticalComponent
+    BarraverticalComponent,
+    Grafico1Component,
+    Grafico2Component
     
   ],
   imports: [
