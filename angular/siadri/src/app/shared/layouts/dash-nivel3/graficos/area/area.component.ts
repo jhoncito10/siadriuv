@@ -8,7 +8,8 @@ import { BuscadorService } from 'app/shared/layouts/modal-popup/buscador.service
   styleUrls: ['./area.component.css']
 })
 export class AreaComponent implements OnInit {
-
+  single: any[];
+  multi: any[];
   view: any[] = [700, 400];
   
     // options
@@ -44,8 +45,8 @@ export class AreaComponent implements OnInit {
     this.convenios = this.removeDuplicates(this.conveniosTotales,"country");
     console.log(this.convenios);
 
-    var arregloSingle = [];
-    var arregloMulti = [];
+    let arregloSingle:any= [];
+    let arregloMulti:any[] = [];
     for(var i=0;i< this.convenios.length;i++){
       var n=0;
       for(var j=0;j<this.conveniosTotales.length;j++){

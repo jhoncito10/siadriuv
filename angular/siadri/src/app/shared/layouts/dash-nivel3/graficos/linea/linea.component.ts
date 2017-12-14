@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./linea.component.css']
 })
 export class LineaComponent implements OnInit {
-
+  //single: any[];
+  multi: any[];
   view: any[] = [700, 400];
   
     // options
