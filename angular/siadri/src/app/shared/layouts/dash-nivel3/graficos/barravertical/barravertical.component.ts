@@ -19,9 +19,10 @@ export class BarraverticalComponent implements OnInit {
   gradient = false;
   showLegend = true;
   showXAxisLabel = true;
-  xAxisLabel = 'CONVENIOS';
+  xAxisLabel = "";
   showYAxisLabel = true;
-  yAxisLabel = 'MESES QUE QUEDAN DE VIGENCIA';
+  yAxisLabel = "";
+  title = "";
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
@@ -34,6 +35,10 @@ export class BarraverticalComponent implements OnInit {
   ngOnInit() {
     this.modal.currentPrueba.subscribe(data=>{
       this.single = data;
+      console.log(data);
+      this.xAxisLabel = data[0].xlabel;//convebions
+      this.yAxisLabel = data[0].ylabel;//meses que quedan de vigencia
+      this.title = data[0].title//instituciones
       this.conveniosSeleccionados = data;
       this.chart2(this.single);
     });
