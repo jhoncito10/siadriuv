@@ -38,7 +38,7 @@ export class LineaComponent implements OnInit {
 
   ngOnInit() {
     this.modal.currentPrueba.subscribe(data=>{
-      this.multi = data;
+      this.multi = [{name:"iralnada",series:[{name:"Inicio",value:0},{name:"Actual",value:100}]}];
       this.chart2(this.multi);
     });
 
