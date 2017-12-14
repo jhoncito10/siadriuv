@@ -15,7 +15,7 @@ import * as moment from 'moment';
 })
 export class BarraComponent implements OnInit {
 
-  view: any[] = [700, 500];
+  view: any[] = [1200, 600];
   
     // options
     showXAxis = true;
@@ -91,25 +91,31 @@ export class BarraComponent implements OnInit {
       
   onSelect(event) {
     console.log(event);
-    this.datosGraficoVencer(event.name);
+    if(event.name){
+      this.datosGraficoVencer(event.name);
+    }else{
+      this.datosGraficoVencer(event);
+    }
+  
   }
 
   datosGraficoVencer(name:any){
     var arregloSingle = [];
-    var arregloMulti = [];
+    //var arregloMulti = [];
   
       for(var j=0;j<this.conveniosTotales.length;j++){
         if(this.conveniosTotales[j].country == name){
           if(this.conveniosTotales[j].expires != "No disponible"){
             var fecha = this.obtenerFecha(this.conveniosTotales[j].expires);
             if(fecha <= 12 && fecha >= 0){
-              arregloMulti.push({name:this.conveniosTotales[j].country,series:[{name:"Inicio",value:0},{name:"Actual",value:fecha}]});
+              arregloSingle.push({name:this.conveniosTotales[j].institution,value:fecha,objeto:this.conveniosTotales[j]});
+              //arregloMulti.push({name:this.conveniosTotales[j].country,series:[{name:"Inicio",value:0},{name:"Actual",value:fecha}]});
             }
           }
         }
       }
     
-      this.modal.changePrueba(arregloMulti);
+      this.modal.changePrueba(arregloSingle);
   }
 
   obtenerFecha(fechaVencimiento:any){
@@ -125,13 +131,16 @@ export class BarraComponent implements OnInit {
     var diff = fecha2.diff(fecha1, 'days');
     var duration = moment.duration(diff,'days');
 
-    var meses = parseInt(""+duration.asMonths());
+    //var meses = parseInt(""+duration.asMonths());
+
+    var meses = parseFloat(duration.asMonths().toFixed(1));
 
     return meses;
 
   }
+
   chart2(multi:any){
     Object.assign(this, {multi});
-   }
+  }
 
 }
