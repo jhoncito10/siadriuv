@@ -4,6 +4,10 @@ import {NgxChartsModule} from '@swimlane/ngx-charts';
 import {BrowserModule} from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { ModalService } from 'app/shared/modal.service';
+import * as moment from 'moment';
+
+
 @Component({
   selector: 'app-barra',
   templateUrl: './barra.component.html',
@@ -11,7 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 })
 export class BarraComponent implements OnInit {
 
-  view: any[] = [700, 400];
+  view: any[] = [700, 500];
   
     // options
     showXAxis = true;
@@ -19,10 +23,11 @@ export class BarraComponent implements OnInit {
     gradient = false;
     showLegend = true;
     showXAxisLabel = true;
-    xAxisLabel = 'Country';
+    xAxisLabel = 'NUMERO DE CONVENIOS';
     showYAxisLabel = true;
-    yAxisLabel = 'Population';
+    yAxisLabel = 'PAISES';
     single:any;
+    multi:any;
   
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA', '#2E2EFE','#FF0000','#00FF00','#088A85','#BF00FF','#00FFFF','#D7DF01','#FF0040','#D76915','#099FF5','#FD3DB7']
@@ -30,21 +35,22 @@ export class BarraComponent implements OnInit {
 
   conveniosTotales:any;
   convenios:any
-  constructor(private ad:BuscadorService) {
-    this.datosGrafico();
-   }
+  constructor(private modal:ModalService) {
+    this.modal.currentGraficos.subscribe(data =>{
+      this.conveniosTotales = data;
+    });
+    
+  }
 
   ngOnInit() {
+    this.datosGrafico();
   }
 
   datosGrafico(){
-    this.ad.getdataConvenio();
-    this.conveniosTotales = this.ad.getConvenio();
+    
     this.convenios = this.removeDuplicates(this.conveniosTotales,"country");
-    console.log(this.convenios);
 
     var arregloSingle = [];
-    var arregloMulti = [];
     for(var i=0;i< this.convenios.length;i++){
       var n=0;
       for(var j=0;j<this.conveniosTotales.length;j++){
@@ -53,14 +59,13 @@ export class BarraComponent implements OnInit {
         }
       }
       arregloSingle.push({name:this.convenios[i].country,value:n});
-      
-      arregloMulti.push({name:this.convenios[i].country,series:[{name:"Inicio",value:0},{name:"Actual",value:n}]});
     }
     
     this.single = arregloSingle;
-    this.chart1(arregloSingle,arregloMulti);
+    this.chart1(arregloSingle);
 
   }
+
 
   removeDuplicates(originalArray, prop) {
     var newArray = [];
@@ -78,17 +83,55 @@ export class BarraComponent implements OnInit {
 
 
 
-  chart1(singled,multi){
+  chart1(singled){
 
-      console.log(singled);
-      console.log(multi);
-    
-       Object.assign(this, {singled, multi});
+       Object.assign(this, {singled});
  
-      }
+  }
       
-      onSelect(event) {
-        console.log(event);
+  onSelect(event) {
+    console.log(event);
+    this.datosGraficoVencer(event.name);
+  }
+
+  datosGraficoVencer(name:any){
+    var arregloSingle = [];
+    var arregloMulti = [];
+  
+      for(var j=0;j<this.conveniosTotales.length;j++){
+        if(this.conveniosTotales[j].country == name){
+          if(this.conveniosTotales[j].expires != "No disponible"){
+            var fecha = this.obtenerFecha(this.conveniosTotales[j].expires);
+            if(fecha <= 12 && fecha >= 0){
+              arregloMulti.push({name:this.conveniosTotales[j].country,series:[{name:"Inicio",value:0},{name:"Actual",value:fecha}]});
+            }
+          }
+        }
       }
+    
+      this.modal.changePrueba(arregloMulti);
+  }
+
+  obtenerFecha(fechaVencimiento:any){
+    var arr = [];
+    var f = new Date();
+    var fechaActual = f.getFullYear()+"-"+(f.getMonth()+1)+"-"+f.getDate();
+    arr = fechaVencimiento.split('/');
+    fechaVencimiento = arr[2]+"-"+arr[0]+"-"+arr[1];
+
+    var fecha1 = moment(fechaActual);
+    var fecha2 = moment(fechaVencimiento);
+
+    var diff = fecha2.diff(fecha1, 'days');
+    var duration = moment.duration(diff,'days');
+
+    var meses = parseInt(""+duration.asMonths());
+
+    return meses;
+
+  }
+  chart2(multi:any){
+    Object.assign(this, {multi});
+   }
 
 }

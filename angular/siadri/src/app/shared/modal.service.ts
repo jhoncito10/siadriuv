@@ -37,10 +37,25 @@ export class ModalService {
     this.imprimir.next(imp);
   }
 
-  //variable que contiene el mensaje que se muestra en el Modal-Popup
+  //variable que contiene el usuario 
   private UserSource = new BehaviorSubject<any>('default message');
   currentUser = this.UserSource.asObservable();
   changeUser(user: any) {
     this.UserSource.next(user);
   }
+
+    //variable que contiene el mensaje que se muestra en el Modal-Popup
+    private  conveniosGraficos = new BehaviorSubject<any>([]);
+    currentGraficos = this.conveniosGraficos.asObservable();
+    changeConveniosGraficos(convenios: any) {
+      this.conveniosGraficos.next(convenios);
+    }
+
+
+      //variable que contiene el mensaje que se muestra en el Modal-Popup
+      private  prueba = new BehaviorSubject<any>([]);
+      currentPrueba = this.prueba.asObservable();
+      changePrueba(pru: any) {
+        this.prueba.next(pru);
+      }
 }

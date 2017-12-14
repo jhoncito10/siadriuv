@@ -49,6 +49,7 @@ import { DonaComponent } from './shared/layouts/dash-nivel3/graficos/dona/dona.c
 import { AreaComponent } from './shared/layouts/dash-nivel3/graficos/area/area.component';
 import { LineaComponent } from './shared/layouts/dash-nivel3/graficos/linea/linea.component';
 
+import { MomentModule } from 'angular2-moment';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { LineaComponent } from './shared/layouts/dash-nivel3/graficos/linea/line
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     DataTablesModule,
-    NgxChartsModule
+    NgxChartsModule,
+    MomentModule
   ],
   providers: [
       LoginService,
