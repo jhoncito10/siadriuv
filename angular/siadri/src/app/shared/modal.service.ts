@@ -15,8 +15,8 @@ export class ModalService {
     this.messageSource.next(message);
   }
 
-   //variable que contiene el mensaje que se muestra en el Modal-Popup
-   private GraficoSource = new BehaviorSubject<any>('default message');
+   //variable que contiene el grafico  que esta haciendo el llamado
+   private GraficoSource = new BehaviorSubject<any>('Grafico1');
    currentGrafico = this.GraficoSource.asObservable();
    changeGrafico(grafico: any){
      this.GraficoSource.next(grafico);

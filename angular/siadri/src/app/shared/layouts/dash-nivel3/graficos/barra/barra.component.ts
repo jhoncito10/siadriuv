@@ -28,7 +28,7 @@ export class BarraComponent implements OnInit {
     yAxisLabel = 'PAISES';
     single:any;
     multi:any;
-    222 = 'PAISES';
+    title = 'PAISES';
   
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA', '#2E2EFE','#FF0000','#00FF00','#088A85','#BF00FF','#00FFFF','#D7DF01','#FF0040','#D76915','#099FF5','#FD3DB7']
@@ -39,6 +39,7 @@ export class BarraComponent implements OnInit {
   constructor(private modal:ModalService) {
     this.modal.currentGraficos.subscribe(data =>{
       this.conveniosTotales = data;
+      console.log(this.conveniosTotales);
     });
     
   }
@@ -51,10 +52,10 @@ export class BarraComponent implements OnInit {
     
     this.convenios = this.removeDuplicates(this.conveniosTotales,"country");
 
-    var arregloSingle = [];
-    for(var i=0;i< this.convenios.length;i++){
-      var n=0;
-      for(var j=0;j<this.conveniosTotales.length;j++){
+    let arregloSingle = [];
+    for(let i=0;i< this.convenios.length;i++){
+      let n=0;
+      for(let j=0;j<this.conveniosTotales.length;j++){
         if(this.convenios[i].country == this.conveniosTotales[j].country){
           n++;
         }
@@ -91,23 +92,34 @@ export class BarraComponent implements OnInit {
   }
       
   onSelect(event) {
-    console.log(event);
-    if(event.name){
-      this.datosGraficoVencer(event.name);
-    }else{
-      this.datosGraficoVencer(event);
+    let grafico;
+    this.modal.currentGrafico.subscribe(data=>{
+      grafico = data;
+    }); 
+
+    if(grafico == 'Grafico1'){
+      if(event.name){
+        this.datosGraficoVencer(event.name);
+      }else{
+        this.datosGraficoVencer(event);
+      }
+    }else if(grafico == 'Grafico2'){
+      if(event.name){
+        this.datosGraficoAno(event.name);
+      }else{
+        this.datosGraficoAno(event);
+      }
     }
-  
   }
 
   datosGraficoVencer(name:any){
-    var arregloSingle = [];
+    let arregloSingle = [];
     //var arregloMulti = [];
   
-      for(var j=0;j<this.conveniosTotales.length;j++){
+      for(let j=0;j<this.conveniosTotales.length;j++){
         if(this.conveniosTotales[j].country == name){
           if(this.conveniosTotales[j].expires != "No disponible"){
-            var fecha = this.obtenerFecha(this.conveniosTotales[j].expires);
+            let fecha = this.obtenerFecha(this.conveniosTotales[j].expires);
             if(fecha <= 12 && fecha >= 0){
               arregloSingle.push({name:this.conveniosTotales[j].institution,value:fecha,objeto:this.conveniosTotales[j],xlabel:"CONVENIOS",ylabel:"MESES QUE QUEDAN DE VIGENCIA",title:"INSTITUCIONES"});
               //arregloMulti.push({name:this.conveniosTotales[j].country,series:[{name:"Inicio",value:0},{name:"Actual",value:fecha}]});
@@ -116,46 +128,65 @@ export class BarraComponent implements OnInit {
         }
       }
 
-      arregloSingle.push();
-    
-      this.modal.changePrueba(arregloSingle);
+      if(!(arregloSingle.length == 0)){
+        this.modal.changePrueba(arregloSingle);
+      }else{
+       alert("En el pais "+name+" no existen convenios que se expiren en menos de 1 año");
+      }
+      
   }
 
+  //ESTA FUNCIONANDO CON EL CAMPO DE EXPIRACION PERO DEBE SER EL DE CREACION QUE ACTUALMENTE NO ESTA
   datosGraficoAno(name:any){
-    var arregloSingle = [];
-    //var arregloMulti = [];
-  
-      for(var j=0;j<this.conveniosTotales.length;j++){
-        if(this.conveniosTotales[j].country == name){
-          if(this.conveniosTotales[j].expires != "No disponible"){
-            var fecha = this.obtenerFecha(this.conveniosTotales[j].expires);
-            if(fecha <= 12 && fecha >= 0){
-              arregloSingle.push({name:this.conveniosTotales[j].institution,value:fecha,objeto:this.conveniosTotales[j]});
-              //arregloMulti.push({name:this.conveniosTotales[j].country,series:[{name:"Inicio",value:0},{name:"Actual",value:fecha}]});
-            }
-          }
+    let arregloSingle = [];
+    let convTemp = [];
+    this.modal.currentGraficos.subscribe(data=>{
+      for(let i=0;i<data.length;i++){
+        if((data[i].pais==name)&&(data[i].ano_de_firma != undefined)&&(data[i].ano_de_firma != "")){
+          convTemp.push(data[i]);
         }
       }
-    
-      this.modal.changePrueba(arregloSingle);
+    });
+
+      let conven = this.removeDuplicates(convTemp, 'ano_de_firma');
+
+      console.log(conven);
+
+      for(let i=0;i<conven.length;i++){
+        let n = 0;
+        for(let j=0;j<convTemp.length;j++){
+          if(conven[i].ano_de_firma == convTemp[j].ano_de_firma){
+            n++;
+          }
+        }
+        arregloSingle.push({name:conven[i].ano_de_firma,value:n,objeto:conven[i],xlabel:"AÑOS",ylabel:"CANTIDAD DE CONVENIOS",title:"AÑOS"});
+      }
+
+      if(!(arregloSingle.length == 0)){
+        this.modal.changePrueba(arregloSingle);
+      }else{
+       alert("En el pais "+name+" no existen convenios que se expiren en menos de 1 año");
+      }
+      
+     
   }
 
   obtenerFecha(fechaVencimiento:any){
-    var arr = [];
-    var f = new Date();
-    var fechaActual = f.getFullYear()+"-"+(f.getMonth()+1)+"-"+f.getDate();
+    let arr = [];
+    let f = new Date();
+    let fechaActual = f.getFullYear()+"-"+(f.getMonth()+1)+"-"+f.getDate();
     arr = fechaVencimiento.split('/');
     fechaVencimiento = arr[2]+"-"+arr[0]+"-"+arr[1];
 
-    var fecha1 = moment(fechaActual);
-    var fecha2 = moment(fechaVencimiento);
+    let fecha1 = moment(fechaActual);
+    let fecha2 = moment(fechaVencimiento);
 
-    var diff = fecha2.diff(fecha1, 'days');
-    var duration = moment.duration(diff,'days');
+    let diff = fecha2.diff(fecha1, 'days');
+    let duration = moment.duration(diff,'days');
 
     //var meses = parseInt(""+duration.asMonths());
 
-    var meses = parseFloat(duration.asMonths().toFixed(1));
+    let meses = parseFloat(duration.asMonths().toFixed(1));
 
     return meses;
 
