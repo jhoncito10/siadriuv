@@ -37,32 +37,37 @@ export class BarraComponent implements OnInit {
   conveniosTotales:any;
   convenios:any
   constructor(private modal:ModalService) {
-    this.modal.currentGraficos.subscribe(data =>{
-      this.conveniosTotales = data;
-      console.log(this.conveniosTotales);
-    });
-    
+  
   }
 
   ngOnInit() {
-    this.datosGrafico();
+    this.modal.currentGraficos.subscribe(data =>{
+      this.conveniosTotales = data;
+      
+        console.log('entro');
+        console.log(this.conveniosTotales);
+        this.datosGrafico();
+
+    });
   }
 
   datosGrafico(){
-    
-    this.convenios = this.removeDuplicates(this.conveniosTotales,"country");
 
     let arregloSingle = [];
-    for(let i=0;i< this.convenios.length;i++){
-      let n=0;
-      for(let j=0;j<this.conveniosTotales.length;j++){
-        if(this.convenios[i].country == this.conveniosTotales[j].country){
-          n++;
+
+      this.convenios = this.removeDuplicates(this.conveniosTotales,"country");  
+      console.log(this.convenios);  
+      for(let i=0;i< this.convenios.length;i++){
+        let n=0;
+        for(let j=0;j<this.conveniosTotales.length;j++){
+          if(this.convenios[i].country == this.conveniosTotales[j].country){
+            n++;
+          }
         }
+        arregloSingle.push({name:this.convenios[i].country,value:n});
       }
-      arregloSingle.push({name:this.convenios[i].country,value:n});
-    }
-    
+     
+    console.log(arregloSingle);
     this.single = arregloSingle;
     this.chart1(arregloSingle);
 
@@ -140,7 +145,7 @@ export class BarraComponent implements OnInit {
   datosGraficoAno(name:any){
     let arregloSingle = [];
     let convTemp = [];
-    this.modal.currentGraficos.subscribe(data=>{
+    this.modal.currentGraficos2.subscribe(data=>{
       for(let i=0;i<data.length;i++){
         if((data[i].pais==name)&&(data[i].ano_de_firma != undefined)&&(data[i].ano_de_firma != "")){
           convTemp.push(data[i]);
@@ -165,7 +170,7 @@ export class BarraComponent implements OnInit {
       if(!(arregloSingle.length == 0)){
         this.modal.changePrueba(arregloSingle);
       }else{
-       alert("En el pais "+name+" no existen convenios que se expiren en menos de 1 año");
+       alert("vista de datos no disponible");
       }
       
      

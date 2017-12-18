@@ -59,10 +59,26 @@ export class ModalService {
     }
 
 
+    //variable que contiene el arreglo del grafico de barras horizontales del segundo nodo
+    private  conveniosGraficos2 = new BehaviorSubject<any>([]);
+    currentGraficos2 = this.conveniosGraficos2.asObservable();
+    changeConveniosGraficos2(convenios2: any) {
+      this.conveniosGraficos2.next(convenios2);
+    }
+
+
       //variable que contiene el arreglo del grafico de barras verticales
       private  prueba = new BehaviorSubject<any>([{name:"",value:0,xlabel:"",ylabel:"",title:""}]);
       currentPrueba = this.prueba.asObservable();
       changePrueba(pru: any) {
         this.prueba.next(pru);
       }
+
+
+       //variable que contiene el arreglo de las notificaciones del header
+       private  notificacion = new BehaviorSubject<any>([]);
+       currentNotificacion = this.notificacion.asObservable();
+       changeNotifcacion(noti: any) {
+         this.notificacion.next(noti);
+       }
 }

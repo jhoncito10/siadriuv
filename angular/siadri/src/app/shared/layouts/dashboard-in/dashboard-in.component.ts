@@ -1,4 +1,6 @@
+import { BuscadorService } from 'app/shared/layouts/modal-popup/buscador.service';
 import { Component, OnInit } from '@angular/core';
+import { ModalService } from 'app/shared/modal.service';
 
 @Component({
   selector: 'app-dashboard-in',
@@ -7,7 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardInComponent implements OnInit {
 
-  constructor() { }
+  user = JSON.parse(localStorage.getItem('usuario'));
+
+  constructor(private ad:BuscadorService ,private modal:ModalService) { 
+    
+    this.ad.getNotificaciones(this.user.uid).subscribe(data=>{
+      this.modal.changeNotifcacion(data);
+    });
+
+  }
 
   ngOnInit() {
   }

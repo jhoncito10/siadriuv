@@ -15,13 +15,34 @@
             <i class="fa fa-sign-in"> Ingresar</i>
            </a>
         </li>
+
+        <li class="dropdown notifications-menu open">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+            <i class="fa fa-bell-o"></i>
+            <span class="label label-warning">{{notificaciones.length}}</span>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="header">You have {{notificaciones.length}} notifications</li>
+            <li>
+              <!-- inner menu: contains the actual data -->
+              <ul class="menu">
+                <li *ngFor="let item of this.notificaciones" (click)="info(item)">
+                  <a style="cursor:pointer;">
+                    <i class="{{item.icon}}"></i> {{item.info}}
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
         <li *ngIf="this.session" class="dropdown notifications-menu">
           <a  title="Salir" id="logout" (click)="logout()" style="cursor:pointer;">
             <i class="fa fa-sign-out"> Salir</i>
           </a>
         </li>
-          <li class="dropdown notifications-menu">
 
+          <li class="dropdown notifications-menu">
             <div class="logo-image hidden-xs">
               <a id="logo" href="http://www.univalle.edu.co/">
                         <img longdesc="http://www.seapp724.com/" class="img-responsive"  src="assets/images/logo.jpg" width="424" height="51" alt="Universidad del Valle">

@@ -6,7 +6,6 @@ import { HttpService } from './../../services/http.service';
 @Injectable()
 export class BuscadorService {
 
-
   convenios: any;
   constructor(private ad:AngularFireDatabase, private _http:HttpService){
     this.getdataConvenio();
@@ -74,7 +73,6 @@ export class BuscadorService {
     this.ad.app.database().ref('borradores/'+key).remove();
   }
 
-
   getConv(){
     return this.ad.list('/convenios_inicio', {
       query: {
@@ -82,6 +80,19 @@ export class BuscadorService {
       }
     });
 
+  }
+
+  getNotificaciones(userkey:any){
+    return this.ad.list('/usuarios/'+userkey+'/notificacion', {
+      query: {
+        orderByChild: 'estado',
+        equalTo:'sin leer'
+      }
+    });
+  }
+
+  setNotificacion(userkey:any,notkey){
+    return this.ad.app.database().ref('/usuarios/'+userkey+'/notificacion/'+notkey+'/estado').set('leido');
   }
 
  

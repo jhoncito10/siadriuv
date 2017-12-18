@@ -35,7 +35,6 @@ export class BarraverticalComponent implements OnInit {
   ngOnInit() {
     this.modal.currentPrueba.subscribe(data=>{
       this.single = data;
-      console.log(this.single);
       this.xAxisLabel = data[0].xlabel;//convebions
       this.yAxisLabel = data[0].ylabel;//meses que quedan de vigencia
       this.title = data[0].title//instituciones
