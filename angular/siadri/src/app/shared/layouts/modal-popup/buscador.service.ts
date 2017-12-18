@@ -74,6 +74,17 @@ export class BuscadorService {
     this.ad.app.database().ref('borradores/'+key).remove();
   }
 
+
+  getConv(){
+    return this.ad.list('/convenios_inicio', {
+      query: {
+        orderByChild: 'pais'
+      }
+    });
+
+  }
+
+ 
  
 
 
