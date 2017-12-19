@@ -20,12 +20,12 @@ export class HttpService {
 
   public post(url, params): Observable<any> {
     const headers =   new Headers({'Content-Type': 'application/json'});
-
     const options = new RequestOptions({headers: headers});
     const body = JSON.stringify(params);
-
+    //const body = params;
+    console.log(body);
     return this._http.post(url, body, options).map(response => {response.json();
-    console.log('email')});
+    console.log('email');});
   }
 
   public delete(url, token): Observable<any> {
