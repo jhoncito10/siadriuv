@@ -1,24 +1,28 @@
-{
-  "rules": {
-    ".read": true,
-    ".write": true
+{"rules":{
+
+  "roles":{
+    ".read":"(auth != false)",
+      ".write":"(root.child('usuarios').child(auth.uid).child('roles').val() == 'ADMIN')"},
+
+  "usuarios":{
+    ".read":"(auth != false)",
+      ".write":"(root.child('usuarios').child(auth.uid).child('roles').val() == 'ADMIN')"},
+
+  "convenios":{
+    ".read":"true",
+      ".write":"(root.child('usuarios').child(auth.uid).child('roles').val() == 'ADMIN')"},
+
+  "convenios_inicio":{
+    ".read":"(auth != false) && (root.child('usuarios').child(auth.uid).child('roles').val() != 'NIVEL2')",
+      ".write":"(root.child('usuarios').child(auth.uid).child('roles').val() == 'ADMIN')"},
+
+  "solicitudes":{
+    ".read":"(auth != false)",
+      ".write":"(auth != false)"},
+
+  "borradores":{
+    ".read":"(auth != false)",
+      ".write":"(auth != false)"}
+
   }
 }
-
-
-/*
-  {
-  "rules": {
-    ".read": "auth != null",
-    "gmailUsers": {
-      "$uid": {
-        ".write": "auth.token.email_verified == true && 
-                   auth.token.email.matches(/.*@gmail.com$/)"
-      }
-    }
-  }
-}
-
-
-wget -r -np https://<YOURAPPNAME>.firebaseapp.com
-*/

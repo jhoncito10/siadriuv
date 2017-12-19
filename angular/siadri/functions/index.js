@@ -24,7 +24,7 @@ const ref = admin.database().ref();
                 direccion:"",
                 displayname:displayName,
                 email: email,
-                roles:"PUBLICO",
+                roles:"NIVEL2",
                 empresa:"",
                 telefono:"",
                 estado: ""

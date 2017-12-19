@@ -20,32 +20,37 @@ export class LoginComponent implements OnInit {
     pass: null,
     passconfirm: null
   };
-  constructor(public _ls: LoginService, public rs: RegistroService,
-              private ruta: Router                                   ) { }
+  
+  constructor(public _ls: LoginService, public rs: RegistroService,private ruta: Router) { }
+
   ngOnInit() {
   }
 /* INICIO SESION */
-ingresar(proveedor?: string) {
-  if (proveedor === 'google') {
+  ingresar(proveedor?: string) {
+    if (proveedor === 'google') {
 
-    this._ls.login().then(() => {
-      this.ruta.navigate(['dash']);
-   });
-
-  } else {
-
-    this._ls.loginEmail( this.dataAuten.email, this.dataAuten.pass).then(() => {
-       this.ruta.navigate(['dash']);
+      this._ls.login().then(() => {
+        this.ruta.navigate(['dash']);
     });
 
-  }
+    } else {
+
+      this._ls.loginEmail( this.dataAuten.email, this.dataAuten.pass).then(() => {
+        this.ruta.navigate(['dash']);
+      });
+
+    }
   }
 /* REGISTRO USUARIO */
-registrar() {
-          if (this.dataRes.pass === this.dataRes.passconfirm) {
-            this.rs.createUser( this.dataRes.email, this.dataRes.pass).then(() => { console.log('Usuario creado'); });
-          } else { console.log(error);
-          alert ('No coincide la contrasena');
-          }
-       }
+  registrar() {
+      if (this.dataRes.pass === this.dataRes.passconfirm) {
+        this.rs.createUser( this.dataRes.email, this.dataRes.pass).then(() => {
+            this._ls.loginEmail( this.dataRes.email, this.dataRes.pass).then(() => {
+            this.ruta.navigate(['dash']);
+          });
+        });
+      } else {
+      alert ('No coincide la contrasena');
+      }
+  }
 }

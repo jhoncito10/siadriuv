@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardCentralComponent } from './dashboard-central.component';
+import { ComponentCorreoComponent } from './component-correo.component';
 
-describe('DashboardCentralComponent', () => {
-  let component: DashboardCentralComponent;
-  let fixture: ComponentFixture<DashboardCentralComponent>;
+describe('ComponentCorreoComponent', () => {
+  let component: ComponentCorreoComponent;
+  let fixture: ComponentFixture<ComponentCorreoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DashboardCentralComponent ]
+      declarations: [ ComponentCorreoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardCentralComponent);
+    fixture = TestBed.createComponent(ComponentCorreoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

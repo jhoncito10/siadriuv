@@ -20,7 +20,7 @@ export class FunuserService {
         });
     });
     return prom;
-   }
+  }
 
   getUsersBD() {
    return this.ad.list('/usuarios');
