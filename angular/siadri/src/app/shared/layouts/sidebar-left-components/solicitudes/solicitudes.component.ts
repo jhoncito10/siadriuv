@@ -28,7 +28,6 @@ export class SolicitudesComponent implements OnInit {
           }
         }).subscribe(data=>{
           this.solicitudes = data;
-          console.log(data);
       });
     
  }
