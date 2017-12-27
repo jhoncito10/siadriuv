@@ -12,7 +12,9 @@ export class SolicitudesComponent implements OnInit {
   solicitudes:any;
   user =  JSON.parse(localStorage.getItem('usuario'));
 
-  constructor(private ad:AngularFireDatabase, private data:ModalService) { }
+  constructor(private ad:AngularFireDatabase, private data:ModalService) {
+    console.log(this.user);
+   }
 
   ngOnInit() {
     this.cargarSolicitudes(this.user.uid);
@@ -20,7 +22,6 @@ export class SolicitudesComponent implements OnInit {
 
   //METODO QUE CARGA LAS SOLICITUDES DE EL USUARIO QUE ESTA AUTENTICADO EN ESE MOMENTO
   cargarSolicitudes(uid:any){
-      console.log(uid);
         this.ad.list('/solicitudes', {
           query: {
             orderByChild: 'uid_diligenciado',

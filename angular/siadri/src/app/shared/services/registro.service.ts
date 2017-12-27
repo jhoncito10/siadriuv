@@ -13,8 +13,7 @@ export class RegistroService {
          // tslint:disable-next-line:prefer-const
           let promise = new Promise((resolve, reject) => {
             this.afAuth.auth.createUserWithEmailAndPassword(email, pass).then(
-              () => {
-                console.log('Usuario creado');
+              () => {  
                 alert('Registrado exitosamente');
                 resolve();
             }).catch(function(error){

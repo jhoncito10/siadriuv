@@ -1,3 +1,5 @@
+import { AdminGuard } from './shared/services/admin.guard';
+import { Nivel3Guard } from './shared/services/nivel3.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FunuserService } from './shared/layouts/formularios-admin/usuarios/funuser.service';
 import { RuleservicesService } from './shared/layouts/formularios-admin/roles/rule.service';
@@ -5,7 +7,6 @@ import { BuscadorService } from './shared/layouts/modal-popup/buscador.service';
 import { ModalService } from './shared/modal.service';
 import { LeaftletmapService } from './shared/layouts/dashboard-map/leaftletmap.service';
 import { app_routing } from './app.route';
-import { PublicGuard } from './shared/services/public.guard';
 import { AuthGuard } from './shared/services/auth.guard';
 import { RouterModule } from '@angular/router';
 import { RegistroService } from './shared/services/registro.service';
@@ -22,7 +23,6 @@ import { AppComponent } from './app.component';
 import { HeaderTopComponent } from './shared/layouts/header-top/header-top.component';
 import { SidebarLeftComponent } from './shared/layouts/sidebar-left/sidebar-left.component';
 import { DashboardMapComponent } from './shared/layouts/dashboard-map/dashboard-map.component';
-import { DashboardCentralComponent } from './shared/layouts/dashboard-central/dashboard-central.component';
 import { firebaseconfig } from './config';
 import { AgreementsComponent } from './shared/layouts/sidebar-left-components/agreements/agreements.component';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -53,6 +53,8 @@ import { MomentModule } from 'angular2-moment';
 import { BarraverticalComponent } from './shared/layouts/dash-nivel3/graficos/barravertical/barravertical.component';
 import { Grafico1Component } from './shared/layouts/dash-nivel3/component-graficos/grafico1/grafico1.component';
 import { Grafico2Component } from './shared/layouts/dash-nivel3/component-graficos/grafico2/grafico2.component';
+import { CorreoComponent } from './shared/layouts/sidebar-left-components/correo/correo.component';
+import { ComponentCorreoComponent } from './shared/layouts/dash-nivel3/component-correo/component-correo.component';
 
 
 @NgModule({
@@ -62,7 +64,6 @@ import { Grafico2Component } from './shared/layouts/dash-nivel3/component-grafic
     SidebarLeftComponent,
     AgreementsComponent,
     DashboardMapComponent,
-    DashboardCentralComponent,
     ModalPopupComponent,
     LoginComponent,
     DashboardInComponent,
@@ -82,7 +83,9 @@ import { Grafico2Component } from './shared/layouts/dash-nivel3/component-grafic
     LineaComponent,
     BarraverticalComponent,
     Grafico1Component,
-    Grafico2Component
+    Grafico2Component,
+    CorreoComponent,
+    ComponentCorreoComponent
     
   ],
   imports: [
@@ -103,14 +106,15 @@ import { Grafico2Component } from './shared/layouts/dash-nivel3/component-grafic
       LoginService,
       HttpService,
       RegistroService,
-      PublicGuard,
       AuthGuard,
       LeaftletmapService,
       ModalService,
       BuscadorService,
       DashboardMapComponent,
       RuleservicesService,
-      FunuserService
+      FunuserService,
+      Nivel3Guard,
+      AdminGuard
     ],
   bootstrap: [AppComponent]
 })

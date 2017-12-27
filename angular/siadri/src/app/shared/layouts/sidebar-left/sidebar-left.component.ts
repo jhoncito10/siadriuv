@@ -17,11 +17,11 @@ export class SidebarLeftComponent implements OnInit {
   constructor(public fs: RuleservicesService) {
     if (localStorage.getItem('usuario')) {
        this.datosUser = JSON.parse(localStorage.getItem('usuario'));
-                  this.fs.getConsultaRol(this.datosUser.uid).then(() => {
-                   this.fs.getAtrRol(this.fs.getRolEsp()).subscribe(data => {
-                     this.rol = data.$key;
-                    });
-                  });
+      this.fs.getConsultaRol(this.datosUser.uid).then(() => {
+        this.fs.getAtrRol(this.fs.getRolEsp()).subscribe(data => {
+          this.rol = data.$key;
+        });
+      });
     
     }
   }

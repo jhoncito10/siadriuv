@@ -9,13 +9,19 @@ import { ModalService } from 'app/shared/modal.service';
 })
 export class DashboardInComponent implements OnInit {
 
-  user = JSON.parse(localStorage.getItem('usuario'));
+  user:any;
 
   constructor(private ad:BuscadorService ,private modal:ModalService) { 
     
-    this.ad.getNotificaciones(this.user.uid).subscribe(data=>{
-      this.modal.changeNotifcacion(data);
-    });
+    if(JSON.parse(localStorage.getItem('usuario'))){
+
+      this.user = JSON.parse(localStorage.getItem('usuario'));
+      this.ad.getNotificaciones(this.user.uid).subscribe(data=>{
+        this.modal.changeNotifcacion(data);
+      });
+
+    }
+    
 
   }
 
