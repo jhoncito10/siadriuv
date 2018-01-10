@@ -26,6 +26,7 @@ import { ComponentCorreoComponent } from 'app/shared/layouts/dash-nivel3/compone
         {path: 'grafico1',component:Grafico1Component},
         {path: 'grafico2',component:Grafico2Component},
         { path: 'enviocorreos', component: ComponentCorreoComponent},
+        { path: '', pathMatch: 'full', redirectTo: 'dash/mapa'}
     ]},
    
     { path: 'roles', component: RolesComponent,canActivate:[AdminGuard]},
