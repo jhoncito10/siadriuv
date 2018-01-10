@@ -25,6 +25,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  volver(){
+    this.ruta.navigate(['dash']);
+  }
+
 /* INICIO SESION */
   ingresar(proveedor?: string) {
     if (proveedor === 'google') {

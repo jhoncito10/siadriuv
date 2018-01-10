@@ -72,8 +72,10 @@ export class LoginService {
    logout() {
       localStorage.removeItem('usuario');
       this.usuario = null ;
-      this.afAuth.auth.signOut();
-      this.ruta.navigate(['/login']);
+      this.afAuth.auth.signOut().then(()=>{
+        this.ruta.navigate(['login']);
+      });
+     
       }
   }
 
