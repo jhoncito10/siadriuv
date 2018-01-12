@@ -30,31 +30,40 @@ export class BuscadorService {
 
   crearSolicitud(solicitud: any, nombreSol: any) {
     this.ad.app.database().ref('/solicitudes').push(solicitud).then(data => {
-      console.log(solicitud);
-      const url = `https://us-central1-siadriuv.cloudfunctions.net/enviarCorreo`;
-      let mailData = {
-        para: solicitud.correo_solicitante,
-        asunto: 'Solicitud de convenio',
-        mensaje: `El usuario ${solicitud.solicitante.nombre} con el correo ${solicitud.correo_solicitante}
-                  realizo subscripcion al estudio  de convenio o contrato
-                  `
+      this.ad.app.database().ref('/solicitudes/' + data.path.o[1] + '/nombreSolicitud').set(nombreSol).then(() => {
+        const url = `https://us-central1-siadriuv.cloudfunctions.net/enviarCorreo`;
+        let mailData = {
+          para: solicitud.correo_solicitante,
+          asunto: 'Solicitud de convenio',
+          mensaje: `El usuario ${solicitud.solicitante.nombre} con el correo ${solicitud.correo_solicitante}
+                    realizo subscripcion al estudio  de convenio o contrato
+                    `
 
-      }
-      // return this._http.post(url, mailData);
+        }
+        // return this._http.post(url, mailData);
 
-      $.ajax(
-        {
-          type: 'POST',
-          url: url,
-          data: JSON.stringify(mailData),
-          success: function (result) {
-            console.log('done');
-          },
-          contentType: 'application/json'
-        });
+        $.ajax(
+          {
+            type: 'POST',
+            url: url,
+            data: JSON.stringify(mailData),
+            success: function (result) {
+              alert('solicitud exitosa');
+
+            },
+            contentType: 'application/json'
+          });
+
+      });
+
 
     });
   }
+
+
+
+
+
 
   crearBorrador(formulario: any, nombreBorr: any) {
     this.ad.app.database().ref('/borradores').push(formulario).then(data => {
