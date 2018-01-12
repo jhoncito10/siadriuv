@@ -2109,34 +2109,34 @@
                                 <font size="1">Clasificación del Convenio o Contrato</font>
                             </b>
                         </td>
-                        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" colspan="3" rowspan="2"
+                        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000" colspan="2" rowspan="2"
                             align="center" valign="middle">
                             <font size="1">Internacional</font>
+                            <input class="checkbox" style="margin-top: 15px" name="input-internacional" [(ngModel)]="this.formulario.conveniocontrato.clasificacion.internacional" type="checkbox" id="input-internacional" >
                         </td>
                         <td style="margin-right: 5px; border-top: 1px solid #000000" align="left" valign="bottom">
-                            <input class="checkbox" style="margin-top: 15px" name="input-internacional" [(ngModel)]="this.formulario.conveniocontrato.clasificacion.internacional" type="checkbox" id="input-internacional" >
+                            <br>
+                        </td>
+                        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000;margin-left: 10px;" colspan="2" rowspan="2" align="center" valign="middle">
+                            <font size="1">Nacional</font>
+                            <input class="checkbox" style="margin-top: 15px" name="input-nacional" [(ngModel)]="this.formulario.conveniocontrato.clasificacion.nacional" type="checkbox" id="input-nacional">
+                        </td>
+                        <td style="margin-right: 5px; border-top: 1px solid #000000" align="left" valign="bottom">
                             <br>
                         </td>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" colspan="2" rowspan="2" align="center" valign="middle">
-                            <font size="1">Nacional</font>
-                        </td>
-                        <td style="margin-right: 5px; border-top: 1px solid #000000" align="left" valign="bottom">
-                            <input class="checkbox" style="margin-top: 15px" name="input-nacional" [(ngModel)]="this.formulario.conveniocontrato.clasificacion.nacional" type="checkbox" id="input-nacional">
-                            <br>
-                        </td>
-                        <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000" colspan="2" rowspan="2" align="left" valign="middle">
                             <font size="1">Departamental</font>
+                            <input class="checkbox" style="margin-top: 15px" name="input-departamental" [(ngModel)]="this.formulario.conveniocontrato.clasificacion.departamental" type="checkbox" id="input-departamental" >
                         </td>
                         <td style="margin-right: 5px; border-top: 1px solid #000000" align="left" valign="bottom">
-                            <input class="checkbox" style="margin-top: 15px" name="input-departamental" [(ngModel)]="this.formulario.conveniocontrato.clasificacion.departamental" type="checkbox" id="input-departamental" >
                             <br>
                         </td>
-                        <td style="margin-right: 10px; border-top: 1px solid #000000; border-bottom: 1px solid #000000" colspan="2" rowspan="2" align="left"
+                        <td style="margin-right: 10px; border-top: 1px solid #000000; border-bottom: 1px solid #000000" colspan="2" rowspan="2" align="center"
                             valign="middle">
                             <font size="1">Municipal</font>
+                            <input class="checkbox" style="margin-top: 15px" name="input-municipal" [(ngModel)]="this.formulario.conveniocontrato.clasificacion.municipal" type="checkbox" id="input-municipal" >
                         </td>
                         <td style="border-top: 1px solid #000000" align="left" valign="bottom">
-                            <input class="checkbox" style="margin-top: 15px; margin-left: 6px" name="input-municipal" [(ngModel)]="this.formulario.conveniocontrato.clasificacion.municipal" type="checkbox" id="input-municipal" >
                             <br>
                         </td>
                         <td style="border-top: 1px solid #000000" align="center" valign="middle">
@@ -2504,10 +2504,10 @@
                         <td height="20" align="left" valign="bottom">
                             <br>
                         </td>
-                        <td style="border-left: 2px solid #000000" colspan="11" align="left" valign="top">*Movilidad estudiantil:
-                            <input class="checkbox" style="margin-top: 6px; margin-left: 130px" name="input-mov-estudiantil" [(ngModel)]="this.formulario.tipoconvcont.academico.mov" type="checkbox" id="input-mov-estudiantil">
+                        <td style="border-left: 2px solid #000000" colspan="11" align="left" valign="top">*Movilidad estudiantil: 
                         </td>
-                        <td align="center" valign="top">
+                        <td height="10" align="left" valign="top">
+                                <input class="checkbox" style="margin-top: 2px; margin-right: 140px" name="input-mov-estudiantil" [(ngModel)]="this.formulario.tipoconvcont.academico.mov" type="checkbox" id="input-mov-estudiantil">
                             <br>
                         </td>
                         <td align="left" valign="bottom">
@@ -2585,9 +2585,10 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="11" align="left" valign="top">*Convenios con IES:
-                            <input class="checkbox" style="margin-top: 6px; margin-left: 135px"  name="input-conv-ies" [(ngModel)]="this.formulario.tipoconvcont.academico.ies" type="checkbox" id="input-conv-ies">
+                           
                         </td>
-                        <td align="center" valign="top">
+                        <td height="10" align="left" valign="bottom">
+                                <input class="checkbox" style="margin-top: 2px; margin-right: 140px"  name="input-conv-ies" [(ngModel)]="this.formulario.tipoconvcont.academico.ies" type="checkbox" id="input-conv-ies">
                             <br>
                         </td>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
@@ -2613,10 +2614,10 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="11" align="left" valign="middle">*Actividades de educación continua
-                            <input class="checkbox" style="margin-top: 6px; margin-left: 69px" name="input-act-edu" [(ngModel)]="this.formulario.tipoconvcont.academico.act" type="checkbox" id="input-act-edu">
                             <br>y permanente1
                         </td>
-                        <td align="center" valign="top">
+                        <td height="23" align="left" valign="bottom">
+                                <input class="checkbox" style="margin-top: 2px; margin-right: 140px" name="input-act-edu" [(ngModel)]="this.formulario.tipoconvcont.academico.act" type="checkbox" id="input-act-edu">
                             <br>
                         </td>
                         <td style="border-right: 2px solid #000000" align="left" valign="bottom">
@@ -2631,9 +2632,10 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="11" align="left" valign="top">*Servicios Académicos2:
-                            <input class="checkbox" style="margin-top: 6px; margin-left: 117px" name="input-serv-aca" [(ngModel)]="this.formulario.tipoconvcont.academico.sac" type="checkbox" id="input-serv-aca">
+                            
                         </td>
-                        <td align="center" valign="top">
+                        <td height="9" align="left" valign="bottom">
+                                <input class="checkbox" style="margin-top: 2px; margin-right: 140px" name="input-serv-aca" [(ngModel)]="this.formulario.tipoconvcont.academico.sac" type="checkbox" id="input-serv-aca">
                             <br>
                         </td>
                         <td align="left" valign="bottom">
@@ -2711,9 +2713,9 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="11" align="left" valign="top">*Prácticas y Pasantía Profesionales
-                            <input class="checkbox" style="margin-top: 6px; margin-left: 68px" name="input-prac-pas" [(ngModel)]="this.formulario.tipoconvcont.academico.ppp" type="checkbox" id="input-prac-pas">
                         </td>
-                        <td align="center" valign="top">
+                        <td height="10" align="left" valign="bottom">
+                                <input class="checkbox" style="margin-top: 2px; margin-right: 140px" name="input-prac-pas" [(ngModel)]="this.formulario.tipoconvcont.academico.ppp" type="checkbox" id="input-prac-pas">
                             <br>
                         </td>
                         <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
@@ -2742,9 +2744,10 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="11" align="left" valign="top">*Contratos de Aprendizaje:
-                            <input class="checkbox" style="margin-top: 6px; margin-left: 107px" name="input-con-apre" [(ngModel)]="this.formulario.tipoconvcont.academico.cap" type="checkbox" id="input-con-apre">
+                            
                         </td>
-                        <td align="center" valign="top">
+                        <td height="10" align="left" valign="bottom">
+                                <input class="checkbox" style="margin-top: 2px; margin-right: 140px" name="input-con-apre" [(ngModel)]="this.formulario.tipoconvcont.academico.cap" type="checkbox" id="input-con-apre">
                             <br>
                         </td>
                         <td style="border-right: 2px solid #000000" align="left" valign="bottom">
@@ -2759,9 +2762,10 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="11" align="left" valign="top">*Compromiso Social3:
-                            <input class="checkbox" style="margin-top: 6px; margin-left: 128px" name="input-comp-soc" [(ngModel)]="this.formulario.tipoconvcont.academico.cos" type="checkbox" id="input-comp-soc">
+                           
                         </td>
-                        <td align="center" valign="top">
+                        <td height="10" align="left" valign="bottom">
+                                <input class="checkbox" style="margin-top: 2px; margin-right: 140px" name="input-comp-soc" [(ngModel)]="this.formulario.tipoconvcont.academico.cos" type="checkbox" id="input-comp-soc">
                             <br>
                         </td>
                         <td style="border-right: 2px solid #000000" align="left" valign="bottom">
@@ -2776,9 +2780,10 @@
                             <br>
                         </td>
                         <td style="border-bottom: 2px solid #000000; border-left: 2px solid #000000" colspan="11" align="left" valign="top">*Otras Actividades Académicas:
-                            <input class="checkbox" style="margin-top: 6px; margin-left: 84px" name="input-otr-act" [(ngModel)]="this.formulario.tipoconvcont.academico.oaa" type="checkbox" id="input-otr-act">
+                           
                         </td>
-                        <td style="border-bottom: 2px solid #000000" align="center" valign="top">
+                        <td style="border-bottom: 2px solid #000000" align="left" valign="bottom">
+                                <input class="checkbox" style="margin-top: 2px; margin-right: 140px" name="input-otr-act" [(ngModel)]="this.formulario.tipoconvcont.academico.oaa" type="checkbox" id="input-otr-act">
                             <br>
                         </td>
                         <td style="border-bottom: 2px solid #000000" align="left" valign="bottom">
@@ -3110,9 +3115,10 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="12" align="left" valign="top">Proyectos de Investigación:
-                            <input class="checkbox" style="margin-top: 6px; margin-left: 100px" name="input-proy-inv" [(ngModel)]="this.formulario.tipoconvcont.investigacion.pdi" type="checkbox" id="input-proy-inv">
+                            
                         </td>
                         <td align="left" valign="bottom">
+                                <input class="checkbox" style="margin-top: 2px; margin-right: 300px" name="input-proy-inv" [(ngModel)]="this.formulario.tipoconvcont.investigacion.pdi" type="checkbox" id="input-proy-inv">
                             <br>
                         </td>
                         <td style="border-top: 1px solid #000000; border-bottom: 2px solid #000000; border-right: 1px solid #000000" colspan="10"
@@ -3134,9 +3140,10 @@
                             <br>
                         </td>
                         <td style="border-bottom: 2px solid #000000; border-left: 2px solid #000000" colspan="12" align="left" valign="top">Otras Actividades de Investigación:
-                            <input class="checkbox" style="margin-top: 6px; margin-left: 66px" name="input-otrac-inves" [(ngModel)]="this.formulario.tipoconvcont.investigacion.oai" type="checkbox" id="input-otrac-inves">
+                            
                         </td>
                         <td style="border-bottom: 2px solid #000000" align="left" valign="bottom">
+                                <input class="checkbox" style="margin-top: 2px; margin-right: 300px" name="input-otrac-inves" [(ngModel)]="this.formulario.tipoconvcont.investigacion.oai" type="checkbox" id="input-otrac-inves">
                             <br>
                         </td>
                         <td align="left" valign="bottom">
@@ -3269,11 +3276,12 @@
                         <td height="19" align="left" valign="bottom">
                             <br>
                         </td>
-                        <td style="border-top: 1px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000" colspan="12"
+                        <td style="border-top: 2px solid #000000; border-bottom: 2px solid #000000; border-left: 2px solid #000000" colspan="12"
                             rowspan="2" align="left" valign="top">Asuntos del Bienestar Universitario o de su portafolio de servicios:
-                            <input class="checkbox" style="margin-top: 15px; margin-left: 10px" name="input-bien-univ" [(ngModel)]="this.formulario.tipoconvcont.bienestar.abu" type="checkbox" id="input-bien-univ">
+                            
                         </td>
                         <td align="left" valign="bottom">
+                                <input class="checkbox" style="margin-top: 2px; margin-right: 300px" name="input-bien-univ" [(ngModel)]="this.formulario.tipoconvcont.bienestar.abu" type="checkbox" id="input-bien-univ">
                             <br>
                         </td>
                         <td style="border-top: 1px solid #000000; border-bottom: 2px solid #000000; border-right: 1px solid #000000" colspan="10"
@@ -3429,9 +3437,10 @@
                             <br>
                         </td>
                         <td style="border-left: 2px solid #000000" colspan="12" align="left" valign="top">Movilidad Internacional:
-                            <input class="checkbox" style="margin-top: 6px; margin-left: 130px" name="input-movil-int" [(ngModel)]="this.formulario.tipoconvcont.interna.mi" type="checkbox" id="input-movil-int">
+                           
                         </td>
                         <td align="left" valign="bottom">
+                                <input class="checkbox" style="margin-top: 2px; margin-right: 300px" name="input-movil-int" [(ngModel)]="this.formulario.tipoconvcont.interna.mi" type="checkbox" id="input-movil-int">
                             <br>
                         </td>
                         <td style="border-top: 1px solid #000000; border-bottom: 2px solid #000000; border-right: 1px solid #000000" colspan="10"
@@ -3455,9 +3464,10 @@
                             <br>
                         </td>
                         <td style="border-bottom: 2px solid #000000; border-left: 2px solid #000000" colspan="12" align="left" valign="top">Proyectos de Cooperación Internacional:
-                            <input class="checkbox" style="margin-top: 6px; margin-left: 54px" name="input-proy-coopin" [(ngModel)]="this.formulario.tipoconvcont.interna.pci" type="checkbox" id="input-proy-coopin">
+                            
                         </td>
                         <td style="border-bottom: 2px solid #000000" align="left" valign="bottom">
+                                <input class="checkbox" style="margin-top: 2px; margin-right: 300px" name="input-proy-coopin" [(ngModel)]="this.formulario.tipoconvcont.interna.pci" type="checkbox" id="input-proy-coopin">
                             <br>
                         </td>
                         <td align="left" valign="bottom">
