@@ -8,7 +8,9 @@ import { ModalService } from 'app/shared/modal.service';
   styleUrls: ['./linea.component.css']
 })
 export class LineaComponent implements OnInit {
-
+  //single: any[];
+  multi: any[];
+  single:any;
   view: any[] = [700, 400];
   
     // options
@@ -28,8 +30,7 @@ export class LineaComponent implements OnInit {
     // line, area
     autoScale = true;
 
-    multi:any;
-    single:any;
+    
 
     conveniosTotales:any;
   constructor(private modal:ModalService) { 

@@ -10,7 +10,8 @@ import * as moment from 'moment';
   styleUrls: ['./area.component.css']
 })
 export class AreaComponent implements OnInit {
-
+  single: any[];
+  multi: any[];
   view: any[] = [700, 400];
   
     // options
@@ -22,7 +23,6 @@ export class AreaComponent implements OnInit {
     xAxisLabel = 'MESES DE VIGENCIA';
     showYAxisLabel = true;
     yAxisLabel = 'PAISES';
-    multi:any;
   
     colorScheme = {
       domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA', '#2E2EFE','#FF0000','#00FF00','#088A85','#BF00FF','#00FFFF','#D7DF01','#FF0040','#D76915','#099FF5','#FD3DB7']

@@ -1,0 +1,17 @@
+[debug] [2018-01-12T22:55:41.010Z] ----------------------------------------------------------------------
+[debug] [2018-01-12T22:55:41.012Z] Command:       /home/radamanthys/.nvm/versions/node/v6.12.0/bin/node /home/radamanthys/.nvm/versions/node/v6.12.0/bin/firebase serve --only functions
+[debug] [2018-01-12T22:55:41.012Z] CLI Version:   3.16.0
+[debug] [2018-01-12T22:55:41.012Z] Platform:      linux
+[debug] [2018-01-12T22:55:41.012Z] Node Version:  v6.12.0
+[debug] [2018-01-12T22:55:41.012Z] Time:          Fri Jan 12 2018 17:55:41 GMT-0500 (-05)
+[debug] [2018-01-12T22:55:41.012Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-01-12T22:55:41.020Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-01-12T22:55:41.020Z] > authorizing via signed-in user
+[debug] [2018-01-12T22:55:41.022Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/siadriuv  
+  
+ Fri Jan 12 2018 17:55:41 GMT-0500 (-05)
+[debug] [2018-01-12T22:55:41.735Z] <<< HTTP RESPONSE 200
+[debug] [2018-01-12T22:55:41.736Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/siadriuv/tokens  
+  
+ Fri Jan 12 2018 17:55:41 GMT-0500 (-05)
