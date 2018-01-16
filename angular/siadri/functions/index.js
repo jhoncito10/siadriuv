@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 const admin = require('firebase-admin');
 const CUT_OFF_TIME = 6 * 30 * 24 * 60 * 60 * 1000; // 6 months in milliseconds.
 //const INTERVAL_TIME = 24 * 24 * 60 * 60 * 1000; // 24 days in milliseconds.
-const INTERVAL_TIME = 1000 * 10 ; // 1 hour in milliseconds.
+const INTERVAL_TIME = 1000 * 60 * 60 * 6 ; // 1 hour in milliseconds.
 admin.initializeApp(functions.config().firebase);
 
 
@@ -49,7 +49,7 @@ let sendMail = (req, res) => {
     });
     var mailsolicitante = {
         from: 'SIADRI <sistema.siadri@correounivalle.edu.co>',
-        bcc: `${req.para}, francisco.hurtado@geoprocess.com.co`,
+        bcc: `${req.para}`,
         subject: req.asunto,
         html: req.mensaje
     };
@@ -148,7 +148,7 @@ var verificaFechas = (req, res) => {
 
                             newNotification.set(notificacion).then(res => {
                                 let mailData = {
-                                    para: `belfegorh@gmail.com`,
+                                    para: `${usuario.val().email}`,
                                     asunto: 'Notificacion convenio',
                                     mensaje: `${notificacion.info}
                                               `

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+declare var $: any;
 
 @Component({
   selector: 'app-correo',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CorreoComponent implements OnInit {
 
+
+
   constructor() { }
 
   ngOnInit() {
   }
-
 }

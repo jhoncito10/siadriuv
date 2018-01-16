@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ComponentCorreoComponent implements OnInit {
 
+  email: string = '';
+  cc: string = '';
+  cco: string = '';
+  asunto: string = '';
+  mensaje: string = '';
+
   constructor() { }
 
   ngOnInit() {
   }
+  enviarCorreo() { this.email = 'Nancy'; }
 
 }

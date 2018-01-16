@@ -96,6 +96,7 @@ export class BuscadorService {
   }
 
   setNotificacion(userkey: any, notkey) {
+    
     return this.ad.app.database().ref('/usuarios/' + userkey + '/notificacion/' + notkey + '/estado').set('leido');
   }
 
