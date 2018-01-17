@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 const admin = require('firebase-admin');
 const CUT_OFF_TIME = 6 * 30 * 24 * 60 * 60 * 1000; // 6 months in milliseconds.
 //const INTERVAL_TIME = 24 * 24 * 60 * 60 * 1000; // 24 days in milliseconds.
-const INTERVAL_TIME = 1000 * 60 * 60 * 6 ; // 1 hour in milliseconds.
+const INTERVAL_TIME = 1000 * 60 * 60 ; // 1 hour in milliseconds.
 admin.initializeApp(functions.config().firebase);
 
 
@@ -105,7 +105,7 @@ var verificaFechas = (req, res) => {
     const convenios = ref.child(`/convenios_inicio/`);
     // const ref = event.data.ref.parent; // reference to the items
     const now = Date.now();
-    console.log(moment().subtract(5, 'hours'));
+    console.log(moment().utcOffset("-05:00"));
     const oldItemsQuery = convenios.orderByChild('fecha_de_vencimiento');
     convenios.once('value').then(snapshot => {
         // create a map with all children that need to be removed
@@ -114,7 +114,6 @@ var verificaFechas = (req, res) => {
 
             let fechaFormat = moment(child.val().fecha_de_vencimiento, 'M/D/YYYY', true).format('x');
             let cutoff = fechaFormat - now;
-            let prueba = moment('11/19/2010', 'M/D/YYYY', false).format('x');
             if (cutoff <= CUT_OFF_TIME) {
                 let refUsuarios = ref.child(`/usuarios/`);
                 let path = refUsuarios.toString();
@@ -124,7 +123,7 @@ var verificaFechas = (req, res) => {
                     .once('value').then(usuarios => {
 
                         usuarios.forEach(usuario => {
-                            let horaactual = moment().utcOffset("-05:00").format("DD/MM/YYYY hh:mm:ss")+"";
+                            let horaactual = moment().utcOffset("-05:00").format("DD/MM/YYYY HH:mm:ss")+"";
                             let notificacion = {};
                             if (cutoff < 0) {
                                 notificacion = {
@@ -165,5 +164,47 @@ var verificaFechas = (req, res) => {
         // return ref.update(updates);
     });
 };
-
+console.log(moment().utcOffset("-05:00"));
 setInterval(verificaFechas, INTERVAL_TIME);
+
+
+const mailTrasport = nodemailer.createTransport({
+    // host:'smtp.gmail.com',
+    // port:465,
+    // secure:true,
+    service: 'gmail',
+    auth:{
+        user:'francisco.hurtado@geoprocess.com.co',
+        pass:'soul-reaver1'
+    }
+});
+
+exports.weeklyEmail = functions.https.onRequest((req, res)=>{
+    const currentTime = new Date().getTime();
+    const lastWeek = currentTime - 604800000;
+    const emails = [];
+    ref.child('usuarios')
+    .orderByChild('roles')
+    .equalTo('NIVEL3')
+    .once('value').then(snap=>{
+        snap.forEach(childSnap=>{
+            const email = childSnap.val().email;
+            emails.push(email);
+        });
+        return emails;
+    }).then(emails=>{
+        console.log('emails '+emails.join() );
+        const mailOptions = {
+            from:'"SIADRI" <sistema.siadri@correounivalle.edu.co>',
+            bcc:emails.join(),
+            subject:'convenio apunto de vencer',
+            text:'el convenio xxx esta por vencer'
+        };
+        return mailTrasport.sendMail(mailOptions).then(()=>{
+            res.send('email enviado');
+        }).catch(error=>{
+            res.send(error);
+        });
+    });
+});
+
