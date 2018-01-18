@@ -7,10 +7,19 @@ const nodemailer = require('nodemailer');
 const admin = require('firebase-admin');
 const CUT_OFF_TIME = 6 * 30 * 24 * 60 * 60 * 1000; // 6 months in milliseconds.
 //const INTERVAL_TIME = 24 * 24 * 60 * 60 * 1000; // 24 days in milliseconds.
-const INTERVAL_TIME = 1000 * 60 * 60 * 6 ; // 1 hour in milliseconds.
+const INTERVAL_TIME = 1000 * 60 * 60; // 1 hour in milliseconds.
 admin.initializeApp(functions.config().firebase);
 
-
+const mailTrasport = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        type: 'OAuth2',
+        user: 'sistema.siadri@correounivalle.edu.co',
+        clientId: '275977166524-j6d3duj2sjad0relljnnhe602so63oe3.apps.googleusercontent.com',
+        clientSecret: 'OLcqQJkutDFJp0QYDjp8hnoi',
+        refreshToken: '1/ByCgMX5es351WxKldwgoPr_dU4N9cYe4Rq1Cqq2Nswk'
+    }
+});
 
 
 
@@ -37,38 +46,26 @@ exports.CreateUser = functions.auth.user().onCreate(event => {
 
 
 let sendMail = (req, res) => {
-    var transporter = nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-            type: 'OAuth2',
-            user: 'sistema.siadri@correounivalle.edu.co',
-            clientId: '275977166524-j6d3duj2sjad0relljnnhe602so63oe3.apps.googleusercontent.com',
-            clientSecret: 'OLcqQJkutDFJp0QYDjp8hnoi',
-            refreshToken: '1/ByCgMX5es351WxKldwgoPr_dU4N9cYe4Rq1Cqq2Nswk'
-        }
-    });
+
     var mailsolicitante = {
         from: 'SIADRI <sistema.siadri@correounivalle.edu.co>',
         bcc: `${req.para}`,
         subject: req.asunto,
         html: req.mensaje
     };
-    transporter.sendMail(mailsolicitante, function (error, success) {
-        if (error) {
-            console.log("error");
-            if (res) {
-                    res.status(500).send("Error al enviar Email desde Firebase Functions [ERROR::Nodemailer]");
+    return mailTrasport.sendMail(mailsolicitante).then(() => {
+        if (res) {
+            res.status(200).send("Exito al enviar Email desde Firebase Functions.");
 
-            } else {
-                console.log("error, al enviar correo");
-            }
         } else {
-            if (res) {
-                res.status(200).send("Exito al enviar Email desde Firebase Functions.");
+            console.log("exito al enviar correo");
+        }
+    }).catch(error => {
+        if (res) {
+            res.status(200).send("Exito al enviar Email desde Firebase Functions.");
 
-            } else {
-                console.log("exito al enviar correo");
-            }
+        } else {
+            console.log("exito al enviar correo");
         }
     });
     // send mail with defined transport object
@@ -94,7 +91,6 @@ exports.enviarCorreo = functions.https.onRequest((req, res) => {
         //res.status(200).send('Para: ' + req.body.para + ' Asunto: ' + req.body.asunto + ' Mensaje: ' + req.body.mensaje);
         // FUNCIONA OK
         // Nodemailer req.body
-        console.log(req.body);
         sendMail(req.body, res);
 
     });
@@ -102,68 +98,145 @@ exports.enviarCorreo = functions.https.onRequest((req, res) => {
 
 
 var verificaFechas = (req, res) => {
-    const convenios = ref.child(`/convenios_inicio/`);
-    // const ref = event.data.ref.parent; // reference to the items
-    const now = Date.now();
-    console.log(moment().subtract(5, 'hours'));
-    const oldItemsQuery = convenios.orderByChild('fecha_de_vencimiento');
-    convenios.once('value').then(snapshot => {
-        // create a map with all children that need to be removed
 
-        snapshot.forEach(child => {
+    const usuarios = {
+        keys: [],
+        emails: []
+    };
+    return ref.child('usuarios')
+        .orderByChild('roles')
+        .equalTo('NIVEL3')
+        .once('value').then(snap => {
+            snap.forEach(childSnap => {
+                const email = childSnap.val().email;
+                const key = childSnap.key;
+                usuarios.emails.push(email);
+                usuarios.keys.push(key);
+            });
+            return usuarios;
+        }).then(usuarios => {
+            console.log('emails ' + usuarios.emails.join());
 
-            let fechaFormat = moment(child.val().fecha_de_vencimiento, 'M/D/YYYY', true).format('x');
-            let cutoff = fechaFormat - now;
-            let prueba = moment('11/19/2010', 'M/D/YYYY', false).format('x');
-            if (cutoff <= CUT_OFF_TIME) {
-                let refUsuarios = ref.child(`/usuarios/`);
-                let path = refUsuarios.toString();
-                refUsuarios
-                    .orderByChild('roles')
-                    .equalTo('NIVEL3')
-                    .once('value').then(usuarios => {
 
-                        usuarios.forEach(usuario => {
-                            let horaactual = moment().utcOffset("-05:00").format("DD/MM/YYYY hh:mm:ss")+"";
-                            let notificacion = {};
-                            if (cutoff < 0) {
-                                notificacion = {
-                                    "estado": "sin leer",
-                                    "icon": "fa fa-users text-aqua",
-                                    "info": `El convenio con la institucion "${child.val().institucion}" vencio, en la fecha ${child.val().fecha_de_vencimiento}`,
-                                    "fecha_creacion:":horaactual,
-                                    "fecha_modificacion:":horaactual
-                                };
+            const convenios = ref.child(`/convenios_inicio/`);
+            const refUsuarios = ref.child(`/usuarios/`);
+            const now = Date.now();
+            console.log(moment().utcOffset("-05:00"));
+            const oldItemsQuery = convenios.orderByChild('fecha_de_vencimiento');
+            convenios.once('value').then(snapshot => {
+                // create a map with all children that need to be removed
 
-                            } else {
-                                notificacion = {
-                                    "estado": "sin leer",
-                                    "icon": "fa fa-users text-aqua",
-                                    "info": `El convenio con la institucion "${child.val().institucion}" vencera en menos de 6 meses, en la fecha ${child.val().fecha_de_vencimiento}`,
-                                    "fecha_creacion:":horaactual,
-                                    "fecha_modificacion:":horaactual
-                                };
+                snapshot.forEach(child => {
+
+                    let fechaFormat = moment(child.val().fecha_de_vencimiento, 'M/D/YYYY', true).format('x');
+                    let cutoff = fechaFormat - now;
+                    if (cutoff <= CUT_OFF_TIME) {
+                        let mensaje = "";
+                        let horaactual = moment().utcOffset("-05:00").format("DD/MM/YYYY HH:mm:ss") + "";
+                        let notificacion = {};
+                        if (cutoff < 0) {
+                            mensaje = `El convenio con la institucion "${child.val().institucion}" vencio, en la fecha ${child.val().fecha_de_vencimiento}`;
+                            notificacion = {
+                                "estado": "sin leer",
+                                "icon": "fa fa-users text-aqua",
+                                "info": mensaje,
+                                "fecha_creacion:": horaactual,
+                                "fecha_modificacion:": horaactual
+                            };
+
+                        } else {
+                            mensaje = `El convenio con la institucion "${child.val().institucion}" vencera en menos de 6 meses, en la fecha ${child.val().fecha_de_vencimiento}`;
+                            notificacion = {
+                                "estado": "sin leer",
+                                "icon": "fa fa-users text-aqua",
+                                "info": mensaje,
+                                "fecha_creacion:": horaactual,
+                                "fecha_modificacion:": horaactual
+                            };
+                        }
+                        for (const key in usuarios.keys) {
+                            if (usuarios.keys.hasOwnProperty(key)) {
+                                const usuariokey = usuarios.keys[key];
+
+
+
+                                let newNotification = refUsuarios.child(`/${usuariokey}/notificacion/${child.key}/`);
+
+                                newNotification.set(notificacion);
+
                             }
-                            let newNotification = refUsuarios.child(`/${usuario.key}/notificacion/${child.key}/`);
+                        }
+                        let mailData = {
+                            from: '"SIADRI" <sistema.siadri@correounivalle.edu.co>',
+                            bcc: usuarios.emails.join(),
+                            subject: 'convenio apunto de vencer',
+                            html: mensaje
 
-                            newNotification.set(notificacion).then(res => {
-                                let mailData = {
-                                    para: `${usuario.val().email}`,
-                                    asunto: 'Notificacion convenio',
-                                    mensaje: `${notificacion.info}
-                                              `
-                                }
-                                sendMail(mailData);
-                            });
-                            // We've appended a new message to the message_list location.
+                        };
+
+
+                        // sendMail(mailData);
+                        mailTrasport.sendMail(mailData).then(() => {
+                            console.log('email enviado');
+                        }).catch(error => {
+                            console.log(error);
                         });
-                    });
-            }
 
+
+                        // We've appended a new message to the message_list location.
+                    }
+
+                });
+                // execute all updates in one go and return the result to end the function
+                // return ref.update(updates);
+            });
         });
-        // execute all updates in one go and return the result to end the function
-        // return ref.update(updates);
-    });
-};
 
-setInterval(verificaFechas, INTERVAL_TIME);
+};
+console.log(moment().utcOffset("-05:00"));
+// setInterval(verificaFechas, INTERVAL_TIME);
+
+
+
+
+exports.weeklyEmail = functions.https.onRequest((req, res) => {
+
+    verificaFechas().then(() => {
+        res.send('email enviado');
+    }).catch(error => {
+        res.send(error);
+    });
+
+
+
+
+
+
+
+    // const currentTime = new Date().getTime();
+    // const lastWeek = currentTime - 604800000;
+    // const emails = [];
+    // ref.child('usuarios')
+    // .orderByChild('roles')
+    // .equalTo('NIVEL3')
+    // .once('value').then(snap=>{
+    //     snap.forEach(childSnap=>{
+    //         const email = childSnap.val().email;
+    //         emails.push(email);
+    //     });
+    //     return emails;
+    // }).then(emails=>{
+    //     console.log('emails '+emails.join() );
+    //     const mailOptions = {
+    //         from:'"SIADRI" <sistema.siadri@correounivalle.edu.co>',
+    //         bcc:emails.join(),
+    //         subject:'convenio apunto de vencer',
+    //         text:'el convenio xxx esta por vencer'
+    //     };
+    //     return mailTrasport.sendMail(mailOptions).then(()=>{
+    //         res.send('email enviado');
+    //     }).catch(error=>{
+    //         res.send(error);
+    //     });
+    // });
+});
