@@ -270,7 +270,7 @@ export class ModalPopupComponent implements OnInit {
     form.correo_solicitante = this.correosolicitante;
     form.uid_diligenciado = this.user.uid;
     form.correo_diligenciado = this.user.email;
-    var parametro = form.fecha.dia + "/" + form.fecha.mes + "/" + form.fecha.ano + "/#" + Math.floor(Math.random() * (1000));
+    var parametro = "Sol:"+form.fecha.dia + "/" + form.fecha.mes + "/" + form.fecha.ano + "/#" + Math.floor(Math.random() * (1000));
 
     this.busqueda.crearSolicitud(form,parametro);
     if (form.$key) {
@@ -281,14 +281,43 @@ export class ModalPopupComponent implements OnInit {
     $('#inputBusqueda').val("");
   }
 
-  enviarBorrador() {
+  enviarRenovacion(){
     var form;
-    this.data.currentformulario.subscribe(forma => {
+    this.data.currentformularioRenov.subscribe(forma => {
       form = forma;
     });
 
+    form.correo_solicitante = this.correosolicitante;
     form.uid_diligenciado = this.user.uid;
     form.correo_diligenciado = this.user.email;
+    var parametro = "Ren:"+form.fecha.dia + "/" + form.fecha.mes + "/" + form.fecha.ano + "/#" + Math.floor(Math.random() * (1000));
+
+    this.busqueda.crearRenovacion(form,parametro);
+    if (form.$key) {
+      this.busqueda.EliminarBorrador(form.$key);
+    }
+
+    $('#modal1').modal('hide');
+    $('#inputBusqueda').val("");
+  }
+
+  enviarBorrador(message:any) {
+    var form;
+    if(message == "nombre"){
+      this.data.currentformulario.subscribe(forma => {
+        form = forma;
+      });
+      this.borrador = "Sol: "+this.borrador;
+    }else{
+      this.data.currentformularioRenov.subscribe(forma => {
+        form = forma;
+      });
+      this.borrador = "Ren: "+this.borrador;
+    }
+   
+    form.uid_diligenciado = this.user.uid;
+    form.correo_diligenciado = this.user.email;
+    
 
     this.busqueda.crearBorrador(form, this.borrador);
     $('#modal1').modal('hide');

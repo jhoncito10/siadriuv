@@ -1,21 +1,17 @@
-import { ModalService } from 'app/shared/modal.service';
+import { ModalService } from './../../../modal.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-inscripciones',
-  templateUrl: './inscripciones.component.html',
-  styleUrls: ['./inscripciones.component.css']
+  selector: 'app-inscripcion',
+  templateUrl: './inscripcion.component.html',
+  styleUrls: ['./inscripcion.component.css']
 })
-export class InscripcionesComponent implements OnInit {
+export class InscripcionComponent implements OnInit {
 
   constructor(private data:ModalService) { }
 
   ngOnInit() {
   }
-
-  //METODO QUE INICIALIZA EL FORMULARIO, CREANDO EL OBJETO JSON QUE GUARDA LOS DATOS DE LOS INPUTS
-  //GENERA LA FECHA ACTUAL, (37) CAMBIA LOS VALORES DEL FORMULARIO EN EL OBSERVABLE QUE SE ENCUENTRA EN MODALSERVICE
-  //(38) CAMBIA EL VALOR DE LA VARIABLE OBSERVABLE IMPRIMIR QUE SE ENCUENTRA EN MODALSERVICE
   inicializarFormulario(){
     var formulario = {
       fecha:{dia:"",mes:"",ano:""},

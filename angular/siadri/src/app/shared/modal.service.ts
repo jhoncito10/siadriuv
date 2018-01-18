@@ -29,12 +29,19 @@ export class ModalService {
     this.object.next(object);
   }
 
-  //variable que contiene el objecto json que corresponde a los datos del formulario
+  //variable que contiene el objecto json que corresponde a los datos del formulario inscripcion
   private formulario = new BehaviorSubject<any>([]);
   currentformulario = this.formulario.asObservable();
   changeformulario(form:any){
     this.formulario.next(form);
   }
+
+   //variable que contiene el objecto json que corresponde a los datos del formulario renovacion
+   private formularioRenov = new BehaviorSubject<any>([]);
+   currentformularioRenov = this.formularioRenov.asObservable();
+   changeformularioRenovacion(formRev:any){
+     this.formularioRenov.next(formRev);
+   }
 
   //variable que permite controlar la aparicion o desaparicion del boton imprimir de la interfaz
   //de solicitudes

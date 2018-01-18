@@ -60,6 +60,38 @@ export class BuscadorService {
     });
   }
 
+  crearRenovacion(renovacion: any, nombreRen: any){
+    this.ad.app.database().ref('/renovaciones').push(renovacion).then(data => {
+      this.ad.app.database().ref('/renovaciones/' + data.path.o[1] + '/nombreRenov').set(nombreRen).then(() => {
+        const url = `https://us-central1-siadriuv.cloudfunctions.net/enviarCorreo`;
+        let mailData = {
+          para: renovacion.correo_solicitante,
+          asunto: 'Solicitud de convenio',
+          mensaje: `El usuario ${renovacion.solicitante.nombre} con el correo ${renovacion.correo_solicitante}
+                    realizo subscripcion al estudio  de convenio o contrato
+                    `
+
+        }
+        // return this._http.post(url, mailData);
+
+        $.ajax(
+          {
+            type: 'POST',
+            url: url,
+            data: JSON.stringify(mailData),
+            success: function (result) {
+              alert('solicitud exitosa');
+
+            },
+            contentType: 'application/json'
+          });
+
+      });
+
+
+    });
+  }
+
 
 
 

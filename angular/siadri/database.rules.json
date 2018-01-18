@@ -19,6 +19,10 @@
   "solicitudes":{
     ".read":"(auth != false)",
       ".write":"(auth != false)"},
+      
+  "renovaciones":{
+    ".read":"(auth != false)",
+      ".write":"(auth != false)"},
 
   "borradores":{
     ".read":"(auth != false)",

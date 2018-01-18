@@ -3,7 +3,14 @@
     <a href="#"><i class="fa fa-database"></i> <span>Borradores</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
     
-      <li *ngFor="let item of this.borradores"  (click)="mostrarBorrador(item.$key)"><a [routerLink]="['dashnivel2']" class='menubusqueda' id="borradores"><i class="fa fa-circle-o"></i>{{item.nombreBorrador}}</a></li>
+      <li *ngFor="let item of this.borradores"  (click)="mostrarBorrador(item.$key,origen(item.nombreBorrador))">
+        <a *ngIf="origen(item.nombreBorrador) == 'Sol'" [routerLink]="['dashnivel2/inscripciones']" class='menubusqueda' id="borradores">
+            <i class="fa fa-circle-o"></i>{{item.nombreBorrador}}
+        </a>
+        <a *ngIf="origen(item.nombreBorrador) == 'Ren'" [routerLink]="['dashnivel2/renovaciones']" class='menubusqueda' id="borradores">
+          <i class="fa fa-circle-o"></i>{{item.nombreBorrador}}
+        </a>
+      </li>
 
     </ul>
   </li>

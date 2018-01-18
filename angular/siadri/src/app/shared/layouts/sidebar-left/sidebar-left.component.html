@@ -19,9 +19,10 @@
       <li class="header" align="center">Menu de navegacion</li>
       <!-- Componentes traidos del sidebar componentes -->
       <app-agreements ></app-agreements>
-      <app-inscripciones *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-inscripciones>
+      <app-inscripcion *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-inscripcion>
       <app-borradores *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-borradores>
       <app-solicitudes *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-solicitudes>
+      <app-renovacion *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-renovacion>
       <app-graficos *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-graficos>
       <app-admin *ngIf="this.rol == 'ADMIN'"></app-admin>
       <app-correo *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-correo>

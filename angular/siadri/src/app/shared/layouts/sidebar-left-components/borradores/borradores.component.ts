@@ -28,18 +28,30 @@ export class BorradoresComponent implements OnInit {
       }
     }).subscribe(data=>{
       this.borradores = data;
+      console.log(this.borradores);
   });
 
   }
 
   //METODO QUE PERMITE MOSTRAR LOS BORRADORES DE EL USUARIO DEPENDIENDO EL BORRADOR AL QUE LE DE CLICK
-  mostrarBorrador(key:any){
+  mostrarBorrador(key:any,origen:any){
     for (let index = 0; index < this.borradores.length; index++) {
       if (this.borradores[index]['$key'] === key) {
-        this.data.changeformulario(this.borradores[index]);
+        if(origen == "Sol"){
+          this.data.changeformulario(this.borradores[index]);
+        }else{
+          this.data.changeformularioRenovacion(this.borradores[index]);
+        }
         this.data.changeImprimir(false);
        }
     }
+  }
+
+  origen(item){
+    if(item != undefined){
+      return item.substring(0, 3);
+    }
+    
   }
 
 }

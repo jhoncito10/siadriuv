@@ -1,3 +1,5 @@
+import { RenovacionesComponent } from './shared/layouts/dash-nivel2/renovaciones/renovaciones.component';
+import { InscripcionesComponent } from './shared/layouts/dash-nivel2/inscripciones/inscripciones.component';
 import { AdminGuard } from './shared/services/admin.guard';
 import { Nivel3Guard } from './shared/services/nivel3.guard';
 import { Grafico2Component } from './shared/layouts/dash-nivel3/component-graficos/grafico2/grafico2.component';
@@ -20,7 +22,11 @@ import { ComponentCorreoComponent } from 'app/shared/layouts/dash-nivel3/compone
   { path: 'dash', component: DashboardInComponent,
    children : [
     { path: 'mapa', component: DashboardMapComponent},
-    { path: 'dashnivel2', component: DashNivel2Component, canActivate:[AuthGuard]},
+    { path: 'dashnivel2', component: DashNivel2Component, canActivate:[AuthGuard],
+    children:[
+        {path: 'inscripciones',component:InscripcionesComponent},
+        {path: 'renovaciones',component:RenovacionesComponent}
+    ]},
     { path: 'dashnivel3', component: DashNivel3Component, canActivate:[Nivel3Guard],
     children: [
         {path: 'grafico1',component:Grafico1Component},

@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div *ngIf="this.message == 'Ingrese el correo del responsable de esta solicitud' || this.message == 'nombre'" class="modal-content">
+    <div *ngIf="this.message == 'Ingrese el correo del responsable de esta solicitud' || this.message == 'Ingrese el correo del responsable de esta renovacion' || this.message == 'nombre' || this.message == 'nombreRenov'" class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="myModalLabel1">{{message}}</h4>
@@ -35,9 +35,17 @@
               <label for="inputcorreo" class="control-label">INGRESE CORREO </label>
               <input type="text" name="inputcorreo" [(ngModel)]="this.correosolicitante" placeholder="{{message}}" class="form-control" id="inputcorreo" />
             </div>
+            <div *ngIf="this.message == 'Ingrese el correo del responsable de esta renovacion'" class="col-sm-10">
+              <label for="inputcorreo" class="control-label">INGRESE CORREO </label>
+              <input type="text" name="inputcorreo" [(ngModel)]="this.correosolicitante" placeholder="{{message}}" class="form-control" id="inputcorreo" />
+            </div>
             <div *ngIf="this.message == 'nombre'" class="col-sm-10">
                 <label for="inputcorreo" class="control-label">INGRESE NOMBRE</label>
-                <input type="text" name="inputnombre" [(ngModel)]="this.borrador" placeholder="INGRESE NOMBRE DE BORRADOR" class="form-control" id="inputcorreo" />
+                <input type="text" name="inputnombre" [(ngModel)]="this.borrador" placeholder="INGRESE NOMBRE DE BORRADOR SOLICITUD" class="form-control" id="inputcorreo" />
+            </div>
+            <div *ngIf="this.message == 'nombreRenov'" class="col-sm-10">
+              <label for="inputcorreo" class="control-label">INGRESE NOMBRE</label>
+              <input type="text" name="inputnombre" [(ngModel)]="this.borrador" placeholder="INGRESE NOMBRE DE BORRADOR RENOVACION" class="form-control" id="inputcorreo" />
             </div>
           </div>
         </form>
@@ -46,11 +54,19 @@
         <div *ngIf="this.message == 'Ingrese el correo del responsable de esta solicitud'">
           <button (click)="enviar()" id="btn-enviar-pedido" class="btn btn-danger btn-block">Solicitar</button>
         </div>
-        <div *ngIf="this.message == 'nombre'">
-            <button (click)="enviarBorrador()" id="btn-enviar-borrador" class="btn btn-danger btn-block">Guardar Borrador</button>
+        <div *ngIf="this.message == 'Ingrese el correo del responsable de esta renovacion'">
+          <button (click)="enviarRenovacion()" id="btn-enviar-pedido" class="btn btn-danger btn-block">Renovar</button>
         </div>
+        <div *ngIf="this.message == 'nombre'">
+            <button (click)="enviarBorrador(this.message)" id="btn-enviar-borrador" class="btn btn-danger btn-block">Guardar Borrador</button>
+        </div>
+        <div *ngIf="this.message == 'nombreRenov'">
+          <button (click)="enviarBorrador(this.message)" id="btn-enviar-borrador" class="btn btn-danger btn-block">Guardar Borrador</button>
+      </div>
       </div>
     </div>
+
+    
   </div>
 </div>
 

@@ -1,3 +1,4 @@
+import { InscripcionesComponent } from './shared/layouts/dash-nivel2/inscripciones/inscripciones.component';
 import { AdminGuard } from './shared/services/admin.guard';
 import { Nivel3Guard } from './shared/services/nivel3.guard';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,7 +32,6 @@ import { AngularFireModule } from 'angularfire2';
 import { ModalPopupComponent } from './shared/layouts/modal-popup/modal-popup.component';
 import { LoginComponent } from './shared/layouts/login/login.component';
 import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in.component';
-import { InscripcionesComponent } from './shared/layouts/sidebar-left-components/inscripciones/inscripciones.component';
 import { DashNivel2Component } from './shared/layouts/dash-nivel2/dash-nivel2.component';
 import { BorradoresComponent } from './shared/layouts/sidebar-left-components/borradores/borradores.component';
 import { SolicitudesComponent } from './shared/layouts/sidebar-left-components/solicitudes/solicitudes.component';
@@ -55,6 +55,9 @@ import { Grafico1Component } from './shared/layouts/dash-nivel3/component-grafic
 import { Grafico2Component } from './shared/layouts/dash-nivel3/component-graficos/grafico2/grafico2.component';
 import { CorreoComponent } from './shared/layouts/sidebar-left-components/correo/correo.component';
 import { ComponentCorreoComponent } from './shared/layouts/dash-nivel3/component-correo/component-correo.component';
+import { RenovacionComponent } from './shared/layouts/sidebar-left-components/renovacion/renovacion.component';
+import { RenovacionesComponent } from './shared/layouts/dash-nivel2/renovaciones/renovaciones.component';
+import { InscripcionComponent } from './shared/layouts/sidebar-left-components/inscripcion/inscripcion.component';
 
 
 @NgModule({
@@ -85,7 +88,11 @@ import { ComponentCorreoComponent } from './shared/layouts/dash-nivel3/component
     Grafico1Component,
     Grafico2Component,
     CorreoComponent,
-    ComponentCorreoComponent
+    ComponentCorreoComponent,
+    InscripcionesComponent,
+    RenovacionComponent,
+    RenovacionesComponent,
+    InscripcionComponent
     
   ],
   imports: [
