@@ -1,7 +1,7 @@
 
  <div class="modal-content">
   <div class="modal-header">
-      <h4 class="modal-title"><i class="fa fa-envelope-o"></i> Compose New Message</h4>
+      <h4 class="modal-title"><i class="fa fa-envelope-o"></i> Redacta un nuevo mensaje</h4>
   </div>
   <!-- (ngSubmit)="onSubmit($event)" -->
   <form #loginForm="ngForm" > 
@@ -9,19 +9,19 @@
           <div class="form-group">
               <div class="input-group">
                   <span class="input-group-addon">Para:</span>
-                  <input [(ngModel)]="email" #ctrl="ngModel" name="email_to" type="email" class="form-control" placeholder="Email " required>
+                  <input [(ngModel)]="email" #ctrl="ngModel" name="email" type="email" class="form-control" placeholder="Email " required>
               </div>
           </div>
           <div class="form-group">
               <div class="input-group">
                   <span class="input-group-addon">CC:</span>
-                  <input [(ngModel)]="cc" #ctrl="ngModel" name="email_to" type="email" class="form-control" placeholder="Email CC" >
+                  <input [(ngModel)]="cc" #ctrl="ngModel" name="cc" type="email" class="form-control" placeholder="Email CC" >
               </div>
           </div>
           <div class="form-group">
               <div class="input-group">
                   <span class="input-group-addon">BCC:</span>
-                  <input [(ngModel)]="cco" #ctrl="ngModel" name="email_to" type="email" class="form-control" placeholder="Email BCC" >
+                  <input [(ngModel)]="cco" #ctrl="ngModel" name="cco" type="email" class="form-control" placeholder="Email BCC" >
               </div>
           </div>
           <div class="form-group">
@@ -39,7 +39,7 @@
       <div class="modal-footer clearfix">
 
 
-          <button [disabled]="!loginForm.form.valid" type="submit" class="btn btn-primary pull-left" (click)="enviarCorreo()"><i class="fa fa-envelope"></i> Send Message</button>
+          <button [disabled]="!loginForm.form.valid" type="submit" class="btn btn-primary pull-left" (click)="enviarCorreo()"><i class="fa fa-envelope"></i> Enviar message</button>
       </div>
   </form>
 </div> 
