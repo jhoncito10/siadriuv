@@ -2,6 +2,8 @@ import { BuscadorService } from 'app/shared/layouts/modal-popup/buscador.service
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from 'app/shared/modal.service';
 
+declare var $: any;
+
 @Component({
   selector: 'app-dashboard-in',
   templateUrl: './dashboard-in.component.html',
@@ -27,5 +29,6 @@ export class DashboardInComponent implements OnInit {
 
   ngOnInit() {
   }
+  
 
 }

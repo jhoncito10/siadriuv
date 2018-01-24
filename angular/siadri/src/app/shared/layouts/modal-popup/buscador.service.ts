@@ -48,8 +48,9 @@ export class BuscadorService {
             url: url,
             data: JSON.stringify(mailData),
             success: function (result) {
+              $('#modal3').modal('hide');
               alert('solicitud exitosa');
-
+              
             },
             contentType: 'application/json'
           });
@@ -80,8 +81,9 @@ export class BuscadorService {
             url: url,
             data: JSON.stringify(mailData),
             success: function (result) {
+              $('#modal3').modal('hide');
               alert('solicitud exitosa');
-
+              
             },
             contentType: 'application/json'
           });
@@ -100,6 +102,7 @@ export class BuscadorService {
   crearBorrador(formulario: any, nombreBorr: any) {
     this.ad.app.database().ref('/borradores').push(formulario).then(data => {
       this.ad.app.database().ref('/borradores/' + data.path.o[1] + '/nombreBorrador').set(nombreBorr).then(() => {
+        $('#modal3').modal('hide');
         alert('borrador ingresado');
       });
     });

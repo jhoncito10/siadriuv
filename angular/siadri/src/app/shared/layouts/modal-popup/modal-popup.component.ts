@@ -1,3 +1,4 @@
+import { BarraComponent } from './../dash-nivel3/graficos/barra/barra.component';
 import { Observable } from 'rxjs/Observable';
 import { DashboardMapComponent } from './../dashboard-map/dashboard-map.component';
 import { BuscadorService } from './buscador.service';
@@ -262,6 +263,7 @@ export class ModalPopupComponent implements OnInit {
 
 
   enviar() {
+    this.ejecutarSpiner();
     var form;
     this.data.currentformulario.subscribe(forma => {
       form = forma;
@@ -282,6 +284,7 @@ export class ModalPopupComponent implements OnInit {
   }
 
   enviarRenovacion(){
+    this.ejecutarSpiner();
     var form;
     this.data.currentformularioRenov.subscribe(forma => {
       form = forma;
@@ -302,6 +305,7 @@ export class ModalPopupComponent implements OnInit {
   }
 
   enviarBorrador(message:any) {
+    this.ejecutarSpiner();
     var form;
     if(message == "nombre"){
       this.data.currentformulario.subscribe(forma => {
@@ -320,8 +324,13 @@ export class ModalPopupComponent implements OnInit {
     
 
     this.busqueda.crearBorrador(form, this.borrador);
+   
     $('#modal1').modal('hide');
     $('#inputBusqueda').val("");
+  }
+
+  ejecutarSpiner(){
+    $('#modal3').modal({backdrop: 'static', keyboard: false,show:true});
   }
 }
 
