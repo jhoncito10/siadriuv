@@ -15,6 +15,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { UsuariosComponent } from 'app/shared/layouts/formularios-admin/usuarios/usuarios.component';
 import { DashNivel3Component } from 'app/shared/layouts/dash-nivel3/dash-nivel3.component';
 import { ComponentCorreoComponent } from 'app/shared/layouts/dash-nivel3/component-correo/component-correo.component';
+import { InvestigacionesComponent } from 'app/shared/layouts/dash-nivel2/investigaciones/investigaciones.component';
 
  const routes: Routes = [
 
@@ -25,7 +26,8 @@ import { ComponentCorreoComponent } from 'app/shared/layouts/dash-nivel3/compone
     { path: 'dashnivel2', component: DashNivel2Component, canActivate:[AuthGuard],
     children:[
         {path: 'inscripciones',component:InscripcionesComponent},
-        {path: 'renovaciones',component:RenovacionesComponent}
+        {path: 'renovaciones',component:RenovacionesComponent},
+        {path: 'investigaciones',component:InvestigacionesComponent}
     ]},
     { path: 'dashnivel3', component: DashNivel3Component, canActivate:[Nivel3Guard],
     children: [

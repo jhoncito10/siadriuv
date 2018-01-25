@@ -1,6 +1,6 @@
 <ul class="sidebar-menu">
   <li class="treeview">
-    <a href="#"><i class="fa fa-pencil-square-o"></i> <span>Renovaciones</span> <i class="fa fa-angle-left pull-right"></i></a>
+    <a href="#"><i class="fa fa-handshake-o"></i> <span>Renovaciones</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
       <li (click)="inicializarFormulario()"><a [routerLink]="['dashnivel2/renovaciones']" class='menubusqueda' id="roles"><i class="fa fa-circle-o"></i>formato covenio juridico</a></li>  
     </ul>
@@ -8,7 +8,7 @@
 </ul>
 <ul class="sidebar-menu">
     <li class="treeview">
-      <a href="#"><i class="fa fa-pencil-square-o"></i> <span>Renovaciones Guardadas</span> <i class="fa fa-angle-left pull-right"></i></a>
+      <a href="#"><i class="fa fa-floppy-o"></i> <span>Renovaciones Guardadas</span> <i class="fa fa-angle-left pull-right"></i></a>
       <ul class="treeview-menu">
           <li *ngFor="let item of this.renovaciones"  (click)="mostrarRenovacion(item.$key)"><a [routerLink]="['dashnivel2/renovaciones']" class='menubusqueda' id="solicitudes"><i class="fa fa-circle-o"></i>{{item.nombreRenov}}</a></li>
       </ul>

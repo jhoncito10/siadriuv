@@ -12,20 +12,20 @@
     background: #123456;
     box-shadow: inset 0 0 0 .12em rgba(0,0,0,0.2), 0 0 0 .12em rgba(255,255,255,0.1);
     background:
-        -webkit-linear-gradient(#ea2d0e 50%, #fcd883 50%),
-        -webkit-linear-gradient(#fcd883 50%, #ea2d0e 50%);
+        -webkit-linear-gradient(#ea2d0e 50%, #f3f3f3 50%),
+        -webkit-linear-gradient(#ebebeb 50%, #ea2d0e 50%);
     background:
-        -moz-linear-gradient(#ea2d0e 50%, #ffdd72 50%),
-        -moz-linear-gradient(#ffdd72 50%, #ea2d0e 50%);
+        -moz-linear-gradient(#ea2d0e 50%, #b3ae9f 50%),
+        -moz-linear-gradient(#d1cfc9 50%, #ea2d0e 50%);
     background:
-        -ms-linear-gradient(#ea2d0e 50%, #ffdd72 50%),
-        -ms-linear-gradient(#ffdd72 50%, #ea2d0e 50%);
+        -ms-linear-gradient(#ea2d0e 50%, #e7e6e2 50%),
+        -ms-linear-gradient(#f8f7f5 50%, #ea2d0e 50%);
     background:
-        -o-linear-gradient(#ea2d0e 50%, #ffdd72 50%),
-        -o-linear-gradient(#ffdd72 50%, #ea2d0e 50%);
+        -o-linear-gradient(#ea2d0e 50%, #adaaa1 50%),
+        -o-linear-gradient(#f7f4ec 50%, #ea2d0e 50%);
     background:
-        linear-gradient(#ea2d0e 50%, #ffdd72 50%),
-        linear-gradient(#ffdd72 50%, #ea2d0e 50%);
+        linear-gradient(#ea2d0e 50%, #eceae3 50%),
+        linear-gradient(#f8f6f0 50%, #ea2d0e 50%);
     background-size: 50% 100%, 50% 100%;
     background-position: 0 0, 100% 0;
     background-repeat: no-repeat;
@@ -40,7 +40,7 @@
 .demo-2 .spinner:after {
 	content: "";
 	position: absolute;
-	border: .12em solid rgba(255,255,255,0.3);
+	border: .12em solid rgba(255, 0, 0, 0.3);
 	position: absolute;
 	top: 25%;
 	left: 25%;

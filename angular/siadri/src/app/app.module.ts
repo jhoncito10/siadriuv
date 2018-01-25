@@ -59,6 +59,8 @@ import { RenovacionComponent } from './shared/layouts/sidebar-left-components/re
 import { RenovacionesComponent } from './shared/layouts/dash-nivel2/renovaciones/renovaciones.component';
 import { InscripcionComponent } from './shared/layouts/sidebar-left-components/inscripcion/inscripcion.component';
 import { SpinerComponent } from './shared/layouts/spiner/spiner.component';
+import { InvestigacionComponent } from './shared/layouts/sidebar-left-components/investigacion/investigacion.component';
+import { InvestigacionesComponent } from './shared/layouts/dash-nivel2/investigaciones/investigaciones.component';
 
 
 @NgModule({
@@ -94,7 +96,9 @@ import { SpinerComponent } from './shared/layouts/spiner/spiner.component';
     RenovacionComponent,
     RenovacionesComponent,
     InscripcionComponent,
-    SpinerComponent
+    SpinerComponent,
+    InvestigacionComponent,
+    InvestigacionesComponent
     
   ],
   imports: [
