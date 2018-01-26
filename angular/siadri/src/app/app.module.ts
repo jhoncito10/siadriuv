@@ -61,6 +61,7 @@ import { InscripcionComponent } from './shared/layouts/sidebar-left-components/i
 import { SpinerComponent } from './shared/layouts/spiner/spiner.component';
 import { InvestigacionComponent } from './shared/layouts/sidebar-left-components/investigacion/investigacion.component';
 import { InvestigacionesComponent } from './shared/layouts/dash-nivel2/investigaciones/investigaciones.component';
+import { UnivalleGuard } from 'app/shared/services/univalle.guard';
 
 
 @NgModule({
@@ -127,7 +128,8 @@ import { InvestigacionesComponent } from './shared/layouts/dash-nivel2/investiga
       RuleservicesService,
       FunuserService,
       Nivel3Guard,
-      AdminGuard
+      AdminGuard,
+      UnivalleGuard
     ],
   bootstrap: [AppComponent]
 })

@@ -33,8 +33,8 @@
                   
                     <div class="form-group">
                       <div class="col-md-12">
-                        <label class="control-label" for="nome"><strong>Fecha</strong></label>
-                        <input name="nome" class="form-control" placeholder="Fecha" type="date">
+                        <label class="control-label" for="fecha"><strong>Fecha</strong></label>
+                        <input name="fecha" [(ngModel)]="this.formulario.fecha" class="form-control" value="" type="date" id="fecha">
                         </div>
                     </div>
             
@@ -42,9 +42,9 @@
                         <div class="col-md-12">
                           <h2><strong>1. TIPO DE MODALIDAD A LA QUE APLICA</strong></h2>
                           <label class="control-label" for="modalidad"><strong>Modalidad</strong></label>
-                          <select name="modalidad" class="form-control"  id="" >
-                            <option value="">Modalidad 1</option>
-                            <option value="">Modalidad 2</option>
+                          <select name="modalidad" [(ngModel)]="this.formulario.modalidad" class="form-control"  id="modalidad" >
+                            <option value="modalidad 1">Modalidad 1</option>
+                            <option value="modalidad 2">Modalidad 2</option>
                           </select>
                         </div>
                       </div>
@@ -58,60 +58,60 @@
                       <div class="form-group">
                         <div class="col-md-6">
                           <label class="control-label" for="nom"><strong>Nombre profesor responsable en Univalle</strong></label>
-                          <input name="nom" class="form-control" placeholder="Ingrese responsable" type="text">
+                          <input name="nom" [(ngModel)]="this.formulario.datos_solicitud.nombre_prof" class="form-control" placeholder="Ingrese responsable" type="text">
                         </div>
                       </div>
             
                       <div class="form-group">
                         <div class="col-md-6">
                           <label class="control-label" for="doc"><strong>Documento de identidad</strong></label>
-                          <input name="doc" class="form-control" placeholder="Ingrese documento" type="text">
+                          <input name="doc" [(ngModel)]="this.formulario.datos_solicitud.doc_prof" class="form-control" placeholder="Ingrese documento" type="text">
                         </div>
                       </div>
             
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="facu"><strong>Facultad/Instituto/Unidad Academica</strong></label>
-                            <input name="facu" class="form-control" placeholder="Ingrese Facultad" type="text">
+                            <input name="facu" [(ngModel)]="this.formulario.datos_solicitud.facultad" class="form-control" placeholder="Ingrese Facultad" type="text">
                           </div>
                       </div>
 
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="cel"><strong>Numero Celular</strong></label>
-                            <input name="cel" class="form-control" placeholder="Ingrese numero celular" type="text">
+                            <input name="cel" [(ngModel)]="this.formulario.datos_solicitud.celu_prof" class="form-control" placeholder="Ingrese numero celular" type="text">
                           </div>
                       </div>
 
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="tel"><strong>Telefono fijo en Univalle</strong></label>
-                            <input name="tel" class="form-control" placeholder="Ingrese telefono fijo" type="text">
+                            <input name="tel" [(ngModel)]="this.formulario.datos_solicitud.tel_univ" class="form-control" placeholder="Ingrese telefono fijo" type="text">
                           </div>
                       </div>
 
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="correo"><strong>Correo electronico</strong></label>
-                            <input name="correo" class="form-control" placeholder="@correounivalle.edu.co" type="text">
+                            <input name="correo" [(ngModel)]="this.formulario.datos_solicitud.mail_prof" class="form-control" placeholder="@correounivalle.edu.co" type="text">
                           </div>
                       </div>
 
                       <div class="form-group">
                           <div class="col-md-12">
                             <label class="control-label" for="sicop"><strong>Centro de Información del Proyecto de investigación en el marco en el que se realiza la movilidad (CI – SICOP) </strong></label>
-                            <input name="sicop" class="form-control" placeholder="Ingrese SICOP" type="text">
+                            <input name="sicop" [(ngModel)]="this.formulario.datos_solicitud.sicop" class="form-control" placeholder="Ingrese SICOP" type="text">
                           </div>
                       </div>
 
                       <div class="form-group">
                           <div class="col-md-12">
                               <h2><strong>3. DATOS DE LA PERSONA QUE REALIZA LA MOVILIDAD</strong></h2>
-                              <label class="control-label" for="modalidad"><strong>TIPO DE PERSONA</strong></label>
-                              <select name="modalidad" class="form-control"  id="" >
-                                <option value="">Profesor de Univalle</option>
-                                <option value="">Profesor visitante internacional</option>
-                                <option value="">Estudiante Univalle</option>
+                              <label class="control-label" for="tipoper"><strong>TIPO DE PERSONA</strong></label>
+                              <select name="tipoper" [(ngModel)]="this.formulario.datos_movilidad.tipo_persona" class="form-control"  id="" >
+                                <option value="Profesor de Univalle">Profesor de Univalle</option>
+                                <option value="Profesor visitante internacional">Profesor visitante internacional</option>
+                                <option value="Estudiante Univalle">Estudiante Univalle</option>
                               </select>
                             </div>
                       </div>
@@ -119,56 +119,56 @@
                       <div class="form-group">
                           <div class="col-md-12">
                             <label class="control-label" for="nomApe"><strong>Nombres y Apellidos</strong></label>
-                            <input name="nomApe" class="form-control" placeholder="Ingrese nombres y apellidos" type="text">
+                            <input name="nomApe" [(ngModel)]="this.formulario.datos_movilidad.nom_ape" class="form-control" placeholder="Ingrese nombres y apellidos" type="text">
                           </div>
                       </div>
 
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="ccpas"><strong>CC / Pasaporte N*</strong></label>
-                            <input name="ccpas" class="form-control" placeholder="Ingrese CC o Numero pasaporte" type="text">
+                            <input name="ccpas" [(ngModel)]="this.formulario.datos_movilidad.CC_pas" class="form-control" placeholder="Ingrese CC o Numero pasaporte" type="text">
                           </div>
                       </div>
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="nac"><strong>Nacionalidad</strong></label>
-                            <input name="nac" class="form-control" placeholder="Ingrese Nacionalidad" type="text">
+                            <input name="nac" [(ngModel)]="this.formulario.datos_movilidad.nacionalidad" class="form-control" placeholder="Ingrese Nacionalidad" type="text">
                           </div>
                       </div>
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="ciuor"><strong>Ciudad Origen</strong></label>
-                            <input name="ciuor" class="form-control" placeholder="Ingrese ciudad origen" type="text">
+                            <input name="ciuor" [(ngModel)]="this.formulario.datos_movilidad.ciudad_or" class="form-control" placeholder="Ingrese ciudad origen" type="text">
                           </div>
                       </div>
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="ciudes"><strong>Ciudad Destino</strong></label>
-                            <input name="ciudes" class="form-control" placeholder="Ingrese ciudad destino" type="text">
+                            <input name="ciudes" [(ngModel)]="this.formulario.datos_movilidad.ciudad_des" class="form-control" placeholder="Ingrese ciudad destino" type="text">
                           </div>
                       </div>
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="paor"><strong>Pais Origen</strong></label>
-                            <input name="paor" class="form-control" placeholder="Ingrese pais origen" type="text">
+                            <input name="paor" [(ngModel)]="this.formulario.datos_movilidad.pais_or" class="form-control" placeholder="Ingrese pais origen" type="text">
                           </div>
                       </div>
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="pades"><strong>Pais Destino</strong></label>
-                            <input name="pades" class="form-control" placeholder="Ingrese pais destino" type="text">
+                            <input name="pades" [(ngModel)]="this.formulario.datos_movilidad.pais_des" class="form-control" placeholder="Ingrese pais destino" type="text">
                           </div>
                       </div>
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="part"><strong>Partida</strong></label>
-                            <input name="part" class="form-control"  type="date">
+                            <input name="part" [(ngModel)]="this.formulario.datos_movilidad.fecha_part" class="form-control"  type="date">
                           </div>
                       </div>
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="regre"><strong>Regreso</strong></label>
-                            <input name="regre" class="form-control"  type="date">
+                            <input name="regre" [(ngModel)]="this.formulario.datos_movilidad.fecha_reg" class="form-control"  type="date">
                           </div>
                       </div>
 
@@ -176,24 +176,24 @@
                           <div class="col-md-12">
                               <h2><strong>4. INFORMACION DEL TIPO DE MOVILIDAD A LA QUE APLICA (Marque con una X)</strong></h2>
                               <label class="control-label" for="info4"><strong>TIPO DE PERSONA</strong></label>
-                              <select name="info4" class="form-control"  id="" >
-                                <option value="">Presentación de resultados de investigación o creación en eventos realizados en Colombia</option>
-                                <option value="">Presentación de resultados de investigación en el exterior</option>
-                                <option value="">Estancias internacionales</option>
-                                <option value="">Fomento</option>
+                              <select name="info4" [(ngModel)]="this.formulario.tipo_movilidad.tipo_mov" class="form-control"  id="" >
+                                <option value="Presentación de resultados de investigación o creación en eventos realizados en Colombia">Presentación de resultados de investigación o creación en eventos realizados en Colombia</option>
+                                <option value="Presentación de resultados de investigación en el exterior">Presentación de resultados de investigación en el exterior</option>
+                                <option value="Estancias internacionales">Estancias internacionales</option>
+                                <option value="Fomento">Fomento</option>
                               </select>
                           </div>
                       </div>
                       <div class="form-group">
                           <div class="col-md-12">
                             <label class="control-label" for="observa"><strong>Observaciones</strong></label>
-                            <textarea class="form-control" name="observa" id="" rows="5"></textarea>
+                            <textarea class="form-control" [(ngModel)]="this.formulario.tipo_movilidad.observaciones" name="observa" id="" rows="5"></textarea>
                           </div>
                       </div>
                       <div class="form-group">
                           <div class="col-md-12">
                             <label class="control-label" for="just"><strong>Jutificacion(100 palabras)</strong></label>
-                            <textarea class="form-control" name="just" id="" rows="5"></textarea>
+                            <textarea class="form-control" [(ngModel)]="this.formulario.tipo_movilidad.justificacion" name="just" id="" rows="5"></textarea>
                           </div>
                       </div>
 
@@ -210,33 +210,33 @@
                               <th style="text-align: center;">VALOR SOLICITADO COMITE CIAM*.</th>
                             </tr>
                             <tr>
-                              <td> <input name="item1" class="form-control"  type="text"></td>
-                              <td><input name="vr1" class="form-control"  type="text" placeholder="$"></td>
-                              <td><input name="nom1" class="form-control"  type="text"></td>
-                              <td><input name="val1" class="form-control"  type="text" placeholder="$"></td>
+                              <td> <input name="item1" [(ngModel)]="this.formulario.presupuesto.item1.item1" class="form-control"  type="text"></td>
+                              <td><input name="vr1" [(ngModel)]="this.formulario.presupuesto.item1.vr_od1" class="form-control"  type="text" placeholder="$"></td>
+                              <td><input name="nom1" [(ngModel)]="this.formulario.presupuesto.item1.nom_1" class="form-control"  type="text"></td>
+                              <td><input name="val1" [(ngModel)]="this.formulario.presupuesto.item1.vr_ciam1" class="form-control"  type="text" placeholder="$"></td>
                             </tr>
                             <tr>
-                              <td> <input name="item2" class="form-control"  type="text"></td>
-                              <td><input name="vr2" class="form-control"  type="text" placeholder="$"></td>
-                              <td><input name="nom2" class="form-control"  type="text"></td>
-                              <td><input name="val2" class="form-control"  type="text" placeholder="$"></td>
+                              <td> <input name="item2" [(ngModel)]="this.formulario.presupuesto.item2.item2" class="form-control"  type="text"></td>
+                              <td><input name="vr2" [(ngModel)]="this.formulario.presupuesto.item2.vr_od2" class="form-control"  type="text" placeholder="$"></td>
+                              <td><input name="nom2" [(ngModel)]="this.formulario.presupuesto.item2.nom_2" class="form-control"  type="text"></td>
+                              <td><input name="val2" [(ngModel)]="this.formulario.presupuesto.item2.vr_ciam2" class="form-control"  type="text" placeholder="$"></td>
                             </tr>
                             <tr>
-                              <td> <input name="item3" class="form-control"  type="text"></td>
-                              <td><input name="vr3" class="form-control"  type="text" placeholder="$"></td>
-                              <td><input name="nom3" class="form-control"  type="text"></td>
-                              <td><input name="val3" class="form-control"  type="text" placeholder="$"></td>
+                              <td> <input name="item3" [(ngModel)]="this.formulario.presupuesto.item3.item3" class="form-control"  type="text"></td>
+                              <td><input name="vr3" [(ngModel)]="this.formulario.presupuesto.item3.vr_od3" class="form-control"  type="text" placeholder="$"></td>
+                              <td><input name="nom3" [(ngModel)]="this.formulario.presupuesto.item3.nom_3" class="form-control"  type="text"></td>
+                              <td><input name="val3" [(ngModel)]="this.formulario.presupuesto.item3.vr_ciam3" class="form-control"  type="text" placeholder="$"></td>
                             </tr>
                             <tr>
-                              <td> <input name="item4" class="form-control"  type="text"></td>
-                              <td><input name="vr4" class="form-control"  type="text" placeholder="$"></td>
-                              <td><input name="nom4" class="form-control"  type="text"></td>
-                              <td><input name="val4" class="form-control"  type="text" placeholder="$"></td>
+                              <td> <input name="item4" [(ngModel)]="this.formulario.presupuesto.item4.item4" class="form-control"  type="text"></td>
+                              <td><input name="vr4"  [(ngModel)]="this.formulario.presupuesto.item4.vr_od4" class="form-control"  type="text" placeholder="$"></td>
+                              <td><input name="nom4" [(ngModel)]="this.formulario.presupuesto.item4.nom_4" class="form-control"  type="text"></td>
+                              <td><input name="val4" [(ngModel)]="this.formulario.presupuesto.item4.vr_ciam4" class="form-control"  type="text" placeholder="$"></td>
                             </tr>
                             <tr>
                               <th colspan="3" tyle="text-align: right;">VALOR TOTAL DEL APOYO SOLICITADO</th>
                           
-                              <td><input name="valT" class="form-control"  type="text" placeholder="$"></td>
+                              <td><input name="valTotal" [(ngModel)]="this.formulario.presupuesto.valor_total" class="form-control"  type="text" placeholder="$"></td>
                             </tr>
                           </table>
                           <p>*Sólo gastos de transporte y/o viáticos (NO APLICA para inscripciones, gastos de traslados aeropuertos, visas, seguros médicos, etc.) 
@@ -255,44 +255,44 @@
                           </tr>
                           <tr>
                             <td colspan="2" style="text-align: left;"><p>Plan de Trabajo / actividades a desarrollar (Formato libre. Según agenda de viaje).</p></td>
-                            <td colspan="1"><input  type="checkbox"></td>
+                            <td colspan="1"><input name="plan_tractv" [(ngModel)]="this.formulario.doc_entregados.modalidad1.prof_nom_univ.plan_tractv" type="checkbox"></td>
 
                             <td colspan="2" style="text-align: left;"><p>Plan de Trabajo / actividades a desarrollar (Formato libre. Según agenda de viaje).</p></td>
-                            <td colspan="1"><input  type="checkbox"></td>
+                            <td colspan="1"><input name="plan_tractv2" [(ngModel)]="this.formulario.doc_entregados.modalidad1.prof_art_int.plan_tractv2" type="checkbox"></td>
                           </tr>
                           <tr>
                             <td colspan="2" style="text-align: left;"><p>Carta de invitación de un profesor en la entidad receptora o de aceptación de la ponencia por parte del comité organizador del evento.</p></td>
-                            <td colspan="1"><input  type="checkbox"></td>
+                            <td colspan="1"><input name="carta_inv" [(ngModel)]="this.formulario.doc_entregados.modalidad1.prof_nom_univ.carta_inv" type="checkbox"></td>
 
                             <td colspan="2" style="text-align: left;"><p>Carta del profesor invitado internacional aceptando la invitación y señalando que cumplirá con la agenda programada de acuerdo con los términos de la invitación.</p></td>
-                            <td colspan="1"><input  type="checkbox"></td>
+                            <td colspan="1"><input name="cart_proinv" [(ngModel)]="this.formulario.doc_entregados.modalidad1.prof_art_int.cart_proinv" type="checkbox"></td>
                           </tr>
                           <tr>
                             <td colspan="2" style="text-align: left;"><p>Carta de aprobación / VoBo del jefe inmediato autorizando realizar la movilidad.</p></td>
-                            <td colspan="1"><input  type="checkbox"></td>
+                            <td colspan="1"><input name="carta_apro" [(ngModel)]="this.formulario.doc_entregados.modalidad1.prof_nom_univ.carta_apro" type="checkbox"></td>
 
                             <td colspan="2" style="text-align: left;"><p>Copia de la página de identificación del pasaporte del profesor extranjero. </p></td>
-                            <td colspan="1"><input  type="checkbox"></td>
+                            <td colspan="1"><input name="copia_pag" [(ngModel)]="this.formulario.doc_entregados.modalidad1.prof_art_int.copia_pag" type="checkbox"></td>
                           </tr>
                           <tr>
                             <td colspan="2" style="text-align: left;"><p>Evidencia de posición de la universidad receptora según el ranking de Shanghái (Si aplica).</p></td>
-                            <td colspan="1"><input  type="checkbox"></td>
+                            <td colspan="1"><input name="evidencia" [(ngModel)]="this.formulario.doc_entregados.modalidad1.prof_nom_univ.evidencia" type="checkbox"></td>
 
                             <td colspan="2" style="text-align: left;"><p>Carta de compromiso de la Coordinación administrativa de la Facultad / Instituto asegurando el diligenciamiento ante el SIRE y la consecución de pólizas.</p></td>
-                            <td colspan="1"><input  type="checkbox"></td>
+                            <td colspan="1"><input name="carta_comp" [(ngModel)]="this.formulario.doc_entregados.modalidad1.prof_art_int.carta_comp" type="checkbox"></td>
                           </tr>
                           <tr>
                               <td colspan="2" rowspan="2" style="text-align: left;"><p>Presupuesto (ITEM 5 del presente formato).</p></td>
-                              <td colspan="1" rowspan="2"><input  type="checkbox"></td>
+                              <td colspan="1" rowspan="2"><input name="presupuesto" [(ngModel)]="this.formulario.doc_entregados.modalidad1.prof_nom_univ.presupuesto" type="checkbox"></td>
                             
                             <td colspan="2" style="text-align: left;"><p>Evidencia de la posición que ocupa la universidad de procedencia en el ranking de Shanghái. NOTA: Cuando el investigador extranjero no esté adscrito a una institución que se encuentre en el ranking de Shanghái, deberá contar con un índice H en Web of Science igual o superior a 10.</p></td>
-                            <td colspan="1"><input  type="checkbox"></td>
+                            <td colspan="1"><input name="evidencia" [(ngModel)]="this.formulario.doc_entregados.modalidad1.prof_art_int.evidencia" type="checkbox"></td>
                           </tr>
                           <tr>
                             
 
                             <td colspan="2" style="text-align: left;"><p>Carta de aval del comité de investigaciones de la facultad / instituto académico (Según modelo ADJUNTO).</p></td>
-                            <td colspan="1"><input  type="checkbox"></td>
+                            <td colspan="1"><input name="carta_aval" [(ngModel)]="this.formulario.doc_entregados.modalidad1.prof_art_int.carta_aval" type="checkbox"></td>
                           </tr>
                         
                           
@@ -311,7 +311,7 @@
                           </tr>
                           <tr>
                             <td colspan="2" style="text-align: left;"><p>Tabulado de matrícula del semestre en el cual postula.</p></td>
-                            <td colspan="1"><input  type="checkbox"></td>
+                            <td colspan="1"><input name="tabulado" [(ngModel)]="this.formulario.doc_entregados.modalidad2.prof_nom_univ.tabulado" type="checkbox"></td>
 
                             <td colspan="2" rowspan="6" style="text-align: left;">
                               <p>Carta del tutor de tesis doctoral, aprobando la actividad en el exterior 
@@ -320,28 +320,28 @@
                                 b) Revisar el informe de la pasantía y el artículo o producto elaborado por el 
                                 estudiante en los siguientes 30 días hábiles después del regreso del estudiante.
                                 </p></td>
-                            <td colspan="1" rowspan="6"><input  type="checkbox"></td>
+                            <td colspan="1" rowspan="6"><input name="carta_tutor" [(ngModel)]="this.formulario.doc_entregados.modalidad2.prof_art_int.carta_tutor" type="checkbox"></td>
       
                           </tr>
                           <tr>
                             <td colspan="2" style="text-align: left;"><p>Certificado de promedio descargado del SRA.</p></td>
-                            <td colspan="1"><input  type="checkbox"></td>               
+                            <td colspan="1"><input name="certificado" [(ngModel)]="this.formulario.doc_entregados.modalidad2.prof_nom_univ.certificado" type="checkbox"></td>               
                           </tr>
                           <tr>
                           <td colspan="2" style="text-align: left;"><p>Carta del comité de programa académico respaldando la postulación.</p></td>
-                          <td colspan="1"><input  type="checkbox"></td>
+                          <td colspan="1"><input name="carta_comite" [(ngModel)]="this.formulario.doc_entregados.modalidad2.prof_nom_univ.carta_comite"type="checkbox"></td>
                         </tr>
                         <tr>
                             <td colspan="2" style="text-align: left;"><p>Carta de invitación de un profesor / institución / entidad receptora.</p></td>
-                            <td colspan="1"><input  type="checkbox"></td>
+                            <td colspan="1"><input name="carta_invitacion" [(ngModel)]="this.formulario.doc_entregados.modalidad2.prof_nom_univ.carta_invitacion" type="checkbox"></td>
                         </tr>
                         <tr>
                             <td colspan="2" style="text-align: left;"><p>Carta de aval del comité de investigaciones de la facultad/instituto académico</p></td>
-                            <td colspan="1"><input  type="checkbox"></td>
+                            <td colspan="1"><input name="carta_aval_comite" [(ngModel)]="this.formulario.doc_entregados.modalidad2.prof_nom_univ.carta_aval_comite" type="checkbox"></td>
                         </tr>
                         <tr>
                               <td colspan="2" style="text-align: left;"><p>Documento del plan de trabajo / actividades a realizar en el exterior (Formato libre que indique cronograma y actividades).</p></td>
-                              <td colspan="1"><input  type="checkbox"></td>
+                              <td colspan="1"><input name="doc_plan" [(ngModel)]="this.formulario.doc_entregados.modalidad2.prof_nom_univ.doc_plan" type="checkbox"></td>
                         </tr>
                     
                           
@@ -363,15 +363,15 @@
                       </div>
                       <div class="col-md-12">
                           <label class="control-label" for="nomfir"><strong>Nombre</strong></label>
-                          <input name="nomfir" class="form-control" placeholder="Ingrese Nombre" type="text">
+                          <input name="nomfir" [(ngModel)]="this.formulario.firma.nombre_firma" class="form-control" placeholder="Ingrese Nombre" type="text">
                           <label class="control-label" for="docfir"><strong>CC N*</strong></label>
-                          <input name="docfir" class="form-control" placeholder="Ingrese documento" type="text">
+                          <input name="docfir" [(ngModel)]="this.formulario.firma.doc_firma" class="form-control" placeholder="Ingrese documento" type="text">
                       </div>
 
                      
                       <div class="form-group">
                         <div class="col-md-12">
-                          <button type="button" class="btn2 btn-danger btn-lg btn-block danger">Enviar</button>
+                          <button type="button" (click)="mostrar()" class="btn2 btn-danger btn-lg btn-block danger">Enviar</button>
                         </div>
                       </div>     
                   </fieldset> 
@@ -382,48 +382,3 @@
       </div>
     </div>
   </div>
-
-              <!-- <form id="modform">
-              <h2 class="text-center">Solicitud para apoyo a la investigacion</h2>
-          
-              <div class="contentform" >
-          
-                  <div class="leftcontact table-responsive">
-                  <div class="form-group">
-                    <p>Fecha <span>*</span></p>
-                    <span class="icon-case"><i class="fa fa-user"></i></span>
-                    <input name="input1" class="clase" type="date" id="prenom" data-rule="required"/>
-                    <div class="validation"></div>
-                  </div>
-                  </div>
-                  <div class="rightcontact">
-                  <div class="form-group">
-                      <p>ID<span>*</span></p>
-                      <span class="icon-case"><i class="fa fa-key"></i></span>
-                      <input name="input2"  class="clase"type="text" id="prenom" data-rule="required"/>
-                      <div class="validation"></div>
-                    </div>
-                  </div>
-                  <table class="table table-condensed">
-                      <thead>
-                        <tr>
-                          <th>Nodo</th>
-                          <th>Lectura</th>
-                          <th>Escritura</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                              <input  class="clase" readonly v type="text"  id="prenom" data-rule="required">
-                            </td>
-                          <td><input  style="height: 19px;" type="checkbox" ></td>
-                          <td><input  style="height: 19px;" type="checkbox" ></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    <button  class="btn btn-success"><span class="fa fa-check"></span> Crear</button>
-          
-                </div>
-
-            </form> -->

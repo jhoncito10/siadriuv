@@ -31,16 +31,34 @@ exports.CreateUser = functions.auth.user().onCreate(event => {
     const displayName = event.data.displayName || "";
     //  console.log(event);
     const email = event.data.email;
+    const univalle = email.split('@');
     const newUser = ref.child(`/usuarios/${uid}`);
-    newUser.set({
-        direccion: "",
-        displayname: displayName,
-        email: email,
-        roles: "NIVEL2",
-        empresa: "",
-        telefono: "",
-        estado: ""
-    });
+    if(univalle[1] == "correounivalle.edu.co"){
+        newUser.set({
+            direccion: "",
+            displayname: displayName,
+            email: email,
+            roles: "NIVEL2",
+            empresa: "",
+            telefono: "",
+            estado: "",
+            form_investigacion:{
+                estado:"SIN DILIGENCIAR",
+                form:{}
+            }
+        });
+    }else{
+        newUser.set({
+            direccion: "",
+            displayname: displayName,
+            email: email,
+            roles: "NIVEL2",
+            empresa: "",
+            telefono: "",
+            estado: ""
+        });
+    }
+    
 
 });
 

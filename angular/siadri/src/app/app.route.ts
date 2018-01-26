@@ -1,3 +1,4 @@
+import { UnivalleGuard } from './shared/services/univalle.guard';
 import { RenovacionesComponent } from './shared/layouts/dash-nivel2/renovaciones/renovaciones.component';
 import { InscripcionesComponent } from './shared/layouts/dash-nivel2/inscripciones/inscripciones.component';
 import { AdminGuard } from './shared/services/admin.guard';
@@ -27,7 +28,7 @@ import { InvestigacionesComponent } from 'app/shared/layouts/dash-nivel2/investi
     children:[
         {path: 'inscripciones',component:InscripcionesComponent},
         {path: 'renovaciones',component:RenovacionesComponent},
-        {path: 'investigaciones',component:InvestigacionesComponent}
+        {path: 'investigaciones',component:InvestigacionesComponent,canActivate:[UnivalleGuard]}
     ]},
     { path: 'dashnivel3', component: DashNivel3Component, canActivate:[Nivel3Guard],
     children: [

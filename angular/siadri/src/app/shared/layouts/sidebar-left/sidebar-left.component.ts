@@ -13,10 +13,16 @@ export class SidebarLeftComponent implements OnInit {
   public admin = false;
   datosUser: any;
   rol:string;
+  univalle = false;
 
   constructor(public fs: RuleservicesService) {
     if (localStorage.getItem('usuario')) {
        this.datosUser = JSON.parse(localStorage.getItem('usuario'));
+       let arr = this.datosUser.email.split("@");
+       if(arr[1] == "correounivalle.edu.co"){
+         this.univalle = true;
+       }
+       
       this.fs.getConsultaRol(this.datosUser.uid).then(() => {
         this.fs.getAtrRol(this.fs.getRolEsp()).subscribe(data => {
           this.rol = data.$key;

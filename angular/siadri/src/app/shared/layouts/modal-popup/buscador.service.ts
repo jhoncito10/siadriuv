@@ -135,6 +135,13 @@ export class BuscadorService {
     return this.ad.app.database().ref('/usuarios/' + userkey + '/notificacion/' + notkey + '/estado').set('leido');
   }
 
+  setEstadoFormInvestigacion(userkey:any){
+    return this.ad.app.database().ref('/usuarios/' + userkey + '/form_investigacion/estado').set('DILIGENCIADO');
+  }
+
+  setFormInvestigacion(userkey:any,form){
+    return this.ad.app.database().ref('/usuarios/' + userkey + '/form_investigacion/form').set(form);
+  }
 
 
 
