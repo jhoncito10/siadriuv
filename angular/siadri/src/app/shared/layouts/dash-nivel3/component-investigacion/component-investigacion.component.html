@@ -1,0 +1,76 @@
+<div class="box box-solid ">
+  <div id="content-box" class="box box-danger">
+    <div class="box-header with-border">
+      <h3 class="box-title">INVESTIGACIONES DILIGENCIADAS</h3>
+
+      <div class="box-tools pull-right">
+        <button id="buton1" type="button" class="btn btn-box-tool" data-widget="collapse">
+          <i class="fa fa-minus"></i>
+        </button>
+      </div>
+    </div>
+    <div id="div1" class="box-body">
+      
+      <div class="principal animated fadeIn ">
+        <div id="modrolebox"  >
+          <div class="contentform">
+            <div class="panel panel-custom-l-red ">
+              <div class="panel-heading">FORMULARIOS DE INVESTIGACION</div>
+              <div class="panel-body ">
+                  <div class="table-responsive">
+                <table datatable [dtOptions]="dtOptions" id="tablaInv" class="table table-hover table-condensed" [dtTrigger]= "dtTrigger" >
+                  <thead>
+                    <tr>
+                      <th>Fecha</th>
+                      <th>D.Solicitante</th>
+                      <th>D.Movilidad</th>
+                      <th>Modalidad</th>
+                      <th>Movilizacion</th>
+                      <th>Firma</th>
+                      <th>EXCEL</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr style="cursor:pointer" *ngFor="let item of this.investigaciones" (click)="cargarArreglo(item)">
+                      <td>
+                         {{item.form.fecha}}
+                      </td>
+                      <td>
+                          {{item.form.datos_solicitud.doc_prof}}
+                      </td>
+                      <td>
+                          {{item.form.datos_movilidad.CC_pas}}
+                      </td>
+                      <td>
+                         {{item.form.modalidad}}
+                      </td>
+                      <td>
+                          {{item.form.tipo_movilidad.tipo_mov}}
+                       </td>
+                      <td>
+                          {{item.form.firma.doc_firma}}
+                       </td>
+                      <td>
+                        <div class="form-group text-center"> <input class="checkbox" style="width: 20px;height: 20px;" type="checkbox" value="{{item.$key}}"></div>
+                       
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              </div>
+            </div>
+          </div>
+      
+        </div>
+
+      </div>
+      <div class="form-group">
+        <div class="col-md-12">
+          <button type="button" (click)="mostrar()" class="btn2 btn-danger btn-lg btn-block danger">DESCARGAR</button>
+        </div>
+      </div> 
+      
+  </div>
+
+  </div>

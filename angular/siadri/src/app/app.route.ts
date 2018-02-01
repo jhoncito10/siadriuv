@@ -1,3 +1,4 @@
+import { ComponentInvestigacionComponent } from './shared/layouts/dash-nivel3/component-investigacion/component-investigacion.component';
 import { UnivalleGuard } from './shared/services/univalle.guard';
 import { RenovacionesComponent } from './shared/layouts/dash-nivel2/renovaciones/renovaciones.component';
 import { InscripcionesComponent } from './shared/layouts/dash-nivel2/inscripciones/inscripciones.component';
@@ -35,6 +36,7 @@ import { InvestigacionesComponent } from 'app/shared/layouts/dash-nivel2/investi
         {path: 'grafico1',component:Grafico1Component},
         {path: 'grafico2',component:Grafico2Component},
         { path: 'enviocorreos', component: ComponentCorreoComponent},
+        { path: 'investigacion', component: ComponentInvestigacionComponent},
         { path: '', pathMatch: 'full', redirectTo: 'dash/mapa'}
     ]},
    

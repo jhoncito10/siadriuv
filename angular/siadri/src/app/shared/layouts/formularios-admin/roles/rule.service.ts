@@ -62,7 +62,7 @@ export class RuleservicesService {
 
   getRolEspBD(key: string) {
    return this.ad.object('/usuarios/' + key + '/roles');
-   }
+  }
 
    getAtrRol(key: string) {
     return this.ad.object('/roles/' + key);

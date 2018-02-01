@@ -1,8 +1,8 @@
 <!-- (click)="login()" -->
 
-<div class="main-header">
-  <a href="#" class="logo">
-    <span class="logo-lg"><b>SIA</b>DRI</span>
+<div class="main-header sombra" >
+  <a href="#" class="logo" >
+    <span class="logo-lg" style="font-size: 25px;"><b >SIA</b>DRI</span>
   </a>
   <nav class="navbar navbar-static-top">
     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -11,12 +11,12 @@
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <li *ngIf="!this.session" class="dropdown notifications-menu" id="login-li-button">
-          <a [routerLink]="('/login')" class="btn-interno">
-            <i class="fa fa-sign-in"> Ingresar</i>
+          <a [routerLink]="('/login')" class="btn-interno"  style="cursor:pointer; padding-right: 30px; padding-top: 20px;">
+            <i class="fa fa-sign-in" style="font-size: 15px;"> Ingresar</i>
            </a>
         </li>
 
-        <li *ngIf="this.session" class="dropdown notifications-menu open">
+        <li *ngIf="this.session" class="dropdown notifications-menu" style="padding-top: 3px;">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
             <i class="fa fa-bell-o"></i>
             <span class="label label-warning">{{notificaciones.length}}</span>
@@ -37,15 +37,15 @@
         </li>
 
         <li *ngIf="this.session" class="dropdown notifications-menu">
-          <a  title="Salir" id="logout" (click)="logout()" style="cursor:pointer;">
-            <i class="fa fa-sign-out"> Salir</i>
+          <a  title="Salir" id="logout" (click)="logout()" style="cursor:pointer; padding-right: 30px; padding-top: 20px;">
+            <i class="fa fa-sign-out" style="font-size: 15px;"> Salir</i>
           </a>
         </li>
 
           <li class="dropdown notifications-menu">
             <div class="logo-image hidden-xs">
               <a id="logo" href="http://www.univalle.edu.co/">
-                        <img longdesc="http://www.seapp724.com/" class="img-responsive"  src="assets/images/logo.jpg" width="424" height="51" alt="Universidad del Valle">
+                        <img longdesc="http://www.seapp724.com/" class="img-responsive"  src="assets/images/logounivalle.png" width="424" height="50" alt="Universidad del Valle">
                       </a>
             </div>
           </li>

@@ -89,8 +89,13 @@ nav{
 
 
 #menuSuperior, #menuPrincipal{
-	background: rgb(232,28,37);
-	border: 0px;
+	background: rgb(255, 255, 255);
+  border: 0px;
+  height: 20px;
+  padding-top: 10px;
+  padding-left: 10px;
+ 
+
 }
 
 .barraHorizontal{
@@ -106,13 +111,14 @@ nav{
 }
 
 .fondo-main{
-  background-color:rgb(225,225,225);
+  background-color:rgb(255, 248, 248);
 }
 
 .jumbotron{
 	height:100%;
 	margin:0px;
   padding: 10px;
+  align-content: left;
 }
 .fondo-menu-principal{
   background-color: rgb(232,28,37);
@@ -172,6 +178,19 @@ nav{
   font-family: "Open Sans light 200";
   font-size: 35px;
 }
+/*Subtítulos de sección*/
+.subtitulos-seccion2{
+  font-family: "Open Sans light 200";
+  font-size: 20px;
+}
+
+.subtitulos-seccion3{
+  font-family: "Open Sans light 200";
+  font-size: 23px;
+  color: #E81C25;
+  padding-left: 25px;
+}
+
 /*Subtítulos de noticias en agencia*/
 .subtitulos-noticias{
   font-family: "Open Sans light 200";
@@ -179,15 +198,17 @@ nav{
 }
 /*Contenidos de sección*/
 .contenido-seccion{
-  color: #6D6E71;
+  color: rgb(255, 255, 255);
   font-family: "Open Sans normal 400";
   font-size: 15px;
 }
 /*Hipervínculos, enlaces o links en contenidos*/
 .links{
-  color: #428bca;
+  color: rgb(253, 253, 253);
   font-family: "Open Sans normal 400";
-  font-size: 15px;
+  font-size: 20px;
+  border-color: rgb(255, 254, 254);
+  background-color: #E81C25;
 }
 /*Ítems menú principal*/
 .item-menu-principal{
@@ -214,9 +235,12 @@ nav{
   font-family: "Open Sans light 200";
   font-size: 17px;
 }
- - 
+
+
 /*Información contactos sección inferior izquierda*/
 .info-contacto-seccion-inferior{
   font-family: "Open Sans regular 400";
   font-size: 15px;
 }
+
+

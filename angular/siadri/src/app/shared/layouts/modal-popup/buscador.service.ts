@@ -94,11 +94,6 @@ export class BuscadorService {
     });
   }
 
-
-
-
-
-
   crearBorrador(formulario: any, nombreBorr: any) {
     this.ad.app.database().ref('/borradores').push(formulario).then(data => {
       this.ad.app.database().ref('/borradores/' + data.path.o[1] + '/nombreBorrador').set(nombreBorr).then(() => {
@@ -135,15 +130,23 @@ export class BuscadorService {
     return this.ad.app.database().ref('/usuarios/' + userkey + '/notificacion/' + notkey + '/estado').set('leido');
   }
 
-  setEstadoFormInvestigacion(userkey:any){
-    return this.ad.app.database().ref('/usuarios/' + userkey + '/form_investigacion/estado').set('DILIGENCIADO');
+  // setEstadoFormInvestigacion(userkey:any){
+  //   return this.ad.app.database().ref('/investigaciones' + userkey + '/estado').set('DILIGENCIADO');
+  // }
+
+  crearFormInvestigacion(userkey:any,form){
+    return this.ad.app.database().ref('/investigaciones').push({form,uid_diligenciado:userkey});
   }
 
-  setFormInvestigacion(userkey:any,form){
-    return this.ad.app.database().ref('/usuarios/' + userkey + '/form_investigacion/form').set(form);
+
+
+  getInvestigaciones(){
+    return this.ad.list('/investigaciones', {
+      query: {
+        orderByChild: 'fecha'
+      }
+    });
   }
-
-
 
 
 

@@ -26,6 +26,10 @@
 
   "borradores":{
     ".read":"(auth != false)",
+      ".write":"(auth != false)"},
+      
+  "investigaciones":{
+    ".read":"(auth != false)",
       ".write":"(auth != false)"}
 
   }
