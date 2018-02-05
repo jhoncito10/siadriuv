@@ -80,7 +80,7 @@ nav{
   display: inline-block;
   margin: 5px;
   vertical-align: top;
-  text-align:left
+  text-align:center;
 }
 
 .footer-logo img{
@@ -101,6 +101,11 @@ nav{
 .barraHorizontal{
   background-color:rgb(232,28,37);
   width:100%;
+  height: 5px;
+}
+.barraHorizontal2{
+  background-color:rgb(232,28,37);
+  width:80%;
   height: 5px;
 }
 
