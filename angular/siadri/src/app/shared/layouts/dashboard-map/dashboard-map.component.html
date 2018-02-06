@@ -32,7 +32,7 @@
         <div class="divScroll" >
         <div  *ngFor="let item of this.convenios | async" class="box box-widget widget-user">
             <!-- Add the bg color to the header using any of the bg-* classes -->
-            <div class="widget-user-header bg-red" style="background: red;">
+            <div class="widget-user-header bg-red" style="background: red; height: 100%">
               <h2 class="widget-user-username">{{item.country}}</h2>
               <h4 class="widget-user-desc">{{item.description}}</h4>
             </div>
