@@ -64,6 +64,7 @@ import { InvestigacionesComponent } from './shared/layouts/dash-nivel2/investiga
 import { UnivalleGuard } from 'app/shared/services/univalle.guard';
 import { ComponentInvestigacionComponent } from './shared/layouts/dash-nivel3/component-investigacion/component-investigacion.component';
 import { TablainvestigacionComponent } from './shared/layouts/sidebar-left-components/tablainvestigacion/tablainvestigacion.component';
+import { PrincipalComponent } from './shared/layouts/principal/principal.component';
 
 
 @NgModule({
@@ -103,7 +104,8 @@ import { TablainvestigacionComponent } from './shared/layouts/sidebar-left-compo
     InvestigacionComponent,
     InvestigacionesComponent,
     ComponentInvestigacionComponent,
-    TablainvestigacionComponent
+    TablainvestigacionComponent,
+    PrincipalComponent
     
   ],
   imports: [

@@ -3,6 +3,8 @@ import { BuscadorService } from './../modal-popup/buscador.service';
 import { RuleservicesService } from './../formularios-admin/roles/rule.service';
 import { Component, OnInit } from '@angular/core';
 
+declare var $: any;
+
 @Component({
   selector: 'app-sidebar-left',
   templateUrl: './sidebar-left.component.html',
@@ -14,11 +16,12 @@ export class SidebarLeftComponent implements OnInit {
 
   public admin = false;
   datosUser: any;
-  rol:string;
+  rol:string="";
   estado:string;
   univalle = false;
 
   constructor(public fs: RuleservicesService, private busqueda:BuscadorService,private modal:ModalService) {
+    
     if (localStorage.getItem('usuario')) {
        this.datosUser = JSON.parse(localStorage.getItem('usuario'));
        let arr = this.datosUser.email.split("@");
@@ -29,6 +32,7 @@ export class SidebarLeftComponent implements OnInit {
       this.fs.getConsultaRol(this.datosUser.uid).then(() => {
         this.fs.getAtrRol(this.fs.getRolEsp()).subscribe(data => {
           this.rol = data.$key;
+    
         });
       });
     }
@@ -38,6 +42,7 @@ export class SidebarLeftComponent implements OnInit {
 
 
   }
+
 
 }
 

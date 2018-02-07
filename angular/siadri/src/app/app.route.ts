@@ -18,9 +18,11 @@ import { UsuariosComponent } from 'app/shared/layouts/formularios-admin/usuarios
 import { DashNivel3Component } from 'app/shared/layouts/dash-nivel3/dash-nivel3.component';
 import { ComponentCorreoComponent } from 'app/shared/layouts/dash-nivel3/component-correo/component-correo.component';
 import { InvestigacionesComponent } from 'app/shared/layouts/dash-nivel2/investigaciones/investigaciones.component';
+import { PrincipalComponent } from 'app/shared/layouts/principal/principal.component';
 
  const routes: Routes = [
 
+  { path: 'principal', component: PrincipalComponent },
   { path: 'login', component: LoginComponent },
   { path: 'dash', component: DashboardInComponent,
    children : [
@@ -44,7 +46,7 @@ import { InvestigacionesComponent } from 'app/shared/layouts/dash-nivel2/investi
     { path: 'usuarios', component: UsuariosComponent,canActivate:[AdminGuard]},
     { path: '', pathMatch: 'full', redirectTo: 'mapa'}
     ]},
-    { path: '', pathMatch: 'full', redirectTo: 'dash'}
+    { path: '', pathMatch: 'full', redirectTo: 'principal'}
 ];
 export const app_routing = RouterModule.forRoot(routes, { useHash: true });
 
