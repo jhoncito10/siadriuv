@@ -27,9 +27,15 @@ const ref = admin.database().ref();
 
 exports.CreateUser = functions.auth.user().onCreate(event => {
 
-    const uid = event.data.uid;
+  console.log("FUNCIONO");
+    crearUsuario(event);
+
+});
+
+function crearUsuario(event){
+  const uid = event.data.uid;
     const displayName = event.data.displayName || "";
-    //  console.log(event);
+     console.log(event);
     const email = event.data.email;
     const newUser = ref.child(`/usuarios/${uid}`);
     newUser.set({
@@ -40,10 +46,13 @@ exports.CreateUser = functions.auth.user().onCreate(event => {
         empresa: "",
         telefono: "",
         estado: ""
+    }).then(exito =>{
+      console.log('EL USUARIO SE CREO CON EXITO', exito);
+    }).catch(error => {
+      console.log('SE GENERO UN ERROR AL INTENTAR CREAR USUARIO');
+      crearUsuario(event);
     });
-
-
-});
+}
 
 
 let sendMail = (req, res) => {

@@ -53,6 +53,7 @@
     "moment": "^2.19.4",
     "protractor": "^5.2.0",
     "rxjs": "^5.5.2",
+    "sweetalert2": "^7.12.12",
     "ts-node": "^3.3.0",
     "tslint": "^5.8.0",
     "typescript": "^2.3.4",
