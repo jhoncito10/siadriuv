@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
   ingresar(proveedor?: string) {
     if (proveedor === 'google') {
       this._ls.login().then(() => {
+        alert('acceso exitoso');
         this.ruta.navigate(['dash']);
       });
 
@@ -57,8 +58,8 @@ export class LoginComponent implements OnInit {
           this.ruta.navigate(['dash']);
         });
       } else {
-       // swal({type: 'error', text: 'No coinciden las contrasenas', title: 'dfdfdf'});
-       alert ('No coinciden las contrasenas');
+        swal({type: 'error', text: 'No coinciden las contrasenas', title: 'dfdfdf'});
+       //alert ('No coinciden las contrasenas');
       }
   }
 }

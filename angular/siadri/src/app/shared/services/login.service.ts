@@ -29,7 +29,7 @@ export class LoginService {
         .then(resp => {
           this.usuario = resp.user;
           this.obtenerRol(this.usuario).then(() => {
-            alert('acceso exitoso');
+
             resolve();
           }).catch(function() {
             alert('error, intente de nuevo por favor')
@@ -48,6 +48,7 @@ export class LoginService {
           localStorage.setItem('usuario', JSON.stringify(user));
           this.rule.getConsultaRol(user.uid).then(() => {
             this.rule.getAtrRol(this.rule.getRolEsp()).subscribe(datarol => {
+              console.log(datarol.$key);
               this.rol = datarol.$key;
               if (this.rol == null) {
                 this.obtenerRol(user);
