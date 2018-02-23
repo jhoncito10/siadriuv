@@ -58,7 +58,13 @@ export class LoginComponent implements OnInit {
         });
       } else {
        // swal({type: 'error', text: 'No coinciden las contrasenas', title: 'dfdfdf'});
-       alert ('No coinciden las contrasenas');
+       swal({
+        type: 'error',
+        title: 'Error',
+        text: 'las contraseñas no coinciden ',
+        showConfirmButton: true,
+
+      });
       }
   }
 }
