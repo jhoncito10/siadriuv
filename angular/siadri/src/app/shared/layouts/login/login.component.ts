@@ -35,15 +35,31 @@ export class LoginComponent implements OnInit {
   ingresar(proveedor?: string) {
     if (proveedor === 'google') {
       this._ls.login().then(() => {
-        alert('acceso exitoso');
+        swal({
+          type: 'success',
+          title: 'BIENVENID@',
+          text: 'Acceso Exitoso',
+          showConfirmButton: true,
+        });
         this.ruta.navigate(['dash']);
       });
 
     } else {
       this._ls.loginEmail( this.dataAuten.email, this.dataAuten.pass).then(() => {
+        swal({
+          type: 'success',
+          title: 'BIENVENID@',
+          text: 'Acceso Exitoso',
+          showConfirmButton: true,
+        });
         this.ruta.navigate(['dash']);
       }).catch(function() {
-        alert('no fue posible iniciar Sesion debido a que no ha verificado su cuenta por medio del email');
+        swal({
+          type: 'error',
+          title: 'Error',
+          text: 'no fue posible iniciar Sesion debido a que no ha verificado su cuenta por medio del email',
+          showConfirmButton: true,
+        });
       });
 
     }
@@ -54,12 +70,23 @@ export class LoginComponent implements OnInit {
   registrar() {
       if (this.dataRes.pass === this.dataRes.passconfirm) {
         this.rs.createUser( this.dataRes.email, this.dataRes.pass).then(() => {
-          alert('por favor verificar el correo electronico para terminar su proceso de registro');
+          swal({
+            type: 'warning',
+            title: 'Por favor verificar el correo electronico para terminar su proceso de registro',
+            text: '',
+            showConfirmButton: true,
+          });
           this.ruta.navigate(['dash']);
         });
       } else {
-        swal({type: 'error', text: 'No coinciden las contrasenas', title: 'dfdfdf'});
-       //alert ('No coinciden las contrasenas');
+       // swal({type: 'error', text: 'No coinciden las contrasenas', title: 'dfdfdf'});
+       swal({
+        type: 'error',
+        title: 'las contraseñas no coinciden',
+        text: ' ',
+        showConfirmButton: true,
+
+      });
       }
   }
 }

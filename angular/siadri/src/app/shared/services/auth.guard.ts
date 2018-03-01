@@ -6,11 +6,14 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor ( public ls: LoginService) {}
+
+  user = JSON.parse(localStorage.getItem('usuario'));
+
+  constructor () {}
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      if (this.ls.usuario) {
+      if (this.user) {
         return true;
     } else {
        return false;

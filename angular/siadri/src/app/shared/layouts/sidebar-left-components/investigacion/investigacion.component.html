@@ -1,16 +1,16 @@
 <ul class="sidebar-menu">
   <li class="treeview">
-    <a href="#"><i class="fa fa-hand-o-up"></i> <span>Investigaciones</span> <i class="fa fa-angle-left pull-right"></i></a>
+    <a href="#"><i class="fa fa-hand-o-up"></i> <span>CIAM</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
-    
-      <li><a [routerLink]="['dashnivel2/investigaciones']" (click)="inicializarForm()" class='menubusqueda' id="roles"><i class="fa fa-circle-o"></i>Formato Investigacion</a></li>
+
+      <li><a [routerLink]="['dashnivel2/investigaciones']" (click)="inicializarForm()" class='menubusqueda' id="roles"><i class="fa fa-circle-o"></i>Formato CIAM</a></li>
 
     </ul>
   </li>
 </ul>
 <ul class="sidebar-menu">
   <li class="treeview">
-    <a href="#"><i class="fa fa-floppy-o"></i> <span>Investigacion Guardadas</span> <i class="fa fa-angle-left pull-right"></i></a>
+    <a href="#"><i class="fa fa-floppy-o"></i> <span>Ciam Guardados</span> <i class="fa fa-angle-left pull-right"></i></a>
     <ul class="treeview-menu">
         <li *ngFor="let item of this.investigaciones"  (click)="mostrarInvestigacion(item.$key)"><a [routerLink]="['dashnivel2/investigaciones']" class='menubusqueda' id="solicitudes"><i class="fa fa-circle-o">{{item.form.fecha}}</i></a></li>
     </ul>

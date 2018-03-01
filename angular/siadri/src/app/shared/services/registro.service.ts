@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
+import swal from 'sweetalert2';
 import * as firebase from 'firebase/app';
 
 
@@ -16,11 +17,22 @@ export class RegistroService {
             this.afAuth.auth.createUserWithEmailAndPassword(email, pass).then(
               () => {
                 this.afAuth.auth.currentUser.sendEmailVerification();
-                alert('Registrado exitosamente');
+                swal({
+                  type: 'success',
+                  title: 'Felicidades',
+                  text: 'Registrado exitosamente',
+                  showConfirmButton: true,
+                });
                 resolve();
             }).catch(function(error) {
                 console.log(error.message);
-                alert('ha ocurrido un error en el proceso de Registro, por favor intente de nuevo');
+                swal({
+                  type: 'error',
+                  title: 'Error',
+                  text: 'ha ocurrido un error en el proceso de Registro, por favor intente de nuevo',
+                  showConfirmButton: true,
+                });
+
             });
           });
          return promise;

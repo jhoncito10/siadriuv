@@ -54,6 +54,18 @@ function crearUsuario(event){
     });
 }
 
+exports.consFecha = functions.https.onRequest((req,res) => {
+  cors(req, res, () => {
+
+    if(res){
+      res.status(200).send(moment().format('YYYY-MM-DD'));
+    }
+
+
+  });
+
+});
+
 
 let sendMail = (req, res) => {
 

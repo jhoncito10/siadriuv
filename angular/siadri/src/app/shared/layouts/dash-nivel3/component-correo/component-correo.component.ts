@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import swal from 'sweetalert2';
 @Component({
   selector: 'app-component-correo',
   templateUrl: './component-correo.component.html',
@@ -34,7 +34,12 @@ export class ComponentCorreoComponent implements OnInit {
         url: url,
         data: JSON.stringify(mailData),
         success: function (result) {
-          alert('solicitud exitosa');
+          swal({
+            type: 'success',
+            title: 'Solicitud Exitosa',
+            text: '',
+            showConfirmButton: true,
+          });
 
         },
         contentType: 'application/json'

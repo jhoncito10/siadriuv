@@ -7,21 +7,24 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class Nivel3Guard implements CanActivate {
 
- 
-  constructor(public ls:LoginService){
+  user = JSON.parse(localStorage.getItem('usuario'));
+  rol = JSON.parse(localStorage.getItem('rol'));
+
+
+  constructor() {
 
   }
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-      if (this.ls.usuario) {
-        if((this.ls.rol == "NIVEL3") || (this.ls.rol == "ADMIN")){
+      if (this.user) {
+        if ((this.rol === 'NIVEL3') || (this.rol === 'ADMIN')){
           return true;
-        }else{
+        } else {
           return false;
         }
-      
+
     } else {
        return false;
     }

@@ -21,22 +21,20 @@ export class SidebarLeftComponent implements OnInit {
   univalle = false;
 
   constructor(public fs: RuleservicesService, private busqueda:BuscadorService,private modal:ModalService) {
-    
+
     if (localStorage.getItem('usuario')) {
        this.datosUser = JSON.parse(localStorage.getItem('usuario'));
        let arr = this.datosUser.email.split("@");
        if(arr[1] == "correounivalle.edu.co"){
         this.univalle = true;
       }
-
-      this.fs.getConsultaRol(this.datosUser.uid).then(() => {
-        this.fs.getAtrRol(this.fs.getRolEsp()).subscribe(data => {
-          this.rol = data.$key;
-    
-        });
-      });
     }
-  }
+
+    if (localStorage.getItem('rol')) {
+      this.rol = JSON.parse(localStorage.getItem('rol'));
+     }
+   }
+
 
   ngOnInit() {
 

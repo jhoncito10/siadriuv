@@ -6,24 +6,27 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class UnivalleGuard implements CanActivate {
 
-  univalle:any;
+  univalle: any;
 
-  constructor(public ls:LoginService){
-    
+  user = JSON.parse(localStorage.getItem('usuario'));
+  rol = JSON.parse(localStorage.getItem('rol'));
+
+  constructor() {
+
   }
       canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-          if (this.ls.usuario) {
-            this.univalle = this.ls.usuario.email.split("@");
+          if (this.user) {
+            this.univalle = this.user.email.split('@');
             console.log(this.univalle);
-            if((this.univalle[1] == "correounivalle.edu.co") || (this.ls.rol == "ADMIN") || (this.ls.rol == "NIVEL3")){
+            if ((this.univalle[1] === 'correounivalle.edu.co') || (this.rol === 'ADMIN') || (this.rol === "NIVEL3")) {
               return true;
-            }else{
+            } else {
               return false;
             }
-          
+
         } else {
            return false;
         }

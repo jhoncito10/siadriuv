@@ -27,23 +27,23 @@ import { PrincipalComponent } from 'app/shared/layouts/principal/principal.compo
   { path: 'dash', component: DashboardInComponent,
    children : [
     { path: 'mapa', component: DashboardMapComponent},
-    { path: 'dashnivel2', component: DashNivel2Component, canActivate:[AuthGuard],
-    children:[
-        {path: 'inscripciones',component:InscripcionesComponent},
-        {path: 'renovaciones',component:RenovacionesComponent},
-        {path: 'investigaciones',component:InvestigacionesComponent,canActivate:[UnivalleGuard]}
-    ]},
-    { path: 'dashnivel3', component: DashNivel3Component, canActivate:[Nivel3Guard],
+    { path: 'dashnivel2', component: DashNivel2Component, canActivate: [UnivalleGuard],
     children: [
-        {path: 'grafico1',component:Grafico1Component},
-        {path: 'grafico2',component:Grafico2Component},
+        {path: 'inscripciones', component: InscripcionesComponent},
+        {path: 'renovaciones', component: RenovacionesComponent},
+        {path: 'investigaciones', component: InvestigacionesComponent}
+    ]},
+    { path: 'dashnivel3', component: DashNivel3Component, canActivate: [Nivel3Guard],
+    children: [
+        { path: 'grafico1', component: Grafico1Component},
+        { path: 'grafico2', component: Grafico2Component},
         { path: 'enviocorreos', component: ComponentCorreoComponent},
         { path: 'investigacion', component: ComponentInvestigacionComponent},
         { path: '', pathMatch: 'full', redirectTo: 'dash/mapa'}
     ]},
-   
-    { path: 'roles', component: RolesComponent,canActivate:[AdminGuard]},
-    { path: 'usuarios', component: UsuariosComponent,canActivate:[AdminGuard]},
+
+    { path: 'roles', component: RolesComponent, canActivate: [AdminGuard]},
+    { path: 'usuarios', component: UsuariosComponent, canActivate: [AdminGuard]},
     { path: '', pathMatch: 'full', redirectTo: 'mapa'}
     ]},
     { path: '', pathMatch: 'full', redirectTo: 'principal'}

@@ -65,6 +65,8 @@ import { UnivalleGuard } from 'app/shared/services/univalle.guard';
 import { ComponentInvestigacionComponent } from './shared/layouts/dash-nivel3/component-investigacion/component-investigacion.component';
 import { TablainvestigacionComponent } from './shared/layouts/sidebar-left-components/tablainvestigacion/tablainvestigacion.component';
 import { PrincipalComponent } from './shared/layouts/principal/principal.component';
+import { HttpClientModule } from '@angular/common/http';
+import { Ng2CompleterModule } from 'ng2-completer';
 
 
 @NgModule({
@@ -106,7 +108,7 @@ import { PrincipalComponent } from './shared/layouts/principal/principal.compone
     ComponentInvestigacionComponent,
     TablainvestigacionComponent,
     PrincipalComponent
-    
+
   ],
   imports: [
     app_routing,
@@ -115,12 +117,14 @@ import { PrincipalComponent } from './shared/layouts/principal/principal.compone
     BrowserAnimationsModule,
     LeafletModule.forRoot(),
     HttpModule,
+    HttpClientModule,
     AngularFireModule.initializeApp(firebaseconfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     DataTablesModule,
     NgxChartsModule,
-    MomentModule
+    MomentModule,
+    Ng2CompleterModule
   ],
   providers: [
       LoginService,

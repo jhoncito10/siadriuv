@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from 'app/shared/modal.service';
-
+import swal from 'sweetalert2';
 @Component({
   selector: 'app-barravertical',
   templateUrl: './barravertical.component.html',
@@ -29,39 +29,50 @@ export class BarraverticalComponent implements OnInit {
   };
 
 
-  conveniosSeleccionados:any;
-  constructor(private modal:ModalService) { }
+  conveniosSeleccionados: any;
+  constructor(private modal: ModalService) { }
 
   ngOnInit() {
-    this.modal.currentPrueba.subscribe(data=>{
+    this.modal.currentPrueba.subscribe(data => {
       this.single = data;
-      this.xAxisLabel = data[0].xlabel;//convebions
-      this.yAxisLabel = data[0].ylabel;//meses que quedan de vigencia
-      this.title = data[0].title//instituciones
+      this.xAxisLabel = data[0].xlabel; // convebions
+      this.yAxisLabel = data[0].ylabel; // meses que quedan de vigencia
+      this.title = data[0].title// instituciones
       this.conveniosSeleccionados = data;
       this.chart2(this.single);
     });
   }
 
-  chart2(multi:any){
+  chart2(multi: any) {
     Object.assign(this, {multi});
   }
 
   onSelect(event) {
 
-    for(var i=0;i<this.conveniosSeleccionados.length;i++){
-      if(event.name){
-        if(this.conveniosSeleccionados[i].objeto.institution == event.name){
-          alert("La vigencia que queda del convenio "+this.conveniosSeleccionados[i].name+ " es de "+this.conveniosSeleccionados[i].value+" meses");
+    for (let i = 0; i < this.conveniosSeleccionados.length; i++) {
+      if (event.name) {
+        if (this.conveniosSeleccionados[i].objeto.institution === event.name) {
+          swal({
+            type: 'warning',
+            // tslint:disable-next-line:max-line-length
+            title: 'La vigencia que queda del convenio ' + this.conveniosSeleccionados[i].name + ' es de ' + this.conveniosSeleccionados[i].value + 'meses',
+            showConfirmButton: true,
+          });
         }
-      }else{
-        if(this.conveniosSeleccionados[i].objeto.institution == event){
-          alert("La vigencia que queda del convenio "+this.conveniosSeleccionados[i].name+ " es de "+this.conveniosSeleccionados[i].value+" meses");
+      } else {
+        if (this.conveniosSeleccionados[i].objeto.institution === event) {
+          swal({
+            type: 'warning',
+            // tslint:disable-next-line:max-line-length
+            title: 'La vigencia que queda del convenio ' + this.conveniosSeleccionados[i].name + ' es de ' + this.conveniosSeleccionados[i].value + ' meses',
+            text: '',
+            showConfirmButton: true,
+          });
         }
       }
     }
-    
+
   }
-    
+
 
 }

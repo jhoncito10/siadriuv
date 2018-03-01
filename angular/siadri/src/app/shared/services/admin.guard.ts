@@ -7,18 +7,21 @@ import { LoginService } from 'app/shared/services/login.service';
 @Injectable()
 export class AdminGuard implements CanActivate {
 
-  constructor ( public ls: LoginService) {}
+  user = JSON.parse(localStorage.getItem('usuario'));
+  rol = JSON.parse(localStorage.getItem('rol'));
+
+  constructor () {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-      if (this.ls.usuario) {
-        if(this.ls.rol == "ADMIN"){
+      if (this.user) {
+        if (this.rol === 'ADMIN'){
           return true;
-        }else{
+        } else {
           return false;
         }
-      
+
     } else {
        return false;
     }

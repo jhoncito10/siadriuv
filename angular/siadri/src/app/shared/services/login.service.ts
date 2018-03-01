@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { RuleservicesService } from 'app/shared/layouts/formularios-admin/roles/rule.service';
+import swal from 'sweetalert2';
 declare var $: any;
 
 // ESTA CLASE CONTIENE LOS METODOS QUE PERMITEN EL LOGIN Y LOGOUT DE LOS USUARIOS AL SISTEMA
@@ -16,7 +17,9 @@ export class LoginService {
   constructor(public afAuth: AngularFireAuth, public ruta: Router, private rule: RuleservicesService) {
       if (localStorage.getItem('usuario')) {
         this.usuario = JSON.parse(localStorage.getItem('usuario'));
-        this.obtenerRol(this.usuario);
+        this.obtenerRol(this.usuario).then(() => {
+          localStorage.setItem('rol', JSON.stringify(this.rol));
+        });
     }
   }
 
@@ -32,11 +35,21 @@ export class LoginService {
 
             resolve();
           }).catch(function() {
-            alert('error, intente de nuevo por favor')
+            swal({
+              type: 'error',
+              title: 'Error',
+              text: 'error, intente de nuevo por favor',
+              showConfirmButton: true,
+            });
           });
 
         }).catch(function() {
-          alert('ocurrio un error intentando acceder, por favor intente de nuevo');
+          swal({
+            type: 'error',
+            title: 'Error',
+            text: 'ocurrio un error intentando acceder, por favor intente de nuevo',
+            showConfirmButton: true,
+          });
         });
       });
       return promise;
@@ -73,14 +86,18 @@ export class LoginService {
                 this.usuario = data;
                 if (this.usuario.emailVerified) {
                  this.obtenerRol(data);
-                  alert('Loggeado exitosamente');
                   resolve();
                 } else {
                   reject();
                 }
               })
               .catch(() => {
-                alert('Clave o usuario invalido');
+                swal({
+                  type: 'error',
+                  title: 'Error',
+                  text: 'Clave o Usuario invalido',
+                  showConfirmButton: true,
+                });
               })
               ;
             });
