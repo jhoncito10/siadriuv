@@ -50,7 +50,7 @@ export class BuscadorService {
             success: function (result) {
               $('#modal3').modal('hide');
               alert('solicitud exitosa');
-              
+
             },
             contentType: 'application/json'
           });
@@ -83,7 +83,7 @@ export class BuscadorService {
             success: function (result) {
               $('#modal3').modal('hide');
               alert('solicitud exitosa');
-              
+
             },
             contentType: 'application/json'
           });
@@ -126,7 +126,7 @@ export class BuscadorService {
   }
 
   setNotificacion(userkey: any, notkey) {
-    
+
     return this.ad.app.database().ref('/usuarios/' + userkey + '/notificacion/' + notkey + '/estado').set('leido');
   }
 
@@ -143,7 +143,7 @@ export class BuscadorService {
   getInvestigaciones(){
     return this.ad.list('/investigaciones', {
       query: {
-        orderByChild: 'fecha'
+        orderByChild: 'comite'
       }
     });
   }
