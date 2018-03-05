@@ -28,7 +28,7 @@
       <app-graficos *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-graficos>
       <app-admin *ngIf="this.rol == 'ADMIN'"></app-admin>
       <app-correo *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-correo>
-    
+
       <div *ngIf="this.rol == '' && this.datosUser != undefined" class="spinner" style="margin-top: 40px;">
         </div>
         <div *ngIf="this.rol == '' && this.datosUser != undefined" style="text-align: center; color: rgb(3, 3, 3);">
@@ -36,7 +36,7 @@
       </div>
 
       <li><a class='menubusqueda' tabindex="-1" href="#" id="menu-contacto"><i class="fa fa-mouse-pointer"></i>  <span>Contactenos</span></a></li>
-  
+
     </ul>
   </section>
     <!-- /.sidebar -->

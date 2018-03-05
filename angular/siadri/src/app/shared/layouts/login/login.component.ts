@@ -39,9 +39,13 @@ export class LoginComponent implements OnInit {
           type: 'success',
           title: 'BIENVENID@',
           text: 'Acceso Exitoso',
-          showConfirmButton: true,
+          showConfirmButton: true
+        }).then(result => {
+          if (result.value) {
+            this.ruta.navigate(['dash']);
+          }
         });
-        this.ruta.navigate(['dash']);
+
       });
 
     } else {

@@ -1,6 +1,6 @@
 import { LoginService } from './login.service';
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class UnivalleGuard implements CanActivate {
   user = JSON.parse(localStorage.getItem('usuario'));
   rol = JSON.parse(localStorage.getItem('rol'));
 
-  constructor() {
+  constructor(private route: Router) {
 
   }
       canActivate(
@@ -24,10 +24,12 @@ export class UnivalleGuard implements CanActivate {
             if ((this.univalle[1] === 'correounivalle.edu.co') || (this.rol === 'ADMIN') || (this.rol === "NIVEL3")) {
               return true;
             } else {
+              this.route.navigate(['login']);
               return false;
             }
 
         } else {
+          this.route.navigate(['login']);
            return false;
         }
       }

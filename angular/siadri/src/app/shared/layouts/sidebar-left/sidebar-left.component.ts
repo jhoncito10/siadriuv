@@ -33,6 +33,9 @@ export class SidebarLeftComponent implements OnInit {
     if (localStorage.getItem('rol')) {
       this.rol = JSON.parse(localStorage.getItem('rol'));
      }
+
+     console.log(this.datosUser);
+     console.log(this.rol);
    }
 
 

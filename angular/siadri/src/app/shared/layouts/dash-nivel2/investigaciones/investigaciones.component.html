@@ -45,8 +45,8 @@
                           <h2><strong>1. TIPO DE MODALIDAD A LA QUE APLICA</strong></h2>
                           <label class="control-label" for="modalidad"><strong>Modalidad</strong></label>
                           <select name="modalidad" [(ngModel)]="this.formulario.modalidad" class="form-control"  id="modalidad" >
-                            <option value="modalidad 1">Profesores nombrados de la Universidad del Valle y Profesores/Artistas visitantes internacionales </option>
-                            <option value="modalidad 2">Estudiantes de Doctorado y estudiantes de sub especialidades clínico quirúrgicas de la Universidad del Valle</option>
+                            <option value="Profesores nombrados de la Universidad del Valle y Profesores/Artistas visitantes internacionales">Profesores nombrados de la Universidad del Valle y Profesores/Artistas visitantes internacionales </option>
+                            <option value="Estudiantes de Doctorado y estudiantes de sub especialidades clínico quirúrgicas de la Universidad del Valle">Estudiantes de Doctorado y estudiantes de sub especialidades clínico quirúrgicas de la Universidad del Valle</option>
                           </select>
                         </div>
                       </div>
@@ -77,7 +77,7 @@
                             <select name="item4" [(ngModel)]="this.formulario.datos_solicitud.facultad" class="form-control"  id="" >
                               <option value="Facultad de Salud">Facultad de Salud</option>
                               <option value="Faculta de Ciencias Sociales y Económicas">Faculta de Ciencias Sociales y Económicas</option>
-                              <option value=">Facultad de Humanidades">Facultad de Humanidades</option>
+                              <option value="Facultad de Humanidades">Facultad de Humanidades</option>
                               <option value="Facultad de Ciencias Naturales y Exactas">Facultad de Ciencias Naturales y Exactas</option>
                               <option value="Facultad de Ingeniería">Facultad de Ingeniería</option>
                               <option value="Facultad de Artes Integradas">Facultad de Artes Integradas</option>
@@ -85,6 +85,24 @@
                             </select>
                           </div>
                       </div>
+
+                      <div class="form-group">
+                        <div class="col-md-6">
+                          <label class="control-label" for="item4"><strong>Sedes</strong></label>
+                          <select name="item4" [(ngModel)]="this.formulario.datos_solicitud.sede" class="form-control"  id="" >
+                            <option value="Sede Cali">Sede Cali</option>
+                            <option value="Sede Buga">Sede Buga</option>
+                            <option value="Sede Caicedonia">Sede Caicedonia</option>
+                            <option value="Sede Cartago">Sede Cartago</option>
+                            <option value="Sede Norte Cauca">Sede Norte Cauca</option>
+                            <option value="Sede Pacífico">Sede Pacífico</option>
+                            <option value="Sede Palmira">Sede Palmira</option>
+                            <option value="Sede Tuluá">Sede Tuluá</option>
+                            <option value="Sede Yumbo">Sede Yumbo</option>
+                            <option value="Sede Zarzal">Sede Zarzal</option>
+                          </select>
+                        </div>
+                    </div>
 
                       <div class="form-group">
                           <div class="col-md-6">
@@ -97,6 +115,13 @@
                           <div class="col-md-6">
                             <label class="control-label" for="tel"><strong>Telefono fijo en Univalle</strong></label>
                             <input name="tel" [(ngModel)]="this.formulario.datos_solicitud.tel_univ" class="form-control" placeholder="Ingrese telefono fijo" type="text">
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <div class="col-md-6">
+                            <label class="control-label" for="direccion"><strong>Direccion</strong></label>
+                            <input name="direccion" [(ngModel)]="this.formulario.datos_solicitud.direccion" class="form-control" placeholder="Ingrese direccion" type="text">
                           </div>
                       </div>
 
@@ -127,28 +152,37 @@
                       </div>
 
                       <div class="form-group">
-                          <div class="col-md-12">
+                        <div class="col-md-12">
+                          <label class="control-label" ><strong>Seleccione el tipo de documento </strong></label>
+                          <select name="selectCC" class="form-control" id="selectCC" >
+                            <option>Seleccione una opcion</option>
+                            <option value="nacional">Cedula de ciudadania</option>
+                            <option value="internacional">Cédula de extranjeria o pasaporte</option>
+                          </select>
+                        </div>
+                    </div>
+
+                      <div class="form-group">
+                          <div class="col-md-6">
                             <label class="control-label" for="nomApe"><strong>Nombres y Apellidos</strong></label>
                             <input name="nomApe" [(ngModel)]="this.formulario.datos_movilidad.nom_ape" class="form-control" placeholder="Ingrese nombres y apellidos" type="text">
                           </div>
                       </div>
 
-                      <div class="form-group">
-                          <div class="col-md-12">
-                            <label class="control-label" ><strong>Seleccione el tipo de documento </strong></label>
-                            <select name="selectCC" class="form-control" id="selectCC" >
-                              <option>Seleccione una opcion</option>
-                              <option value="nacional">Cedula de ciudadania</option>
-                              <option value="internacional">Cédula de extranjeria o pasaporte</option>
-                            </select>
-                          </div>
-                      </div>
+
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="ccpas"><strong>CC / Pasaporte N* </strong></label>
                             <input name="ccpas" [(ngModel)]="this.formulario.datos_movilidad.CC_pas" class="form-control" placeholder="Ingrese CC o Numero pasaporte" type="text">
                           </div>
                       </div>
+
+                      <div class="form-group">
+                        <div class="col-md-6">
+                          <label class="control-label" for="direccion2"><strong>Direccion</strong></label>
+                          <input name="direccion2" [(ngModel)]="this.formulario.datos_movilidad.direccion" class="form-control" placeholder="Ingrese direccion" type="text">
+                        </div>
+                    </div>
 
                       <div class="form-group">
                           <div class="col-md-6">
@@ -206,16 +240,18 @@
                               </select>
                           </div>
                       </div>
+
+                      <div class="form-group">
+                        <div class="col-md-12">
+                          <label class="control-label" for="just"><strong>Jutificacion(100 palabras)</strong></label>
+                          <textarea class="form-control" [(ngModel)]="this.formulario.tipo_movilidad.justificacion" name="just" id="" rows="5"></textarea>
+                        </div>
+                    </div>
+
                       <div class="form-group">
                           <div class="col-md-12">
                             <label class="control-label" for="observa"><strong>Observaciones</strong></label>
                             <textarea class="form-control" [(ngModel)]="this.formulario.tipo_movilidad.observaciones" name="observa" id="" rows="5"></textarea>
-                          </div>
-                      </div>
-                      <div class="form-group">
-                          <div class="col-md-12">
-                            <label class="control-label" for="just"><strong>Jutificacion(100 palabras)</strong></label>
-                            <textarea class="form-control" [(ngModel)]="this.formulario.tipo_movilidad.justificacion" name="just" id="" rows="5"></textarea>
                           </div>
                       </div>
 
@@ -318,7 +354,7 @@
                                                                         <br>(ver modelo en: <a href="https://drive.google.com/file/d/0B2jaE98MUI8Ub2xuX0FNT1RiTVk/view)">https://drive.google.com/file/d/0B2jaE98MUI8Ub2xuX0FNT1RiTVk/view)</a>  </p></td>
                             <td colspan="1"><input class="col1" name="prof_noma" [(ngModel)]="this.formulario.doc_entregados.prof_nom.a" type="checkbox"></td>
 
-                            <td colspan="1"><input class="col2" name="prof_inta" [(ngModel)]="this.formulario.doc_entregados.prof_int.a" type="checkbox"></td>
+                            <td colspan="1"></td>
                             <td colspan="1"></td>
                           </tr>
                           <tr>
@@ -333,9 +369,9 @@
                             <td colspan="2" style="text-align: left;"><p>c)	Realizar ante la Coordinación Administrativa de la Facultad/Instituto,
                                                                         <br>los trámites internos para acogerlo como Profesor Visitante Internacional
                                                                         <br>y registrarlo en el Sistema de Registro de Extranjeros SIRE.</p></td>
-                            <td colspan="1"></td>
+                            <td colspan="1"><input class="col1" name="prof_nomc" [(ngModel)]="this.formulario.doc_entregados.prof_nom.c" type="checkbox"></td>
 
-                            <td colspan="1"><input class="col2" name="prof_intc" [(ngModel)]="this.formulario.doc_entregados.prof_int.c"  type="checkbox"></td>
+                            <td colspan="1"></td>
                            <td colspan="1"></td>
                           </tr>
                           <tr>
@@ -375,9 +411,9 @@
 
                               Nota: para acceder al formulario debe iniciar sesión con el correo institucional (@correounivalle.edu.co)			X
                               </p></td>
-                            <td colspan="1"><input class="col1" name="presupuesto" [(ngModel)]="this.formulario.doc_entregados.prof_nom.h" type="checkbox"></td>
+                            <td colspan="1"></td>
 
-                            <td colspan="1"><input class="col2" name="prof_inth" [(ngModel)]="this.formulario.doc_entregados.prof_int.h"  type="checkbox"></td>
+                            <td colspan="1"></td>
                             <td colspan="1"><input class="col3" name="est_univh" [(ngModel)]="this.formulario.doc_entregados.est_univ.h" type="checkbox"></td>
                           </tr>
                           <tr>

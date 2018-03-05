@@ -18,8 +18,8 @@ declare var $: any;
 export class InvestigacionesComponent implements OnInit {
 
    formulario = {comite: '', modalidad: '',
-              datos_solicitud: {nombre_prof: '', doc_prof: '', facultad: '', celu_prof: '', tel_univ: '', mail_prof: '', sicop: ''},
-              datos_movilidad: {categoria: '', nom_ape: '', CC_pas: '', nacionalidad: '', ciudad_or: '', ciudad_des: '', pais_or: '', pais_des: '', fecha_part: '', fecha_reg: ''},
+              datos_solicitud: {nombre_prof: '', doc_prof: '', facultad: '', sede:'', celu_prof: '', tel_univ: '', direccion:'',mail_prof: '', sicop: ''},
+              datos_movilidad: {categoria: '', nom_ape: '', CC_pas: '', direccion:'', nacionalidad: '', ciudad_or: '', ciudad_des: '', pais_or: '', pais_des: '', fecha_part: '', fecha_reg: ''},
               tipo_movilidad: {tipo_mov: '', observaciones: '', justificacion: ''},
               presupuesto: {
                 item1: {item1: '', vr_od1: '', nom_1: '', vr_ciam1: ''},
@@ -28,8 +28,8 @@ export class InvestigacionesComponent implements OnInit {
                 item4: {item4: '', vr_od4: '', nom_4: '', vr_ciam4: ''},
                 valor_total: ''},
               doc_entregados: {
-                  prof_nom: { a: false, d: false, e: false, f: false, g: false, h: false, i: false, j: false},
-                  prof_int: {a: false, b: false, c: false, h: false, i: false, j: false},
+                  prof_nom: {a: false, c: false, d: false, e: false, f: false, g: false, i: false, j: false},
+                  prof_int: {b: false, i: false, j: false},
                   est_univ: {g: false, h: false, i: false, j: false}
 
               }
@@ -62,7 +62,7 @@ export class InvestigacionesComponent implements OnInit {
   // tslint:disable-next-line:member-ordering
   // tslint:disable-next-line:quotemark
   // tslint:disable-next-line:max-line-length
-   paises = ["Afghanistan", "Albania", "Argelia", "Alemania", "American Samoa", "Andorra", "Angola", "Anguilla", "Antartida", "Antigua y Barbuda", "Argentina", "Armenia", "Aruba", 'Australia', 'Austria', "Azerbaijan", 'Bahamas', 'Bahrain', 'Bangladesh', "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia-Herzegovina", "Botswana", 'Bouvet Island', 'Brasil', 'Brit Ind Ocean Territory', 'Brunei Darussalm', 'Bulgaria', 'Burkina Faso', 'Burma', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Canary Islands', 'Cape Verde', 'Caymen Islands', 'Central African Rep', 'Chad', 'Chile', 'China', 'Christmas Islands', 'Cocos Islands', 'Colombia', 'Comoros', 'Congo', 'Cook Islands', 'Costa Rica', 'Croatia', 'Cuba', 'Chipre', 'Dem Rep. of Korea', 'Dinamarca', 'Djibouti', 'Dominica', 'East Timor', 'Ecuador', 'Egipto', 'El Salvador', 'Eritrea', 'España', 'Estados Unidos de America', 'Estonia', 'Etiopia', 'Falkland Islands', 'Faroe Islands', 'Fiji', 'Finland', 'Francia', 'Guiana Francesa', 'Polynesia Francesa', 'French So. Territories', 'Gabon', 'Gambia', 'Georgia', 'Ghana', 'Gibraltar', 'Guinea Equatorial', 'Grecia', 'Greenland', 'Grenada', 'Guadalupe', 'Guatemala', 'Guinea', 'Guinea Bissau', 'Guyana', 'Haiti', 'Heard, McDonald Island', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Inglaterra', 'Iran', 'Iraq', 'Ireland', 'Islas Filipinas', 'Israel', 'Italia', 'Ivory Coast', 'Jamaica', 'Japon', 'Jordan', 'Kazakhistan', 'Kenia', 'Kiribati', 'Korea del Norte', 'Kuwait', 'Kyrqyzstan', 'Laos', 'Lativa', 'Libano', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Madagascar', 'Malawi', 'Malaysia', 'Maldivas', 'Mali', 'Malta', 'Mariana Islands', 'Marruecos', 'Marshall Islands', 'Martinique', 'Mauritania', 'Mauritius', 'Mayotte', 'Mexico', 'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montserrat', 'Mozambique', 'Myanmar', 'Nambia', 'Nauru', 'Nepal', 'Netherland Antilles', 'Netherlands', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Niue Island', 'Norfolk Island', 'Northern Mariana Island', 'Norway', 'OCE', 'Oman', 'Pacific Islands', 'Pakistan', 'Palau', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Pitcairn', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Reino Unido', 'Republica de Corea', 'Republica Dominicana', 'Reunion', 'Romania', 'Russian Federation', 'Rwanda', 'South Georgia Sandwich', 'Saint Pierre Miguelon', 'Samoa', 'San Marino', 'Sao Tomee and Principe', 'Saudi Arabia', 'Senegal', 'Seychelles', 'Sierre Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somali Republic', 'South Africa', 'South Korea', 'Sri Lanka', 'St. Helena', 'St. Kits-Nevis', 'St. Lucia', 'St. Vincent/Grenadines', 'Sudan', 'Suriname', 'Svalbard Jan Mayen', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Togo', 'Tokeelau', 'Tonga', 'Trinidad Tobago', 'Tunisia', 'Turquia', 'Turkmenistan', 'Turks Caicos Islands', 'Tuvalu', 'Uganda', 'Ukrania', 'United Arab Emirates', 'Uruguay', 'US Minor Outlying Is.', 'Uzbekistan', 'Vanuatu', 'Vatican City State', 'Venezuela', 'Vietnam', 'Virgin Islands: British', 'Virgin Islands: US', 'Wallis Futuna Islands', 'Western Sahara', 'Western Samoa', 'Yemen', 'Yugoslavia', 'Zaire', 'Zambia', 'Zimbabwe'];
+   paises = ["Afghanistan", "Albania", "Argelia", "Alemania", "American Samoa", "Andorra", "Angola", "Anguilla", "Antartida", "Antigua y Barbuda", "Argentina", "Armenia", "Aruba", 'Australia', 'Austria', "Azerbaijan", 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados', 'Belarus', 'Belgium', 'Belize', 'Benin', 'Bermuda', 'Bhutan', 'Bolivia', 'Bosnia-Herzegovina', 'Botswana', 'Bouvet Island', 'Brasil', 'Brit Ind Ocean Territory', 'Brunei Darussalm', 'Bulgaria', 'Burkina Faso', 'Burma', 'Burundi', 'Cambodia', 'Cameroon', 'Canada', 'Canary Islands', 'Cape Verde', 'Caymen Islands', 'Central African Rep', 'Chad', 'Chile', 'China', 'Christmas Islands', 'Cocos Islands', 'Colombia', 'Comoros', 'Congo', 'Cook Islands', 'Costa Rica', 'Croatia', 'Cuba', 'Chipre', 'Dem Rep. of Korea', 'Dinamarca', 'Djibouti', 'Dominica', 'East Timor', 'Ecuador', 'Egipto', 'El Salvador', 'Eritrea', 'España', 'Estados Unidos de America', 'Estonia', 'Etiopia', 'Falkland Islands', 'Faroe Islands', 'Fiji', 'Finland', 'Francia', 'Guiana Francesa', 'Polynesia Francesa', 'French So. Territories', 'Gabon', 'Gambia', 'Georgia', 'Ghana', 'Gibraltar', 'Guinea Equatorial', 'Grecia', 'Greenland', 'Grenada', 'Guadalupe', 'Guatemala', 'Guinea', 'Guinea Bissau', 'Guyana', 'Haiti', 'Heard, McDonald Island', 'Honduras', 'Hong Kong', 'Hungary', 'Iceland', 'India', 'Indonesia', 'Inglaterra', 'Iran', 'Iraq', 'Ireland', 'Islas Filipinas', 'Israel', 'Italia', 'Ivory Coast', 'Jamaica', 'Japon', 'Jordan', 'Kazakhistan', 'Kenia', 'Kiribati', 'Korea del Norte', 'Kuwait', 'Kyrqyzstan', 'Laos', 'Lativa', 'Libano', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein', 'Lithuania', 'Luxembourg', 'Macau', 'Madagascar', 'Malawi', 'Malaysia', 'Maldivas', 'Mali', 'Malta', 'Mariana Islands', 'Marruecos', 'Marshall Islands', 'Martinique', 'Mauritania', 'Mauritius', 'Mayotte', 'Mexico', 'Micronesia', 'Moldova', 'Monaco', 'Mongolia', 'Montserrat', 'Mozambique', 'Myanmar', 'Nambia', 'Nauru', 'Nepal', 'Netherland Antilles', 'Netherlands', 'New Caledonia', 'New Zealand', 'Nicaragua', 'Niger', 'Nigeria', 'Niue Island', 'Norfolk Island', 'Northern Mariana Island', 'Norway', 'OCE', 'Oman', 'Pacific Islands', 'Pakistan', 'Palau', 'Panama', 'Papua New Guinea', 'Paraguay', 'Peru', 'Pitcairn', 'Poland', 'Portugal', 'Puerto Rico', 'Qatar', 'Reino Unido', 'Republica de Corea', 'Republica Dominicana', 'Reunion', 'Romania', 'Russian Federation', 'Rwanda', 'South Georgia Sandwich', 'Saint Pierre Miguelon', 'Samoa', 'San Marino', 'Sao Tomee and Principe', 'Saudi Arabia', 'Senegal', 'Seychelles', 'Sierre Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands', 'Somali Republic', 'South Africa', 'South Korea', 'Sri Lanka', 'St. Helena', 'St. Kits-Nevis', 'St. Lucia', 'St. Vincent/Grenadines', 'Sudan', 'Suriname', 'Svalbard Jan Mayen', 'Swaziland', 'Sweden', 'Switzerland', 'Syria', 'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Togo', 'Tokeelau', 'Tonga', 'Trinidad Tobago', 'Tunisia', 'Turquia', 'Turkmenistan', 'Turks Caicos Islands', 'Tuvalu', 'Uganda', 'Ukrania', 'United Arab Emirates', 'Uruguay', 'US Minor Outlying Is.', 'Uzbekistan', 'Vanuatu', 'Vatican City State', 'Venezuela', 'Vietnam', 'Virgin Islands: British', 'Virgin Islands: US', 'Wallis Futuna Islands', 'Western Sahara', 'Western Samoa', 'Yemen', 'Yugoslavia', 'Zaire', 'Zambia', 'Zimbabwe'];
 
 
   ngOnInit() {
@@ -165,29 +165,29 @@ export class InvestigacionesComponent implements OnInit {
 
   inicializarForm() {
     this.formulario = {comite: '', modalidad: '',
-                      datos_solicitud: {nombre_prof: '', doc_prof: '', facultad: '', celu_prof: '', tel_univ: '', mail_prof: '', sicop: ''},
-                      datos_movilidad: {categoria: '', nom_ape: '', CC_pas: '', nacionalidad: '', ciudad_or: '', ciudad_des: '', pais_or: '', pais_des: '', fecha_part: '', fecha_reg: ''},
-                      tipo_movilidad: {tipo_mov: '', observaciones: '', justificacion: ''},
-                      presupuesto: {
-                        item1: {item1: '', vr_od1: '', nom_1: '', vr_ciam1: ''},
-                        item2: {item2: '', vr_od2: '', nom_2: '', vr_ciam2: ''},
-                        item3: {item3: '', vr_od3: '', nom_3: '', vr_ciam3: ''},
-                        item4: {item4: '', vr_od4: '', nom_4: '', vr_ciam4: ''},
-                        valor_total: ''},
-                      doc_entregados: {
-                          prof_nom: { a: false, d: false, e: false, f: false, g: false, h: false, i: false, j: false},
-                          prof_int: {a: false, b: false, c: false, h: false, i: false, j: false},
-                          est_univ: {g: false, h: false, i: false, j: false}
+                        datos_solicitud: {nombre_prof: '', doc_prof: '', facultad: '', sede: '', celu_prof: '', tel_univ: '', direccion:'', mail_prof: '', sicop: ''},
+                        datos_movilidad: {categoria: '', nom_ape: '', CC_pas: '', direccion:'', nacionalidad: '', ciudad_or: '', ciudad_des: '', pais_or: '', pais_des: '', fecha_part: '', fecha_reg: ''},
+                        tipo_movilidad: {tipo_mov: '', observaciones: '', justificacion: ''},
+                        presupuesto: {
+                          item1: {item1: '', vr_od1: '', nom_1: '', vr_ciam1: ''},
+                          item2: {item2: '', vr_od2: '', nom_2: '', vr_ciam2: ''},
+                          item3: {item3: '', vr_od3: '', nom_3: '', vr_ciam3: ''},
+                          item4: {item4: '', vr_od4: '', nom_4: '', vr_ciam4: ''},
+                          valor_total: ''},
+                        doc_entregados: {
+                            prof_nom: {a: false, c: false, d: false, e: false, f: false, g: false, i: false, j: false},
+                            prof_int: {b: false, i: false, j: false},
+                            est_univ: {g: false, h: false, i: false, j: false}
 
+                        }
                       }
-    }
   }
 
   imprimir() {
     console.log('entro');
     const inputs = $('input[type="text"]');
-      $.each(inputs, function (index,value) {
-        $(this).attr('value',$(this).val());
+      $.each(inputs, function (index, value) {
+        $(this).attr('value', $(this).val());
       });
       // const inputs1 = $('.valor-numerico');
       // $.each(inputs1, function (index, value) {
