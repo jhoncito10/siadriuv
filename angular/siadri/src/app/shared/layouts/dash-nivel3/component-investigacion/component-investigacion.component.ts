@@ -1,3 +1,4 @@
+
 import { BuscadorService } from 'app/shared/layouts/modal-popup/buscador.service';
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
@@ -105,9 +106,9 @@ export class ComponentInvestigacionComponent implements OnInit {
   }
 
 
-  buscarItem(key:any) {
-    for(let i=0;i<this.investigaciones.length; i++) {
-      if(this.investigaciones[i].$key === key) {
+  buscarItem(key: any) {
+    for (let i =0;i < this.investigaciones.length; i++) {
+      if (this.investigaciones[i].$key === key) {
         return this.investigaciones[i];
       }
     }
@@ -116,9 +117,39 @@ export class ComponentInvestigacionComponent implements OnInit {
   metodo(array: any) {
     const options = {
       rowDelimiter: ';',
+      // tslint:disable-next-line:max-line-length
+      headers: ['form.comite', 'form.modalidad', 'form.datos_movilidad.CC_pas', 'form.datos_movilidad.nom_ape', 'form.datos_movilidad.categoria', 'form.datos_movilidad.nacionalidad', 'form.datos_movilidad.direccion', 'form.datos_movilidad.fecha_part', 'form.datos_movilidad.fecha_reg', 'form.datos_movilidad.pais_des', 'form.datos_movilidad.pais_or', 'form.datos_movilidad.ciudad_des', 'form.datos_movilidad.ciudad_or',
+                // tslint:disable-next-line:max-line-length
+                'form.datos_solicitud.doc_prof', 'form.datos_solicitud.nombre_prof', 'form.datos_solicitud.facultad', 'form.datos_solicitud.sede', 'form.datos_solicitud.sicop', 'form.datos_solicitud.direccion', 'form.datos_solicitud.tel_univ', 'form.datos_solicitud.celu_prof', 'form.datos_solicitud.mail_prof',
+                // tslint:disable-next-line:max-line-length
+                'form.doc_entregados.est_univ.g', 'form.doc_entregados.est_univ.h', 'form.doc_entregados.est_univ.i', 'form.doc_entregados.est_univ.j',
+                'form.doc_entregados.prof_int.a', 'form.doc_entregados.prof_int.b', 'form.doc_entregados.prof_int.c', 'form.doc_entregados.prof_int.h', 'form.doc_entregados.prof_int.i', 'form.doc_entregados.prof_int.j',
+                // tslint:disable-next-line:max-line-length
+                'form.doc_entregados.prof_nom.a', 'form.doc_entregados.prof_nom.c', 'form.doc_entregados.prof_nom.d', 'form.doc_entregados.prof_nom.e', 'form.doc_entregados.prof_nom.f', 'form.doc_entregados.prof_nom.g', 'form.doc_entregados.prof_nom.i', 'form.doc_entregados.prof_nom.j',
+                 // tslint:disable-next-line:max-line-length
+                 'form.presupuesto.item1.item1', 'form.presupuesto.item1.nom_1', 'form.presupuesto.item1.vr_ciam1', 'form.presupuesto.item1.vr_od1',
+                 // tslint:disable-next-line:max-line-length
+                 'form.presupuesto.item2.item2', 'form.presupuesto.item2.nom_2', 'form.presupuesto.item2.vr_ciam2', 'form.presupuesto.item2.vr_od2',
+                 // tslint:disable-next-line:max-line-length
+                 'form.presupuesto.item3.item3', 'form.presupuesto.item3.nom_3', 'form.presupuesto.item3.vr_ciam3', 'form.presupuesto.item3.vr_od3',
+                 // tslint:disable-next-line:max-line-length
+                 'form.presupuesto.item4.item4', 'form.presupuesto.item4.nom_4', 'form.presupuesto.item4.vr_ciam4', 'form.presupuesto.item4.vr_od4',
+                 // tslint:disable-next-line:max-line-length
+                 'form.presupuesto.valor_total', 'form.tipo_movilidad.justificacion', 'form.tipo_movilidad.observaciones', 'form.tipo_movilidad.tipo_mov', 'uid_diligenciado'],
       // tslint:disable-next-line:whitespace
       // tslint:disable-next-line:max-line-length
-      rename: ['DM CC_PASAPORTE', 'DM CIUDAD DESTINO', 'DM CIUDAD ORIGEN', 'DM FECHA PARTIDA', 'DM FECHA REGRESO', 'DM NACIONALIDAD', 'DM NOMBRE Y APELLIDO', 'DM PAIS DESTINO', 'DM PAIS ORIGEN', 'DM TIPO PERSONA', 'DS CELULAR', 'DS DOCUMENTO', 'DS FACULTAD', 'DS MAIL', 'DS NOMBRE', 'DS SICOP', 'DS TEL UNIVALLE', 'DE MOD1 PROF-ART-INT CARTA PROINV', 'DE MOD1 PROF-ART-INT CARTA AVAL', 'DE MOD1 PROF-ART-INT CARTA COMPROBACION', 'DE MOD1 PROF-ART-INT COPIA PAGINA', 'DE MOD1 PROF-ART-INT EVIDENCIA', 'DE MOD1 PROF-ART-INT PLAN TRACTV2', 'DE MOD1 PROF-NOM-UNIV CARTA APROBACION', 'DE MOD1 PROF-NOM-UNIV CARTA INVITACION', 'DE MOD1 PROF-NOM-UNIV EVIDENCIA', 'DE MOD1 PROF-NOM-UNIV CARTA PLAN TRACTV', 'DE MOD1 PROF-NOM-UNIV PRESUPUESTO', 'DE MOD2 PROF-ART-INT CARTA TUTOR', 'DE MOD2 PROF-NOM-UNIV CARTA AVAL', 'DE MOD2 PROF-NOM-UNIV CARTA COMITE', 'DE MOD2 PROF-NOM-UNIV CARTA INVITACION', 'DE MOD2 PROF-NOM-UNIV CERTIFICADO', 'DE MOD2 PROF-NOM-UNIV DOC PLAN', 'DE MOD2 PROF-NOM-UNIV TABULADO', 'FECHA DILIGENCIADO', 'DOCUMENTO FIRMA', 'NOMBRE FIRMA', 'MODALIDAD', 'PRESUPUESTO I1-I1', 'PRESUPUESTO I1-NOM', 'PRESUPUESTO I1-CIAM', 'PRESUPUESTO I1-V-OD', 'PRESUPUESTO I2-I2', 'PRESUPUESTO I2-NOM', 'PRESUPUESTO I2-CIAM', 'PRESUPUESTO I2-V-OD', 'PRESUPUESTO I3-I3', 'PRESUPUESTO I3-NOM', 'PRESUPUESTO I3-CIAM', 'PRESUPUESTO I3-V-OD', 'PRESUPUESTO I4-I4', 'PRESUPUESTO I4-NOM', 'PRESUPUESTO I4-CIAM', 'PRESUPUESTO I4-V-OD', 'PRESUPUESTO VALOR TOTAL', 'TM JUSTIFICACION', 'TM OBSERVACIONES', 'TIPO MOVILIDAD', 'ID DILIGENCIADOR'],
+      rename: ['COMITE', 'MODALIDAD', 'DM CEDULA', 'DM NOMBRE Y APELLIDOS', 'DM CATEGORIA', 'DM NACIONALIDAD', 'DM DIRECCION', 'DM FECHA PARTIDA', 'DM FECHA REGRESO', 'DM PAIS DESTINO', 'DM PAIS ORIGEN', 'DM CIUDAD DESTINO', 'DM CIUDAD ORIGEN',
+               // tslint:disable-next-line:max-line-length
+               'DS DOCUMENTO', 'DS NOMBRE', 'DS FACULTAD', 'DS SEDE', 'DS SICOP', 'DS DIRECCION', 'DS TEL UNIVALLE', 'DS CELULAR', 'DS EMAIL',
+              'DOCUMENTO EST.UNIV G', 'DOCUMENTO EST.UNIV H', 'DOCUMENTO EST.UNIV I', 'DOCUMENTO EST.UNIV J',
+              'DOCUMENTO PROF.INT B', 'DOCUMENTO PROF.INT I', 'DOCUMENTO PROF.INT J',
+              // tslint:disable-next-line:max-line-length
+              'DOCUMENTO PROF.NOM A', 'DOCUMENTO PROF.NOM C', 'DOCUMENTO PROF.NOM D', 'DOCUMENTO PROF.NOM E', 'DOCUMENTO PROF.NOM F', 'DOCUMENTO PROF.NOM G', 'DOCUMENTO PROF.NOM I', 'DOCUMENTO PROF.NOM J',
+              'PRESUPUESTO I1-I1', 'PRESUPUESTO I1-NOM', 'PRESUPUESTO I1-CIAM', 'PRESUPUESTO I1-V-OD',
+              'PRESUPUESTO I2-I2', 'PRESUPUESTO I2-NOM', 'PRESUPUESTO I2-CIAM', 'PRESUPUESTO I2-V-OD',
+              'PRESUPUESTO I3-I3', 'PRESUPUESTO I3-NOM', 'PRESUPUESTO I3-CIAM', 'PRESUPUESTO I3-V-OD',
+              'PRESUPUESTO I4-I4', 'PRESUPUESTO I4-NOM', 'PRESUPUESTO I4-CIAM', 'PRESUPUESTO I4-V-OD',
+              'PRESUPUESTO VALOR TOTAL', 'TM JUSTIFICACION', 'TM OBSERVACIONES', 'TIPO MOVILIDAD', 'ID DILIGENCIADOR'],
       booleanTrueString: 'SI',
       booleanFalseString: 'NO'
     };

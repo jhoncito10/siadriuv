@@ -19,4 +19,8 @@ export class PrincipalComponent implements OnInit {
     this.route.navigate(['dash']);
   }
 
+  enrutar2(){
+    this.route.navigate(['login']);
+  }
+
 }

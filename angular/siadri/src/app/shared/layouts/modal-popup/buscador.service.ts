@@ -15,7 +15,7 @@ export class BuscadorService {
   getdataConvenio() {
     this.ad.list('/convenios', {
       query: {
-        orderByChild: 'country'
+        orderByChild: 'country'        
       }
     }).subscribe(data => {
       this.convenios = data;

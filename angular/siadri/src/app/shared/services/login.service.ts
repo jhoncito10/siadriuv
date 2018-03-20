@@ -63,6 +63,7 @@ export class LoginService {
             this.rule.getAtrRol(this.rule.getRolEsp()).subscribe(datarol => {
               console.log(datarol.$key);
               this.rol = datarol.$key;
+              localStorage.setItem('rol', JSON.stringify(this.rol));
               if (this.rol == null) {
                 this.obtenerRol(user);
               } else {
@@ -107,6 +108,7 @@ export class LoginService {
    // CERRAR SESION EN EL SISTEMA
    logout() {
       localStorage.removeItem('usuario');
+      localStorage.removeItem('rol');
       this.usuario = null ;
       this.afAuth.auth.signOut().then(() => {
         this.ruta.navigate(['login']);

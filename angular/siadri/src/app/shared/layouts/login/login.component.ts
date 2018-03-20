@@ -22,7 +22,11 @@ export class LoginComponent implements OnInit {
     passconfirm: null
   };
 
-  constructor(public _ls: LoginService, public rs: RegistroService, private ruta: Router) { }
+  constructor(public _ls: LoginService, public rs: RegistroService, private ruta: Router) {
+    if (localStorage.getItem('usuario')) {
+      this.ruta.navigate(['dash']);
+    }
+   }
 
   ngOnInit() {
   }
@@ -40,12 +44,8 @@ export class LoginComponent implements OnInit {
           title: 'BIENVENID@',
           text: 'Acceso Exitoso',
           showConfirmButton: true
-        }).then(result => {
-          if (result.value) {
-            this.ruta.navigate(['dash']);
-          }
         });
-
+        this.ruta.navigate(['dash']);
       });
 
     } else {

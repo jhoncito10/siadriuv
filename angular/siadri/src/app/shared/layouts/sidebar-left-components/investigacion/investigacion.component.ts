@@ -12,23 +12,23 @@ export class InvestigacionComponent implements OnInit {
   investigaciones:any;
   user =  JSON.parse(localStorage.getItem('usuario'));
 
-  formulario = {comite: '', modalidad: '',
-                datos_solicitud: {nombre_prof: '', doc_prof: '', facultad: '', celu_prof: '', tel_univ: '', mail_prof: '', sicop: ''},
-                datos_movilidad: {categoria: '', nom_ape: '', CC_pas: '', nacionalidad: '', ciudad_or: '', ciudad_des: '', pais_or: '', pais_des: '', fecha_part: '', fecha_reg: ''},
-                tipo_movilidad: {tipo_mov: '', observaciones: '', justificacion: ''},
-                presupuesto: {
-                  item1: {item1: '', vr_od1: '', nom_1: '', vr_ciam1: ''},
-                  item2: {item2: '', vr_od2: '', nom_2: '', vr_ciam2: ''},
-                  item3: {item3: '', vr_od3: '', nom_3: '', vr_ciam3: ''},
-                  item4: {item4: '', vr_od4: '', nom_4: '', vr_ciam4: ''},
-                  valor_total: ''},
-                doc_entregados: {
-                    prof_nom: { a: false, d: false, e: false, f: false, g: false, h: false, i: false, j: false},
-                    prof_int: {a: false, b: false, c: false, h: false, i: false, j: false},
-                    est_univ: {g: false, h: false, i: false, j: false}
+  formulario = {comite: 'Comite 1 | Movilidades del 7 de mayo al 3 de junio', modalidad: '',
+                  datos_solicitud: {nombre_prof: '', doc_prof: '', facultad: '', sede: '', celu_prof: '', tel_univ: '', direccion:'', mail_prof: '', sicop: ''},
+                  datos_movilidad: {categoria: '', nom_ape: '', CC_pas: '', direccion:'', nacionalidad: '', ciudad_or: '', ciudad_des: '', pais_or: '', pais_des: '', fecha_part: '', fecha_reg: ''},
+                  tipo_movilidad: {tipo_mov: '', observaciones: '', justificacion: ''},
+                  presupuesto: {
+                    item1: {item1: '', vr_od1: '', nom_1: '', vr_ciam1: ''},
+                    item2: {item2: '', vr_od2: '', nom_2: '', vr_ciam2: ''},
+                    item3: {item3: '', vr_od3: '', nom_3: '', vr_ciam3: ''},
+                    item4: {item4: '', vr_od4: '', nom_4: '', vr_ciam4: ''},
+                    valor_total: ''},
+                  doc_entregados: {
+                      prof_nom: {a: false, c: false, d: false, e: false, f: false, g: false, i: false, j: false},
+                      prof_int: {b: false, i: false, j: false},
+                      est_univ: {g: false, h: false, i: false, j: false}
 
+                  }
                 }
-  }
 
 
   constructor(private ad:AngularFireDatabase, private data: ModalService) {

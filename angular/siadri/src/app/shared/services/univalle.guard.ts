@@ -24,7 +24,6 @@ export class UnivalleGuard implements CanActivate {
             if ((this.univalle[1] === 'correounivalle.edu.co') || (this.rol === 'ADMIN') || (this.rol === "NIVEL3")) {
               return true;
             } else {
-              this.route.navigate(['login']);
               return false;
             }
 

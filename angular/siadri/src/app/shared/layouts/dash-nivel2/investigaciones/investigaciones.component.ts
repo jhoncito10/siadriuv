@@ -17,7 +17,7 @@ declare var $: any;
 })
 export class InvestigacionesComponent implements OnInit {
 
-   formulario = {comite: '', modalidad: '',
+   formulario = {comite: 'Comite 1 | Movilidades del 7 de mayo al 3 de junio', modalidad: '',
               datos_solicitud: {nombre_prof: '', doc_prof: '', facultad: '', sede:'', celu_prof: '', tel_univ: '', direccion:'',mail_prof: '', sicop: ''},
               datos_movilidad: {categoria: '', nom_ape: '', CC_pas: '', direccion:'', nacionalidad: '', ciudad_or: '', ciudad_des: '', pais_or: '', pais_des: '', fecha_part: '', fecha_reg: ''},
               tipo_movilidad: {tipo_mov: '', observaciones: '', justificacion: ''},
@@ -48,7 +48,7 @@ export class InvestigacionesComponent implements OnInit {
             //  {name: 'Comite 7 | Movilidades del 5 de nov. al 2 de dic.', fecha: '2018-09-28'},
             //  {name: 'Comite 8 | Movilidades del 3 de dic al 28 de febrero 2019', fecha: '2018-10-26'}];
 
-;
+   impresion = false;
 
 
   constructor(private busqueda: BuscadorService, private ruta: Router, private modal: ModalService,
@@ -114,26 +114,43 @@ export class InvestigacionesComponent implements OnInit {
   }
 
   crearInvestigacion() {
-    this.ejecutarSpiner();
-    this.busqueda.crearFormInvestigacion(this.user.uid, this.formulario).then(() => {
-      swal({
-        type: 'success',
-        title: 'Formulario diligenciado exitosamente',
-        text: '',
-        showConfirmButton: true,
-      });
-
-        $('#modal3').modal('hide');
-        this.inicializarForm();
-        $('#butonpdf').attr('disabled', 'disabled');
-    }).catch(function(error) {
+    if ( this.formulario.datos_movilidad.fecha_part === '' || this.formulario.datos_movilidad.fecha_reg === '') {
       swal({
         type: 'error',
-        title: 'Ocurrio un error, por favor intenar de nuevo',
+        title: 'Debe Diligenciar la fecha de Regreso y Partida',
         text: '',
         showConfirmButton: true,
       });
-    });
+    } else if (this.formulario.comite === '' || this.formulario.modalidad === '') {
+      swal({
+        type: 'error',
+        title: 'Debe Seleccionar el Comite y la Modalidad a la que aplica',
+        text: '',
+        showConfirmButton: true,
+      });
+    } else {
+      this.ejecutarSpiner();
+      this.busqueda.crearFormInvestigacion(this.user.uid, this.formulario).then(() => {
+        swal({
+          type: 'success',
+          title: 'Formulario diligenciado exitosamente',
+          text: '',
+          showConfirmButton: true,
+        });
+
+          $('#modal3').modal('hide');
+
+          this.impresion = true;
+      }).catch(function(error) {
+        swal({
+          type: 'error',
+          title: 'Ocurrio un error, por favor intenar de nuevo',
+          text: '',
+          showConfirmButton: true,
+        });
+      });
+    }
+
   }
 
   consultarFecha() {
@@ -164,7 +181,7 @@ export class InvestigacionesComponent implements OnInit {
   }
 
   inicializarForm() {
-    this.formulario = {comite: '', modalidad: '',
+    this.formulario = {comite: 'Comite 1 | Movilidades del 7 de mayo al 3 de junio', modalidad: '',
                         datos_solicitud: {nombre_prof: '', doc_prof: '', facultad: '', sede: '', celu_prof: '', tel_univ: '', direccion:'', mail_prof: '', sicop: ''},
                         datos_movilidad: {categoria: '', nom_ape: '', CC_pas: '', direccion:'', nacionalidad: '', ciudad_or: '', ciudad_des: '', pais_or: '', pais_des: '', fecha_part: '', fecha_reg: ''},
                         tipo_movilidad: {tipo_mov: '', observaciones: '', justificacion: ''},
@@ -184,67 +201,70 @@ export class InvestigacionesComponent implements OnInit {
   }
 
   imprimir() {
-    console.log('entro');
-    const inputs = $('input[type="text"]');
-      $.each(inputs, function (index, value) {
-        $(this).attr('value', $(this).val());
-      });
-      // const inputs1 = $('.valor-numerico');
-      // $.each(inputs1, function (index, value) {
-      //   $(this).attr('value', $(this).val());
-      // });
 
-      const inputs2 = $('textarea');
-      $.each(inputs2, function (index, value) {
-        $(this).html($(this).val());
-      });
-      const inputs3 = $('input[type="checkbox"]');
-      $.each(inputs3, function (index, value) {
-        $(this).attr('checked', $(this).is(':checked'));
-      });
+    if (this.impresion) {
+        const inputs = $('input[type="text"]');
+        $.each(inputs, function (index, value) {
+          $(this).attr('value', $(this).val());
+        });
 
-      const inputs4 = $('select');
-      $.each(inputs4, function (index, value) {
-        $(this).html($(this).val());
-      });
+        const inputs1 = $('.input');
+        $.each(inputs1, function (index, value) {
+          $(this).attr('value', $(this).val());
+        });
 
-    const divContents = $('#form-work').html();
-    const printWindow = window.open('', '', 'height=400,width=800');
-    printWindow.document.write('<html><head><title>DIV Contents</title>');
-    printWindow.document.write('</head><body >');
-    printWindow.document.write(divContents);
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
-    printWindow.print();
+        const inputs2 = $('textarea');
+        $.each(inputs2, function (index, value) {
+          $(this).html($(this).val());
+        });
+        const inputs3 = $('input[type="checkbox"]');
+        $.each(inputs3, function (index, value) {
+          $(this).attr('checked', $(this).is(':checked'));
+        });
+        const inputs5 = $('input[type="date"]');
+        $.each(inputs5, function (index, value) {
+          $(this).attr('value', $(this).val());
+        });
+
+        const inputs4 = $('.sel');
+        $.each(inputs4, function (index, value) {
+          const valor = $(this).val();
+          // tslint:disable-next-line:max-line-length
+          $(this).find('option[value="' + valor + '"]').attr('selected', true);
+        });
+
+      const divContents = $('#div2').html();
+      const printWindow = window.open('', '', 'height=400,width=800');
+      printWindow.document.write('<html><head><title>DIV Contents</title>');
+      printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">');
+      printWindow.document.write('<link rel="stylesheet" type="text/css" media="print" href="assets/css/print.css">');
+      printWindow.document.write('</head><body >');
+      printWindow.document.write(divContents);
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+      printWindow.print();
+      this.inicializarForm();
+    } else {
+      swal({
+        type: 'error',
+        title: 'Debe Enviar Primero el formulario',
+        text: '',
+        showConfirmButton: true,
+      });
+    }
+
   }
 
-  // imprimirSolicitud() {
+  formato() {
+    // tslint:disable-next-line:max-line-length
+    const url = 'https://docs.google.com/a/correounivalle.edu.co/forms/d/e/1FAIpQLSfgJphqH_jcU9vNaBhbYEPxe6KLzDyYyhkbFa9dpN3IgC2B3g/viewform?c=0&w=1';
+    const a = document.createElement('a');
+		// tslint:disable-next-line:indent
+		a.target = '_blank';
+		a.href = url;
+		a.click();
+  }
 
-  //     var inputs = $('.input-texto');
-  //     $.each(inputs,function (index,value) {
-  //       $(this).attr('value',$(this).val());
-  //     });
-  //     // var inputs1 = $('.valor-numerico');
-  //     // $.each(inputs1,function (index,value) {
-  //     //   $(this).attr('value',$(this).val());
-  //     // });
-  //     // var inputs2 = $('textarea');
-  //     // $.each(inputs2,function (index,value) {
-  //     //   $(this).html($(this).val());
-  //     // });
-  //     var inputs3 = $('.checkbox');
-  //     $.each(inputs3,function (index,value) {
-  //       $(this).attr('checked',$(this).is(':checked'));
-  //     });
 
-  //       var printContents = document.getElementById('formulario-convenio').innerHTML;
-  //       var scale = 'scale(0.999)';
-  //       var w=window.open();
-  //       w.document.write(printContents);
-  //       w.document.head.style.transform = scale;
-  //       w.document.body.style.transform = scale;
-  //       w.print();
-  //       w.close();
 
-  // }
 }

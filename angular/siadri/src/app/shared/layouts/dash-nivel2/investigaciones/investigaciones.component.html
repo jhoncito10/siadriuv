@@ -33,8 +33,8 @@
                       <div class="form-group">
                         <div class="col-md-12">
                           <label class="control-label" for="modalidad"><strong>OPCIONES DE COMITE</strong></label>
-                          <select name="modalidad" [(ngModel)]="this.formulario.comite" class="form-control"  id="comite" >
-                            <option *ngFor="let item of this.comites" value="{{item}}">{{item}}</option>
+                          <select name="modalidad" [(ngModel)]="this.formulario.comite" class="form-control sel"  id="comite" >
+                            <option *ngFor="let item of this.comites" value="{{item}}" selected="true">{{item}}</option>
                           </select>
                         </div>
                       </div>
@@ -44,7 +44,7 @@
                         <div class="col-md-12">
                           <h2><strong>1. TIPO DE MODALIDAD A LA QUE APLICA</strong></h2>
                           <label class="control-label" for="modalidad"><strong>Modalidad</strong></label>
-                          <select name="modalidad" [(ngModel)]="this.formulario.modalidad" class="form-control"  id="modalidad" >
+                          <select name="modalidad" [(ngModel)]="this.formulario.modalidad" class="form-control sel"  id="modalidad" >
                             <option value="Profesores nombrados de la Universidad del Valle y Profesores/Artistas visitantes internacionales">Profesores nombrados de la Universidad del Valle y Profesores/Artistas visitantes internacionales </option>
                             <option value="Estudiantes de Doctorado y estudiantes de sub especialidades clínico quirúrgicas de la Universidad del Valle">Estudiantes de Doctorado y estudiantes de sub especialidades clínico quirúrgicas de la Universidad del Valle</option>
                           </select>
@@ -74,7 +74,7 @@
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="facu"><strong>Facultad/Instituto/Unidad Academica</strong></label>
-                            <select name="item4" [(ngModel)]="this.formulario.datos_solicitud.facultad" class="form-control"  id="" >
+                            <select name="item4" [(ngModel)]="this.formulario.datos_solicitud.facultad" class="form-control sel"  id="" >
                               <option value="Facultad de Salud">Facultad de Salud</option>
                               <option value="Faculta de Ciencias Sociales y Económicas">Faculta de Ciencias Sociales y Económicas</option>
                               <option value="Facultad de Humanidades">Facultad de Humanidades</option>
@@ -82,6 +82,8 @@
                               <option value="Facultad de Ingeniería">Facultad de Ingeniería</option>
                               <option value="Facultad de Artes Integradas">Facultad de Artes Integradas</option>
                               <option value="Facultad de Ciencias de la Administración">Facultad de Ciencias de la Administración</option>
+                              <option value="Intituto de educacion y pedagogia">Intituto de educacion y pedagogia</option>
+                              <option value="Instituto de Psicologia">Instituto de Psicologia</option>
                             </select>
                           </div>
                       </div>
@@ -89,7 +91,7 @@
                       <div class="form-group">
                         <div class="col-md-6">
                           <label class="control-label" for="item4"><strong>Sedes</strong></label>
-                          <select name="item4" [(ngModel)]="this.formulario.datos_solicitud.sede" class="form-control"  id="" >
+                          <select name="item4" [(ngModel)]="this.formulario.datos_solicitud.sede" class="form-control sel"  id="" >
                             <option value="Sede Cali">Sede Cali</option>
                             <option value="Sede Buga">Sede Buga</option>
                             <option value="Sede Caicedonia">Sede Caicedonia</option>
@@ -143,7 +145,7 @@
                           <div class="col-md-12">
                               <h2><strong>3. DATOS DE LA PERSONA QUE REALIZA LA MOVILIDAD</strong></h2>
                               <label class="control-label" for="tipoper"><strong>CATEGORIA</strong></label>
-                              <select name="tipoper" [(ngModel)]="this.formulario.datos_movilidad.categoria" class="form-control"  id="selectDatosMov" >
+                              <select name="tipoper" [(ngModel)]="this.formulario.datos_movilidad.categoria" class="form-control sel"  id="selectDatosMov" >
                                 <option value="Profesor de Univalle">Profesor Nombrado de la Universidad del Valle</option>
                                 <option value="Profesor visitante internacional">Profesor visitante internacional</option>
                                 <option value="Estudiante Univalle">Estudiante de Doctorado y estudiantes de sub especialidades clínico quirúrgicas de Universidad del Valle</option>
@@ -154,7 +156,7 @@
                       <div class="form-group">
                         <div class="col-md-12">
                           <label class="control-label" ><strong>Seleccione el tipo de documento </strong></label>
-                          <select name="selectCC" class="form-control" id="selectCC" >
+                          <select name="selectCC" class="form-control sel" id="selectCC" >
                             <option>Seleccione una opcion</option>
                             <option value="nacional">Cedula de ciudadania</option>
                             <option value="internacional">Cédula de extranjeria o pasaporte</option>
@@ -205,27 +207,27 @@
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="paor"><strong>Pais Origen</strong></label>
-                            <ng2-completer id="paor" name="paor" [(ngModel)]="this.formulario.datos_movilidad.pais_or"  [inputClass]="'completer-input form-control'"  [placeholder]="'Ingrese pais origen'"  [datasource]="paises" [minSearchLength]="0"></ng2-completer>
+                            <ng2-completer id="paor" name="paor" [(ngModel)]="this.formulario.datos_movilidad.pais_or"  [inputClass]="'completer-input form-control input'"  [placeholder]="'Ingrese pais origen'"  [datasource]="paises" [minSearchLength]="0"></ng2-completer>
                             <!-- <input id="paor" name="paor" [(ngModel)]="this.formulario.datos_movilidad.pais_or" class="form-control" placeholder="Ingrese pais origen" type="text"> -->
                           </div>
                       </div>
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="pades"><strong>Pais Destino</strong></label>
-                            <ng2-completer name="pades" [(ngModel)]="this.formulario.datos_movilidad.pais_des"  [inputClass]="'completer-input form-control'"  [placeholder]="'Ingrese pais destino'"  [datasource]="paises" [minSearchLength]="0"></ng2-completer>
+                            <ng2-completer name="pades" [(ngModel)]="this.formulario.datos_movilidad.pais_des"  [inputClass]="'completer-input form-control input'"  [placeholder]="'Ingrese pais destino'"  [datasource]="paises" [minSearchLength]="0"></ng2-completer>
                             <!-- <input name="pades" [(ngModel)]="this.formulario.datos_movilidad.pais_des" class="form-control" placeholder="Ingrese pais destino" type="text"> -->
                           </div>
                       </div>
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="part"><strong>Partida</strong></label>
-                            <input name="part" [(ngModel)]="this.formulario.datos_movilidad.fecha_part" class="form-control"  type="date" min="2018-05-07" max="2018-06-03">
+                            <input name="part" [(ngModel)]="this.formulario.datos_movilidad.fecha_part" class="form-control"  type="date">
                           </div>
                       </div>
                       <div class="form-group">
                           <div class="col-md-6">
                             <label class="control-label" for="regre"><strong>Regreso</strong></label>
-                            <input name="regre" [(ngModel)]="this.formulario.datos_movilidad.fecha_reg" class="form-control"  type="date"  min="2018-05-07" max="2018-06-03">
+                            <input name="regre" [(ngModel)]="this.formulario.datos_movilidad.fecha_reg" class="form-control"  type="date">
                           </div>
                       </div>
 
@@ -233,7 +235,7 @@
                           <div class="col-md-12">
                               <h2><strong>4. INFORMACION DEL TIPO DE MOVILIDAD A LA QUE APLICA</strong></h2>
                               <label class="control-label" for="info4"><strong>CATEGORIA</strong></label>
-                              <select name="info4" [(ngModel)]="this.formulario.tipo_movilidad.tipo_mov" class="form-control"  id="" >
+                              <select name="info4" [(ngModel)]="this.formulario.tipo_movilidad.tipo_mov" class="form-control sel"  id="" >
                                 <option value="Presentación de resultados de investigación en el exterior">Presentación de resultados de investigación en el exterior</option>
                                 <option value="Estancias internacionales">Estancias internacionales</option>
                                 <option value="Fomento">Fomento</option>
@@ -269,7 +271,7 @@
                             </tr>
                             <tr>
                               <td>
-                                  <select name="item1" [(ngModel)]="this.formulario.presupuesto.item1.item1" class="form-control"  id="" >
+                                  <select name="item1" [(ngModel)]="this.formulario.presupuesto.item1.item1" class="form-control sel"  id="" >
                                     <option value="INSCRIPCION">INSCRIPCION</option>
                                     <option value="VISA">VISA</option>
                                     <option value="TIQUETES">TIQUETES</option>
@@ -284,7 +286,7 @@
                             </tr>
                             <tr>
                               <td>
-                                  <select name="item2" [(ngModel)]="this.formulario.presupuesto.item2.item2" class="form-control"  id="" >
+                                  <select name="item2" [(ngModel)]="this.formulario.presupuesto.item2.item2" class="form-control sel"  id="" >
                                     <option value="INSCRIPCION">INSCRIPCION</option>
                                     <option value="VISA">VISA</option>
                                     <option value="TIQUETES">TIQUETES</option>
@@ -299,7 +301,7 @@
                             </tr>
                             <tr>
                               <td>
-                                <select name="item3" [(ngModel)]="this.formulario.presupuesto.item3.item3" class="form-control"  id="" >
+                                <select name="item3" [(ngModel)]="this.formulario.presupuesto.item3.item3" class="form-control sel"  id="" >
                                   <option value="INSCRIPCION">INSCRIPCION</option>
                                   <option value="VISA">VISA</option>
                                   <option value="TIQUETES">TIQUETES</option>
@@ -314,7 +316,7 @@
                             </tr>
                             <tr>
                               <td>
-                                <select name="item4" [(ngModel)]="this.formulario.presupuesto.item4.item4" class="form-control"  id="" >
+                                <select name="item4" [(ngModel)]="this.formulario.presupuesto.item4.item4" class="form-control sel"  id="" >
                                   <option value="INSCRIPCION">INSCRIPCION</option>
                                   <option value="VISA">VISA</option>
                                   <option value="TIQUETES">TIQUETES</option>
@@ -340,104 +342,109 @@
                       <div class="col-md-12">
                           <h2><strong>6. DOCUMENTOS A ENTREGAR</strong></h2>
                       </div>
-                      <div class="col-md-12">
-                        <table aria-colspan="5" class="table table-bordered">
-                          <tr>
-                              <th colspan="2" style="text-align: center;">Actividad</th>
-                              <th colspan="1" style="text-align: center;">Profesores Nombrados de la Universidad del valle</th>
-                              <th colspan="1" style="text-align: center;">Profesores visitantes internacionales o  artistas visitantes internacionales</th>
-                              <th colspan="1" style="text-align: center;">Estudiantes de Doctorado y estudiantes de sub especialidades clínico quirúrgicas </th>
-                          </tr>
-                          <tr>
-                            <td colspan="2" style="text-align: left;"><p>a)	Enviar la carta de invitación al profesor o artista visitante internacional según
-                                                                        <br>formato de migración Colombia para su ingreso al país
-                                                                        <br>(ver modelo en: <a href="https://drive.google.com/file/d/0B2jaE98MUI8Ub2xuX0FNT1RiTVk/view)">https://drive.google.com/file/d/0B2jaE98MUI8Ub2xuX0FNT1RiTVk/view)</a>  </p></td>
-                            <td colspan="1"><input class="col1" name="prof_noma" [(ngModel)]="this.formulario.doc_entregados.prof_nom.a" type="checkbox"></td>
 
-                            <td colspan="1"></td>
-                            <td colspan="1"></td>
-                          </tr>
-                          <tr>
-                            <td colspan="2" style="text-align: left;"><p>b)	Asegurar que el profesor o artista visitante internacional entra al país
-                                                                        <br>según las leyes migratorias y que cuenta con la póliza de salud y accidentes</p></td>
-                            <td colspan="1"></td>
+                      <div class="row">
+                          <div class="col-md-12">
 
-                            <td colspan="1"><input class="col2" name="prof_intb" [(ngModel)]="this.formulario.doc_entregados.prof_int.b"  type="checkbox"></td>
-                            <td colspan="1"></td>
-                          </tr>
-                          <tr>
-                            <td colspan="2" style="text-align: left;"><p>c)	Realizar ante la Coordinación Administrativa de la Facultad/Instituto,
-                                                                        <br>los trámites internos para acogerlo como Profesor Visitante Internacional
-                                                                        <br>y registrarlo en el Sistema de Registro de Extranjeros SIRE.</p></td>
-                            <td colspan="1"><input class="col1" name="prof_nomc" [(ngModel)]="this.formulario.doc_entregados.prof_nom.c" type="checkbox"></td>
+                              <table aria-colspan="5" class="table table-bordered">
+                                <tr>
+                                    <th colspan="2" style="text-align: center;">Actividad</th>
+                                    <th colspan="1" style="text-align: center;">Profesores Nombrados de la Universidad del valle</th>
+                                    <th colspan="1" style="text-align: center;">Profesores visitantes internacionales o  artistas visitantes internacionales</th>
+                                    <th colspan="1" style="text-align: center;">Estudiantes de Doctorado y estudiantes de sub especialidades clínico quirúrgicas </th>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="text-align: left;"><p>a)	Enviar la carta de invitación al profesor o artista visitante internacional según
+                                                                              <br>formato de migración Colombia para su ingreso al país
+                                                                              <br>(ver modelo en: <a href="https://drive.google.com/file/d/0B2jaE98MUI8Ub2xuX0FNT1RiTVk/view)">https://drive.google.com/file/d/0B2jaE98MUI8Ub2xuX0FNT1RiTVk/view)</a>  </p></td>
+                                  <td colspan="1"><input class="col1" name="prof_noma" [(ngModel)]="this.formulario.doc_entregados.prof_nom.a" type="checkbox"></td>
 
-                            <td colspan="1"></td>
-                           <td colspan="1"></td>
-                          </tr>
-                          <tr>
-                            <td colspan="2" style="text-align: left;"><p>d)	Gestionar ante el Consejo de Facultad la resolución de profesor visitante.</p></td>
-                            <td colspan="1"><input class="col1" name="evidencia" [(ngModel)]="this.formulario.doc_entregados.prof_nom.d" type="checkbox"></td>
+                                  <td colspan="1"></td>
+                                  <td colspan="1"></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="text-align: left;"><p>b)	Asegurar que el profesor o artista visitante internacional entra al país
+                                                                              <br>según las leyes migratorias y que cuenta con la póliza de salud y accidentes</p></td>
+                                  <td colspan="1"></td>
 
-                            <td colspan="1"></td>
-                           <td colspan="1"></td>
-                          </tr>
-                          <tr>
-                              <td colspan="2"  style="text-align: left;"><p>e)	Gestionar la resolución de comisión académica en la instancia correspondiente.</p></td>
-                              <td colspan="1"><input class="col1" name="presupuesto" [(ngModel)]="this.formulario.doc_entregados.prof_nom.e" type="checkbox"></td>
+                                  <td colspan="1"><input class="col2" name="prof_intb" [(ngModel)]="this.formulario.doc_entregados.prof_int.b"  type="checkbox"></td>
+                                  <td colspan="1"></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="text-align: left;"><p>c)	Realizar ante la Coordinación Administrativa de la Facultad/Instituto,
+                                                                              <br>los trámites internos para acogerlo como Profesor Visitante Internacional
+                                                                              <br>y registrarlo en el Sistema de Registro de Extranjeros SIRE.</p></td>
+                                  <td colspan="1"><input class="col1" name="prof_nomc" [(ngModel)]="this.formulario.doc_entregados.prof_nom.c" type="checkbox"></td>
 
-                              <td colspan="1"></td>
-                             <td colspan="1"></td>
-                          </tr>
-                          <tr>
-                            <td colspan="2" style="text-align: left;"><p>f)	Constancia por el decano de la Facultad o director del Instituto académico la estancia del
-                                                                        <br>profesor o artista visitante internacional. </p></td>
-                            <td colspan="1"><input class="col1" name="presupuesto" [(ngModel)]="this.formulario.doc_entregados.prof_nom.f" type="checkbox"></td>
+                                  <td colspan="1"></td>
+                                 <td colspan="1"></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="text-align: left;"><p>d)	Gestionar ante el Consejo de Facultad la resolución de profesor visitante.</p></td>
+                                  <td colspan="1"><input class="col1" name="evidencia" [(ngModel)]="this.formulario.doc_entregados.prof_nom.d" type="checkbox"></td>
 
-                            <td colspan="1"></td>
-                           <td colspan="1"></td>
-                          </tr>
-                          <tr>
-                            <td colspan="2" style="text-align: left;"><p>g)	Solicitar con mínimo 40 días hábiles la ayuda aprobada para la movilidad.
-                                                                        <br>Previa demostración de tenencia de la Visa (si aplica) y Póliza de salud.</p></td>
-                            <td colspan="1"><input class="col1" name="presupuesto" [(ngModel)]="this.formulario.doc_entregados.prof_nom.g" type="checkbox"></td>
+                                  <td colspan="1"></td>
+                                 <td colspan="1"></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"  style="text-align: left;"><p>e)	Gestionar la resolución de comisión académica en la instancia correspondiente.</p></td>
+                                    <td colspan="1"><input class="col1" name="presupuesto" [(ngModel)]="this.formulario.doc_entregados.prof_nom.e" type="checkbox"></td>
 
-                            <td colspan="1"></td>
-                            <td colspan="1"><input class="col3" name="est_univg" [(ngModel)]="this.formulario.doc_entregados.est_univ.g" type="checkbox"></td>
-                          </tr>
-                          <tr>
-                            <td colspan="2" style="text-align: left;"><p>h)	Inscribirse en la plataforma de movilidad saliente de la Dirección de Relaciones Internacionales antes de viajar.
-                             <br> <a href=" https://docs.google.com/a/correounivalle.edu.co/forms/d/e/1FAIpQLSfgJphqH_jcU9vNaBhbYEPxe6KLzDyYyhkbFa9dpN3IgC2B3g/viewform?c=0&w=1 ">
-                             ver Doc</a>
+                                    <td colspan="1"></td>
+                                   <td colspan="1"></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="text-align: left;"><p>f)	Constancia por el decano de la Facultad o director del Instituto académico la estancia del
+                                                                              <br>profesor o artista visitante internacional. </p></td>
+                                  <td colspan="1"><input class="col1" name="presupuesto" [(ngModel)]="this.formulario.doc_entregados.prof_nom.f" type="checkbox"></td>
 
-                              Nota: para acceder al formulario debe iniciar sesión con el correo institucional (@correounivalle.edu.co)			X
-                              </p></td>
-                            <td colspan="1"></td>
+                                  <td colspan="1"></td>
+                                 <td colspan="1"></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="text-align: left;"><p>g)	Solicitar con mínimo 40 días hábiles la ayuda aprobada para la movilidad.
+                                                                              <br>Previa demostración de tenencia de la Visa (si aplica) y Póliza de salud.</p></td>
+                                  <td colspan="1"><input class="col1" name="presupuesto" [(ngModel)]="this.formulario.doc_entregados.prof_nom.g" type="checkbox"></td>
 
-                            <td colspan="1"></td>
-                            <td colspan="1"><input class="col3" name="est_univh" [(ngModel)]="this.formulario.doc_entregados.est_univ.h" type="checkbox"></td>
-                          </tr>
-                          <tr>
-                            <td colspan="2" style="text-align: left;"><p>i)	Ejecutar las actividades necesarias para finalizar la actividad financiada en el tiempo y
-                                                                        <br>características establecidas en la propuesta presentada.  Las movilidades se deben realizar
-                                                                        <br>en las fechas postuladas y aprobadas en la convocatoria.</p></td>
-                            <td colspan="1"><input class="col1" name="presupuesto" [(ngModel)]="this.formulario.doc_entregados.prof_nom.i" type="checkbox"></td>
+                                  <td colspan="1"></td>
+                                  <td colspan="1"><input class="col3" name="est_univg" [(ngModel)]="this.formulario.doc_entregados.est_univ.g" type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="text-align: left;"><p>h)	Inscribirse en la plataforma de movilidad saliente de la Dirección de Relaciones Internacionales antes de viajar.
+                                   <br> <a (click)="formato()">
+                                   ver Doc</a>
 
-                            <td colspan="1"><input class="col2" name="prof_inti" [(ngModel)]="this.formulario.doc_entregados.prof_int.i"  type="checkbox"></td>
-                            <td colspan="1"><input class="col3" name="est_univi" [(ngModel)]="this.formulario.doc_entregados.est_univ.i" type="checkbox"></td>
-                          </tr>
-                          <tr>
-                            <td colspan="2" style="text-align: left;"><p>j)	Presentar el informe de la actividad financiada de acuerdo a la propuesta presentada en la convocatoria,
-                                                                       <br> adjuntando los soportes de los productos y resultados descritos en la sección 10 del presente documento.</p></td>
-                            <td colspan="1"><input class="col1" name="presupuesto" [(ngModel)]="this.formulario.doc_entregados.prof_nom.j" type="checkbox"></td>
+                                    Nota: para acceder al formulario debe iniciar sesión con el correo institucional (@correounivalle.edu.co)			X
+                                    </p></td>
+                                  <td colspan="1"></td>
 
-                            <td colspan="1"><input class="col2" name="prof_intj" [(ngModel)]="this.formulario.doc_entregados.prof_int.j"  type="checkbox"></td>
-                            <td colspan="1"><input class="col3" name="est_univj" [(ngModel)]="this.formulario.doc_entregados.est_univ.j" type="checkbox"></td>
-                          </tr>
+                                  <td colspan="1"></td>
+                                  <td colspan="1"><input class="col3" name="est_univh" [(ngModel)]="this.formulario.doc_entregados.est_univ.h" type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="text-align: left;"><p>i)	Ejecutar las actividades necesarias para finalizar la actividad financiada en el tiempo y
+                                                                              <br>características establecidas en la propuesta presentada.  Las movilidades se deben realizar
+                                                                              <br>en las fechas postuladas y aprobadas en la convocatoria.</p></td>
+                                  <td colspan="1"><input class="col1" name="presupuesto" [(ngModel)]="this.formulario.doc_entregados.prof_nom.i" type="checkbox"></td>
+
+                                  <td colspan="1"><input class="col2" name="prof_inti" [(ngModel)]="this.formulario.doc_entregados.prof_int.i"  type="checkbox"></td>
+                                  <td colspan="1"><input class="col3" name="est_univi" [(ngModel)]="this.formulario.doc_entregados.est_univ.i" type="checkbox"></td>
+                                </tr>
+                                <tr>
+                                  <td colspan="2" style="text-align: left;"><p>j)	Presentar el informe de la actividad financiada de acuerdo a la propuesta presentada en la convocatoria,
+                                                                             <br> adjuntando los soportes de los productos y resultados descritos en la sección 10 del presente documento.</p></td>
+                                  <td colspan="1"><input class="col1" name="presupuesto" [(ngModel)]="this.formulario.doc_entregados.prof_nom.j" type="checkbox"></td>
+
+                                  <td colspan="1"><input class="col2" name="prof_intj" [(ngModel)]="this.formulario.doc_entregados.prof_int.j"  type="checkbox"></td>
+                                  <td colspan="1"><input class="col3" name="est_univj" [(ngModel)]="this.formulario.doc_entregados.est_univ.j" type="checkbox"></td>
+                                </tr>
 
 
-                        </table>
+                              </table>
 
+                            </div>
                       </div>
+
 
 
                       <div class="form-group">
@@ -445,7 +452,7 @@
                           <button type="button" (click)="crearInvestigacion()" class="btn2 btn-danger btn-lg btn-block danger">Enviar</button>
                         </div>
                         <div class="col-md-6">
-                          <button id="butonpdf" type="button" (click)="imprimir()" class="btn2 btn-success btn-lg btn-block success" >PDF</button>
+                          <button type="button" (click)="imprimir()" class="btn2 btn-success btn-lg btn-block success" >PDF</button>
                         </div>
                       </div>
                   </fieldset>
@@ -453,6 +460,6 @@
             </div>
 
           </div>
-      </div>
+        </div>
     </div>
   </div>
