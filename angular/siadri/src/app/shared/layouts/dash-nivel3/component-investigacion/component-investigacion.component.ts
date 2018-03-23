@@ -5,7 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import swal from 'sweetalert2';
 import * as jsonexport from 'jsonexport/dist'
 
-declare var $: any;
+ declare var $: any;
 
 @Component({
   selector: 'app-component-investigacion',
@@ -123,7 +123,7 @@ export class ComponentInvestigacionComponent implements OnInit {
                 'form.datos_solicitud.doc_prof', 'form.datos_solicitud.nombre_prof', 'form.datos_solicitud.facultad', 'form.datos_solicitud.sede', 'form.datos_solicitud.sicop', 'form.datos_solicitud.direccion', 'form.datos_solicitud.tel_univ', 'form.datos_solicitud.celu_prof', 'form.datos_solicitud.mail_prof',
                 // tslint:disable-next-line:max-line-length
                 'form.doc_entregados.est_univ.g', 'form.doc_entregados.est_univ.h', 'form.doc_entregados.est_univ.i', 'form.doc_entregados.est_univ.j',
-                'form.doc_entregados.prof_int.a', 'form.doc_entregados.prof_int.b', 'form.doc_entregados.prof_int.c', 'form.doc_entregados.prof_int.h', 'form.doc_entregados.prof_int.i', 'form.doc_entregados.prof_int.j',
+                'form.doc_entregados.prof_int.b', 'form.doc_entregados.prof_int.i', 'form.doc_entregados.prof_int.j',
                 // tslint:disable-next-line:max-line-length
                 'form.doc_entregados.prof_nom.a', 'form.doc_entregados.prof_nom.c', 'form.doc_entregados.prof_nom.d', 'form.doc_entregados.prof_nom.e', 'form.doc_entregados.prof_nom.f', 'form.doc_entregados.prof_nom.g', 'form.doc_entregados.prof_nom.i', 'form.doc_entregados.prof_nom.j',
                  // tslint:disable-next-line:max-line-length
