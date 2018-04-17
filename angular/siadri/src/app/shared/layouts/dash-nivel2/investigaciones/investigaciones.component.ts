@@ -17,8 +17,9 @@ declare var $: any;
 })
 export class InvestigacionesComponent implements OnInit {
 
-   formulario = {comite: 'Comite 1 | Movilidades del 7 de mayo al 3 de junio', modalidad: '',
-              datos_solicitud: {nombre_prof: '', doc_prof: '', facultad: '', sede:'', celu_prof: '', tel_univ: '', direccion:'',mail_prof: '', sicop: ''},
+
+   formulario = {comite: '', modalidad: '',
+              datos_solicitud: {nombre_prof: '', doc_prof: '', facultad: '', sede:'', celu_prof: '', tel_univ: '', direccion:'',mail_prof: '', sicop: '', grupinv:''},
               datos_movilidad: {categoria: '', nom_ape: '', CC_pas: '', direccion:'', nacionalidad: '', ciudad_or: '', ciudad_des: '', pais_or: '', pais_des: '', fecha_part: '', fecha_reg: ''},
               tipo_movilidad: {tipo_mov: '', observaciones: '', justificacion: ''},
               presupuesto: {
@@ -28,9 +29,8 @@ export class InvestigacionesComponent implements OnInit {
                 item4: {item4: '', vr_od4: '', nom_4: '', vr_ciam4: ''},
                 valor_total: ''},
               doc_entregados: {
-                  prof_nom: {a: false, c: false, d: false, e: false, f: false, g: false, i: false, j: false},
-                  prof_int: {b: false, i: false, j: false},
-                  est_univ: {g: false, h: false, i: false, j: false}
+                  mod_1: {item1: false, item2: false, item3: false, item4: false, item5: false},
+                  mod_2: {item1: false, item2: false, item3: false, item4: false, item5: false, item6: false, item7: false}
 
               }
    }
@@ -39,16 +39,18 @@ export class InvestigacionesComponent implements OnInit {
 
    user = JSON.parse(localStorage.getItem('usuario'));
 
-   fechas = [{name: 'Comite 1 | Movilidades del 7 de mayo al 3 de junio', fecha: '2018-03-23'}];
-            //  {name: 'Comite 2 | Movilidades del 4 de junio al 1 de julio', fecha: '2018-04-27'},
-            //  {name: 'Comite 3 | Movilidades del 2 de julio al 5 de agosto', fecha: '2018-05-24'},
-            //  {name: 'Comite 4 | Movilidades del 6 de agosto al 2 de sept.', fecha: '2018-06-29'},
-            //  {name: 'Comite 5 | Movilidades del 3 de sept. al 7 de octubre', fecha: '2018-07-27'},
-            //  {name: 'Comite 6 | Movilidades del 8 de oct. al 4 de noviembre', fecha: '2018-08-31'},
-            //  {name: 'Comite 7 | Movilidades del 5 de nov. al 2 de dic.', fecha: '2018-09-28'},
-            //  {name: 'Comite 8 | Movilidades del 3 de dic al 28 de febrero 2019', fecha: '2018-10-26'}];
+   fechas = [{name: 'Comite 1 | Movilidades del 7 de mayo al 3 de junio', fecha: '2018-03-23'},
+              {name: 'Comite 2 | Movilidades del 4 de junio al 1 de julio', fecha: '2018-04-27'},
+              {name: 'Comite 3 | Movilidades del 2 de julio al 5 de agosto', fecha: '2018-05-24'},
+              {name: 'Comite 4 | Movilidades del 6 de agosto al 2 de sept.', fecha: '2018-06-29'},
+              {name: 'Comite 5 | Movilidades del 3 de sept. al 7 de octubre', fecha: '2018-07-27'},
+              {name: 'Comite 6 | Movilidades del 8 de oct. al 4 de noviembre', fecha: '2018-08-31'},
+              {name: 'Comite 7 | Movilidades del 5 de nov. al 2 de dic.', fecha: '2018-09-28'},
+              {name: 'Comite 8 | Movilidades del 3 de dic al 28 de febrero 2019', fecha: '2018-10-26'}];
 
    impresion = false;
+
+   modalidad = false;
 
 
   constructor(private busqueda: BuscadorService, private ruta: Router, private modal: ModalService,
@@ -74,24 +76,18 @@ export class InvestigacionesComponent implements OnInit {
 
      this.consultarFecha();
 
+     const scope = this;
+
      $('#selectDatosMov').on('change', function() {
-       if (this.value === 'Profesor de Univalle') {
-        $('.col1').removeAttr('disabled');
-        $('.col2').attr('disabled', 'disabled');
-        $('.col3').attr('disabled', 'disabled');
-       } else if (this.value === 'Profesor visitante internacional') {
-        $('.col2').removeAttr('disabled');
-        $('.col1').attr('disabled', 'disabled');
-        $('.col3').attr('disabled', 'disabled');
+       if (this.value === 'Profesor de Univalle' || this.value === 'Profesor visitante internacional') {
+        scope.modalidad = false;
        } else {
-        $('.col3').removeAttr('disabled');
-        $('.col1').attr('disabled', 'disabled');
-        $('.col2').attr('disabled', 'disabled');
+        scope.modalidad = true;
        }
 
      });
 
-     const scope = this;
+
      $('#selectCC').on('change', function() {
       if (this.value === 'nacional') {
         scope.formulario.datos_movilidad.nacionalidad = 'COLOMBIANA';
@@ -149,6 +145,7 @@ export class InvestigacionesComponent implements OnInit {
           showConfirmButton: true,
         });
       });
+
     }
 
   }
@@ -168,10 +165,11 @@ export class InvestigacionesComponent implements OnInit {
        console.log(duration);
       if (duration >= 0) {
         this.comites.push(this.fechas[i].name);
+        break;
       }
 
      }
-     console.log(this.comites);
+
    });
 
   }
@@ -181,26 +179,27 @@ export class InvestigacionesComponent implements OnInit {
   }
 
   inicializarForm() {
-    this.formulario = {comite: 'Comite 1 | Movilidades del 7 de mayo al 3 de junio', modalidad: '',
-                        datos_solicitud: {nombre_prof: '', doc_prof: '', facultad: '', sede: '', celu_prof: '', tel_univ: '', direccion:'', mail_prof: '', sicop: ''},
-                        datos_movilidad: {categoria: '', nom_ape: '', CC_pas: '', direccion:'', nacionalidad: '', ciudad_or: '', ciudad_des: '', pais_or: '', pais_des: '', fecha_part: '', fecha_reg: ''},
-                        tipo_movilidad: {tipo_mov: '', observaciones: '', justificacion: ''},
-                        presupuesto: {
-                          item1: {item1: '', vr_od1: '', nom_1: '', vr_ciam1: ''},
-                          item2: {item2: '', vr_od2: '', nom_2: '', vr_ciam2: ''},
-                          item3: {item3: '', vr_od3: '', nom_3: '', vr_ciam3: ''},
-                          item4: {item4: '', vr_od4: '', nom_4: '', vr_ciam4: ''},
-                          valor_total: ''},
-                        doc_entregados: {
-                            prof_nom: {a: false, c: false, d: false, e: false, f: false, g: false, i: false, j: false},
-                            prof_int: {b: false, i: false, j: false},
-                            est_univ: {g: false, h: false, i: false, j: false}
+    this.formulario = {comite: '', modalidad: '',
+              datos_solicitud: {nombre_prof: '', doc_prof: '', facultad: '', sede:'', celu_prof: '', tel_univ: '', direccion:'',mail_prof: '', sicop: '', grupinv:''},
+              datos_movilidad: {categoria: '', nom_ape: '', CC_pas: '', direccion:'', nacionalidad: '', ciudad_or: '', ciudad_des: '', pais_or: '', pais_des: '', fecha_part: '', fecha_reg: ''},
+              tipo_movilidad: {tipo_mov: '', observaciones: '', justificacion: ''},
+              presupuesto: {
+                item1: {item1: '', vr_od1: '', nom_1: '', vr_ciam1: ''},
+                item2: {item2: '', vr_od2: '', nom_2: '', vr_ciam2: ''},
+                item3: {item3: '', vr_od3: '', nom_3: '', vr_ciam3: ''},
+                item4: {item4: '', vr_od4: '', nom_4: '', vr_ciam4: ''},
+                valor_total: ''},
+              doc_entregados: {
+                mod_1: {item1: false, item2: false, item3: false, item4: false, item5: false},
+                mod_2: {item1: false, item2: false, item3: false, item4: false, item5: false, item6: false, item7: false}
 
-                        }
-                      }
+              }
+   }
   }
 
   imprimir() {
+
+    const ambiente = this;
 
     if (this.impresion) {
         const inputs = $('input[type="text"]');
@@ -242,8 +241,13 @@ export class InvestigacionesComponent implements OnInit {
       printWindow.document.write(divContents);
       printWindow.document.write('</body></html>');
       printWindow.document.close();
-      printWindow.print();
-      this.inicializarForm();
+
+      setTimeout(function() {
+        printWindow.print();
+        ambiente.inicializarForm();
+      }, 1000);
+
+
     } else {
       swal({
         type: 'error',
@@ -264,6 +268,28 @@ export class InvestigacionesComponent implements OnInit {
 		a.href = url;
 		a.click();
   }
+
+  sumaTotal() {
+    let suma = 0;
+    let dato;
+    let dato2;
+    for (let i = 1; i <= 4; i++) {
+      if (this.formulario.presupuesto['item' + i]['vr_od' + i] !== '') {
+         dato = Number.parseInt(this.formulario.presupuesto['item' + i]['vr_od' + i]);
+      } else {dato = 0; }
+
+      if (this.formulario.presupuesto['item' + i]['vr_ciam' + i] !== '') {
+          dato2 = Number.parseInt(this.formulario.presupuesto['item' + i]['vr_ciam' + i]);
+      } else {dato2 = 0; }
+
+      suma += dato + dato2;
+    }
+
+    this.formulario.presupuesto.valor_total = suma.toString();
+
+
+  }
+
 
 
 

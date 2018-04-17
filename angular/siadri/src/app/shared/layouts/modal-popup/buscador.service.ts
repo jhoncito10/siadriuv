@@ -15,7 +15,7 @@ export class BuscadorService {
   getdataConvenio() {
     this.ad.list('/convenios', {
       query: {
-        orderByChild: 'country'        
+        orderByChild: 'country'
       }
     }).subscribe(data => {
       this.convenios = data;
@@ -135,7 +135,7 @@ export class BuscadorService {
   // }
 
   crearFormInvestigacion(userkey:any,form){
-    return this.ad.app.database().ref('/investigaciones').push({form,uid_diligenciado:userkey});
+    return this.ad.app.database().ref('/investigaciones').push({form, uid_diligenciado: userkey});
   }
 
 
@@ -147,6 +147,7 @@ export class BuscadorService {
       }
     });
   }
+
 
 
 

@@ -143,6 +143,13 @@
 
                       <div class="form-group">
                           <div class="col-md-12">
+                            <label class="control-label" for="grupinv"><strong>Grupo de investigación de la Universidad del Valle, al que pertenece </strong></label>
+                            <input name="grupinv" [(ngModel)]="this.formulario.datos_solicitud.grupinv" class="form-control" placeholder="Ingrese Grupo de Investigacion" type="text">
+                          </div>
+                      </div>
+
+                      <div class="form-group">
+                          <div class="col-md-12">
                               <h2><strong>3. DATOS DE LA PERSONA QUE REALIZA LA MOVILIDAD</strong></h2>
                               <label class="control-label" for="tipoper"><strong>CATEGORIA</strong></label>
                               <select name="tipoper" [(ngModel)]="this.formulario.datos_movilidad.categoria" class="form-control sel"  id="selectDatosMov" >
@@ -236,10 +243,10 @@
                               <h2><strong>4. INFORMACION DEL TIPO DE MOVILIDAD A LA QUE APLICA</strong></h2>
                               <label class="control-label" for="info4"><strong>CATEGORIA</strong></label>
                               <select name="info4" [(ngModel)]="this.formulario.tipo_movilidad.tipo_mov" class="form-control sel"  id="" >
-                                <option value="Presentación de resultados de investigación en el exterior">Presentación de resultados de investigación en el exterior</option>
-                                <option value="Estancias internacionales">Estancias internacionales</option>
-                                <option value="Fomento">Fomento</option>
-                                <option value="profesor y/o artista visitante internacional">profesor y/o artista visitante internacional</option>
+                                <option value="Presentación de resultados de investigación en el exterior">Presentación de resultados de investigación en el exterior (modalidad 1 y modalidad 2)</option>
+                                <option value="Estancias internacionales">Estancias internacionales (modalidad 2)</option>
+                                <option value="Fomento">Fomento (modalidad 1)</option>
+                                <option value="profesor y/o artista visitante internacional">profesor y/o artista visitante internacional (modalidad 1)</option>
                               </select>
                           </div>
                       </div>
@@ -260,6 +267,7 @@
 
                       <div class="col-md-12">
                           <h2><strong>5. PRESUPUESTO</strong></h2>
+                          <p>Favor ingresar los valores sin $, puntos o comas</p>
                       </div>
 
                       <div class="col-md-12">
@@ -281,9 +289,9 @@
                                     <option value="OTROS">OTROS</option>
                                   </select>
                               </td>
-                              <td><input name="vr1" [(ngModel)]="this.formulario.presupuesto.item1.vr_od1" class="form-control"  type="text" placeholder="$"></td>
+                              <td><input name="item1.vr_od1" [(ngModel)]="this.formulario.presupuesto.item1.vr_od1" class="form-control"  type="text" placeholder="$"></td>
                               <td><input name="nom1" [(ngModel)]="this.formulario.presupuesto.item1.nom_1" class="form-control"  type="text"></td>
-                              <td><input name="val1" [(ngModel)]="this.formulario.presupuesto.item1.vr_ciam1" class="form-control"  type="text" placeholder="$"></td>
+                              <td><input name="item1.vr_ciam1" [(ngModel)]="this.formulario.presupuesto.item1.vr_ciam1" class="form-control"  type="text" placeholder="$"></td>
                             </tr>
                             <tr>
                               <td>
@@ -296,9 +304,9 @@
                                     <option value="OTROS">OTROS</option>
                                   </select>
                               </td>
-                              <td><input name="vr2" [(ngModel)]="this.formulario.presupuesto.item2.vr_od2" class="form-control"  type="text" placeholder="$"></td>
+                              <td><input name="item2.vr_od2" [(ngModel)]="this.formulario.presupuesto.item2.vr_od2"  class="form-control"  type="text" placeholder="$"></td>
                               <td><input name="nom2" [(ngModel)]="this.formulario.presupuesto.item2.nom_2" class="form-control"  type="text"></td>
-                              <td><input name="val2" [(ngModel)]="this.formulario.presupuesto.item2.vr_ciam2" class="form-control"  type="text" placeholder="$"></td>
+                              <td><input name="item2.vr_ciam2" [(ngModel)]="this.formulario.presupuesto.item2.vr_ciam2"  class="form-control"  type="text" placeholder="$"></td>
                             </tr>
                             <tr>
                               <td>
@@ -311,9 +319,9 @@
                                   <option value="OTROS">OTROS</option>
                                 </select>
                               </td>
-                              <td><input name="vr3" [(ngModel)]="this.formulario.presupuesto.item3.vr_od3" class="form-control"  type="text" placeholder="$"></td>
+                              <td><input name="item3.vr_od3" [(ngModel)]="this.formulario.presupuesto.item3.vr_od3" class="form-control"  type="text" placeholder="$"></td>
                               <td><input name="nom3" [(ngModel)]="this.formulario.presupuesto.item3.nom_3" class="form-control"  type="text"></td>
-                              <td><input name="val3" [(ngModel)]="this.formulario.presupuesto.item3.vr_ciam3" class="form-control"  type="text" placeholder="$"></td>
+                              <td><input name="item3.vr_ciam3" [(ngModel)]="this.formulario.presupuesto.item3.vr_ciam3"  class="form-control"  type="text" placeholder="$"></td>
                             </tr>
                             <tr>
                               <td>
@@ -326,14 +334,21 @@
                                   <option value="OTROS">OTROS</option>
                                 </select>
                               </td>
-                              <td><input name="vr4"  [(ngModel)]="this.formulario.presupuesto.item4.vr_od4" class="form-control"  type="text" placeholder="$"></td>
+                              <td><input name="item4.vr_od4"  [(ngModel)]="this.formulario.presupuesto.item4.vr_od4"  class="form-control"  type="text" placeholder="$"></td>
                               <td><input name="nom4" [(ngModel)]="this.formulario.presupuesto.item4.nom_4" class="form-control"  type="text"></td>
-                              <td><input name="val4" [(ngModel)]="this.formulario.presupuesto.item4.vr_ciam4" class="form-control"  type="text" placeholder="$"></td>
+                              <td><input name="item4.vr_ciam4" [(ngModel)]="this.formulario.presupuesto.item4.vr_ciam4"  class="form-control"  type="text" placeholder="$"></td>
                             </tr>
                             <tr>
-                              <th colspan="3" tyle="text-align: right;">VALOR TOTAL DEL APOYO SOLICITADO</th>
+                              <th colspan="2" tyle="text-align: right;">VALOR TOTAL DEL APOYO SOLICITADO
 
-                              <td><input name="valTotal" [(ngModel)]="this.formulario.presupuesto.valor_total" class="form-control"  type="text" placeholder="$"></td>
+                              </th>
+                              <td colspan="1" tyle="text-align: right;">
+                                  <button type="button" (click)="sumaTotal()" class="btn-success success">Calcular Total</button>
+                              </td>
+
+                              <td colspan="1">
+                                <input name="valTotal" disabled [(ngModel)]="this.formulario.presupuesto.valor_total" class="form-control"  type="text" placeholder="$">
+                              </td>
                             </tr>
                           </table>
                           <p>*Sólo gastos de viáticos (NO APLICA para inscripciones, gastos de traslados aeropuertos, visas, seguros médicos, etc.)
@@ -344,10 +359,61 @@
                           <h2><strong>6. DOCUMENTOS A ENTREGAR</strong></h2>
                       </div>
 
-                      <div class="row">
+                      <div class="row" *ngIf="!modalidad">
                           <div class="col-md-12">
+                              <p><strong><u> Modalidad 1. Profesores nombrados de la Universidad del Valle y Profesores y artistas visitantes internacionales:</u></strong>
 
-                              <table aria-colspan="5" class="table table-bordered">
+                            <table aria-colspan="6" class="table table-bordered">
+                                <tr>
+                                    <th colspan="1" style="text-align: center;">item</th>
+                                    <th colspan="2" style="text-align: center;">Profesores Nombrados de la Universidad del valle</th>
+                                    <th colspan="2" style="text-align: center;">Profesores visitantes internacionales o  artistas visitantes internacionales</th>
+                                    <th colspan="1" style="text-align: center;"></th>
+                                </tr>
+                                <tr>
+                                  <td colspan="1" style="text-align: center;"><p>1</td>
+                                  <td colspan="2" style="text-align: left;">Plan de Trabajo/actividades a desarrollar (Formato libre. Según agenda de viaje)</td>
+
+                                  <td colspan="2" style="text-align: left;">Plan de Trabajo/actividades a desarrollar. (Formato libre. Según agenda de viaje)</td>
+                                  <td colspan="1"><input class="col1" name="prof_noma" [(ngModel)]="this.formulario.doc_entregados.mod_1.item1" type="checkbox"></td>
+                                </tr>
+
+                                <tr>
+                                  <td colspan="1" style="text-align: center;"><p>2</td>
+                                  <td colspan="2" style="text-align: left;">Carta o correo electrónico de invitación de un profesor en la entidad receptora o de aceptación por parte del comité organizador del evento aceptando la ponencia</td>
+
+                                  <td colspan="2" style="text-align: left;">Carta del profesor invitado internacional aceptando la invitación y señalando que cumplirá con la agenda programada de acuerdo con los términos de la invitación.</td>
+                                  <td colspan="1"><input class="col2" name="prof_intb" [(ngModel)]="this.formulario.doc_entregados.mod_1.item2"  type="checkbox"></td>
+                                </tr>
+
+                                <tr>
+                                  <td colspan="1" style="text-align: center;"><p>3</td>
+                                  <td colspan="2" style="text-align: left;">Carta de aprobación por parte del jefe inmediato autorizando realizar la movilidad.</td>
+
+                                  <td colspan="2" style="text-align: left;">Carta de compromiso de la Coordinación administrativa de la Facultad/Instituto asegurando el diligenciamiento ante el SIRE y la consecución de póliza de asistencia internacional al viajero.</td>
+                                  <td colspan="1"><input class="col1" name="prof_nomc" [(ngModel)]="this.formulario.doc_entregados.mod_1.item3" type="checkbox"></td>
+                                </tr>
+
+                                <tr>
+                                  <td colspan="1" style="text-align: center;"><p>4</td>
+                                  <td colspan="2" style="text-align: left;">Fotocopia de la cédula de ciudadanía o de extranjería</td>
+
+                                  <td colspan="2" style="text-align: left;">Evidencia de la posición que ocupa la universidad de procedencia en el ranking de Shanghái. <br>
+                                      NOTA: Cuando el investigador extranjero no esté adscrito a una institución que se encuentre en el ranking de Shanghái, deberá contar con un índice H en Web of Science igual o superior a 10. En el caso de artistas deberá acreditar su trayectoria profesional.</td>
+                                  <td colspan="1"><input class="col1" name="evidencia" [(ngModel)]="this.formulario.doc_entregados.mod_1.item4" type="checkbox"></td>
+                                </tr>
+
+                                <tr>
+                                  <td colspan="1" style="text-align: center;"><p>5</td>
+                                  <td colspan="2" style="text-align: left;">Carta de compromiso del profesor de la consecución de póliza de asistencia internacional al viajero.</td>
+
+                                  <td colspan="2" style="text-align: left;">Copia de la página de identificación del pasaporte del profesor extranjero.</td>
+                                  <td colspan="1"><input class="col1" name="presupuesto" [(ngModel)]="this.formulario.doc_entregados.mod_1.item5" type="checkbox"></td>
+                                </tr>
+
+                            </table>
+
+                              <!-- <table aria-colspan="5" class="table table-bordered">
                                 <tr>
                                     <th colspan="2" style="text-align: center;">Actividad</th>
                                     <th colspan="1" style="text-align: center;">Profesores Nombrados de la Universidad del valle</th>
@@ -441,9 +507,91 @@
                                 </tr>
 
 
-                              </table>
+                              </table> -->
+                          </div>
+                      </div>
 
-                            </div>
+
+
+                      <div class="row" *ngIf="modalidad" style="margin-top: 60px;">
+                        <div class="col-md-12">
+                            <p><strong><u> Modalidad 2. Estudiantes de Doctorado y estudiantes de sub especialidades clínico quirúrgicas de Universidad del Valle:</u></strong>
+                          <table aria-colspan="4" class="table table-bordered">
+                              <tr>
+                                  <th colspan="1" style="text-align: center;">item</th>
+                                  <th colspan="2" style="text-align: center;">Estudiantes de Doctorado y estudiantes de sub especialidades clínico quirúrgicas de Universidad del Valle</th>
+                                  <th colspan="1" style="text-align: center;"></th>
+                              </tr>
+                              <tr>
+                                <td colspan="1" style="text-align: center;"><p>1</td>
+                                <td colspan="2" style="text-align: left;">Tabulado de matrícula del semestre en el cual postula.</td>
+
+                                <td colspan="1"><input class="col1" name="prof_noma" [(ngModel)]="this.formulario.doc_entregados.mod_2.item1" type="checkbox"></td>
+                              </tr>
+
+                              <tr>
+                                <td colspan="1" style="text-align: center;"><p>2</td>
+                                <td colspan="2" style="text-align: left;">Certificado de promedio descargado del SRA.</td>
+
+                                <td colspan="1"><input class="col2" name="prof_intb" [(ngModel)]="this.formulario.doc_entregados.mod_2.item2"  type="checkbox"></td>
+                              </tr>
+
+                              <tr>
+                                <td colspan="1" style="text-align: center;"><p>3</td>
+                                <td colspan="2" style="text-align: left;">Carta del comité de programa académico respaldando la postulación, firmada por el director del posgrado correspondiente. </td>
+
+                                <td colspan="1"><input class="col1" name="prof_nomc" [(ngModel)]="this.formulario.doc_entregados.mod_2.item3" type="checkbox"></td>
+                              </tr>
+
+                              <tr>
+                                <td colspan="1" style="text-align: center;"><p>4</td>
+                                <td colspan="2" style="text-align: left;">Carta de invitación de un profesor/institución/entidad receptora.</td>
+
+                                <td colspan="1"><input class="col1" name="evidencia" [(ngModel)]="this.formulario.doc_entregados.mod_2.item4" type="checkbox"></td>
+                              </tr>
+
+                              <tr>
+                                <td colspan="1" style="text-align: center;"><p>5</td>
+                                <td colspan="2" style="text-align: left;">Carta del tutor de tesis doctoral, aprobando la actividad en el exterior y comprometiéndose a: <br>
+
+                                    a) Brindar la asesoría al estudiante durante la ejecución de la movilidad internacional financiada por la Universidad. <br>
+
+                                    b) Revisar el informe de la pasantía y el artículo o producto elaborado por el estudiante en los siguientes 30 días hábiles después del regreso del estudiante. </td>
+
+                                <td colspan="1"><input class="col1" name="presupuesto" [(ngModel)]="this.formulario.doc_entregados.mod_2.item5" type="checkbox"></td>
+                              </tr>
+
+                              <tr>
+                                <td colspan="1" style="text-align: center;"><p>6</td>
+                                <td colspan="2" style="text-align: left;">Documento del plan de trabajo/actividades a realizar en el exterior.</td>
+
+                                <td colspan="1"><input class="col1" name="presupuesto" [(ngModel)]="this.formulario.doc_entregados.mod_2.item6" type="checkbox"></td>
+                              </tr>
+
+                              <tr>
+                                <td colspan="1" style="text-align: center;"><p>7</td>
+                                <td colspan="2" style="text-align: left;">Fotocopia de la cédula de ciudadanía.</td>
+
+                                <td colspan="1"><input class="col1" name="presupuesto" [(ngModel)]="this.formulario.doc_entregados.mod_2.item7" type="checkbox"></td>
+                              </tr>
+
+                          </table>
+
+                        </div>
+                      </div>
+
+
+
+                      <div class="row">
+                        <div class="col-md-12" style="text-align: left;">
+                          <p>
+                            <strong>
+                                Según la Ley 1581 de 2012, el Decreto 1377 de 2013 y la política de protección de información, en la Dirección de Relaciones Internacionales de la Universidad del Valle, estamos comprometidos con la confidencialidad y privacidad de nuestra base de datos. <br><br>
+                                Este sistema de información y sus archivos adjuntos están destinados únicamente a la persona o entidad a la que va dirigida y puede contener material confidencial y estrictamente para fines académicos. Se prohíbe la retransmisión, difusión o cualquier otro uso por personas o entidades distintas de su destinatario. Si ha recibido este mensaje por error, por favor, póngase en contacto con el remitente y elimine el material de cualquier ordenador. Si no desea seguir recibiendo esta información por favor solicítelo al correo electrónico ciam@correounivalle.edu.co
+                            </strong>
+                          </p>
+                        </div>
+
                       </div>
 
 
@@ -464,3 +612,4 @@
         </div>
     </div>
   </div>
+

@@ -22,6 +22,8 @@ export class ComponentInvestigacionComponent implements OnInit {
 
   dtOptions: any = {};
 
+  check = false;
+
   constructor(private busqueda: BuscadorService) {
 
    }
@@ -39,37 +41,42 @@ export class ComponentInvestigacionComponent implements OnInit {
 
       this.loadTable();
 
-      $('#checkall').on('change', function() {
-        const value = $('#checkall').is(':checked');
-        console.log(value);
-        if (value) {
-          console.log('true');
-          $('.checkbox').prop('checked', 'checked');
-        } else {
-          console.log('false');
-          $('.checkbox').prop('checked', false);
-        }
-      });
-
 
   }
 
   loadTable() {
+    const ambiente = this;
+
     this.dtOptions = {
       // Declare the use of the extension in the dom parameter
       dom: 'Bfrtip',
       // Configure the buttons
       buttons: [
-        'columnsToggle',
         'colvis',
         'copy',
         'print',
         'csv',
         {
-          text: 'Some button',
+          text: 'Seleccionar Todo',
           key: '1',
           action: function (e, dt, node, config) {
-            alert('Button activated');
+
+            if (!ambiente.check) {
+              $('.checkbox').prop('checked', 'checked');
+              ambiente.check = true;
+            } else {
+              $('.checkbox').prop('checked', false);
+              ambiente.check = false;
+            }
+          }
+        },
+        {
+          text: 'Descargar Todo',
+          key: '2',
+          action: function (e, dt, node, config) {
+
+           ambiente.metodo(ambiente.investigaciones);
+
           }
         }
       ],
@@ -120,12 +127,11 @@ export class ComponentInvestigacionComponent implements OnInit {
       // tslint:disable-next-line:max-line-length
       headers: ['form.comite', 'form.modalidad', 'form.datos_movilidad.CC_pas', 'form.datos_movilidad.nom_ape', 'form.datos_movilidad.categoria', 'form.datos_movilidad.nacionalidad', 'form.datos_movilidad.direccion', 'form.datos_movilidad.fecha_part', 'form.datos_movilidad.fecha_reg', 'form.datos_movilidad.pais_des', 'form.datos_movilidad.pais_or', 'form.datos_movilidad.ciudad_des', 'form.datos_movilidad.ciudad_or',
                 // tslint:disable-next-line:max-line-length
-                'form.datos_solicitud.doc_prof', 'form.datos_solicitud.nombre_prof', 'form.datos_solicitud.facultad', 'form.datos_solicitud.sede', 'form.datos_solicitud.sicop', 'form.datos_solicitud.direccion', 'form.datos_solicitud.tel_univ', 'form.datos_solicitud.celu_prof', 'form.datos_solicitud.mail_prof',
+                'form.datos_solicitud.doc_prof', 'form.datos_solicitud.nombre_prof', 'form.datos_solicitud.facultad', 'form.datos_solicitud.sede', 'form.datos_solicitud.sicop', 'form.datos_solicitud.grupinv', 'form.datos_solicitud.direccion', 'form.datos_solicitud.tel_univ', 'form.datos_solicitud.celu_prof', 'form.datos_solicitud.mail_prof',
                 // tslint:disable-next-line:max-line-length
-                'form.doc_entregados.est_univ.g', 'form.doc_entregados.est_univ.h', 'form.doc_entregados.est_univ.i', 'form.doc_entregados.est_univ.j',
-                'form.doc_entregados.prof_int.b', 'form.doc_entregados.prof_int.i', 'form.doc_entregados.prof_int.j',
+                'form.doc_entregados.mod_1.item1', 'form.doc_entregados.mod_1.item2', 'form.doc_entregados.mod_1.item3', 'form.doc_entregados.mod_1.item4', 'form.doc_entregados.mod_1.item5',
                 // tslint:disable-next-line:max-line-length
-                'form.doc_entregados.prof_nom.a', 'form.doc_entregados.prof_nom.c', 'form.doc_entregados.prof_nom.d', 'form.doc_entregados.prof_nom.e', 'form.doc_entregados.prof_nom.f', 'form.doc_entregados.prof_nom.g', 'form.doc_entregados.prof_nom.i', 'form.doc_entregados.prof_nom.j',
+                'form.doc_entregados.mod_2.item1', 'form.doc_entregados.mod_2.item2', 'form.doc_entregados.mod_2.item3', 'form.doc_entregados.mod_2.item4', 'form.doc_entregados.mod_2.item5', 'form.doc_entregados.mod_2.item6', 'form.doc_entregados.mod_2.item7',
                  // tslint:disable-next-line:max-line-length
                  'form.presupuesto.item1.item1', 'form.presupuesto.item1.nom_1', 'form.presupuesto.item1.vr_ciam1', 'form.presupuesto.item1.vr_od1',
                  // tslint:disable-next-line:max-line-length
@@ -140,11 +146,12 @@ export class ComponentInvestigacionComponent implements OnInit {
       // tslint:disable-next-line:max-line-length
       rename: ['COMITE', 'MODALIDAD', 'DM CEDULA', 'DM NOMBRE Y APELLIDOS', 'DM CATEGORIA', 'DM NACIONALIDAD', 'DM DIRECCION', 'DM FECHA PARTIDA', 'DM FECHA REGRESO', 'DM PAIS DESTINO', 'DM PAIS ORIGEN', 'DM CIUDAD DESTINO', 'DM CIUDAD ORIGEN',
                // tslint:disable-next-line:max-line-length
-               'DS DOCUMENTO', 'DS NOMBRE', 'DS FACULTAD', 'DS SEDE', 'DS SICOP', 'DS DIRECCION', 'DS TEL UNIVALLE', 'DS CELULAR', 'DS EMAIL',
-              'DOCUMENTO EST.UNIV G', 'DOCUMENTO EST.UNIV H', 'DOCUMENTO EST.UNIV I', 'DOCUMENTO EST.UNIV J',
-              'DOCUMENTO PROF.INT B', 'DOCUMENTO PROF.INT I', 'DOCUMENTO PROF.INT J',
+               'DS DOCUMENTO', 'DS NOMBRE', 'DS FACULTAD', 'DS SEDE', 'DS SICOP', 'DS GRUPO INV', 'DS DIRECCION', 'DS TEL UNIVALLE', 'DS CELULAR', 'DS EMAIL',
               // tslint:disable-next-line:max-line-length
-              'DOCUMENTO PROF.NOM A', 'DOCUMENTO PROF.NOM C', 'DOCUMENTO PROF.NOM D', 'DOCUMENTO PROF.NOM E', 'DOCUMENTO PROF.NOM F', 'DOCUMENTO PROF.NOM G', 'DOCUMENTO PROF.NOM I', 'DOCUMENTO PROF.NOM J',
+              'MODALIDAD1 DOCUMENTO 1', 'MODALIDAD1 DOCUMENTO 2', 'MODALIDAD1 DOCUMENTO 3', 'MODALIDAD1 DOCUMENTO 4', 'MODALIDAD1 DOCUMENTO 5',
+              // tslint:disable-next-line:max-line-length
+              'MODALIDAD2 DOCUMENTO 1', 'MODALIDAD2 DOCUMENTO 2', 'MODALIDAD2 DOCUMENTO 3', 'MODALIDAD2 DOCUMENTO 4', 'MODALIDAD2 DOCUMENTO 5', 'MODALIDAD2 DOCUMENTO 6', 'MODALIDAD2 DOCUMENTO 7',
+
               'PRESUPUESTO I1-I1', 'PRESUPUESTO I1-NOM', 'PRESUPUESTO I1-CIAM', 'PRESUPUESTO I1-V-OD',
               'PRESUPUESTO I2-I2', 'PRESUPUESTO I2-NOM', 'PRESUPUESTO I2-CIAM', 'PRESUPUESTO I2-V-OD',
               'PRESUPUESTO I3-I3', 'PRESUPUESTO I3-NOM', 'PRESUPUESTO I3-CIAM', 'PRESUPUESTO I3-V-OD',
