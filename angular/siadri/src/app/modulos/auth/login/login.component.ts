@@ -1,6 +1,6 @@
 import { error } from 'util';
-import { RegistroService } from './../../services/registro.service';
-import { LoginService } from './../../services/login.service';
+import { RegistroService } from './../../../shared/services/registro.service';
+import { LoginService } from './../../../shared/services/login.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';

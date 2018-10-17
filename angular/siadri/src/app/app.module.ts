@@ -30,7 +30,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 import { ModalPopupComponent } from './shared/layouts/modal-popup/modal-popup.component';
-import { LoginComponent } from './shared/layouts/login/login.component';
+import { LoginComponent } from './modulos/auth/login/login.component';
 import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in.component';
 import { DashNivel2Component } from './shared/layouts/dash-nivel2/dash-nivel2.component';
 import { BorradoresComponent } from './shared/layouts/sidebar-left-components/borradores/borradores.component';
@@ -67,6 +67,8 @@ import { TablainvestigacionComponent } from './shared/layouts/sidebar-left-compo
 import { PrincipalComponent } from './shared/layouts/principal/principal.component';
 import { HttpClientModule } from '@angular/common/http';
 import { Ng2CompleterModule } from 'ng2-completer';
+
+import { InicioAppComponent } from "./modulos/auth/inicio-app/inicio-app.component";
 
 
 @NgModule({
@@ -107,8 +109,8 @@ import { Ng2CompleterModule } from 'ng2-completer';
     InvestigacionesComponent,
     ComponentInvestigacionComponent,
     TablainvestigacionComponent,
-    PrincipalComponent
-
+    PrincipalComponent,
+    InicioAppComponent
   ],
   imports: [
     app_routing,

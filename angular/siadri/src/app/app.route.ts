@@ -9,9 +9,7 @@ import { Grafico1Component } from './shared/layouts/dash-nivel3/component-grafic
 import { RolesComponent } from './shared/layouts/formularios-admin/roles/roles.component';
 import { DashNivel2Component } from './shared/layouts/dash-nivel2/dash-nivel2.component';
 import { DashboardMapComponent } from './shared/layouts/dashboard-map/dashboard-map.component';
-import { AuthGuard } from './shared/services/auth.guard';
-import { Component } from '@angular/core';
-import { LoginComponent } from './shared/layouts/login/login.component';
+import { LoginComponent } from './modulos/auth/login/login.component';
 import { DashboardInComponent } from './shared/layouts/dashboard-in/dashboard-in.component';
 import { Routes, RouterModule } from '@angular/router';
 import { UsuariosComponent } from 'app/shared/layouts/formularios-admin/usuarios/usuarios.component';
@@ -20,7 +18,10 @@ import { ComponentCorreoComponent } from 'app/shared/layouts/dash-nivel3/compone
 import { InvestigacionesComponent } from 'app/shared/layouts/dash-nivel2/investigaciones/investigaciones.component';
 import { PrincipalComponent } from 'app/shared/layouts/principal/principal.component';
 
+import { InicioAppComponent } from "./modulos/auth/inicio-app/inicio-app.component";
+
  const routes: Routes = [
+  { path: 'inicio', component: InicioAppComponent},
 
   { path: 'principal', component: PrincipalComponent },
   { path: 'login', component: LoginComponent },
@@ -46,7 +47,8 @@ import { PrincipalComponent } from 'app/shared/layouts/principal/principal.compo
     { path: 'usuarios', component: UsuariosComponent, canActivate: [AdminGuard]},
     { path: '', pathMatch: 'full', redirectTo: 'mapa'}
     ]},
-    { path: '', pathMatch: 'full', redirectTo: 'principal'}
+    { path: '', pathMatch: 'full', redirectTo: 'inicio'},
+
 ];
 export const app_routing = RouterModule.forRoot(routes, { useHash: true });
 
