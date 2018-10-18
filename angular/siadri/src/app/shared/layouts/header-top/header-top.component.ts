@@ -1,6 +1,6 @@
 import { BuscadorService } from './../modal-popup/buscador.service';
 import { ModalService } from 'app/shared/modal.service';
-import { LoginComponent } from './../login/login.component';
+import { LoginComponent } from './../../../modulos/auth/login/login.component';
 import { LoginService } from './../../services/login.service';
 import { error } from 'util';
 import { Component, OnInit } from '@angular/core';

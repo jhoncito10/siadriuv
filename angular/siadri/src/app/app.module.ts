@@ -69,6 +69,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Ng2CompleterModule } from 'ng2-completer';
 
 import { InicioAppComponent } from "./modulos/auth/inicio-app/inicio-app.component";
+import { TablaConsultasComponent } from './modulos/nivel-1/tabla-consultas/tabla-consultas.component';
 
 
 @NgModule({
@@ -110,7 +111,8 @@ import { InicioAppComponent } from "./modulos/auth/inicio-app/inicio-app.compone
     ComponentInvestigacionComponent,
     TablainvestigacionComponent,
     PrincipalComponent,
-    InicioAppComponent
+    InicioAppComponent,
+    TablaConsultasComponent
   ],
   imports: [
     app_routing,
