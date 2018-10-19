@@ -8,21 +8,11 @@
     <ul class="treeview-menu">
 
       <li>
-        <a (click)="enviar(text.id)" #text data-toggle="modal" data-target="#modal1" style="cursor: pointer;" tabindex="-1" href="#"
-          id="menu-pais">
-          <i class="fa fa-circle-o"></i>Convenios por país</a>
+        <a [routerLink]="['consultas']" style="cursor: pointer;" tabindex="-1" >
+          <i class="fa fa-circle-o"></i>Consultar</a>
       </li>
       
-      <li>
-        <a (click)="enviar(text1.id)" #text1 data-toggle="modal" data-target="#modal1" style="cursor: pointer;" tabindex="-1" href="#"
-          id="menu-tipo">
-          <i class="fa fa-circle-o"></i>Tipo de convenio</a>
-      </li>
-      <li>
-        <a (click)="enviar(text2.id)" #text2 data-toggle="modal" data-target="#modal1" style="cursor: pointer;" tabindex="-1" href="#"
-          id="menu-academia">
-          <i class="fa fa-circle-o"></i>Por programa</a>
-      </li>
+  
      
       
     </ul>

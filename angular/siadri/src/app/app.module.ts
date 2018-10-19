@@ -24,7 +24,7 @@ import { AppComponent } from './app.component';
 import { HeaderTopComponent } from './shared/layouts/header-top/header-top.component';
 import { SidebarLeftComponent } from './shared/layouts/sidebar-left/sidebar-left.component';
 import { DashboardMapComponent } from './shared/layouts/dashboard-map/dashboard-map.component';
-import { firebaseconfig } from './config';
+import { environment } from './../environments/environment';
 import { AgreementsComponent } from './shared/layouts/sidebar-left-components/agreements/agreements.component';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -39,7 +39,7 @@ import { RolesComponent } from './shared/layouts/formularios-admin/roles/roles.c
 import { UsuariosComponent } from './shared/layouts/formularios-admin/usuarios/usuarios.component';
 import { AdminComponent } from './shared/layouts/sidebar-left-components/admin/admin.component';
 
-import {DataTablesModule} from 'angular-datatables';
+import { DataTablesModule } from 'angular-datatables';
 import { ModalusuarioComponent } from './shared/layouts/formularios-admin/usuarios/modalusuario/modalusuario.component';
 import { DashNivel3Component } from 'app/shared/layouts/dash-nivel3/dash-nivel3.component';
 import { GraficosComponent } from './shared/layouts/sidebar-left-components/graficos/graficos.component';
@@ -122,7 +122,7 @@ import { TablaConsultasComponent } from './modulos/nivel-1/tabla-consultas/tabla
     LeafletModule.forRoot(),
     HttpModule,
     HttpClientModule,
-    AngularFireModule.initializeApp(firebaseconfig),
+    AngularFireModule.initializeApp(environment.config),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     DataTablesModule,

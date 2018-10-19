@@ -5,12 +5,31 @@
       <h3 class="box-title">Consultas</h3>
 
       <div class="box-tools pull-right">
-        <button  type="button" class="btn btn-box-tool" data-widget="collapse">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse">
           <i class="fa fa-plus"></i>
         </button>
       </div>
     </div>
-    <div  class="box-body">
+    <div class="box-body">
+      <table class="row-border hover">
+        <thead>
+          <tr>
+            <th>Pais</th>
+            <th>Institucion</th>
+            <th>Facultad</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let element of convenios; let i = index" >
+            <td *ngIf="element.Archivo=='Activo'">{{ element.Pais }}</td>
+            <td *ngIf="element.Archivo=='Activo'">{{ element.Institucion }}</td>
+            <td *ngIf="element.Archivo=='Activo'">{{ element.Facultad }}</td>
+  
+          </tr>
+        </tbody>
+      </table>
+
     </div>
   </div>
 
@@ -19,13 +38,14 @@
       <h3 class="box-title">Informacion</h3>
 
       <div class="box-tools pull-right">
-        <button  type="button" class="btn btn-box-tool" data-widget="collapse">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse">
           <i class="fa fa-plus"></i>
         </button>
       </div>
     </div>
-    <div  class="box-body">
+    <div class="box-body">
+    
     </div>
-   
+
   </div>
 </div>
