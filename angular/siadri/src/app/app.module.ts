@@ -13,6 +13,8 @@ import { RouterModule } from '@angular/router';
 import { RegistroService } from './shared/services/registro.service';
 import { LoginService } from './shared/services/login.service';
 import { HttpService } from './shared/services/http.service';
+import {MatTableModule} from '@angular/material/table';
+
 
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -128,7 +130,8 @@ import { TablaConsultasComponent } from './modulos/nivel-1/tabla-consultas/tabla
     DataTablesModule,
     NgxChartsModule,
     MomentModule,
-    Ng2CompleterModule
+    Ng2CompleterModule,
+    MatTableModule
   ],
   providers: [
       LoginService,
