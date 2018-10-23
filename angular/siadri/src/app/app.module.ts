@@ -13,7 +13,14 @@ import { RouterModule } from '@angular/router';
 import { RegistroService } from './shared/services/registro.service';
 import { LoginService } from './shared/services/login.service';
 import { HttpService } from './shared/services/http.service';
-import {MatTableModule} from '@angular/material/table';
+import {
+  MatTableModule,
+  MatButtonModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatPaginatorModule
+
+} from '@angular/material';
 
 
 import { FormsModule } from '@angular/forms';
@@ -115,6 +122,7 @@ import { TablaConsultasComponent } from './modulos/nivel-1/tabla-consultas/tabla
     PrincipalComponent,
     InicioAppComponent,
     TablaConsultasComponent
+
   ],
   imports: [
     app_routing,
@@ -131,23 +139,32 @@ import { TablaConsultasComponent } from './modulos/nivel-1/tabla-consultas/tabla
     NgxChartsModule,
     MomentModule,
     Ng2CompleterModule,
-    MatTableModule
+    MatTableModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatPaginatorModule
   ],
+  // exports: [
+  //   MatButtonModule,
+  //   MatFormFieldModule,
+  //   MatInputModule
+  // ],
   providers: [
-      LoginService,
-      HttpService,
-      RegistroService,
-      AuthGuard,
-      LeaftletmapService,
-      ModalService,
-      BuscadorService,
-      DashboardMapComponent,
-      RuleservicesService,
-      FunuserService,
-      Nivel3Guard,
-      AdminGuard,
-      UnivalleGuard
-    ],
+    LoginService,
+    HttpService,
+    RegistroService,
+    AuthGuard,
+    LeaftletmapService,
+    ModalService,
+    BuscadorService,
+    DashboardMapComponent,
+    RuleservicesService,
+    FunuserService,
+    Nivel3Guard,
+    AdminGuard,
+    UnivalleGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

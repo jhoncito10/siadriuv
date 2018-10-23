@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
-import {MatTableDataSource} from '@angular/material';
-
-
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tabla-consultas',
@@ -10,16 +9,30 @@ import {MatTableDataSource} from '@angular/material';
   styleUrls: ['./tabla-consultas.component.css']
 })
 export class TablaConsultasComponent implements OnInit {
- 
-  convenios=[];
 
-  // We use this trigger because fetching the list of persons can be quite long,
-  // thus we ensure the data is fetched before rendering
+  convenios:any;
+  convenio:any;
+  dataTablaConvenios=[];
+
+  displayedColumns = ['pais', 'institucion', 'facultad', 'tipo'];
+  dataSource: MatTableDataSource<Convenio>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private _angularfire: AngularFireDatabase) {
-    
+    this.convenio={
+      pais:'',
+      institucion:'',
+      documentacion:'',
+      site:'',
+      cooperacion:'',
+      objeto:'',
+      email:'',
+      tipo:'',
+      facultad:''
+    }
   }
-
   ngOnInit(): void {
     this._angularfire.list('/convenios', {
       query: {
@@ -27,59 +40,83 @@ export class TablaConsultasComponent implements OnInit {
       }
     }).take(1).subscribe(data => {
       console.log(data);
-      
 
+      this.convenios=data;
       for (const key in data) {
 
         if (data.hasOwnProperty(key)) {
           const element = data[key];
-          this.convenios.push(element);
+          if (element.Archivo == 'Activo') {
+            this.dataTablaConvenios.push(createConvenio(key,element));
+
+          }
 
         }
       }
+      this.dataSource = new MatTableDataSource(this.dataTablaConvenios);
 
-      
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
 
     });
   }
+  /**
+   * Set the paginator and sort after the view init since this component will
+   * be able to query its view for the initialized paginator and sort.
+   */
+  ngAfterViewInit() {
 
-
-   displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
+
+  selectConvenio(conv) {
+    const _convenioSelected = this.convenios[conv.key];
+    this.convenio={
+      pais:_convenioSelected.Pais,
+      institucion:_convenioSelected.Institucion,
+      documentacion:'',
+      site:_convenioSelected["Página Web"] || '',
+      cooperacion:'',
+      objeto:_convenioSelected.Objeto,
+      email:_convenioSelected.Email ||'',
+      tipo:_convenioSelected.Tipo|| '',
+      facultad:_convenioSelected.Facultad || ''
+    }
+    console.log(conv.key,this.convenio);
+  }
+}
+/** Builds and returns a new User. */
+function createConvenio(_key:any ,el: any): Convenio {
+  const key = _key
+  const pais = el.Pais || ''
+  const institucion = el.Institucion || ''
+  const facultad = el.Facultad || ''
+  const email = el.Email || ''
+  const tipo = el.Tipo || ''
+
+  return {
+    key:key,
+    pais: pais,
+    institucion: institucion,
+    facultad: facultad,
+    email: email,
+    tipo:tipo
+  };
 }
 
-export interface Element {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+
+export interface Convenio {
+  key:string,
+  pais: string;
+  institucion: string;
+  facultad: string;
+  email: string;
+  tipo:string;
 }
 
-const ELEMENT_DATA: Element[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-  {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
-  {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
-  {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
-  {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
-  {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
-  {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
-  {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
-  {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
-  {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
-  {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
-];
+

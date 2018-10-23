@@ -22,36 +22,42 @@ import { LoginComponent } from './modulos/auth/login/login.component';
 // nivel-1 modulo
 import { TablaConsultasComponent } from "./modulos/nivel-1/tabla-consultas/tabla-consultas.component";
 
- const routes: Routes = [
-  { path: 'inicio', component: InicioAppComponent},
+const routes: Routes = [
+    { path: 'inicio', component: InicioAppComponent },
 
-  { path: 'principal', component: PrincipalComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'dash', component: DashboardInComponent,
-   children : [
-    { path: 'mapa', component: DashboardMapComponent},
-    { path: 'consultas', component: TablaConsultasComponent},
+    { path: 'principal', component: PrincipalComponent },
+    { path: 'login', component: LoginComponent },
+    {
+        path: 'dash', component: DashboardInComponent,
+        children: [
+            { path: 'mapa', component: DashboardMapComponent },
+            { path: 'consultas', component: TablaConsultasComponent },
 
-    { path: 'dashnivel2', component: DashNivel2Component, canActivate: [UnivalleGuard],
-    children: [
-        {path: 'inscripciones', component: InscripcionesComponent},
-        {path: 'renovaciones', component: RenovacionesComponent},
-        {path: 'investigaciones', component: InvestigacionesComponent}
-    ]},
-    { path: 'dashnivel3', component: DashNivel3Component, canActivate: [Nivel3Guard],
-    children: [
-        { path: 'grafico1', component: Grafico1Component},
-        { path: 'grafico2', component: Grafico2Component},
-        { path: 'enviocorreos', component: ComponentCorreoComponent},
-        { path: 'investigacion', component: ComponentInvestigacionComponent},
-        { path: '', pathMatch: 'full', redirectTo: 'dash/mapa'}
-    ]},
+            {
+                path: 'dashnivel2', component: DashNivel2Component, canActivate: [UnivalleGuard],
+                children: [
+                    { path: 'inscripciones', component: InscripcionesComponent },
+                    { path: 'renovaciones', component: RenovacionesComponent },
+                    { path: 'investigaciones', component: InvestigacionesComponent }
+                ]
+            },
+            {
+                path: 'dashnivel3', component: DashNivel3Component, canActivate: [Nivel3Guard],
+                children: [
+                    { path: 'grafico1', component: Grafico1Component },
+                    { path: 'grafico2', component: Grafico2Component },
+                    { path: 'enviocorreos', component: ComponentCorreoComponent },
+                    { path: 'investigacion', component: ComponentInvestigacionComponent },
+                    { path: '', pathMatch: 'full', redirectTo: 'dash/mapa' }
+                ]
+            },
 
-    { path: 'roles', component: RolesComponent, canActivate: [AdminGuard]},
-    { path: 'usuarios', component: UsuariosComponent, canActivate: [AdminGuard]},
-    { path: '', pathMatch: 'full', redirectTo: 'mapa'}
-    ]},
-    { path: '', pathMatch: 'full', redirectTo: 'inicio'},
+            { path: 'roles', component: RolesComponent, canActivate: [AdminGuard] },
+            { path: 'usuarios', component: UsuariosComponent, canActivate: [AdminGuard] },
+            { path: '', pathMatch: 'full', redirectTo: 'mapa' }
+        ]
+    },
+    { path: '', pathMatch: 'full', redirectTo: 'inicio' },
 
 ];
 export const app_routing = RouterModule.forRoot(routes, { useHash: true });
