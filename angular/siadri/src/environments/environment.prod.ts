@@ -7,5 +7,6 @@ export const environment = {
     projectId: "siadri-dev",
     storageBucket: "siadri-dev.appspot.com",
     messagingSenderId: "145695131403"
-  }
+  },
+  cloudUrl:'https://us-central1-siadri-dev.cloudfunctions.net'
 };

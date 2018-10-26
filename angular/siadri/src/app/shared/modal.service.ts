@@ -15,40 +15,40 @@ export class ModalService {
     this.messageSource.next(message);
   }
 
-   // variable que contiene el grafico  que esta haciendo el llamado
-   // tslint:disable-next-line:member-ordering
-   private GraficoSource = new BehaviorSubject<any>('Grafico1');
-   // tslint:disable-next-line:member-ordering
-   currentGrafico = this.GraficoSource.asObservable();
-   changeGrafico(grafico: any) {
-     this.GraficoSource.next(grafico);
-   }
+  // variable que contiene el grafico  que esta haciendo el llamado
+  // tslint:disable-next-line:member-ordering
+  private GraficoSource = new BehaviorSubject<any>('Grafico1');
+  // tslint:disable-next-line:member-ordering
+  currentGrafico = this.GraficoSource.asObservable();
+  changeGrafico(grafico: any) {
+    this.GraficoSource.next(grafico);
+  }
 
   // variable que contiene las consultas de los convenios
   private object = new BehaviorSubject<any>([]);
   currentObject = this.object.asObservable();
-  changeObject(object:any){
+  changeObject(object: any) {
     this.object.next(object);
   }
 
   // variable que contiene el objecto json que corresponde a los datos del formulario inscripcion
   private formulario = new BehaviorSubject<any>([]);
   currentformulario = this.formulario.asObservable();
-  changeformulario(form:any){
+  changeformulario(form: any) {
     this.formulario.next(form);
   }
 
-   // variable que contiene el objecto json que corresponde a los datos del formulario renovacion
-   private formularioRenov = new BehaviorSubject<any>([]);
-   currentformularioRenov = this.formularioRenov.asObservable();
-   changeformularioRenovacion(formRev:any){
-     this.formularioRenov.next(formRev);
-   }
+  // variable que contiene el objecto json que corresponde a los datos del formulario renovacion
+  private formularioRenov = new BehaviorSubject<any>([]);
+  currentformularioRenov = this.formularioRenov.asObservable();
+  changeformularioRenovacion(formRev: any) {
+    this.formularioRenov.next(formRev);
+  }
 
   // variable que contiene el objecto json que corresponde a los datos del formulario investigacion
   private formularioInvest = new BehaviorSubject<any>([]);
   currentformularioInvest = this.formularioInvest.asObservable();
-  changeformularioInvestigacion(formInv:any){
+  changeformularioInvestigacion(formInv: any) {
     this.formularioInvest.next(formInv);
   }
 
@@ -56,7 +56,7 @@ export class ModalService {
   // de solicitudes
   private imprimir = new BehaviorSubject<any>([]);
   currentImprimir = this.imprimir.asObservable();
-  changeImprimir(imp:any){
+  changeImprimir(imp: any) {
     this.imprimir.next(imp);
   }
 
@@ -67,42 +67,42 @@ export class ModalService {
     this.UserSource.next(user);
   }
 
-    // variable que contiene el arreglo del grafico de barras horizontales
-    private  conveniosGraficos = new BehaviorSubject<any>([]);
-    currentGraficos = this.conveniosGraficos.asObservable();
-    changeConveniosGraficos(convenios: any) {
-      this.conveniosGraficos.next(convenios);
-    }
+  // variable que contiene el arreglo del grafico de barras horizontales
+  private conveniosGraficos = new BehaviorSubject<any>([]);
+  currentGraficos = this.conveniosGraficos.asObservable();
+  changeConveniosGraficos(convenios: any) {
+    this.conveniosGraficos.next(convenios);
+  }
 
 
-    // variable que contiene el arreglo del grafico de barras horizontales del segundo nodo
-    private  conveniosGraficos2 = new BehaviorSubject<any>([]);
-    currentGraficos2 = this.conveniosGraficos2.asObservable();
-    changeConveniosGraficos2(convenios2: any) {
-      this.conveniosGraficos2.next(convenios2);
-    }
+  // variable que contiene el arreglo del grafico de barras horizontales del segundo nodo
+  private conveniosGraficos2 = new BehaviorSubject<any>([]);
+  currentGraficos2 = this.conveniosGraficos2.asObservable();
+  changeConveniosGraficos2(convenios2: any) {
+    this.conveniosGraficos2.next(convenios2);
+  }
 
 
-      // variable que contiene el arreglo del grafico de barras verticales
-      private  prueba = new BehaviorSubject<any>([{name:"",value:0,xlabel:"",ylabel:"",title:""}]);
-      currentPrueba = this.prueba.asObservable();
-      changePrueba(pru: any) {
-        this.prueba.next(pru);
-      }
+  // variable que contiene el arreglo del grafico de barras verticales
+  private prueba = new BehaviorSubject<any>([{ name: "", value: 0, xlabel: "", ylabel: "", title: "" }]);
+  currentPrueba = this.prueba.asObservable();
+  changePrueba(pru: any) {
+    this.prueba.next(pru);
+  }
 
 
-       // variable que contiene el arreglo de las notificaciones del header
-       private  notificacion = new BehaviorSubject<any>([]);
-       currentNotificacion = this.notificacion.asObservable();
-       changeNotifcacion(noti: any) {
-         this.notificacion.next(noti);
-       }
+  // variable que contiene el arreglo de las notificaciones del header
+  private notificacion = new BehaviorSubject<any>([]);
+  currentNotificacion = this.notificacion.asObservable();
+  changeNotifcacion(noti: any) {
+    this.notificacion.next(noti);
+  }
 
 
-        // //variable que  verifica el estado del formulario de investigacion
-        // private  estado = new BehaviorSubject<any>(false);
-        // currentEstado = this.estado.asObservable();
-        // changeEstado(est: any) {
-        //   this.estado.next(est);
-        // }
+  // //variable que  verifica el estado del formulario de investigacion
+  // private  estado = new BehaviorSubject<any>(false);
+  // currentEstado = this.estado.asObservable();
+  // changeEstado(est: any) {
+  //   this.estado.next(est);
+  // }
 }

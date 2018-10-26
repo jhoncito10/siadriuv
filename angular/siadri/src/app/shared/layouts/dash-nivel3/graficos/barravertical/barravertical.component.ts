@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from 'app/shared/modal.service';
 import swal from 'sweetalert2';
+import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
+
 @Component({
   selector: 'app-barravertical',
   templateUrl: './barravertical.component.html',
@@ -30,7 +32,7 @@ export class BarraverticalComponent implements OnInit {
 
 
   conveniosSeleccionados: any;
-  constructor(private modal: ModalService) { }
+  constructor(private modal: ModalService, private localSt:LocalStorageService) { }
 
   ngOnInit() {
     this.modal.currentPrueba.subscribe(data => {
@@ -48,10 +50,10 @@ export class BarraverticalComponent implements OnInit {
   }
 
   onSelect(event) {
-
+    console.log('onSelect',event);
     for (let i = 0; i < this.conveniosSeleccionados.length; i++) {
       if (event.name) {
-        if (this.conveniosSeleccionados[i].objeto.institution === event.name) {
+        if (this.conveniosSeleccionados[i].objeto.institucion === event.name) {
           swal({
             type: 'warning',
             // tslint:disable-next-line:max-line-length
@@ -60,7 +62,7 @@ export class BarraverticalComponent implements OnInit {
           });
         }
       } else {
-        if (this.conveniosSeleccionados[i].objeto.institution === event) {
+        if (this.conveniosSeleccionados[i].objeto.institucion === event) {
           swal({
             type: 'warning',
             // tslint:disable-next-line:max-line-length

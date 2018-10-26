@@ -1,6 +1,4 @@
-import { BuscadorService } from 'app/shared/layouts/modal-popup/buscador.service';
 import { Component, OnInit } from '@angular/core';
-import { ModalService } from 'app/shared/modal.service';
 
 @Component({
   selector: 'app-grafico1',
@@ -9,7 +7,7 @@ import { ModalService } from 'app/shared/modal.service';
 })
 export class Grafico1Component implements OnInit {
 
-  constructor(private ad:BuscadorService, private modal:ModalService) { 
+  constructor() { 
     
   }
 

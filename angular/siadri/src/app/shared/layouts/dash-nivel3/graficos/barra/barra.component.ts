@@ -1,10 +1,9 @@
-import { BuscadorService } from 'app/shared/layouts/modal-popup/buscador.service';
 import { Component, OnInit } from '@angular/core';
-import {NgxChartsModule} from '@swimlane/ngx-charts';
-import {BrowserModule} from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ModalService } from 'app/shared/modal.service';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+
+
 import swal from 'sweetalert2';
 import * as moment from 'moment';
 
@@ -18,65 +17,63 @@ export class BarraComponent implements OnInit {
 
   view: any[] = [1200, 600];
 
-    // options
-    showXAxis = true;
-    showYAxis = true;
-    gradient = false;
-    showLegend = true;
-    showXAxisLabel = true;
-    xAxisLabel = 'NUMERO DE CONVENIOS';
-    showYAxisLabel = true;
-    yAxisLabel = 'PAISES';
-    single:any;
-    multi:any;
-    title = 'PAISES';
+  // options
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = true;
+  showXAxisLabel = true;
+  xAxisLabel = 'NUMERO DE CONVENIOS';
+  showYAxisLabel = true;
+  yAxisLabel = 'PAISES';
+  single: any;
+  multi: any;
+  title = 'PAISES';
 
   colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA', '#2E2EFE','#FF0000','#00FF00','#088A85','#BF00FF','#00FFFF','#D7DF01','#FF0040','#D76915','#099FF5','#FD3DB7']
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA', '#2E2EFE', '#FF0000', '#00FF00', '#088A85', '#BF00FF', '#00FFFF', '#D7DF01', '#FF0040', '#D76915', '#099FF5', '#FD3DB7']
   };
 
   conveniosTotales: any;
   convenios: any
-  constructor(private modal: ModalService) {
+  constructor(private modal: ModalService, private localSt: LocalStorageService) {
 
   }
 
   ngOnInit() {
-    this.modal.currentGraficos.subscribe(data => {
-      this.conveniosTotales = data;
+    this.localSt.observe('convenios')
+      .subscribe((data) => {
+        this.conveniosTotales = data;
 
-        console.log('entro');
-        console.log(this.conveniosTotales);
         this.datosGrafico();
 
-    });
+      });
   }
 
   datosGrafico() {
 
     const arregloSingle = [];
 
-      this.convenios = this.removeDuplicates(this.conveniosTotales, 'country');
-      console.log(this.convenios);
-      for (let i = 0; i < this.convenios.length; i++) {
-        let n = 0;
-        for (let j = 0; j<this.conveniosTotales.length; j++) {
-          if (this.convenios[i].country === this.conveniosTotales[j].country) {
-            n++;
-          }
+    this.convenios = this.removeDuplicates(this.conveniosTotales, 'Pais');
+    console.log(this.convenios);
+    for (let i = 0; i < this.convenios.length; i++) {
+      let n = 0;
+      for (let j = 0; j < this.conveniosTotales.length; j++) {
+        if (this.convenios[i].Pais === this.conveniosTotales[j].Pais) {
+          n++;
         }
-        arregloSingle.push({name: this.convenios[i].country, value: n});
       }
+      arregloSingle.push({ name: this.convenios[i].Pais, value: n });
+    }
 
-    console.log(arregloSingle);
+    // console.log(arregloSingle);
     this.single = arregloSingle;
-    this.chart1(arregloSingle);
+    // this.chart1(arregloSingle);
 
   }
 
 
   removeDuplicates(originalArray, prop) {
-    // tslint:disable-next-line:prefer-const
     let newArray = [];
     const lookupObject = {};
 
@@ -94,15 +91,16 @@ export class BarraComponent implements OnInit {
 
 
 
-  chart1(singled) {
+  // chart1(singled) {
 
-       Object.assign(this, {singled});
+  //   Object.assign(this, { singled });
 
-  }
+  // }
 
   onSelect(event) {
+    console.log(event);
     let grafico;
-    this.modal.currentGrafico.subscribe(data=> {
+    this.modal.currentGrafico.subscribe(data => {
       grafico = data;
     });
 
@@ -124,30 +122,31 @@ export class BarraComponent implements OnInit {
   datosGraficoVencer(name: any) {
     const arregloSingle = [];
 
-      for (let j = 0; j < this.conveniosTotales.length; j++) {
-        if (this.conveniosTotales[j].country === name) {
-          if (this.conveniosTotales[j].expires !== 'No disponible') {
-            const fecha = this.obtenerFecha(this.conveniosTotales[j].expires);
-            if (fecha <= 12 && fecha >= 0) {
-              // tslint:disable-next-line:whitespace
-              // tslint:disable-next-line:max-line-length
-              arregloSingle.push({name:this.conveniosTotales[j].institution,value:fecha,objeto:this.conveniosTotales[j],xlabel:'CONVENIOS',ylabel:'MESES QUE QUEDAN DE VIGENCIA',title:'INSTITUCIONES'});
-            }
+    for (let j = 0; j < this.conveniosTotales.length; j++) {
+      if (this.conveniosTotales[j].Pais === name) {
+        if (this.conveniosTotales[j]['Fecha de vencimiento'] !== 'No disponible') {
+          console.log(this.conveniosTotales[j]);
+          const fecha = this.obtenerFecha(this.conveniosTotales[j]['Fecha de vencimiento']);
+          if (fecha <= 12 && fecha >= 0) {
+            // tslint:disable-next-line:whitespace
+            // tslint:disable-next-line:max-line-length
+            arregloSingle.push({ name: this.conveniosTotales[j].institution, value: fecha, objeto: this.conveniosTotales[j], xlabel: 'CONVENIOS', ylabel: 'MESES QUE QUEDAN DE VIGENCIA', title: 'INSTITUCIONES' });
           }
         }
       }
+    }
 
-      if(!(arregloSingle.length === 0)){
-        this.modal.changePrueba(arregloSingle);
-      } else {
-        swal({
-          type: 'warning',
-          title: 'En el pais ' + name + ' no existen convenios que se expiren en menos de 1 año',
-          text: '',
-          showConfirmButton: true,
-        });
+    if (!(arregloSingle.length === 0)) {
+      this.modal.changePrueba(arregloSingle);
+    } else {
+      swal({
+        type: 'warning',
+        title: 'En el pais ' + name + ' no existen convenios que se expiren en menos de 1 año',
+        text: '',
+        showConfirmButton: true,
+      });
 
-      }
+    }
 
   }
 
@@ -157,64 +156,65 @@ export class BarraComponent implements OnInit {
     const convTemp = [];
     this.modal.currentGraficos2.subscribe(data => {
       for (let i = 0; i < data.length; i++) {
-        if ((data[i].pais === name) && (data[i].ano_de_firma !== undefined) && (data[i].ano_de_firma !== "")) {
+        if ((data[i].pais === name) && (data[i]['Fecha de firma'] !== undefined) && (data[i]['Fecha de firma'] !== "")) {
           convTemp.push(data[i]);
         }
       }
     });
 
-      let conven = this.removeDuplicates(convTemp, 'ano_de_firma');
+    let conven = this.removeDuplicates(convTemp, 'Fecha de firma');
 
-      console.log(conven);
+    // console.log(conven);
 
-      for(let i=0;i<conven.length;i++) {
-        let n = 0;
-        for(let j=0;j<convTemp.length;j++) {
-          if(conven[i].ano_de_firma === convTemp[j].ano_de_firma) {
-            n++;
-          }
+    for (let i = 0; i < conven.length; i++) {
+      let n = 0;
+      for (let j = 0; j < convTemp.length; j++) {
+        if (conven[i]['Fecha de firma'] === convTemp[j]['Fecha de firma']) {
+          n++;
         }
-        arregloSingle.push({name:conven[i].ano_de_firma,value:n,objeto:conven[i],xlabel:"AÑOS",ylabel:"CANTIDAD DE CONVENIOS",title:"AÑOS"});
       }
+      arregloSingle.push({ name: conven[i]['Fecha de firma'], value: n, objeto: conven[i], xlabel: "AÑOS", ylabel: "CANTIDAD DE CONVENIOS", title: "AÑOS" });
+    }
 
-      if(!(arregloSingle.length === 0)){
-        this.modal.changePrueba(arregloSingle);
-      } else {
-        swal({
-          type: 'warning',
-          title: 'vista de datos no disponible',
-          text: '',
-          showConfirmButton: true,
-        });
+    if (!(arregloSingle.length === 0)) {
+      this.modal.changePrueba(arregloSingle);
+    } else {
+      swal({
+        type: 'warning',
+        title: 'vista de datos no disponible',
+        text: '',
+        showConfirmButton: true,
+      });
 
-      }
+    }
+
+
+  }
+
+  obtenerFecha(fechaVencimiento: any) {
+
+    const now = moment();
+    const nowformated = moment(now, 'mm/dd/aaaa');
+
+    if (moment(fechaVencimiento).isValid()) {
+      const fecha2 = moment(fechaVencimiento, 'mm/dd/aaaa');
+      console.log(nowformated, fecha2)
+      const diff = fecha2.diff(nowformated, 'days');
+      const duration = moment.duration(diff, 'days');
+
+      // var meses = parseInt(""+duration.asMonths());
+
+      const meses = parseFloat(duration.asMonths().toFixed(1));
+      console.log(meses)
+      return meses;
+    }
+
 
 
   }
 
-  obtenerFecha(fechaVencimiento:any) {
-    let arr = [];
-    let f = new Date();
-    let fechaActual = f.getFullYear()+"-"+ (f.getMonth()+1)+"-"+f.getDate();
-    arr = fechaVencimiento.split('/');
-    fechaVencimiento = arr[2] +'-'+ arr[0]+ '-' + arr[1];
-
-    const fecha1 = moment(fechaActual);
-    const fecha2 = moment(fechaVencimiento);
-
-    const diff = fecha2.diff(fecha1, 'days');
-    const duration = moment.duration(diff, 'days');
-
-    // var meses = parseInt(""+duration.asMonths());
-
-    const meses = parseFloat(duration.asMonths().toFixed(1));
-
-    return meses;
-
-  }
-
-  chart2(multi: any) {
-    Object.assign(this, {multi});
-  }
+  // chart2(multi: any) {
+  //   Object.assign(this, { multi });
+  // }
 
 }

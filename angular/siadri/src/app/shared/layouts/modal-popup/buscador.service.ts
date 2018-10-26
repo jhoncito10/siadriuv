@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireDatabaseModule } from 'angularfire2/database';
 import { HttpService } from './../../services/http.service';
+import { environment } from "../../../../environments/environment";
 
 declare var $: any;
 
@@ -15,7 +16,7 @@ export class BuscadorService {
   getdataConvenio() {
     this.ad.list('/convenios', {
       query: {
-        orderByChild: 'country'
+        orderByChild: 'Pais'
       }
     }).subscribe(data => {
       this.convenios = data;
@@ -31,7 +32,7 @@ export class BuscadorService {
   crearSolicitud(solicitud: any, nombreSol: any) {
     this.ad.app.database().ref('/solicitudes').push(solicitud).then(data => {
       this.ad.app.database().ref('/solicitudes/' + data.path.o[1] + '/nombreSolicitud').set(nombreSol).then(() => {
-        const url = `https://us-central1-siadriuv.cloudfunctions.net/enviarCorreo`;
+        const url = `${environment.cloudUrl}/enviarCorreo`;
         let mailData = {
           para: solicitud.correo_solicitante,
           asunto: 'Solicitud de convenio',
@@ -64,7 +65,7 @@ export class BuscadorService {
   crearRenovacion(renovacion: any, nombreRen: any){
     this.ad.app.database().ref('/renovaciones').push(renovacion).then(data => {
       this.ad.app.database().ref('/renovaciones/' + data.path.o[1] + '/nombreRenov').set(nombreRen).then(() => {
-        const url = `https://us-central1-siadriuv.cloudfunctions.net/enviarCorreo`;
+        const url = `${environment.cloudUrl}/enviarCorreo`;
         let mailData = {
           para: renovacion.correo_solicitante,
           asunto: 'Solicitud de convenio',

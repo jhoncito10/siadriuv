@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ConveniosService } from "./shared/services/main-service.service";
 
 declare var $: any;
 @Component({
@@ -9,4 +10,7 @@ declare var $: any;
 export class AppComponent {
   title = 'app';
 
+  constructor(private _convenios:ConveniosService) {
+   this._convenios.getConvenios();
+  }
 }

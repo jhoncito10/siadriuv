@@ -80,6 +80,9 @@ import { Ng2CompleterModule } from 'ng2-completer';
 import { InicioAppComponent } from "./modulos/auth/inicio-app/inicio-app.component";
 import { TablaConsultasComponent } from './modulos/nivel-1/tabla-consultas/tabla-consultas.component';
 
+import {Ng2Webstorage} from 'ngx-webstorage';
+import { ConveniosService } from "./shared/services/main-service.service";
+
 
 @NgModule({
   declarations: [
@@ -143,7 +146,8 @@ import { TablaConsultasComponent } from './modulos/nivel-1/tabla-consultas/tabla
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    Ng2Webstorage
   ],
   // exports: [
   //   MatButtonModule,
@@ -163,7 +167,8 @@ import { TablaConsultasComponent } from './modulos/nivel-1/tabla-consultas/tabla
     FunuserService,
     Nivel3Guard,
     AdminGuard,
-    UnivalleGuard
+    UnivalleGuard,
+    ConveniosService
   ],
   bootstrap: [AppComponent]
 })
