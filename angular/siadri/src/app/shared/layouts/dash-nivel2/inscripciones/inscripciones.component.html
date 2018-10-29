@@ -495,8 +495,10 @@
                       <td style="border-top: 1px solid #000000; border-bottom: 1px solid #000000; border-left: 1px solid #000000; border-right: 1px solid #000000"
                           colspan="16" rowspan="2" align="left" valign="middle">
                           <br>
-                          <input class="input-texto" name="input-programa-solic" [(ngModel)]="this.formulario.solicitante.programa" style="margin: 5px" type="text" size="45" id="input-programa-solic">
-                      </td>
+                          <select  class="form-control" name="input-programa-solic" [(ngModel)]="this.formulario.solicitante.programa" style="margin: 5px"  id="input-programa-solic">
+                            <option *ngFor="let programa of programasAcademicos ; let i = index" >{{programa}}</option>
+                        </select>
+                    </td>
                   </tr>
                   <tr>
                   </tr>

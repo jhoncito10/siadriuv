@@ -24,3 +24,7 @@ divScroll::-webkit-scrollbar-track
   background-color: #ECF1F3;
   cursor: pointer;
 }
+select {
+	border: 0;
+	width: 100%;
+}

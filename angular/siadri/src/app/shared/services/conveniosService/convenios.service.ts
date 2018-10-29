@@ -17,7 +17,6 @@ export class ConveniosService {
     })
     // .take(1)
     .subscribe(data => {
-      console.log(data);
 
       this.storage.store('convenios', data);
 

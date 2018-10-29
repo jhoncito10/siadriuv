@@ -20,6 +20,8 @@ import { LoginComponent } from './modulos/auth/login/login.component';
 // nivel-1 modulo
 import { TablaConsultasComponent } from "./modulos/nivel-1/tabla-consultas/tabla-consultas.component";
 
+// nivel-2 modulo
+import { DirectoresProgramaUvComponent } from "./modulos/nivel-2/directores-programa-uv/directores-programa-uv.component";
 const routes: Routes = [
     { path: 'inicio', component: InicioAppComponent },
     { path: 'login', component: LoginComponent },
@@ -33,7 +35,9 @@ const routes: Routes = [
                 children: [
                     { path: 'inscripciones', component: InscripcionesComponent },
                     { path: 'renovaciones', component: RenovacionesComponent },
-                    { path: 'investigaciones', component: InvestigacionesComponent }
+                    { path: 'investigaciones', component: InvestigacionesComponent },
+                    { path: 'directores', component: DirectoresProgramaUvComponent }
+
                 ]
             },
             {

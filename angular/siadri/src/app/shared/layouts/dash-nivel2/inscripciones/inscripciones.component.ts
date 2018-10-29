@@ -1,6 +1,8 @@
 import { AngularFireDatabase } from 'angularfire2/database';
 import { ModalService } from 'app/shared/modal.service';
 import { Component, OnInit } from '@angular/core';
+import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
+
 
 declare var $:any;
 
@@ -26,11 +28,11 @@ export class InscripcionesComponent implements OnInit {
     correo_diligenciado:""
   }
 
-  
+  programasAcademicos:any ;
   imprimir = false;
   
 
-  constructor(private data:ModalService, private ad:AngularFireDatabase) {
+  constructor(private data:ModalService, private ad:AngularFireDatabase,private localSt:LocalStorageService) {
     this.data.changeImprimir(false);
   }
 
@@ -54,6 +56,26 @@ export class InscripcionesComponent implements OnInit {
      this.data.currentImprimir.subscribe(imp => {
        this.imprimir = imp;
      });
+
+     this.localSt.observe('convenios')
+			.subscribe((data) => {
+        //executa el script al cambio en la variable local de canvios
+        console.log(data);
+        var array = [];
+        for (const key in data) {
+  
+          if (data.hasOwnProperty(key)) {
+            const element = data[key];
+            if (element.Archivo == 'Activo') {
+              array.push(element['Facultad']);
+  
+            }
+  
+          }
+        }
+        this.programasAcademicos = this.removeDups(array);
+        console.log(this.programasAcademicos);
+      });
   }
 
      //METODO QUE CAMBIA LA VARIABLE OBSERVABLE FORMULARIO QUE SE ENCUENTRA EN EL MODALSERVICE
@@ -119,6 +141,16 @@ export class InscripcionesComponent implements OnInit {
         w.print();
         w.close();
   
+  }
+  removeDups(names) {
+    let unique = {};
+    names.forEach(function(i) {
+        if(!unique[i]) {
+          unique[i] = true;
+        }
+     
+    });
+    return Object.keys(unique);
   }
   
 }

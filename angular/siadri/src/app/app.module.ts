@@ -82,6 +82,7 @@ import { TablaConsultasComponent } from './modulos/nivel-1/tabla-consultas/tabla
 
 import {Ng2Webstorage} from 'ngx-webstorage';
 import { ConveniosService } from "./shared/services/main-service.service";
+import { DirectoresProgramaUvComponent } from './modulos/nivel-2/directores-programa-uv/directores-programa-uv.component';
 
 
 @NgModule({
@@ -124,7 +125,8 @@ import { ConveniosService } from "./shared/services/main-service.service";
     TablainvestigacionComponent,
     PrincipalComponent,
     InicioAppComponent,
-    TablaConsultasComponent
+    TablaConsultasComponent,
+    DirectoresProgramaUvComponent
 
   ],
   imports: [

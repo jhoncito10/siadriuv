@@ -1,0 +1,109 @@
+<div class="box box-solid ">
+  <div id="content-box" #tablaSolicitudesCarrera class="box box-danger collapsed-box">
+    <div class="box-header with-border">
+        <div class="overlay" *ngIf="dataTablaSolicitudes.length==0">
+            <i class="fa fa-refresh fa-spin"></i>
+          </div>
+      <h3 class="box-title">Consultas</h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse" >
+          <i class="fa fa-plus" #conveniosButton></i>
+        </button>
+      </div>
+    </div>
+    <div class="box-body">
+        
+      <div class="example-header">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+      </div>
+
+      <div class="example-container mat-elevation-z8">
+
+        <mat-table [dataSource]="dataSource" matSort>
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="correo">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Correo solicitante </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.correo}} </mat-cell>
+          </ng-container>
+
+          <!-- Progress Column -->
+          <ng-container matColumnDef="fecha">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de solicitud </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.fecha}} </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="facultad">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Facultad </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.facultad}} </mat-cell>
+          </ng-container>
+
+          <!-- Color Column -->
+          <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.nombre}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectConvenio(row)">
+          </mat-row>
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+
+
+
+    </div>
+  </div>
+
+  <!-- <div #descripcionConvenio class="box box-danger collapsed-box">
+    <div class="box-header with-border">
+      <i class="fa fa-bank"></i>
+      <h3 class="box-title">Informacion</h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+          <i class="fa fa-plus" #descripcionConvenioButton></i>
+        </button>
+      </div>
+    </div>
+    <div class="box-body">
+      <div class="row">
+        <div class="col-sm-4 border-right">
+          <div class="description-block">
+            <h5 class="description-header">{{convenio.institucion}}</h5>
+            <div class="box-footer no-padding text-center">
+              <a href="https://www.google.es/maps/place/{{convenio.pais}}+{{convenio.institucion}}" target="_blank"><img
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAARdSURBVFhH7dV/TJR1HAdwtpx/1X/9YQXW1EWeuqK7k6C75+FAOit0VkIMWU6bZtJiriETKNRVo7XM2SK4lBR1ighshWKW3FDWVEB29xzPQeScQYvjLm/g2pI6Pj3fb9/v9fz43vF4PtQ/vLf3H3fP9/Z57ft8n+eS5kLis600+TnLGpG3FIpZFt6fmfkAufT/xGcyzRd581sib73u560gr8hZ/5CgpxCaLP/v4s9Me1hCXVWjGJ3y281vkJ/pyKn8+xYcLHp0YW3RokRaXPXik4LDeoMBiV09wGRXgTO5riCYXP8qJNra1xxsQPzeGeLSlxIGI9KOqWGPfVkEGztq4P3Lx6Cy+xDYTpQqIOraP3oJxCzmcJBuMwichXkNVTqDTUSizSOuDcnyQXzTDhgOj4I8kelp2P3DEQVI3ve25zIHt1pXQOUTi2Hn44tg3/JU6LWZNWvQQ+LjTfcTjjIP1ecvpENSGzbC6O0gBrUNd8O27z6FikuHoGvEA+aj2zQo2pP5nGZoZ0YaRpXJioDqdajoNUM4yshxVd0NGNYgdGgA8Xo+L1MzsDFtmQKGirCsWzzIWQsIRxk5Du0WyqrmMvzZebocvMHritK18ja/YtcMPG1ZocFVpS7BZ1C9VuTMuYSjjBzX8uNFjFvdUo4/v9C6C25OBHDv/DWFr6XUFypgqPs3ZWsGeqQd2mtaEoWhXUNnUL0OVbBbUghHGTluZ5cLA5oG3Yrh9pOlMBX5E34K/6L4nnbNnrXMoQiIdvDo08vAnfEUc430QLgJRRs5bvHBYgxA6fy5H8ovuqDmygkI/B7G36HXihxFm1Innbv1zzKHz1TpNucRijZyHGr68RLoGRvCGBr0KnF52pm3FPX54y9D6JwNBh1sQKzGfcehqHGoCLG2rQrvXMmFAxisXkOLYBM+DqT/Igjty2AiWPU50gODvPlBwmCHhdNbOQxXtMPNN2cGilkr4esdG2b+X00Up4FJnRJXwUBXI4h5OUwUradmL1ScrX2GEGInEVxM2LUW6Om9Av3HvmKiUAc2FUJvz+XZwbFg00OrYdj3DYbRCm9v1eIc6dDX3oavG46LBZsc74FgKAhewRPF9X5/Dvw5yvPnebcset1QHAsWIbBwOIyrBgrvlCh37dszxuNYsEnvc7DncB+MjP0WxamB19qaozhh++tRmGE4Fuy2BNvySR9wlROw+cAEjMYBiuucGNdf95mxuJlgtGxgCAPpre0732Ecjg1zamBK4C0NUKj/HO+eHHZPuLuF0bKAgQEv+D7cbQwuURgteweVT3FCuHuF0bKA4yrgXeH0Hn69ZT0kcqBuHAuG3mOJwmgRUP0eDITGMVAXrrR93dLZgNGygL8GA7D/0hEbIcROtS9//i0vF/kXlmsYjPYfYCiKuzE2Eql2u+cRQvwc7nRWIOCkkGM4jBYDA+MY9sXV1l1ktL5Uu/l5xa6Ps5d/0MTPVgsbz2Tr3rG5zGXWk5T0Ny98tx+G/QW3AAAAAElFTkSuQmCC">
+              </a>
+              <a href="https://es.wikipedia.org/wiki/'{{convenio.institucion}}'" target="_blank"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAYAAACMo1E1AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAN2SURBVFhH7VdNaBNBFE78V/BfD14EtaCIf81uSunBCK3JbFsqQmOxzUyoSkSxB72JYsGLYFFB8Q//UBS9iSjizZuioAcFwdYfVERUEMSoVLH1e5PZ7SY7bdMk3YPmwQeb97038+XNzNudQNn+C1ve0DrTsMRx0+IvTCa+jCos/glzPTYZ346pgxkFg1hGGH9tWqLfbxiMn1cy9JapmD7ZF8R4nZLiNajv1ib5BKxal5LiNeyDN7ok/8BPKCleK4sbEmVxhSJPcXRyTJZM5QL+h4jrRdvZ4eX5E+SmQ0xsc/vRBW6rcXe7/RKWuKO4/MWFWbKWmnI8Hh+r6MDKdckZiLkCPm00bpyzNB6foKiAUZeaDu4muI/hWj47EomMI38Va5sG3wE5bqxtcU3TpqmOv6F9IfxHJTcScTaoCoomniZ3OIOJS4qiBn7O8eMtYzSmppgNiWWY8Jc7B9XdR/EY63qWX2KE4jDRW7tCRiy5Jotn/E8lEytkLqoAgb+lPyaa4ApisrtZ8Zb4RqtBOXjuy+GAAg6EERNbVUgAAzzI5vktRVH1LlB16Tlk8dbsOPqj4qCMY+JaLpdBIeJomYzUeIoJ14sNuTx8q4mrjCYqqtYmFmT2GX/vjsEYP0OxtnlGNLmEKu7mBlCAOELIElsohg4Ifve4OVTkHijnkwfjHHLzEkycJI72qYdzUKA4tIOX9gnEc0cuH2ZiPXGRSHISVcnNyb2IPYnDtcjZl1oUKE6hneKqm5snI/azm0NFdspBYPh9Nouz+GXpZ/yM2+9FceJ67Oohdr/tp6pWsI6Jgc7OMcTRvsNEdgvpo5ZiNPL5yOm1c/QoTly/Wc85xVITRrV+kI8OCVxBVOaiI15VD1W7IePz+pAtUhwEPbffGhjsFHAfj9TTWlSMXHq7ekZUVMlTmrMP9Si2cgD1MIqn1mHWJ2poSWlpiUOFXtltx47DpIdzx9CjBOIQ98zeX2Soyi43727aq1j7XPjSbn5wlEKcBG+hnOro5lnIwzVvgEP13lFLkWPaL/28UCJx2HtPqXoQckTP8w51B/6q4/UoWeUAxo8hR9seIO4DhF3VcYOjlOJKjrK4QjGUOEs88ib4B7SgvUqK1+TFRJPkE9L05aKkaC2IE+bcBXwD49/tt8mwRjcvdP0u4PSog/E9w1WsbP+QBQJ/ASo77g3bVu5KAAAAAElFTkSuQmCC"></a>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 border-right">
+          <div class="box-footer no-padding">
+            <ul class="nav nav-stacked">
+              <li><a href={{convenio?.site}} target="_blank">Site <span class="pull-right badge bg-green">web</span></a></li>
+            </ul>
+          </div>
+
+
+        </div>
+        <div class="col-sm-4">
+          <div class="description-block">
+            <h5 class="description-header">{{convenio.Tipo}}</h5>
+            <span class="description-text">{{convenio.facultad}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div> -->
+
+</div>
