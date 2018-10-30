@@ -20,6 +20,7 @@
       <!-- Componentes traidos del sidebar componentes -->
       <app-agreements ></app-agreements>
       <app-inscripcion *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-inscripcion>
+      <app-side-bar-menu-directores></app-side-bar-menu-directores>
       <app-borradores *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-borradores>
       <app-solicitudes *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-solicitudes>
       <app-renovacion *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-renovacion>

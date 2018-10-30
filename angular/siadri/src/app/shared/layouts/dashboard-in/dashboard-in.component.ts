@@ -1,6 +1,7 @@
 import { BuscadorService } from 'app/shared/layouts/modal-popup/buscador.service';
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from 'app/shared/modal.service';
+import { ConveniosService } from "../../../shared/services/conveniosService/convenios.service";
 
 declare var $: any;
 
@@ -13,11 +14,13 @@ export class DashboardInComponent implements OnInit {
 
   user:any;
 
-  constructor(private ad:BuscadorService ,private modal:ModalService) { 
-    
+  constructor(private ad:BuscadorService ,private modal:ModalService, private _convenios:ConveniosService) { 
+    this._convenios.getConvenios();
+
     if(JSON.parse(localStorage.getItem('usuario'))){
 
       this.user = JSON.parse(localStorage.getItem('usuario'));
+
       this.ad.getNotificaciones(this.user.uid).subscribe(data=>{
         this.modal.changeNotifcacion(data);
       });

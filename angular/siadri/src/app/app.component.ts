@@ -10,7 +10,6 @@ declare var $: any;
 export class AppComponent {
   title = 'app';
 
-  constructor(private _convenios:ConveniosService) {
-   this._convenios.getConvenios();
+  constructor() {
   }
 }

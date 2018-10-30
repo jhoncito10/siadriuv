@@ -83,6 +83,7 @@ import { TablaConsultasComponent } from './modulos/nivel-1/tabla-consultas/tabla
 import {Ng2Webstorage} from 'ngx-webstorage';
 import { ConveniosService } from "./shared/services/main-service.service";
 import { DirectoresProgramaUvComponent } from './modulos/nivel-2/directores-programa-uv/directores-programa-uv.component';
+import { SideBarMenuDirectoresComponent } from './shared/layouts/sidebar-left-components/side-bar-menu-directores/side-bar-menu-directores.component';
 
 
 @NgModule({
@@ -126,7 +127,8 @@ import { DirectoresProgramaUvComponent } from './modulos/nivel-2/directores-prog
     PrincipalComponent,
     InicioAppComponent,
     TablaConsultasComponent,
-    DirectoresProgramaUvComponent
+    DirectoresProgramaUvComponent,
+    SideBarMenuDirectoresComponent
 
   ],
   imports: [

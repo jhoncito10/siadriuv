@@ -41,12 +41,50 @@ export class TablaConsultasComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-      // var data = this.storage.retrieve('convenios');
+      
+    
+
+  }
+  /**
+   * Set the paginator and sort after the view init since this component will
+   * be able to query its view for the initialized paginator and sort.
+   */
+  ngAfterViewInit() {
       //Observa el cambio en la variable local que contiene los convenios
-      this.localSt.observe('convenios')
+       this.getDataConvenios()
+
+
+  }
+
+  getDataConvenios(){
+     var consultaConvenios = this.localSt.retrieve('convenios');
+     console.log('local',consultaConvenios);
+    if (consultaConvenios) {
+        this.convenios = consultaConvenios;
+        for (const key in consultaConvenios) {
+  
+          if (consultaConvenios.hasOwnProperty(key)) {
+            const element = consultaConvenios[key];
+            if (element.Archivo == 'Activo') {
+              this.dataTablaConvenios.push(createConvenio(key, element));
+  
+            }
+  
+          }
+        }
+        this.dataSource = new MatTableDataSource(this.dataTablaConvenios);
+  
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+  
+        this.tablaConvenios.nativeElement.classList.remove('collapsed-box')
+        this.conveniosButton.nativeElement.classList.remove('fa-plus')
+        this.conveniosButton.nativeElement.classList.add('fa-minus')
+    } else {
+      consultaConvenios=[]
+      return this.localSt.observe('convenios')
 			.subscribe((data) => {
         //executa el script al cambio en la variable local de canvios
-        console.log(data);
         // this.storage.store('convenios', data);
         this.convenios = data;
         for (const key in data) {
@@ -69,15 +107,8 @@ export class TablaConsultasComponent implements OnInit {
         this.conveniosButton.nativeElement.classList.remove('fa-plus')
         this.conveniosButton.nativeElement.classList.add('fa-minus')
       });
-    
-
-  }
-  /**
-   * Set the paginator and sort after the view init since this component will
-   * be able to query its view for the initialized paginator and sort.
-   */
-  ngAfterViewInit() {
-
+    }
+   
   }
 
   applyFilter(filterValue: string) {
