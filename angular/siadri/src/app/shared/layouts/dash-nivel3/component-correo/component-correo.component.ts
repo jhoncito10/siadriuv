@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MailServiceService } from "../../../services/main-service.service";
 import swal from 'sweetalert2';
 @Component({
   selector: 'app-component-correo',
@@ -13,37 +14,31 @@ export class ComponentCorreoComponent implements OnInit {
   asunto: string = '';
   mensaje: string = '';
 
-  constructor() { }
+  constructor(private _mailServiceService: MailServiceService) { }
 
   ngOnInit() {
   }
   enviarCorreo() {
-    const url = `https://us-central1-siadriuv.cloudfunctions.net/enviarCorreo`;
-    // const url = `http://localhost:5000/siadriuv/us-central1/enviarCorreo`;
-    const mailData = {
-      para:this.email,
-      cc:this.cc,
-      cco:this.cco,
-      asunto:this.asunto,
-      mensaje:this.mensaje
-    };
-    console.log(mailData);
-    $.ajax(
-      {
-        type: 'POST',
-        url: url,
-        data: JSON.stringify(mailData),
-        success: function (result) {
-          swal({
-            type: 'success',
-            title: 'Solicitud Exitosa',
-            text: '',
-            showConfirmButton: true,
-          });
+    swal.showLoading()
 
-        },
-        contentType: 'application/json'
-      });
+    this._mailServiceService
+    .send(this.email, this.asunto, this.mensaje, this.cc, this.cco)
+    .subscribe((responseData) => {
+      console.log(responseData)
+      if (responseData) {
+        swal({
+          type: 'success',
+          title: 'Correo enviado'        
+        });
+      } else {
+        swal({
+          type: 'error',
+          title: 'Error al enviar el correo, intentalo nuevamente'        
+        });
+      }
+      
+    }, error=>{
+      console.log(error)
+    })
   }
-
 }

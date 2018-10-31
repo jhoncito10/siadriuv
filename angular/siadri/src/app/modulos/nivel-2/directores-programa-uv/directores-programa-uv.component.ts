@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseApp } from 'angularfire2';
-
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import swal from 'sweetalert2';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
-import { ClassGetter } from '@angular/compiler/src/output/output_ast';
-// require("firebase/database");
+import { MailServiceService } from "../../../shared/services/main-service.service";
+
 
 @Component({
   selector: 'app-directores-programa-uv',
@@ -19,21 +18,22 @@ export class DirectoresProgramaUvComponent implements OnInit {
   solicitud: any;
   dataTablaSolicitudes = [];
   db: any
-  displayedColumns = ['correo', 'fecha', 'facultad', 'nombre'];
+  displayedColumns = ['correo', 'fecha', 'facultad', 'nombre', 'estado'];
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('panelSuperior') tablaSolicitudesCarrera: ElementRef;
-  @ViewChild('panelinferior') descripcionConvenio: ElementRef;
-  @ViewChild('panelSuperiorButton') conveniosButton: ElementRef;
-  @ViewChild('panelinferiorButton') descripcionConvenioButton: ElementRef;
+  @ViewChild('panelinferior') panelInferior: ElementRef;
+  @ViewChild('panelSuperiorButton') panelSuperiorButton: ElementRef;
+  @ViewChild('panelinferiorButton') panelinferiorButton: ElementRef;
 
   constructor(private _angularfire: AngularFireDatabase,
     private localSt: LocalStorageService,
-    @Inject(FirebaseApp) firebaseApp: any) {
+    @Inject(FirebaseApp) firebaseApp: any,
+    private _mailServiceService:MailServiceService) {
     this.db = firebaseApp.database();
-    this.solicitudes={}
+    this.solicitudes = {}
 
     this.solicitud = {
       fecha: { dia: "", mes: "", ano: "" },
@@ -50,69 +50,50 @@ export class DirectoresProgramaUvComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.consultaDatosTabla()
+
+  }
+  consultaDatosTabla() {
     this.db.ref('/solicitudes/').once('value').then(solicitudesSnap => {
-      console.log('solicitudes',solicitudesSnap.val())
+      this.dataTablaSolicitudes = [];
+
       solicitudesSnap.forEach((solicitudSnap) => {
-          let dato = solicitudSnap.val()
 
-          console.log(solicitudSnap.key,dato)
-          this.solicitudes[solicitudSnap.key]=dato
-          let correo = dato.correo_solicitante || ''
-          let dia = dato.fecha.dia|| ''
-          let mes = dato.fecha.mes|| ''
-          let ano = dato.fecha.ano|| ''
+        let dato = solicitudSnap.val()
 
-          let fecha = `${dia}/${mes}/${ano}` || ''
-          let facultad = dato.solicitante.programa || ''
-          let nombre = dato.solicitante.nombre || ''
+        this.solicitudes[solicitudSnap.key] = dato
+        let correo = dato.correo_solicitante || ''
+        let dia = dato.fecha.dia || ''
+        let mes = dato.fecha.mes || ''
+        let ano = dato.fecha.ano || ''
 
-          this.dataTablaSolicitudes.push({
-            correo: correo,
-            fecha: fecha,
-            facultad: facultad,
-            nombre: nombre,
-            key: solicitudSnap.key
-          })
+        let fecha = `${dia}/${mes}/${ano}` || ''
+        let facultad = dato.solicitante.programa || ''
+        let nombre = dato.solicitante.nombre || ''
+        let estado = dato.estado || 'Pendiente'
+        let comentarioDenegacion = dato.comentarioDenegacion || 'Ninguno'
+
+        this.dataTablaSolicitudes.push({
+          correo: correo,
+          fecha: fecha,
+          facultad: facultad,
+          nombre: nombre,
+          key: solicitudSnap.key,
+          estado: estado,
+          comentarioDenegacion: comentarioDenegacion
+        })
 
       })
 
       this.dataSource = new MatTableDataSource(this.dataTablaSolicitudes);
 
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
 
-        this.tablaSolicitudesCarrera.nativeElement.classList.remove('collapsed-box')
-        this.conveniosButton.nativeElement.classList.remove('fa-plus')
-        this.conveniosButton.nativeElement.classList.add('fa-minus')
-    })
-    // this._angularfire.list('/solicitudes/')
-    //   // .take(1)
-    //   .subscribe(data => {
-    //     this.solicitudes = data;
-    //     data.forEach((dat, index) => {
-    //       let dato = dat
-    //       let correo = dato.correo_solicitante || ''
-    //       let fecha = `${dato.fecha.dia}/${dato.fecha.mes}/${dato.fecha.ano}` || ''
-    //       let facultad = dato.solicitante.programa || ''
-    //       let nombre = dato.solicitante.nombre || ''
-
-    //       this.dataTablaSolicitudes.push({
-    //         correo: correo,
-    //         fecha: fecha,
-    //         facultad: facultad,
-    //         nombre: nombre,
-    //         key: index
-    //       })
-    //     })
-    //     this.dataSource = new MatTableDataSource(this.dataTablaSolicitudes);
-
-    //     this.dataSource.paginator = this.paginator;
-    //     this.dataSource.sort = this.sort;
-
-    //     this.tablaSolicitudesCarrera.nativeElement.classList.remove('collapsed-box')
-    //     this.conveniosButton.nativeElement.classList.remove('fa-plus')
-    //     this.conveniosButton.nativeElement.classList.add('fa-minus')
-    //   });
+      if (this.tablaSolicitudesCarrera.nativeElement.classList.contains('collapsed-box')) {
+        this.panelSuperiorButton.nativeElement.click()
+      }
+    }).catch((error) => console.log(`${error}`))
   }
 
   applyFilter(filterValue: string) {
@@ -124,55 +105,118 @@ export class DirectoresProgramaUvComponent implements OnInit {
     const _convenioSelected = this.solicitudes[solic.key];
     this.solicitud = _convenioSelected
     this.solicitud.key = solic.key
+    if (this.panelInferior.nativeElement.classList.contains('collapsed-box')) {
+      this.panelinferiorButton.nativeElement.click()
+    }
+    this.panelInferior.nativeElement.scrollIntoView();
 
-    this.toglePanelDescripcion()
   }
 
   toglePanelDescripcion() {
-    if (this.descripcionConvenio.nativeElement.classList.contains('collapsed-box')) {
-      this.descripcionConvenio.nativeElement.classList.remove('collapsed-box')
-      this.descripcionConvenioButton.nativeElement.classList.remove('fa-plus')
-      this.descripcionConvenioButton.nativeElement.classList.add('fa-minus')
-    }
-    this.descripcionConvenio.nativeElement.scrollIntoView();
+
 
   }
 
-  aprobar(){
+  aprobar() {
+    swal.showLoading()
+    var _this = this
+
     const promise = this._angularfire.object(`/solicitudes/${this.solicitud.key}/`).update({ estado: 'aprobada por el director de programa' });
-        promise
-          .then(_ => console.log('success'))
-          .catch(err => console.log(err, 'You dont have access!'));
+    promise
+      .then(res => {
+        var body ='cuerpo del correo de aceptacion'
+
+        return this.enviarCorreo(this.solicitud.correo_diligenciado,"Solicitud Aprobada por el director de programa",body)
+        .subscribe((responseData) => {
+          console.log(responseData)
+          _this.consultaDatosTabla()
+
+          if (responseData) {
+            swal({
+              title: `Solicitud actualizada`
+            })
+          } else {
+            swal({
+              title: `Solicitud actualizada`
+            })
           }
           
-          denegar(){}
+        }, error=>{
+          _this.consultaDatosTabla()
+
+          console.log(error)
+        })
+        
+      })
+      .catch(err => {
+        swal({
+          title: `${err}`
+        })
+        console.log(err, 'You dont have access!')
+      });
+
+  }
+
+  denegar() {
+    var _this = this
+    var mensajeDenegacion=''
+    const promise = this._angularfire.object(`/solicitudes/${this.solicitud.key}/`);
+
+    swal({
+      title: 'Comentario',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Enviar',
+      showLoaderOnConfirm: true,
+      preConfirm: (mensaje) => {
+        mensajeDenegacion = mensaje
+        return promise.update({
+          estado: 'Denegada por el director de programa',
+          comentarioDenegacion: `${mensaje}`
+        })
+          
+      },
+      allowOutsideClick: () => !swal.isLoading()
+    }).then((result) => {
+      if (result.value) {
+        var body =`cuerpo del correo de la razon por la cual la solicitud es denegada 
+                    ${result} -- ${mensajeDenegacion}`
+
+        return this.enviarCorreo(this.solicitud.correo_diligenciado,"Solicitud denegada por el director de programa",body)
+        .subscribe((responseData) => {
+          console.log(responseData)
+          _this.consultaDatosTabla()
+
+          if (responseData) {
+            swal({
+              title: `Solicitud actualizada`
+            })
+          } else {
+            swal({
+              title: `Solicitud actualizada`
+            })
+          }
+          
+        }, error=>{
+          _this.consultaDatosTabla()
+
+          console.log(error)
+        })
+        
+      }
+    }).catch(error=>{
+      console.log(error)
+
+    })
+  }
+
+  enviarCorreo(email,asunto,mensaje,cc ='',cco='') {
+
+    return this._mailServiceService
+    .send(email, asunto, mensaje, cc, cco)
+    
+  }
 }
-
-// function createConvenio(_key: any, el: any): Convenio {
-//   const key = _key
-//   const pais = el.Pais || ''
-//   const institucion = el.Institucion || ''
-//   const facultad = el.Facultad || ''
-//   const email = el.Email || ''
-//   const tipo = el.Tipo || ''
-
-//   return {
-//     key: key,
-//     pais: pais,
-//     institucion: institucion,
-//     facultad: facultad,
-//     email: email,
-//     tipo: tipo
-//   };
-// }
-
-
-// export interface Convenio {
-//   key: string,
-//   pais: string;
-//   institucion: string;
-//   facultad: string;
-//   email: string;
-//   tipo: string;
-// }
-

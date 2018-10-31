@@ -77,18 +77,15 @@ let sendMail = (req, res) => {
     };
     return mailTrasport.sendMail(mailsolicitante).then(() => {
         if (res) {
-            res.status(200).send("Exito al enviar Email desde Firebase Functions.");
+            res.status(200).json({status:200,mensaje:'correo enviado correctamente'});
 
         } else {
             console.log("exito al enviar correo");
         }
     }).catch(error => {
-        if (res) {
-            res.status(200).send("Exito al enviar Email desde Firebase Functions.");
 
-        } else {
-            console.log("exito al enviar correo");
-        }
+            console.log(`${error}`);
+        
     });
     // send mail with defined transport object
     // transporter.sendMail(mailOptions, (error, info) => {

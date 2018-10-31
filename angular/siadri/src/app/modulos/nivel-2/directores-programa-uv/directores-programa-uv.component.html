@@ -7,8 +7,8 @@
       <h3 class="box-title">Consultas</h3>
 
       <div class="box-tools pull-right">
-        <button type="button" class="btn btn-box-tool" data-widget="collapse" >
-          <i class="fa fa-plus" #panelSuperiorButton></i>
+        <button #panelSuperiorButton type="button" class="btn btn-box-tool" data-widget="collapse" >
+          <i class="fa fa-plus" ></i>
         </button>
       </div>
     </div>
@@ -47,6 +47,11 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.nombre}} </mat-cell>
           </ng-container>
+          <!-- Color Column -->
+          <ng-container matColumnDef="estado">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.estado}} </mat-cell>
+          </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectSolicitud(row)">
@@ -67,8 +72,8 @@
       <h3 class="box-title">Solicitud</h3>
 
       <div class="box-tools pull-right">
-        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-          <i class="fa fa-plus" #panelinferiorButton></i>
+        <button #panelinferiorButton type="button" class="btn btn-box-tool" data-widget="collapse">
+          <i class="fa fa-plus" #panelinferiorButtonIcon></i>
         </button>
       </div>
     </div>
@@ -95,11 +100,20 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-sm-4 border-right">
+          <div class="description-block">
+            <h5 class="description-header">{{solicitud.comentarioDenegacion}}</h5>
+            
+          </div>
+        </div>
+       
+      </div>
     </div>
     <div class="box-footer">
       <div class="row" *ngIf="solicitud.solicitante.nombre!=''">
         <div class="col-md-6">
-            <button type="button" class="btn btn-block btn-danger">Negar</button>
+            <button type="button" class="btn btn-block btn-danger" (click)="denegar()">Negar</button>
         </div>
         <div class="col-md-6">
             <button type="button" class="btn btn-block btn-success" (click)="aprobar()">Success</button>

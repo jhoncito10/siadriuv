@@ -81,7 +81,7 @@ import { InicioAppComponent } from "./modulos/auth/inicio-app/inicio-app.compone
 import { TablaConsultasComponent } from './modulos/nivel-1/tabla-consultas/tabla-consultas.component';
 
 import {Ng2Webstorage} from 'ngx-webstorage';
-import { ConveniosService } from "./shared/services/main-service.service";
+import { ConveniosService, MailServiceService } from "./shared/services/main-service.service";
 import { DirectoresProgramaUvComponent } from './modulos/nivel-2/directores-programa-uv/directores-programa-uv.component';
 import { SideBarMenuDirectoresComponent } from './shared/layouts/sidebar-left-components/side-bar-menu-directores/side-bar-menu-directores.component';
 
@@ -172,7 +172,8 @@ import { SideBarMenuDirectoresComponent } from './shared/layouts/sidebar-left-co
     Nivel3Guard,
     AdminGuard,
     UnivalleGuard,
-    ConveniosService
+    ConveniosService,
+    MailServiceService
   ],
   bootstrap: [AppComponent]
 })
