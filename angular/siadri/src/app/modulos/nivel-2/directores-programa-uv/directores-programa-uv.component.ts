@@ -13,13 +13,19 @@ import { MailServiceService } from "../../../shared/services/main-service.servic
   styleUrls: ['./directores-programa-uv.component.css']
 })
 export class DirectoresProgramaUvComponent implements OnInit {
-
+  //datos consulta
   solicitudes: any;
+  // solicitud selecionada
   solicitud: any;
-  dataTablaSolicitudes = [];
+  // variable para la instacia de realtime databe de firebase
   db: any
-  displayedColumns = ['correo', 'fecha', 'facultad', 'nombre', 'estado'];
+  //datos de la tabla
+  dataTablaSolicitudes = [];
+
+  displayedColumns = ['correo', 'ano', 'destino', 'nombre', 'estado'];
   dataSource: MatTableDataSource<any>;
+
+  programaAcademicoDestino='FONOAUDIOLOGÍA'
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -31,21 +37,43 @@ export class DirectoresProgramaUvComponent implements OnInit {
   constructor(private _angularfire: AngularFireDatabase,
     private localSt: LocalStorageService,
     @Inject(FirebaseApp) firebaseApp: any,
-    private _mailServiceService:MailServiceService) {
+    private _mailServiceService: MailServiceService) {
     this.db = firebaseApp.database();
     this.solicitudes = {}
 
     this.solicitud = {
-      fecha: { dia: "", mes: "", ano: "" },
-      solicitante: { nombre: "", programa: "", objetivo: "", alcance: "", justificacion: "", beneficios: "", coordinador: "", institucion: "", replegal: "", telefono: "", fax: "", correo: "" },
-      conveniocontrato: { duracion: "", valor: "", resolucion: "", tipo: { convenio: { marco: false, especifico: false }, contrato: false }, clasificacion: { internacional: false, nacional: false, departamental: false, municipal: false, entidad: { publica: false, privada: false } } },
-      tipoconvcont: { academico: { mov: false, ies: false, act: false, sac: false, ppp: false, cap: false, cos: false, oaa: false }, investigacion: { pdi: false, oai: false }, bienestar: { abu: false }, interna: { mi: false, pci: false } },
-      vicerectoria: "",
-      presupuesto: { ing: 0, idp: 0, ti: 0, gas: 0, mys: 0, galoj: 0, gali: 0, gtran: 0, cper: 0, pnu: 0, peu: 0, ops: 0, eqac: 0, iif: 0, gasg: 0, viu: 0, imp: 0, cap: 0, totcos: 0, dif: 0, sala: 0, repu: 0, per30: 0, ctp17: 0, valemi: 0, conciu: 0, rendf: 0, disr: 0, fc: 0, foi: 0, totalrec: 0 },
-      observaciones: "",
-      correo_solicitante: "",
-      uid_diligenciado: "",
-      correo_diligenciado: ""
+      "AÑO": 0,
+      "NOMBRE": "",
+      "ID_SEXO_BIOLOGICO": "",
+      "ID_ESTADO_CIVIL": "",
+      "FECHA_NACIMIENTO": "",
+      "Correo electrónico": "",
+      "TIPO DE IDENTIFICACIÓN": "",
+      "NÚMERO DE IDENTIFICACIÓN": "",
+      "CÓDIGO DEL ESTUDIANTE EN UNIVALLE": "",
+      "PERIODO ACADÉMICO": 0,
+      "TIPO DE MOVILIDAD": "",
+      "TIPO DE CONVENIO": "",
+      "CODIGO_CONVENIO": "",
+      "MODALIDAD": "",
+      "NUM_DIAS_MOVILIDAD": "",
+      "TIPO DE PROGRAMA - CONVOCATORIA": "",
+      "NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN": "",
+      "NIVEL DE FORMACIÓN DE LA MOVILIDAD": "",
+      "PAÍS DE ORIGEN": "",
+      "UNIVERSIDAD DE PROCEDENCIA": "",
+      "CIUDAD-SEDE": "",
+      "PAÍS DE DESTINO": "",
+      "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "",
+      "PROGRAMA ACADÉMICO DE ORIGEN": "",
+      "CÓDIGO DEL PROGRAMA": "",
+      "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
+      "PROGRAMA ACADÉMICO DE DESTINO (2)": "",
+      "FINANCIAMIENTO": "NO APLICA",
+      "VALOR_FINANCIACION_NACIONAL": "",
+      "ID_FUENTE_INTERNACIONAL": "",
+      "ID_PAIS_FINANCIADOR": "",
+      "VALOR_FINANCIACION_INTERNAC": ""
     }
   }
 
@@ -54,46 +82,53 @@ export class DirectoresProgramaUvComponent implements OnInit {
 
   }
   consultaDatosTabla() {
-    this.db.ref('/solicitudes/').once('value').then(solicitudesSnap => {
-      this.dataTablaSolicitudes = [];
+    console.log('consulta tabla')
+    this.db.ref('/postulaciones/')
+      .orderByChild("TIPO DE MOVILIDAD")
+      .equalTo('ENTRANTE')
+      .once('value')
 
-      solicitudesSnap.forEach((solicitudSnap) => {
+      .then(solicitudesSnap => {
+        this.dataTablaSolicitudes = [];
 
-        let dato = solicitudSnap.val()
+        solicitudesSnap.forEach((solicitudSnap) => {
 
-        this.solicitudes[solicitudSnap.key] = dato
-        let correo = dato.correo_solicitante || ''
-        let dia = dato.fecha.dia || ''
-        let mes = dato.fecha.mes || ''
-        let ano = dato.fecha.ano || ''
+          let dato = solicitudSnap.val()
+          console.log(dato)
+          if(dato['PROGRAMA ACADÉMICO DE DESTINO (1)']==this.programaAcademicoDestino){
+            this.solicitudes[solicitudSnap.key] = dato
+            let correo = dato['Correo electrónico'] || ''
+            let ano = dato['AÑO'] || ''
+            let nombre = dato['NOMBRE'] || ''
+            let estado = dato.estado || 'Pendiente'
+            let destino = dato['PROGRAMA ACADÉMICO DE DESTINO (1)'] || 'Ninguno'
+            let comentarioDenegacion = dato['comentarioDenegacion'] || ''
 
-        let fecha = `${dia}/${mes}/${ano}` || ''
-        let facultad = dato.solicitante.programa || ''
-        let nombre = dato.solicitante.nombre || ''
-        let estado = dato.estado || 'Pendiente'
-        let comentarioDenegacion = dato.comentarioDenegacion || 'Ninguno'
+            this.dataTablaSolicitudes.push({
+              correo: correo,
+              ano: ano,
+              destino: destino,
+              nombre: nombre,
+              key: solicitudSnap.key,
+              estado: estado,
+              comentarioDenegacion: comentarioDenegacion
+            })
+          }
 
-        this.dataTablaSolicitudes.push({
-          correo: correo,
-          fecha: fecha,
-          facultad: facultad,
-          nombre: nombre,
-          key: solicitudSnap.key,
-          estado: estado,
-          comentarioDenegacion: comentarioDenegacion
+
+          
+
         })
 
-      })
+        this.dataSource = new MatTableDataSource(this.dataTablaSolicitudes);
 
-      this.dataSource = new MatTableDataSource(this.dataTablaSolicitudes);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
 
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-
-      if (this.tablaSolicitudesCarrera.nativeElement.classList.contains('collapsed-box')) {
-        this.panelSuperiorButton.nativeElement.click()
-      }
-    }).catch((error) => console.log(`${error}`))
+        if (this.tablaSolicitudesCarrera.nativeElement.classList.contains('collapsed-box')) {
+          this.panelSuperiorButton.nativeElement.click()
+        }
+      }).catch((error) => console.log(`${error}`))
   }
 
   applyFilter(filterValue: string) {
@@ -119,34 +154,44 @@ export class DirectoresProgramaUvComponent implements OnInit {
 
   aprobar() {
     swal.showLoading()
-    var _this = this
+    // var _this = this
 
-    const promise = this._angularfire.object(`/solicitudes/${this.solicitud.key}/`).update({ estado: 'aprobada por el director de programa' });
+    const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update({ estado: 'Aprobada por el director de programa' });
     promise
       .then(res => {
-        var body ='cuerpo del correo de aceptacion'
+        if (this.solicitud['Correo electrónico'] != '') {
+          var body = 'cuerpo del correo de aceptacion'
 
-        return this.enviarCorreo(this.solicitud.correo_diligenciado,"Solicitud Aprobada por el director de programa",body)
-        .subscribe((responseData) => {
-          console.log(responseData)
-          _this.consultaDatosTabla()
+          return this.enviarCorreo(this.solicitud['Correo electrónico'], "Solicitud Aprobada por el director de programa", body)
+            .subscribe((responseData) => {
+              console.log(responseData)
 
-          if (responseData) {
-            swal({
-              title: `Solicitud actualizada`
+              if (responseData) {
+                swal({
+                  title: `Solicitud actualizada`
+                })
+              } else {
+                swal({
+                  title: `Solicitud actualizada`
+                })
+              }
+
+            }, error => {
+
+              console.log(error)
             })
-          } else {
-            swal({
-              title: `Solicitud actualizada`
-            })
-          }
-          
-        }, error=>{
-          _this.consultaDatosTabla()
+        } else {
+          swal({
+            title: `Solicitud actualizada`
+          })
+          return
+        }
 
-          console.log(error)
-        })
-        
+
+      })
+      .then(() => {
+        this.consultaDatosTabla()
+
       })
       .catch(err => {
         swal({
@@ -158,9 +203,9 @@ export class DirectoresProgramaUvComponent implements OnInit {
   }
 
   denegar() {
-    var _this = this
-    var mensajeDenegacion=''
-    const promise = this._angularfire.object(`/solicitudes/${this.solicitud.key}/`);
+    // var _this = this
+    var mensajeDenegacion = ''
+    const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`);
 
     swal({
       title: 'Comentario',
@@ -177,46 +222,123 @@ export class DirectoresProgramaUvComponent implements OnInit {
           estado: 'Denegada por el director de programa',
           comentarioDenegacion: `${mensaje}`
         })
-          
+
       },
       allowOutsideClick: () => !swal.isLoading()
     }).then((result) => {
       if (result.value) {
-        var body =`cuerpo del correo de la razon por la cual la solicitud es denegada 
-                    ${result} -- ${mensajeDenegacion}`
+        if (this.solicitud['Correo electrónico'] != '') {
+          var body = `cuerpo del correo de la razon por la cual la solicitud es denegada 
+          ${result} -- ${mensajeDenegacion}`
 
-        return this.enviarCorreo(this.solicitud.correo_diligenciado,"Solicitud denegada por el director de programa",body)
-        .subscribe((responseData) => {
-          console.log(responseData)
-          _this.consultaDatosTabla()
+          return this.enviarCorreo(this.solicitud['Correo electrónico'], "Solicitud denegada por el director de programa", body)
+            .subscribe((responseData) => {
+              console.log(responseData)
 
-          if (responseData) {
-            swal({
-              title: `Solicitud actualizada`
+              if (responseData) {
+                swal({
+                  title: `Solicitud actualizada`
+                })
+              } else {
+                swal({
+                  title: `Solicitud actualizada`
+                })
+              }
+
+            }, error => {
+
+              console.log(error)
             })
-          } else {
-            swal({
-              title: `Solicitud actualizada`
-            })
-          }
-          
-        }, error=>{
-          _this.consultaDatosTabla()
+        } else {
+          swal({
+            title: `Solicitud actualizada`
+          })
+          return
+        }
 
-          console.log(error)
-        })
-        
       }
-    }).catch(error=>{
-      console.log(error)
-
     })
+      .then(() => {
+        this.consultaDatosTabla()
+
+      })
+      .catch(error => {
+        console.log(error)
+
+      })
   }
 
-  enviarCorreo(email,asunto,mensaje,cc ='',cco='') {
+  enviarCorreo(email, asunto, mensaje, cc = '', cco = '') {
 
     return this._mailServiceService
-    .send(email, asunto, mensaje, cc, cco)
-    
+      .send(email, asunto, mensaje, cc, cco)
+
   }
 }
+
+/*
+1
+AÑO: 
+2015
+CIUDAD-SEDE: 
+"CALI"
+CODIGO_CONVENIO: 
+""
+Correo electrónico: 
+""
+CÓDIGO DEL ESTUDIANTE EN UNIVALLE: 
+"NO APLICA"
+CÓDIGO DEL PROGRAMA: 
+"-"
+FECHA_NACIMIENTO: 
+""
+FINANCIAMIENTO: 
+"NO APLICA"
+ID_ESTADO_CIVIL: 
+""
+ID_FUENTE_INTERNACIONAL: 
+""
+ID_PAIS_FINANCIADOR: 
+""
+ID_SEXO_BIOLOGICO: 
+""
+MODALIDAD: 
+"SEMESTRE DE INTERCAMBIO"
+NIVEL DE FORMACIÓN DE LA MOVILIDAD: 
+"PREGRADO"
+NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN: 
+"PREGRADO PROFESIONAL"
+NOMBRE: 
+"CARREÑO SALGADO ERICK PATRICIO"
+NUM_DIAS_MOVILIDAD: 
+""
+NÚMERO DE IDENTIFICACIÓN: 
+"P04337831"
+PAÍS DE DESTINO: 
+"COLOMBIA"
+PAÍS DE ORIGEN: 
+"CHILE"
+PERIODO ACADÉMICO: 
+1
+PROGRAMA ACADÉMICO DE DESTINO (1): 
+"FONOAUDIOLOGÍA"
+PROGRAMA ACADÉMICO DE DESTINO (2): 
+"-"
+PROGRAMA ACADÉMICO DE ORIGEN: 
+"FONOAUDIOLOGÍA"
+TIPO DE CONVENIO: 
+"INTERCAMBIO"
+TIPO DE IDENTIFICACIÓN: 
+"PASAPORTE"
+TIPO DE MOVILIDAD: 
+"ENTRANTE"
+TIPO DE PROGRAMA - CONVOCATORIA: 
+"CINDA"
+UNIVERSIDAD - INSTITUCIÓN RECEPTORA: 
+"UNIVERSIDAD DEL VALLE"
+UNIVERSIDAD DE PROCEDENCIA: 
+"UNIVERSIDAD DE TALCA"
+VALOR_FINANCIACION_INTERNAC: 
+""
+VALOR_FINANCIACION_NACIONAL: 
+*/

@@ -31,15 +31,15 @@
           </ng-container>
 
           <!-- Progress Column -->
-          <ng-container matColumnDef="fecha">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de solicitud </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.fecha}} </mat-cell>
+          <ng-container matColumnDef="ano">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Año </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.ano}} </mat-cell>
           </ng-container>
 
           <!-- Name Column -->
-          <ng-container matColumnDef="facultad">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Facultad </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.facultad}} </mat-cell>
+          <ng-container matColumnDef="destino">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Programa destino </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.destino}} </mat-cell>
           </ng-container>
 
           <!-- Color Column -->
@@ -81,14 +81,14 @@
       <div class="row">
         <div class="col-sm-4 border-right">
           <div class="description-block">
-            <h5 class="description-header">{{solicitud.solicitante.nombre || ''}}</h5>
+            <h5 class="description-header">{{solicitud['NOMBRE'] || ''}}</h5>
             
           </div>
         </div>
         <div class="col-sm-4 border-right">
           <div class="box-footer no-padding">
             <ul class="nav nav-stacked">
-              <li><a href="mailto:{{solicitud.correo_diligenciado || ''}}" target="_blank">{{solicitud.correo_diligenciado || ''}} <span class="pull-right badge bg-green">web</span></a></li>
+              <li><a href="mailto:{{solicitud['Correo electrónico'] || ''}}" target="_blank"><span class="pull-right badge bg-green">Correo</span>{{solicitud['Correo electrónico'] || ''}} </a></li>
             </ul>
           </div>
 
@@ -96,7 +96,7 @@
         </div>
         <div class="col-sm-4">
           <div class="description-block">
-            <h5 class="description-header">{{solicitud.fecha.dia || ''}}/{{solicitud.fecha.mes || ''}}/{{solicitud.fecha.ano || ''}}</h5>
+            <h5 class="description-header">{{solicitud['AÑO'] || ''}}</h5>
           </div>
         </div>
       </div>
@@ -111,7 +111,7 @@
       </div>
     </div>
     <div class="box-footer">
-      <div class="row" *ngIf="solicitud.solicitante.nombre!=''">
+      <div class="row" *ngIf="solicitud.nombre!==''">
         <div class="col-md-6">
             <button type="button" class="btn btn-block btn-danger" (click)="denegar()">Negar</button>
         </div>
