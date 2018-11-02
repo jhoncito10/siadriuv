@@ -3,16 +3,15 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseApp } from 'angularfire2';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import swal from 'sweetalert2';
-import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
-import { MailServiceService } from "../../../shared/services/main-service.service";
-
-
+import { LocalStorageService } from 'ngx-webstorage';
+import { MailServiceService } from "../../../../shared/services/main-service.service";
 @Component({
-  selector: 'app-directores-programa-uv',
-  templateUrl: './directores-programa-uv.component.html',
-  styleUrls: ['./directores-programa-uv.component.css']
+  selector: 'app-pares-externos-salientes',
+  templateUrl: './pares-externos-salientes.component.html',
+  styleUrls: ['./pares-externos-salientes.component.css']
 })
-export class DirectoresProgramaUvComponent implements OnInit {
+export class ParesExternosSalientesComponent implements OnInit {
+
   //datos consulta
   solicitudes: any;
   // solicitud selecionada
@@ -25,7 +24,7 @@ export class DirectoresProgramaUvComponent implements OnInit {
   displayedColumns = ['correo', 'ano', 'destino', 'nombre', 'estado'];
   dataSource: MatTableDataSource<any>;
 
-  programaAcademicoDestino='FONOAUDIOLOGÍA'
+  programaAcademicoDestino = 'FONOAUDIOLOGÍA'
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -95,28 +94,30 @@ export class DirectoresProgramaUvComponent implements OnInit {
 
           let dato = solicitudSnap.val()
           console.log(dato)
-          if(dato['PROGRAMA ACADÉMICO DE DESTINO (1)']==this.programaAcademicoDestino){
-            this.solicitudes[solicitudSnap.key] = dato
-            let correo = dato['Correo electrónico'] || ''
-            let ano = dato['AÑO'] || ''
-            let nombre = dato['NOMBRE'] || ''
-            let estado = dato.estado || 'Pendiente'
-            let destino = dato['PROGRAMA ACADÉMICO DE DESTINO (1)'] || 'Ninguno'
-            let comentarioDenegacion = dato['comentarioDenegacion'] || ''
+          if (dato['UNIVERSIDAD - INSTITUCIÓN RECEPTORA'] == 'UNIVERSIDAD DEL VALLE') {
+              this.solicitudes[solicitudSnap.key] = dato
+              let correo = dato['Correo electrónico'] || ''
+              let ano = dato['AÑO'] || ''
+              let nombre = dato['NOMBRE'] || ''
+              let estado = dato.estado || 'Pendiente'
+              let destino = dato['PROGRAMA ACADÉMICO DE DESTINO (1)'] || 'Ninguno'
+              let comentarioDenegacion = dato['comentarioDenegacion'] || ''
 
-            this.dataTablaSolicitudes.push({
-              correo: correo,
-              ano: ano,
-              destino: destino,
-              nombre: nombre,
-              key: solicitudSnap.key,
-              estado: estado,
-              comentarioDenegacion: comentarioDenegacion
-            })
+              this.dataTablaSolicitudes.push({
+                correo: correo,
+                ano: ano,
+                destino: destino,
+                nombre: nombre,
+                key: solicitudSnap.key,
+                estado: estado,
+                comentarioDenegacion: comentarioDenegacion
+              })
+
+
           }
 
 
-          
+
 
         })
 
@@ -229,7 +230,7 @@ export class DirectoresProgramaUvComponent implements OnInit {
       if (result.value) {
         if (this.solicitud['Correo electrónico'] != '') {
           var body = `cuerpo del correo de la razon por la cual la solicitud es denegada 
-          ${result} -- ${mensajeDenegacion}`
+        ${result} -- ${mensajeDenegacion}`
 
           return this.enviarCorreo(this.solicitud['Correo electrónico'], "Solicitud denegada por el director de programa", body)
             .subscribe((responseData) => {

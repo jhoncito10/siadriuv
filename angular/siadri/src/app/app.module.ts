@@ -84,6 +84,8 @@ import {Ng2Webstorage} from 'ngx-webstorage';
 import { ConveniosService, MailServiceService } from "./shared/services/main-service.service";
 import { DirectoresProgramaUvComponent } from './modulos/nivel-2/directores-programa-uv/directores-programa-uv.component';
 import { SideBarMenuDirectoresComponent } from './shared/layouts/sidebar-left-components/side-bar-menu-directores/side-bar-menu-directores.component';
+import { ParesExternosComponent } from './modulos/nivel-2/pares-externos/pares-externos.component';
+import { ParesExternosSalientesComponent } from './modulos/nivel-2/pares-externos/pares-externos-salientes/pares-externos-salientes.component';
 
 
 @NgModule({
@@ -128,7 +130,9 @@ import { SideBarMenuDirectoresComponent } from './shared/layouts/sidebar-left-co
     InicioAppComponent,
     TablaConsultasComponent,
     DirectoresProgramaUvComponent,
-    SideBarMenuDirectoresComponent
+    SideBarMenuDirectoresComponent,
+    ParesExternosComponent,
+    ParesExternosSalientesComponent
 
   ],
   imports: [

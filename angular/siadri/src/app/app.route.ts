@@ -14,14 +14,18 @@ import { UsuariosComponent } from 'app/shared/layouts/formularios-admin/usuarios
 import { DashNivel3Component } from 'app/shared/layouts/dash-nivel3/dash-nivel3.component';
 import { ComponentCorreoComponent } from 'app/shared/layouts/dash-nivel3/component-correo/component-correo.component';
 import { InvestigacionesComponent } from 'app/shared/layouts/dash-nivel2/investigaciones/investigaciones.component';
-//auth modulo
+//MODULO AUTH
 import { InicioAppComponent } from "./modulos/auth/inicio-app/inicio-app.component";
 import { LoginComponent } from './modulos/auth/login/login.component';
-// nivel-1 modulo
+// MODULO NIVEL 1
 import { TablaConsultasComponent } from "./modulos/nivel-1/tabla-consultas/tabla-consultas.component";
 
-// nivel-2 modulo
+// MODULO NIVEL 2
+//directores de programa
 import { DirectoresProgramaUvComponent } from "./modulos/nivel-2/directores-programa-uv/directores-programa-uv.component";
+// pares externos
+import { ParesExternosComponent } from "./modulos/nivel-2/pares-externos/pares-externos.component";
+
 const routes: Routes = [
     { path: 'inicio', component: InicioAppComponent },
     { path: 'login', component: LoginComponent },
@@ -36,7 +40,9 @@ const routes: Routes = [
                     { path: 'inscripciones', component: InscripcionesComponent },
                     { path: 'renovaciones', component: RenovacionesComponent },
                     { path: 'investigaciones', component: InvestigacionesComponent },
-                    { path: 'directores', component: DirectoresProgramaUvComponent }
+                    { path: 'directores', component: DirectoresProgramaUvComponent },
+                    { path: 'paresExternos', component: ParesExternosComponent }
+
 
                 ]
             },

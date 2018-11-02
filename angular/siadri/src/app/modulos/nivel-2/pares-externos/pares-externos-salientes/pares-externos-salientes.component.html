@@ -1,0 +1,125 @@
+<div class="box box-solid ">
+  <div id="content-box" #panelSuperior class="box box-danger collapsed-box">
+    <div class="box-header with-border">
+        <div class="overlay" *ngIf="dataTablaSolicitudes.length==0">
+            <i class="fa fa-refresh fa-spin"></i>
+          </div>
+      <h3 class="box-title">Solicitudes salientes</h3>
+
+      <div class="box-tools pull-right">
+        <button #panelSuperiorButton type="button" class="btn btn-box-tool" data-widget="collapse" >
+          <i class="fa fa-plus" ></i>
+        </button>
+      </div>
+    </div>
+    <div class="box-body">
+        
+      <div class="example-header">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+      </div>
+
+      <div class="example-container mat-elevation-z8">
+
+        <mat-table [dataSource]="dataSource" matSort>
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="correo">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Correo solicitante </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.correo}} </mat-cell>
+          </ng-container>
+
+          <!-- Progress Column -->
+          <ng-container matColumnDef="ano">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Año </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.ano}} </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="destino">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Programa destino </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.destino}} </mat-cell>
+          </ng-container>
+
+          <!-- Color Column -->
+          <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.nombre}} </mat-cell>
+          </ng-container>
+          <!-- Color Column -->
+          <ng-container matColumnDef="estado">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.estado}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectSolicitud(row)">
+          </mat-row>
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+
+
+
+    </div>
+  </div>
+
+  <div #panelinferior class="box box-danger collapsed-box">
+    <div class="box-header with-border">
+      <i class="fa fa-bank"></i>
+      <h3 class="box-title">Solicitud</h3>
+
+      <div class="box-tools pull-right">
+        <button #panelinferiorButton type="button" class="btn btn-box-tool" data-widget="collapse">
+          <i class="fa fa-plus" #panelinferiorButtonIcon></i>
+        </button>
+      </div>
+    </div>
+    <div class="box-body">
+      <div class="row">
+        <div class="col-sm-4 border-right">
+          <div class="description-block">
+            <h5 class="description-header">{{solicitud['NOMBRE'] || ''}}</h5>
+            
+          </div>
+        </div>
+        <div class="col-sm-4 border-right">
+          <div class="box-footer no-padding">
+            <ul class="nav nav-stacked">
+              <li><a href="mailto:{{solicitud['Correo electrónico'] || ''}}" target="_blank"><span class="pull-right badge bg-green">Correo</span>{{solicitud['Correo electrónico'] || ''}} </a></li>
+            </ul>
+          </div>
+
+
+        </div>
+        <div class="col-sm-4">
+          <div class="description-block">
+            <h5 class="description-header">{{solicitud['AÑO'] || ''}}</h5>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4 border-right">
+          <div class="description-block">
+            <h5 class="description-header">{{solicitud.comentarioDenegacion}}</h5>
+            
+          </div>
+        </div>
+       
+      </div>
+    </div>
+    <div class="box-footer">
+      <div class="row" *ngIf="solicitud.nombre!==''">
+        <div class="col-md-6">
+            <button type="button" class="btn btn-block btn-danger" (click)="denegar()">Negar</button>
+        </div>
+        <div class="col-md-6">
+            <button type="button" class="btn btn-block btn-success" (click)="aprobar()">Success</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
