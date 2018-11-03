@@ -86,6 +86,7 @@ import { DirectoresProgramaUvComponent } from './modulos/nivel-2/directores-prog
 import { SideBarMenuDirectoresComponent } from './shared/layouts/sidebar-left-components/side-bar-menu-directores/side-bar-menu-directores.component';
 import { ParesExternosComponent } from './modulos/nivel-2/pares-externos/pares-externos.component';
 import { ParesExternosSalientesComponent } from './modulos/nivel-2/pares-externos/pares-externos-salientes/pares-externos-salientes.component';
+import { SideBarMenuParesExternosComponent } from './shared/layouts/sidebar-left-components/side-bar-menu-pares-externos/side-bar-menu-pares-externos.component';
 
 
 @NgModule({
@@ -132,7 +133,8 @@ import { ParesExternosSalientesComponent } from './modulos/nivel-2/pares-externo
     DirectoresProgramaUvComponent,
     SideBarMenuDirectoresComponent,
     ParesExternosComponent,
-    ParesExternosSalientesComponent
+    ParesExternosSalientesComponent,
+    SideBarMenuParesExternosComponent
 
   ],
   imports: [
