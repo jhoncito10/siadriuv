@@ -26,6 +26,8 @@ export class ParesExternosSalientesComponent implements OnInit {
 
   programaAcademicoDestino = 'FONOAUDIOLOGÍA'
 
+  estadoComponenteInferior = 0 //0 = ninguno; 1 =  nueva solicitud; 2 = datos solicitud
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('panelSuperior') tablaSolicitudesCarrera: ElementRef;
@@ -51,7 +53,7 @@ export class ParesExternosSalientesComponent implements OnInit {
       "NÚMERO DE IDENTIFICACIÓN": "",
       "CÓDIGO DEL ESTUDIANTE EN UNIVALLE": "",
       "PERIODO ACADÉMICO": 0,
-      "TIPO DE MOVILIDAD": "",
+      "TIPO DE MOVILIDAD": "ENTRANTE",
       "TIPO DE CONVENIO": "",
       "CODIGO_CONVENIO": "",
       "MODALIDAD": "",
@@ -63,7 +65,7 @@ export class ParesExternosSalientesComponent implements OnInit {
       "UNIVERSIDAD DE PROCEDENCIA": "",
       "CIUDAD-SEDE": "",
       "PAÍS DE DESTINO": "",
-      "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "",
+      "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "UNIVERSIDAD DEL VALLE",
       "PROGRAMA ACADÉMICO DE ORIGEN": "",
       "CÓDIGO DEL PROGRAMA": "",
       "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
@@ -81,14 +83,12 @@ export class ParesExternosSalientesComponent implements OnInit {
 
   }
   consultaDatosTabla() {
-    console.log('consulta tabla')
     this.db.ref('/postulaciones/')
       .orderByChild("TIPO DE MOVILIDAD")
       .equalTo('ENTRANTE')
-      .once('value')
-
-      .then(solicitudesSnap => {
+      .once('value',solicitudesSnap => {
         this.dataTablaSolicitudes = [];
+        console.log('consulta tabla',solicitudesSnap)
 
         solicitudesSnap.forEach((solicitudSnap) => {
 
@@ -148,126 +148,25 @@ export class ParesExternosSalientesComponent implements OnInit {
 
   }
 
-  toglePanelDescripcion() {
-
-
+  nuevaSolicitud(){
+    this.estadoComponenteInferior=1
+    if (this.panelInferior.nativeElement.classList.contains('collapsed-box')) {
+      this.panelinferiorButton.nativeElement.click()
+    }
+    this.panelInferior.nativeElement.scrollIntoView();
   }
 
-  aprobar() {
-    swal.showLoading()
-    // var _this = this
+ crearSolicitud(){
+  console.log(this.solicitud)
+  var ref = this.db.ref('/postulaciones/').push()
 
-    const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update({ estado: 'Aprobada por el director de programa' });
-    promise
-      .then(res => {
-        if (this.solicitud['Correo electrónico'] != '') {
-          var body = 'cuerpo del correo de aceptacion'
-
-          return this.enviarCorreo(this.solicitud['Correo electrónico'], "Solicitud Aprobada por el director de programa", body)
-            .subscribe((responseData) => {
-              console.log(responseData)
-
-              if (responseData) {
-                swal({
-                  title: `Solicitud actualizada`
-                })
-              } else {
-                swal({
-                  title: `Solicitud actualizada`
-                })
-              }
-
-            }, error => {
-
-              console.log(error)
-            })
-        } else {
-          swal({
-            title: `Solicitud actualizada`
-          })
-          return
-        }
-
-
-      })
-      .then(() => {
-        this.consultaDatosTabla()
-
-      })
-      .catch(err => {
-        swal({
-          title: `${err}`
-        })
-        console.log(err, 'You dont have access!')
-      });
-
-  }
-
-  denegar() {
-    // var _this = this
-    var mensajeDenegacion = ''
-    const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`);
-
-    swal({
-      title: 'Comentario',
-      input: 'text',
-      inputAttributes: {
-        autocapitalize: 'off'
-      },
-      showCancelButton: true,
-      confirmButtonText: 'Enviar',
-      showLoaderOnConfirm: true,
-      preConfirm: (mensaje) => {
-        mensajeDenegacion = mensaje
-        return promise.update({
-          estado: 'Denegada por el director de programa',
-          comentarioDenegacion: `${mensaje}`
-        })
-
-      },
-      allowOutsideClick: () => !swal.isLoading()
-    }).then((result) => {
-      if (result.value) {
-        if (this.solicitud['Correo electrónico'] != '') {
-          var body = `cuerpo del correo de la razon por la cual la solicitud es denegada 
-        ${result} -- ${mensajeDenegacion}`
-
-          return this.enviarCorreo(this.solicitud['Correo electrónico'], "Solicitud denegada por el director de programa", body)
-            .subscribe((responseData) => {
-              console.log(responseData)
-
-              if (responseData) {
-                swal({
-                  title: `Solicitud actualizada`
-                })
-              } else {
-                swal({
-                  title: `Solicitud actualizada`
-                })
-              }
-
-            }, error => {
-
-              console.log(error)
-            })
-        } else {
-          swal({
-            title: `Solicitud actualizada`
-          })
-          return
-        }
-
-      }
-    })
-      .then(() => {
-        this.consultaDatosTabla()
-
-      })
-      .catch(error => {
-        console.log(error)
-
-      })
-  }
+  ref.set(this.solicitud).then((res)=>{
+    console.log(res)
+  }).catch(error=>{
+    console.log(error)
+  })
+ }
+  
 
   enviarCorreo(email, asunto, mensaje, cc = '', cco = '') {
 
