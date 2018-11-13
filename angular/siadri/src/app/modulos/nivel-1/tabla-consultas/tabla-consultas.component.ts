@@ -15,9 +15,10 @@ export class TablaConsultasComponent implements OnInit {
   convenios: any;
   convenio: any;
   dataTablaConvenios = [];
+  spiner:boolean;
 
   displayedColumns = ['pais', 'institucion', 'facultad', 'tipo'];
-  dataSource: MatTableDataSource<Convenio>;
+  dataSource:any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -28,6 +29,8 @@ export class TablaConsultasComponent implements OnInit {
 
 
   constructor(private _angularfire: AngularFireDatabase,private localSt:LocalStorageService) {
+    this.spiner = true;
+
     this.convenio = {
       pais: '',
       institucion: '',
@@ -41,7 +44,7 @@ export class TablaConsultasComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-      
+
     
 
   }
@@ -51,12 +54,15 @@ export class TablaConsultasComponent implements OnInit {
    */
   ngAfterViewInit() {
       //Observa el cambio en la variable local que contiene los convenios
-       this.getDataConvenios()
-
+      setTimeout(() => {
+        this.getDataConvenios()
+      });
 
   }
+ 
 
   getDataConvenios(){
+    this.spiner=true;
      var consultaConvenios = this.localSt.retrieve('convenios');
      console.log('local',consultaConvenios);
     if (consultaConvenios) {
@@ -76,7 +82,8 @@ export class TablaConsultasComponent implements OnInit {
   
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-  
+        this.spiner=true;
+
         this.tablaConvenios.nativeElement.classList.remove('collapsed-box')
         this.conveniosButton.nativeElement.classList.remove('fa-plus')
         this.conveniosButton.nativeElement.classList.add('fa-minus')
@@ -102,7 +109,8 @@ export class TablaConsultasComponent implements OnInit {
   
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-  
+        this.spiner=true;
+
         this.tablaConvenios.nativeElement.classList.remove('collapsed-box')
         this.conveniosButton.nativeElement.classList.remove('fa-plus')
         this.conveniosButton.nativeElement.classList.add('fa-minus')

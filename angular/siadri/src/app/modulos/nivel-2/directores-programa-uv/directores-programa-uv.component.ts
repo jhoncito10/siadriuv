@@ -95,7 +95,10 @@ export class DirectoresProgramaUvComponent implements OnInit {
 
           let dato = solicitudSnap.val()
           console.log(dato)
-          if(dato['PROGRAMA ACADÉMICO DE DESTINO (1)']==this.programaAcademicoDestino){
+          if(
+true
+            // dato['PROGRAMA ACADÉMICO DE DESTINO (1)']==this.programaAcademicoDestino
+          ){
             this.solicitudes[solicitudSnap.key] = dato
             let correo = dato['Correo electrónico'] || ''
             let ano = dato['AÑO'] || ''

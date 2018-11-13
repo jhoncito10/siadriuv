@@ -20,7 +20,7 @@ export class UnivalleGuard implements CanActivate {
 
           if (this.user) {
             this.univalle = this.user.email.split('@');
-            console.log(this.univalle);
+            console.log(this.rol);
             if ((this.univalle[1] === 'correounivalle.edu.co') || (this.rol === 'ADMIN') || (this.rol === "NIVEL3")) {
               return true;
             } else {
