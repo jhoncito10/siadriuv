@@ -25,7 +25,7 @@ export class DirectoresProgramaUvComponent implements OnInit {
   displayedColumns = ['correo', 'ano', 'destino', 'nombre', 'estado'];
   dataSource: MatTableDataSource<any>;
 
-  programaAcademicoDestino='FONOAUDIOLOGÍA'
+  programaAcademicoDestino='BIOLOGÍA'
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -96,8 +96,7 @@ export class DirectoresProgramaUvComponent implements OnInit {
           let dato = solicitudSnap.val()
           console.log(dato)
           if(
-true
-            // dato['PROGRAMA ACADÉMICO DE DESTINO (1)']==this.programaAcademicoDestino
+            dato['PROGRAMA ACADÉMICO DE DESTINO (1)']==this.programaAcademicoDestino
           ){
             this.solicitudes[solicitudSnap.key] = dato
             let correo = dato['Correo electrónico'] || ''

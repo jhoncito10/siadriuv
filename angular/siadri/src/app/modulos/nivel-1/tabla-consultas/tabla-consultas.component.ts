@@ -82,7 +82,7 @@ export class TablaConsultasComponent implements OnInit {
   
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        this.spiner=true;
+        this.spiner=false;
 
         this.tablaConvenios.nativeElement.classList.remove('collapsed-box')
         this.conveniosButton.nativeElement.classList.remove('fa-plus')
@@ -109,7 +109,7 @@ export class TablaConsultasComponent implements OnInit {
   
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        this.spiner=true;
+        this.spiner=false;
 
         this.tablaConvenios.nativeElement.classList.remove('collapsed-box')
         this.conveniosButton.nativeElement.classList.remove('fa-plus')

@@ -5,7 +5,13 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import swal from 'sweetalert2';
 import { LocalStorageService } from 'ngx-webstorage';
 import { MailServiceService } from "../../../../shared/services/main-service.service";
-import { element } from 'protractor';
+import * as  moment from "moment";
+import * as firebase from "firebase";
+import { MomentModule } from 'angular2-moment';
+import { environment } from "../../../../../environments/environment";
+firebase.initializeApp(environment.config);
+
+
 @Component({
   selector: 'app-pares-externos-salientes',
   templateUrl: './pares-externos-salientes.component.html',
@@ -20,6 +26,7 @@ export class ParesExternosSalientesComponent implements OnInit {
   // variable para la instacia de realtime databe de firebase
   db: any
   //datos de la tabla
+  firebaseStorage: any
   dataTablaSolicitudes = [];
 
   displayedColumns = ['correo', 'ano', 'destino', 'nombre', 'estado'];
@@ -29,22 +36,33 @@ export class ParesExternosSalientesComponent implements OnInit {
 
   estadoComponenteInferior = 0 //0 = ninguno; 1 =  nueva solicitud; 2 = datos solicitud
 
+  year
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('panelSuperior') tablaSolicitudesCarrera: ElementRef;
   @ViewChild('panelinferior') panelInferior: ElementRef;
   @ViewChild('panelSuperiorButton') panelSuperiorButton: ElementRef;
   @ViewChild('panelinferiorButton') panelinferiorButton: ElementRef;
+  @ViewChild('fileInput1') fileInput1: ElementRef;
+  @ViewChild('fileInput2') fileInput2: ElementRef;
+  @ViewChild('fileInput3') fileInput3: ElementRef;
+
+
 
   constructor(private _angularfire: AngularFireDatabase,
     private localSt: LocalStorageService,
     @Inject(FirebaseApp) firebaseApp: any,
-    private _mailServiceService: MailServiceService) {
+    private _mailServiceService: MailServiceService,
+    private _MomentModule: MomentModule
+  ) {
     this.db = firebaseApp.database();
+    this.firebaseStorage = firebase.storage();
+    console.log(firebaseApp)
     this.solicitudes = {}
-
+    this.year = moment().year()
     this.solicitud = {
-      "AÑO": 0,
+      "AÑO": this.year,
       "NOMBRE": "",
       "ID_SEXO_BIOLOGICO": "",
       "ID_ESTADO_CIVIL": "",
@@ -59,7 +77,7 @@ export class ParesExternosSalientesComponent implements OnInit {
       "CODIGO_CONVENIO": "",
       "MODALIDAD": "",
       "NUM_DIAS_MOVILIDAD": "",
-      "TIPO DE PROGRAMA - CONVOCATORIA": "",
+      "TIPO DE PROGRAMA - CONVOCATORIA": "BILATERAL",
       "NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN": "",
       "NIVEL DE FORMACIÓN DE LA MOVILIDAD": "",
       "PAÍS DE ORIGEN": "",
@@ -69,13 +87,16 @@ export class ParesExternosSalientesComponent implements OnInit {
       "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "UNIVERSIDAD DEL VALLE",
       "PROGRAMA ACADÉMICO DE ORIGEN": "",
       "CÓDIGO DEL PROGRAMA": "",
-      "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
+      "PROGRAMA ACADÉMICO DE DESTINO (1)": "BIOLOGÍA",
       "PROGRAMA ACADÉMICO DE DESTINO (2)": "",
       "FINANCIAMIENTO": "NO APLICA",
       "VALOR_FINANCIACION_NACIONAL": "",
       "ID_FUENTE_INTERNACIONAL": "",
       "ID_PAIS_FINANCIADOR": "",
-      "VALOR_FINANCIACION_INTERNAC": ""
+      "VALOR_FINANCIACION_INTERNAC": "",
+      "urlFile1":"",
+      "urlFile2":"",
+      "urlFile3":""
     }
   }
 
@@ -89,12 +110,12 @@ export class ParesExternosSalientesComponent implements OnInit {
       .equalTo('ENTRANTE')
       .once('value', solicitudesSnap => {
         this.dataTablaSolicitudes = [];
-        console.log('consulta tabla', solicitudesSnap)
+        // console.log('consulta tabla', solicitudesSnap)
 
         solicitudesSnap.forEach((solicitudSnap) => {
 
           let dato = solicitudSnap.val()
-          console.log(dato)
+          // console.log(dato)
           if (dato['UNIVERSIDAD DE PROCEDENCIA'] == this.universidadProcedencia) {
             this.solicitudes[solicitudSnap.key] = dato
             let correo = dato['Correo electrónico'] || ''
@@ -143,6 +164,7 @@ export class ParesExternosSalientesComponent implements OnInit {
 
     const _convenioSelected = this.solicitudes[solic.key];
     this.solicitud = _convenioSelected
+    console.log(this.solicitud)
     this.solicitud.key = solic.key
     if (this.panelInferior.nativeElement.classList.contains('collapsed-box')) {
       this.panelinferiorButton.nativeElement.click()
@@ -157,35 +179,147 @@ export class ParesExternosSalientesComponent implements OnInit {
     if (this.panelInferior.nativeElement.classList.contains('collapsed-box')) {
       this.panelinferiorButton.nativeElement.click()
     }
-    this.panelInferior.nativeElement.scrollIntoView();
+    // setTimeout(function(){ 
+
+    //  }, 2500);
+    this.panelInferior.nativeElement.scrollIntoView({ block: "start", behavior: "smooth" });
+
+
   }
 
   crearSolicitud() {
-    console.log(this.validarDatosFormlario())
-    if (this.validarDatosFormlario()) {
-      var ref = this.db.ref('/postulaciones/').push()
+    console.log(this.fileInput1.nativeElement.files[0])
 
-      ref.set(this.solicitud).then((res) => {
+    if (this.validarDatosFormlario()) {      
+
+      if (
+        this.fileInput1.nativeElement.files && this.fileInput1.nativeElement.files.length > 0 &&
+        this.fileInput2.nativeElement.files && this.fileInput2.nativeElement.files.length > 0 &&
+        this.fileInput3.nativeElement.files && this.fileInput3.nativeElement.files.length > 0
+        ) {
+          swal({
+            title: 'Cargando',
+            html: '',
+            onOpen: () => {
+              swal.showLoading()
+             
+            }
+          })
+          var ref = this.db.ref('/postulaciones/').push()
+
+          let reader = new FileReader();
+        let file = this.fileInput1.nativeElement.files[0];
+        console.log(file)
+        // reader.readAsDataURL(file);
+        var storageRef = this.firebaseStorage.ref();
+        var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo1.pdf`);
+
+        var promesaFile1 = mountainsRef.put(file)
+
+        let file2 = this.fileInput2.nativeElement.files[0];
+        console.log(file2)
+        // reader.readAsDataURL(file);
+        var storageRef = this.firebaseStorage.ref();
+        var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo2.pdf`);
+
+        var promesaFile2 = mountainsRef.put(file2)
+
+        let file3 = this.fileInput3.nativeElement.files[0];
+        console.log(file3)
+        // reader.readAsDataURL(file);
+        var storageRef = this.firebaseStorage.ref();
+        var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo3.pdf`);
+
+        var promesaFile3 = mountainsRef.put(file3)
+
+
+        Promise.all([promesaFile1, promesaFile2, promesaFile3]).then((values) => {
+          console.log(values[0].a.downloadURLs[0])
+          this.solicitud['urlFile1'] = values[0].a.downloadURLs[0]
+          this.solicitud['urlFile2'] = values[1].a.downloadURLs[0]
+          this.solicitud['urlFile3'] = values[2].a.downloadURLs[0]
+
+
+
+          return ref.set(this.solicitud).then(()=>{
+            this.consultaDatosTabla()
+
+            if (this.solicitud['Correo electrónico'] != '') {
+              var body = 'cuerpo del correo de solicitud de par externo'
+    
+              return this.enviarCorreo(this.solicitud['Correo electrónico'], "Solicitud par externo", body)
+                .subscribe((responseData) => {
+                  console.log(responseData)
+    
+                  if (responseData) {
+                    swal(
+                      'Solicitud creada correctamente',
+                      '',
+                      'success'
+                    )
+                  } else {
+                    swal(
+                      'Solicitud creada correctamente',
+                      '',
+                      'success'
+                    )
+                  }
+    
+                }, error => {
+    
+                  console.log(error)
+                })
+            } else {
+              
+              return
+            }
+            
+          })
+          
+        }).catch(error => {
+          swal(
+            `${error}`,
+            '',
+            'error'
+          )
+          console.log(error)
+        })
+
+      }else{
         swal(
-          'Solicitud creada correctamente',
-          '',
-          'success'
-        )
-      }).catch(error => {
-        swal(
-          `${error}`,
+          `Todos los documentos son requeridos`,
           '',
           'error'
         )
-        console.log(error)
-      })
+      }
+    
+     
+      
+     
     }
 
   }
 
+  // onFileChange(event) {
+  //   let reader = new FileReader();
+
+  //   if (event.target.files && event.target.files.length > 0) {
+  //     let file = event.target.files[0];
+  //     console.log(file)
+  //     // reader.readAsDataURL(file);
+  //     var storageRef = this.firebaseStorage.ref();
+  //     var mountainsRef = storageRef.child(`llave/archivo1.pdf`);
+
+  //     mountainsRef.put(file).then(function (snapshot) {
+  //       console.log('Uploaded a blob or file!');
+  //     });
+
+  //   };
+
+  // }
   setsolicitud() {
     this.solicitud = {
-      "AÑO": 0,
+      "AÑO": this.year,
       "NOMBRE": "",
       "ID_SEXO_BIOLOGICO": "",
       "ID_ESTADO_CIVIL": "",
@@ -200,7 +334,7 @@ export class ParesExternosSalientesComponent implements OnInit {
       "CODIGO_CONVENIO": "",
       "MODALIDAD": "",
       "NUM_DIAS_MOVILIDAD": "",
-      "TIPO DE PROGRAMA - CONVOCATORIA": "",
+      "TIPO DE PROGRAMA - CONVOCATORIA": "BILATERAL",
       "NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN": "",
       "NIVEL DE FORMACIÓN DE LA MOVILIDAD": "",
       "PAÍS DE ORIGEN": "",
@@ -210,13 +344,16 @@ export class ParesExternosSalientesComponent implements OnInit {
       "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "UNIVERSIDAD DEL VALLE",
       "PROGRAMA ACADÉMICO DE ORIGEN": "",
       "CÓDIGO DEL PROGRAMA": "",
-      "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
+      "PROGRAMA ACADÉMICO DE DESTINO (1)": "BIOLOGÍA",
       "PROGRAMA ACADÉMICO DE DESTINO (2)": "",
       "FINANCIAMIENTO": "NO APLICA",
       "VALOR_FINANCIACION_NACIONAL": "",
       "ID_FUENTE_INTERNACIONAL": "",
       "ID_PAIS_FINANCIADOR": "",
-      "VALOR_FINANCIACION_INTERNAC": ""
+      "VALOR_FINANCIACION_INTERNAC": "",
+      "urlFile1":"",
+      "urlFile2":"",
+      "urlFile3":""
     }
   }
 
