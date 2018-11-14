@@ -27,6 +27,7 @@ export class DirectoresProgramaUvComponent implements OnInit {
 
   programaAcademicoDestino='BIOLOGÍA'
 
+  estadoComponent
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('panelSuperior') tablaSolicitudesCarrera: ElementRef;
@@ -40,7 +41,7 @@ export class DirectoresProgramaUvComponent implements OnInit {
     private _mailServiceService: MailServiceService) {
     this.db = firebaseApp.database();
     this.solicitudes = {}
-
+      this.estadoComponent = 0
     this.solicitud = {
       "AÑO": 0,
       "NOMBRE": "",
@@ -142,6 +143,8 @@ export class DirectoresProgramaUvComponent implements OnInit {
     const _convenioSelected = this.solicitudes[solic.key];
     this.solicitud = _convenioSelected
     this.solicitud.key = solic.key
+    this.estadoComponent = 1
+
     if (this.panelInferior.nativeElement.classList.contains('collapsed-box')) {
       this.panelinferiorButton.nativeElement.click()
     }
@@ -149,10 +152,6 @@ export class DirectoresProgramaUvComponent implements OnInit {
 
   }
 
-  toglePanelDescripcion() {
-
-
-  }
 
   aprobar() {
     swal.showLoading()

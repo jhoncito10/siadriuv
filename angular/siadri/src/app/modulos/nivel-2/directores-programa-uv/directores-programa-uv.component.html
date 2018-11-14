@@ -4,7 +4,7 @@
         <div class="overlay" *ngIf="dataTablaSolicitudes.length==0">
             <i class="fa fa-refresh fa-spin"></i>
           </div>
-      <h3 class="box-title">Consultas</h3>
+      <h3 class="box-title">Solicitud entrante</h3>
 
       <div class="box-tools pull-right">
         <button #panelSuperiorButton type="button" class="btn btn-box-tool" data-widget="collapse" >
@@ -111,7 +111,7 @@
       </div>
     </div>
     <div class="box-footer">
-      <div class="row" *ngIf="solicitud.nombre!==''">
+      <div class="row" *ngIf="estadoComponent==1">
         <div class="col-md-6">
             <button type="button" class="btn btn-block btn-danger" (click)="denegar()">Rechazar</button>
         </div>
