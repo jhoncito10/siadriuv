@@ -27,6 +27,8 @@ export class DirectoresProgramaUvComponent implements OnInit {
 
   programaAcademicoDestino='BIOLOGÍA'
 
+  programasAcademicos = []
+
   estadoComponent
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -41,7 +43,8 @@ export class DirectoresProgramaUvComponent implements OnInit {
     private _mailServiceService: MailServiceService) {
     this.db = firebaseApp.database();
     this.solicitudes = {}
-      this.estadoComponent = 0
+    this.estadoComponent = 0
+
     this.solicitud = {
       "AÑO": 0,
       "NOMBRE": "",
@@ -96,6 +99,8 @@ export class DirectoresProgramaUvComponent implements OnInit {
 
           let dato = solicitudSnap.val()
           console.log(dato)
+          this.programasAcademicos.push(dato['PROGRAMA ACADÉMICO DE DESTINO (1)'])
+
           if(
             dato['PROGRAMA ACADÉMICO DE DESTINO (1)']==this.programaAcademicoDestino
           ){
@@ -106,7 +111,6 @@ export class DirectoresProgramaUvComponent implements OnInit {
             let estado = dato.estado || 'Pendiente'
             let destino = dato['PROGRAMA ACADÉMICO DE DESTINO (1)'] || 'Ninguno'
             let comentarioDenegacion = dato['comentarioDenegacion'] || ''
-
             this.dataTablaSolicitudes.push({
               correo: correo,
               ano: ano,
@@ -118,11 +122,13 @@ export class DirectoresProgramaUvComponent implements OnInit {
             })
           }
 
-
+          
           
 
         })
+        // this.programasAcademicos =this.removeDups(this.programasAcademicos)
 
+        // console.log(this.programasAcademicos)
         this.dataSource = new MatTableDataSource(this.dataTablaSolicitudes);
 
         this.dataSource.paginator = this.paginator;
@@ -275,4 +281,15 @@ export class DirectoresProgramaUvComponent implements OnInit {
       .send(email, asunto, mensaje, cc, cco)
 
   }
+
+   removeDups(names) {
+    let unique = {};
+    names.forEach(function(i) {
+      if(!unique[i]) {
+        unique[i] = true;
+      }
+    });
+    return Object.keys(unique);
+  }
+  
 }

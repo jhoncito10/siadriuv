@@ -87,6 +87,8 @@ import { SideBarMenuDirectoresComponent } from './shared/layouts/sidebar-left-co
 import { ParesExternosComponent } from './modulos/nivel-2/pares-externos/pares-externos.component';
 import { ParesExternosSalientesComponent } from './modulos/nivel-2/pares-externos/pares-externos-salientes/pares-externos-salientes.component';
 import { SideBarMenuParesExternosComponent } from './shared/layouts/sidebar-left-components/side-bar-menu-pares-externos/side-bar-menu-pares-externos.component';
+import { AdminDirectoresUvComponent } from './modulos/nivel-3/admin-directores-uv/admin-directores-uv.component';
+import { SideBarMenuAdminDirectoresComponent } from './shared/layouts/sidebar-left-components/side-bar-menu-admin-directores/side-bar-menu-admin-directores.component';
 
 
 @NgModule({
@@ -134,7 +136,9 @@ import { SideBarMenuParesExternosComponent } from './shared/layouts/sidebar-left
     SideBarMenuDirectoresComponent,
     ParesExternosComponent,
     ParesExternosSalientesComponent,
-    SideBarMenuParesExternosComponent
+    SideBarMenuParesExternosComponent,
+    AdminDirectoresUvComponent,
+    SideBarMenuAdminDirectoresComponent
 
   ],
   imports: [

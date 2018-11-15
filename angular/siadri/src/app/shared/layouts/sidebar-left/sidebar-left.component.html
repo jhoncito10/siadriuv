@@ -22,6 +22,7 @@
       <app-inscripcion *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-inscripcion>
       <app-side-bar-menu-directores></app-side-bar-menu-directores>
       <app-side-bar-menu-pares-externos></app-side-bar-menu-pares-externos>  
+      <app-side-bar-menu-admin-directores></app-side-bar-menu-admin-directores>
 
       <app-borradores *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-borradores>
       <app-solicitudes *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-solicitudes>

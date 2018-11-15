@@ -1,0 +1,136 @@
+<div class="box box-solid ">
+  <div id="content-box" #panelSuperior class="box box-danger collapsed-box">
+    <div class="box-header with-border">
+      <div class="overlay" *ngIf="dataTablaprogramasAcademicos.length==0">
+        <i class="fa fa-refresh fa-spin"></i>
+      </div>
+      <h3 class="box-title">Programas Academicos</h3>
+
+      <div class="box-tools pull-right">
+        <button #panelSuperiorButton type="button" class="btn btn-box-tool" data-widget="collapse">
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </div>
+    <div class="box-body">
+
+      <div class="example-header">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+      </div>
+
+      <div class="example-container mat-elevation-z8">
+
+        <mat-table [dataSource]="dataSource" matSort>
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="correo">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Correo director </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.correo}} </mat-cell>
+          </ng-container>
+
+          <!-- Progress Column -->
+          <ng-container matColumnDef="programa">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Año </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.programa}} </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="estado">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> estado </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.estado}} </mat-cell>
+          </ng-container>
+
+
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" 
+          (click)="selectprograma(row)" 
+          [ngClass]="{'selected': (rowSelected == row)}">
+          </mat-row>
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+
+
+
+    </div>
+    <div class="box-footer">
+      <div class="row">
+        <div class="col-md-6">
+
+        </div>
+        <div class="col-md-6">
+          <!-- <button type="button" class="btn btn-block btn-success" (click)="nuevaSolicitud()">Nueva solicitud <i class="fa fa-plus"></i>
+          </button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div #panelinferior class="box box-danger collapsed-box">
+    <div class="box-header with-border">
+      <i class="fa fa-bank"></i>
+      <h3 class="box-title">Programa académico</h3>
+
+      <div class="box-tools pull-right">
+        <button #panelinferiorButton type="button" class="btn btn-box-tool" data-widget="collapse">
+          <i class="fa fa-plus" #panelinferiorButtonIcon></i>
+        </button>
+      </div>
+    </div>
+    <div class="box-body">
+      <div *ngIf="(estadoComponenteInferior==1 || estadoComponenteInferior==2)">
+        <div class="form-group">
+          <label for="correo" class="col-md-5 control-label">Correo</label>
+
+          <div class="col-md-7">
+              <div class="input-group ">
+                  <input [(ngModel)]='programa["correo"]' type="text" class="form-control" id="correo" placeholder="Correo"
+                  [attr.disabled]="estadoComponenteInferior==2 ? '' : null">                      
+                  <span class="input-group-btn">
+                        <button type="button" class="btn btn-info btn-flat"
+                        (click) = "editar()">Go!</button>
+                      </span>
+                </div>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="programa" class="col-md-5 control-label">Programa</label>
+
+          <div class="col-md-7">
+            
+            <input [(ngModel)]='programa["programa"]' type="text" class="form-control" id="programa" placeholder="programa"
+            disabled>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="estado" class="col-md-5 control-label">Estado</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='programa["estado"]' type="text" class="form-control" id="estado" placeholder="estado"
+            disabled>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="box-footer">
+      <div class="row" *ngIf="estadoComponenteInferior==1">
+        <div class="col-md-6">
+
+        </div>
+        <div class="col-md-6">
+          <button type="button" class="btn btn-block btn-success" 
+          (click)="actualizarPrograma()">Actualizar <i class="fa fa-arrow-circle-up"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
