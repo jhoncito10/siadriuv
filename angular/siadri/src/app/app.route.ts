@@ -29,8 +29,9 @@ import { ParesExternosComponent } from "./modulos/nivel-2/pares-externos/pares-e
 
 //MODULO NIVEL 3
 //  administracion de directores de programa
-
 import { AdminDirectoresUvComponent } from "./modulos/nivel-3/admin-directores-uv/admin-directores-uv.component";
+import { AdminParesExternosComponent } from "./modulos/nivel-3/admin-pares-externos/admin-pares-externos.component";
+
 const routes: Routes = [
     { path: 'inicio', component: InicioAppComponent },
     { path: 'login', component: LoginComponent },
@@ -46,10 +47,7 @@ const routes: Routes = [
                     { path: 'renovaciones', component: RenovacionesComponent },
                     { path: 'investigaciones', component: InvestigacionesComponent },
                     { path: 'directores', component: DirectoresProgramaUvComponent },
-                    { path: 'paresExternos', component: ParesExternosComponent },
-                    { path: 'AdminDirectores', component: AdminDirectoresUvComponent }
-
-
+                    { path: 'paresExternos', component: ParesExternosComponent }
                 ]
             },
             {
@@ -59,7 +57,9 @@ const routes: Routes = [
                     { path: 'grafico2', component: Grafico2Component },
                     { path: 'enviocorreos', component: ComponentCorreoComponent },
                     { path: 'investigacion', component: ComponentInvestigacionComponent },
-                    { path: '', pathMatch: 'full', redirectTo: 'dash/consultas' }
+                    { path: '', pathMatch: 'full', redirectTo: 'dash/consultas' },
+                    { path: 'AdminDirectores', component: AdminDirectoresUvComponent },
+                    { path: 'AdminParesExternos', component: AdminParesExternosComponent }
                 ]
             },
 

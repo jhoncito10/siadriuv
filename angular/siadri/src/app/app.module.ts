@@ -81,7 +81,7 @@ import { InicioAppComponent } from "./modulos/auth/inicio-app/inicio-app.compone
 import { TablaConsultasComponent } from './modulos/nivel-1/tabla-consultas/tabla-consultas.component';
 
 import {Ng2Webstorage} from 'ngx-webstorage';
-import { ConveniosService, MailServiceService } from "./shared/services/main-service.service";
+import { ConveniosService, MailServiceService, MixedFunctions } from "./shared/services/main-service.service";
 import { DirectoresProgramaUvComponent } from './modulos/nivel-2/directores-programa-uv/directores-programa-uv.component';
 import { SideBarMenuDirectoresComponent } from './shared/layouts/sidebar-left-components/side-bar-menu-directores/side-bar-menu-directores.component';
 import { ParesExternosComponent } from './modulos/nivel-2/pares-externos/pares-externos.component';
@@ -89,6 +89,7 @@ import { ParesExternosSalientesComponent } from './modulos/nivel-2/pares-externo
 import { SideBarMenuParesExternosComponent } from './shared/layouts/sidebar-left-components/side-bar-menu-pares-externos/side-bar-menu-pares-externos.component';
 import { AdminDirectoresUvComponent } from './modulos/nivel-3/admin-directores-uv/admin-directores-uv.component';
 import { SideBarMenuAdminDirectoresComponent } from './shared/layouts/sidebar-left-components/side-bar-menu-admin-directores/side-bar-menu-admin-directores.component';
+import { AdminParesExternosComponent } from './modulos/nivel-3/admin-pares-externos/admin-pares-externos.component';
 
 
 @NgModule({
@@ -138,7 +139,8 @@ import { SideBarMenuAdminDirectoresComponent } from './shared/layouts/sidebar-le
     ParesExternosSalientesComponent,
     SideBarMenuParesExternosComponent,
     AdminDirectoresUvComponent,
-    SideBarMenuAdminDirectoresComponent
+    SideBarMenuAdminDirectoresComponent,
+    AdminParesExternosComponent
 
   ],
   imports: [
@@ -183,7 +185,8 @@ import { SideBarMenuAdminDirectoresComponent } from './shared/layouts/sidebar-le
     AdminGuard,
     UnivalleGuard,
     ConveniosService,
-    MailServiceService
+    MailServiceService,
+    MixedFunctions
   ],
   bootstrap: [AppComponent]
 })
