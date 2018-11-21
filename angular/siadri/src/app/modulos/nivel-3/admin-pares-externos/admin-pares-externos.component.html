@@ -39,7 +39,10 @@
             <mat-cell *matCellDef="let row"> {{row.nombre}} </mat-cell>
           </ng-container>
 
-
+          <ng-container matColumnDef="convenio">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> ID convenio </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.convenio}} </mat-cell>
+          </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;" 
@@ -114,7 +117,7 @@
           </div>
           <div class="col-md-7">
             <select [(ngModel)]='cuenta["convenio"]' class="form-control col-md-7" id="convenio" [disabled]="!(convenios.length > 0)">
-              <option *ngFor="let conv of convenios ; index as i;" [ngValue]="conv"> {{conv}}</option>
+              <option *ngFor="let conv of convenios ; index as i;" [ngValue]="i"> {{conv.id}}</option>
             </select>
           </div>
 

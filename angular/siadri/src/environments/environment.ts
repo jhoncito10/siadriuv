@@ -13,6 +13,9 @@ export const environment = {
     storageBucket: "siadri-dev.appspot.com",
     messagingSenderId: "145695131403"
   },
-  cloudUrl:'https://us-central1-siadri-dev.cloudfunctions.net'
+  cloudUrl:'https://us-central1-siadri-dev.cloudfunctions.net',
+  mails:{
+    dirDRI:"francisco.hurtado.velasco@geoprocess.com.co"
+  }
 };
 

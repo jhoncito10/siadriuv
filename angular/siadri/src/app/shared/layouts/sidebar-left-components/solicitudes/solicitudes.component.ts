@@ -13,7 +13,7 @@ export class SolicitudesComponent implements OnInit {
   user =  JSON.parse(localStorage.getItem('usuario'));
 
   constructor(private ad:AngularFireDatabase, private data:ModalService) {
-    console.log(this.user);
+    // console.log(this.user);
    }
 
   ngOnInit() {

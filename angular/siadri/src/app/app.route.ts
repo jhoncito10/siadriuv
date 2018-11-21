@@ -25,7 +25,8 @@ import { TablaConsultasComponent } from "./modulos/nivel-1/tabla-consultas/tabla
 import { DirectoresProgramaUvComponent } from "./modulos/nivel-2/directores-programa-uv/directores-programa-uv.component";
 // pares externos
 import { ParesExternosComponent } from "./modulos/nivel-2/pares-externos/pares-externos.component";
-
+// postulaciones Estudiantes
+import { EstudiantesPostulacionesComponent } from "./modulos/nivel-2/estudiantes-postulaciones/estudiantes-postulaciones.component";
 
 //MODULO NIVEL 3
 //  administracion de directores de programa
@@ -47,7 +48,9 @@ const routes: Routes = [
                     { path: 'renovaciones', component: RenovacionesComponent },
                     { path: 'investigaciones', component: InvestigacionesComponent },
                     { path: 'directores', component: DirectoresProgramaUvComponent },
-                    { path: 'paresExternos', component: ParesExternosComponent }
+                    { path: 'paresExternos', component: ParesExternosComponent },
+                    { path: 'postulacionesEstudiantes', component: EstudiantesPostulacionesComponent }
+
                 ]
             },
             {

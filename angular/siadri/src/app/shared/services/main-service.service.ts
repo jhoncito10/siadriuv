@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 
 import { ConveniosService } from './conveniosService/convenios.service';
 import { MailServiceService } from "./mailService/mail-service.service";
+import { NativeFirebaseService } from "./nativeFirebaseService/native-firebase.service";
 
 export {
   ConveniosService,
-  MailServiceService
+  MailServiceService,
+  NativeFirebaseService
 };
 @Injectable()
 

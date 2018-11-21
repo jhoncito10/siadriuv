@@ -90,7 +90,10 @@ import { SideBarMenuParesExternosComponent } from './shared/layouts/sidebar-left
 import { AdminDirectoresUvComponent } from './modulos/nivel-3/admin-directores-uv/admin-directores-uv.component';
 import { SideBarMenuAdminDirectoresComponent } from './shared/layouts/sidebar-left-components/side-bar-menu-admin-directores/side-bar-menu-admin-directores.component';
 import { AdminParesExternosComponent } from './modulos/nivel-3/admin-pares-externos/admin-pares-externos.component';
+import { EstudiantesPostulacionesComponent } from './modulos/nivel-2/estudiantes-postulaciones/estudiantes-postulaciones.component';
+import { SideBarMenuEstudiantesComponent } from './shared/layouts/sidebar-left-components/side-bar-menu-estudiantes/side-bar-menu-estudiantes.component';
 
+import { NativeFirebaseService } from "./shared/services/nativeFirebaseService/native-firebase.service";
 
 @NgModule({
   declarations: [
@@ -140,7 +143,9 @@ import { AdminParesExternosComponent } from './modulos/nivel-3/admin-pares-exter
     SideBarMenuParesExternosComponent,
     AdminDirectoresUvComponent,
     SideBarMenuAdminDirectoresComponent,
-    AdminParesExternosComponent
+    AdminParesExternosComponent,
+    EstudiantesPostulacionesComponent,
+    SideBarMenuEstudiantesComponent
 
   ],
   imports: [
@@ -186,7 +191,8 @@ import { AdminParesExternosComponent } from './modulos/nivel-3/admin-pares-exter
     UnivalleGuard,
     ConveniosService,
     MailServiceService,
-    MixedFunctions
+    MixedFunctions,
+    NativeFirebaseService
   ],
   bootstrap: [AppComponent]
 })

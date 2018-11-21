@@ -4,17 +4,18 @@ import { FirebaseApp } from 'angularfire2';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import swal from 'sweetalert2';
 import { LocalStorageService } from 'ngx-webstorage';
-import { MailServiceService, NativeFirebaseService } from "../../../../shared/services/main-service.service";
+import { MailServiceService } from "../../../shared/services/main-service.service";
 import * as  moment from "moment";
-
-
+import * as firebase from "firebase";
+import { MomentModule } from 'angular2-moment';
 
 @Component({
-  selector: 'app-pares-externos-salientes',
-  templateUrl: './pares-externos-salientes.component.html',
-  styleUrls: ['./pares-externos-salientes.component.css']
+  selector: 'app-estudiantes-postulaciones',
+  templateUrl: './estudiantes-postulaciones.component.html',
+  styleUrls: ['./estudiantes-postulaciones.component.css']
 })
-export class ParesExternosSalientesComponent implements OnInit {
+export class EstudiantesPostulacionesComponent implements OnInit {  
+  user = JSON.parse(localStorage.getItem('usuario'));
 
   //datos consulta
   solicitudes: any;
@@ -35,9 +36,6 @@ export class ParesExternosSalientesComponent implements OnInit {
 
   year
 
-  user = JSON.parse(localStorage.getItem('usuario'));
-
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('panelSuperior') tablaSolicitudesCarrera: ElementRef;
@@ -54,88 +52,17 @@ export class ParesExternosSalientesComponent implements OnInit {
     private localSt: LocalStorageService,
     @Inject(FirebaseApp) firebaseApp: any,
     private _mailServiceService: MailServiceService,
-    private _NativeFirebaseService: NativeFirebaseService
+    private _MomentModule: MomentModule
   ) {
     this.db = firebaseApp.database();
-    this.firebaseStorage = this._NativeFirebaseService.fb.storage();
-    // this.firebaseStorage = firebase.storage();
-    // console.log(this._NativeFirebaseService.fb.auth().currentUser.email)
+    this.firebaseStorage = firebase.storage();
+    console.log(firebaseApp)
     this.solicitudes = {}
     this.year = moment().year()
     this.setsolicitud()
   }
 
   ngOnInit() {
-    this.consultaDatosTabla()
-
-  }
-  consultaDatosTabla() {
-    this.db.ref('/postulaciones/')
-      .orderByChild("creadoPor")
-      .equalTo(this.user.email)
-      .once('value', solicitudesSnap => {
-        this.dataTablaSolicitudes = [];
-        // console.log('consulta tabla', solicitudesSnap)
-
-        solicitudesSnap.forEach((solicitudSnap) => {
-
-          let dato = solicitudSnap.val()
-          // console.log(dato)
-          if (dato['TIPO DE MOVILIDAD'] == 'ENTRANTE') {
-            this.solicitudes[solicitudSnap.key] = dato
-            let correo = dato['Correo electrónico'] || ''
-            let ano = dato['AÑO'] || ''
-            let nombre = dato['NOMBRE'] || ''
-            let estado = dato.estado || 'En espera de aprobación DRI'
-            let destino = dato['PROGRAMA ACADÉMICO DE DESTINO (1)'] || 'Ninguno'
-            let comentarioDenegacion = dato['comentarioDenegacion'] || ''
-
-            this.dataTablaSolicitudes.push({
-              correo: correo,
-              ano: ano,
-              destino: destino,
-              nombre: nombre,
-              key: solicitudSnap.key,
-              estado: estado,
-              comentarioDenegacion: comentarioDenegacion
-            })
-
-
-          }
-
-
-
-
-        })
-
-        this.dataSource = new MatTableDataSource(this.dataTablaSolicitudes);
-
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-
-        if (this.tablaSolicitudesCarrera.nativeElement.classList.contains('collapsed-box')) {
-          this.panelSuperiorButton.nativeElement.click()
-        }
-      }).catch((error) => console.log(`${error}`))
-  }
-
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
-  }
-  selectSolicitud(solic) {
-    this.estadoComponenteInferior = 2
-
-    const _convenioSelected = this.solicitudes[solic.key];
-    this.solicitud = _convenioSelected
-    console.log(this.solicitud)
-    this.solicitud.key = solic.key
-    if (this.panelInferior.nativeElement.classList.contains('collapsed-box')) {
-      this.panelinferiorButton.nativeElement.click()
-    }
-    this.panelInferior.nativeElement.scrollIntoView();
-
   }
 
   nuevaSolicitud() {
@@ -155,24 +82,25 @@ export class ParesExternosSalientesComponent implements OnInit {
   crearSolicitud() {
     console.log(this.fileInput1.nativeElement.files[0])
 
-    if (this.validarDatosFormlario()) {
+    // if (this.validarDatosFormlario()) {      
+      if (true) {      
 
       if (
         this.fileInput1.nativeElement.files && this.fileInput1.nativeElement.files.length > 0 &&
         this.fileInput2.nativeElement.files && this.fileInput2.nativeElement.files.length > 0 &&
         this.fileInput3.nativeElement.files && this.fileInput3.nativeElement.files.length > 0
-      ) {
-        swal({
-          title: 'Cargando',
-          html: '',
-          onOpen: () => {
-            swal.showLoading()
+        ) {
+          swal({
+            title: 'Cargando',
+            html: '',
+            onOpen: () => {
+              swal.showLoading()
+             
+            }
+          })
+          var ref = this.db.ref('/postulaciones/').push()
 
-          }
-        })
-        var ref = this.db.ref('/postulaciones/').push()
-
-        let reader = new FileReader();
+          let reader = new FileReader();
         let file = this.fileInput1.nativeElement.files[0];
         console.log(file)
         // reader.readAsDataURL(file);
@@ -204,20 +132,18 @@ export class ParesExternosSalientesComponent implements OnInit {
           this.solicitud['urlFile2'] = values[1].a.downloadURLs[0]
           this.solicitud['urlFile3'] = values[2].a.downloadURLs[0]
 
-          this.solicitud['fechaCreado']  =  moment().format('DD/MM/YYYY HH:mm')
-          this.solicitud['fechaActualizado']  =  moment().format('DD/MM/YYYY HH	:mm')
 
 
-          return ref.set(this.solicitud).then(() => {
-            this.consultaDatosTabla()
+          return ref.set(this.solicitud).then(()=>{
+            // this.consultaDatosTabla()
 
             if (this.solicitud['Correo electrónico'] != '') {
               var body = 'cuerpo del correo de solicitud de par externo'
-
+    
               return this.enviarCorreo(this.solicitud['Correo electrónico'], "Solicitud par externo", body)
                 .subscribe((responseData) => {
                   console.log(responseData)
-
+    
                   if (responseData) {
                     swal(
                       'Solicitud creada correctamente',
@@ -231,18 +157,18 @@ export class ParesExternosSalientesComponent implements OnInit {
                       'success'
                     )
                   }
-
+    
                 }, error => {
-
+    
                   console.log(error)
                 })
             } else {
-
+              
               return
             }
-
+            
           })
-
+          
         }).catch(error => {
           swal(
             `${error}`,
@@ -252,38 +178,21 @@ export class ParesExternosSalientesComponent implements OnInit {
           console.log(error)
         })
 
-      } else {
+      }else{
         swal(
           `Todos los documentos son requeridos`,
           '',
           'error'
         )
       }
-
-
-
-
+    
+     
+      
+     
     }
 
   }
 
-  // onFileChange(event) {
-  //   let reader = new FileReader();
-
-  //   if (event.target.files && event.target.files.length > 0) {
-  //     let file = event.target.files[0];
-  //     console.log(file)
-  //     // reader.readAsDataURL(file);
-  //     var storageRef = this.firebaseStorage.ref();
-  //     var mountainsRef = storageRef.child(`llave/archivo1.pdf`);
-
-  //     mountainsRef.put(file).then(function (snapshot) {
-  //       console.log('Uploaded a blob or file!');
-  //     });
-
-  //   };
-
-  // }
   setsolicitud() {
     this.solicitud = {
       "AÑO": this.year,
@@ -326,70 +235,8 @@ export class ParesExternosSalientesComponent implements OnInit {
       "fechaActualizado":"",
       "estado":"En espera de aprobación DRI"
     }
-    console.log(this.solicitud)
   }
 
-  validarDatosFormlario() {
-    if (this.solicitud["NOMBRE"] == '') {
-      swal(
-        'El campo nombre no puede estar vacio',
-        '',
-        'error'
-      )
-      return false
-    } else if (this.solicitud["FECHA_NACIMIENTO"] == '') {
-      swal(
-        'El campo fecha de nacimiento no puede estar vacio',
-        '',
-        'error'
-      )
-      return false
-    }
-    else if (this.solicitud["Correo electrónico"] == '') {
-      swal(
-        'El campo correo electronico no puede estar vacio',
-        '',
-        'error'
-      )
-      return false
-    }
-    else if (this.solicitud["IDENTIFICACIÓN"] == '') {
-      swal(
-        'El campo identificación no puede estar vacio',
-        '',
-        'error'
-      )
-      return false
-    }
-    else if (this.solicitud["NÚMERO DE IDENTIFICACIÓN"] == '') {
-      swal(
-        'El campo número de identificación no puede estar vacio',
-        '',
-        'error'
-      )
-      return false
-    }
-    else if (this.solicitud["PROGRAMA ACADÉMICO DE DESTINO (1)"] == '') {
-      swal(
-        'El campo programa académico de destino no puede estar vacio',
-        '',
-        'error'
-      )
-      return false
-    }
-    else if (this.solicitud["TIPO DE PROGRAMA - CONVOCATORIA"] == '') {
-      swal(
-        'El campo tipo de programa - convocatoria  no puede estar vacio',
-        '',
-        'error'
-      )
-      return false
-    }
-    else {
-      return true
-
-    }
-  }
 
   enviarCorreo(email, asunto, mensaje, cc = '', cco = '') {
 

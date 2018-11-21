@@ -26,10 +26,10 @@ export class AdminParesExternosComponent implements OnInit {
   firebaseStorage: any
   dataTablaCuentasParesExt = [];
 
-  displayedColumns = ['correo', 'nombre', 'institucion'];
+  displayedColumns = ['correo', 'nombre', 'institucion','convenio'];
   dataSource: MatTableDataSource<any>;
   instituciones = []
-convenios = []
+  convenios = []
 
   estadoComponenteInferior = 0 //0 = ninguno; 1 =  nueva programa; 2 = datos programa
 
@@ -77,18 +77,23 @@ convenios = []
 
         solicitudesSnap.forEach((solicitudSnap) => {
           let dato = solicitudSnap.val()
+          console.log(dato)
+
           this.cuentasParesExt[solicitudSnap.key] = dato
           let correo = dato['correo'] || ''
           let nombre = dato['nombre'] || ''
           let institucion = dato['institucion'] || ''
+          let convenio = dato['convenio']['id'] || ''
+
           this.dataTablaCuentasParesExt.push({
             correo: correo,
             nombre: nombre,
             key: solicitudSnap.key,
-            institucion: institucion
+            institucion: institucion,
+            convenio:convenio
           })
         })
-   
+
         this.dataSource = new MatTableDataSource(this.dataTablaCuentasParesExt);
 
         this.dataSource.paginator = this.paginator;
@@ -135,33 +140,36 @@ convenios = []
     }
   }
 
-  getConveniosInstitucion(insti){
-    this.spinnerConvenios=true
+  getConveniosInstitucion(insti) {
+    this.spinnerConvenios = true
     this.convenios = []
     console.log(insti)
     this.db.ref('/convenios/')
-    .orderByChild("Institucion")
-    .equalTo(insti)
-    .once('value')
+      .orderByChild("Institucion")
+      .equalTo(insti)
+      .once('value')
 
-    .then(conveniosSnap => { 
-      console.log(conveniosSnap.val())
-      var ResConvenios = conveniosSnap.val()
-      for (const conv in ResConvenios) {
-        if (ResConvenios.hasOwnProperty(conv)) {
-          this.convenios.push(conv)
+      .then(conveniosSnap => {
+        console.log(conveniosSnap.val())
+        var ResConvenios = conveniosSnap.val()
+        for (const conv in ResConvenios) {
+          if (ResConvenios.hasOwnProperty(conv)) {
+            this.convenios.push({
+              id:conv,
+              data:ResConvenios[conv]
+            })
+          }
         }
-      }
-      this.spinnerConvenios=false
+        this.spinnerConvenios = false
 
-      console.log(this.convenios.length)
-    })
-    .catch(erro=>{
-      console.log(erro)
-      this.spinnerConvenios=true
+        console.log(this.convenios.length)
+      })
+      .catch(erro => {
+        console.log(erro)
+        this.spinnerConvenios = true
 
-    })
-    
+      })
+
   }
 
   applyFilter(filterValue: string) {
@@ -170,18 +178,18 @@ convenios = []
     this.dataSource.filter = filterValue;
   }
   selectCuenta(row) {
-      this.estadoComponenteInferior = 2
-      this.rowSelected = row;
+    this.estadoComponenteInferior = 2
+    this.rowSelected = row;
 
-      this.cuenta = row
-      console.log(row.key, this.rowSelected.key)
-      this.cuenta.key = row.key
+    this.cuenta = row
+    this.cuenta.key = row.key
 
+    console.log(this.cuenta)
 
-      if (this.panelInferior.nativeElement.classList.contains('collapsed-box')) {
-        this.panelinferiorButton.nativeElement.click()
-      }
-      this.panelInferior.nativeElement.scrollIntoView();
+    if (this.panelInferior.nativeElement.classList.contains('collapsed-box')) {
+      this.panelinferiorButton.nativeElement.click()
+    }
+    this.panelInferior.nativeElement.scrollIntoView();
 
   }
 
@@ -204,13 +212,15 @@ convenios = []
       this._AngularFireAuth.auth.createUserWithEmailAndPassword(newmail, pass)
         .then((user) => {
           var ref = this.db.ref(`/paresExternos/${user.uid}`)
-          let setUser = this.cuenta
-          // {
-          //   "nombre": this.cuenta['nombre'],
-          //   "correo": this.cuenta['correo'],
-          //   "institucion": this.cuenta['institucion'],
-          //   "otraInstitucion": this.cuenta['otraInstitucion']
-          // }
+          let setUser = 
+          {
+            "nombre": this.cuenta['nombre'],
+            "correo": this.cuenta['correo'],
+            "institucion": this.cuenta['institucion'],
+            "otraInstitucion": this.cuenta['otraInstitucion'] ,   
+            "key": this.cuenta['key'],
+            "convenio": this.convenios[this.cuenta['convenio']]
+          }
           return ref.set(setUser).then(() => {
             this.consultaDatosTabla()
             let body = `
@@ -289,7 +299,7 @@ convenios = []
       "institucion": "",
       "key": "",
       "otraInstitucion": "",
-      "convenio":""
+      "convenio": ""
     }
     this.convenios = []
 
