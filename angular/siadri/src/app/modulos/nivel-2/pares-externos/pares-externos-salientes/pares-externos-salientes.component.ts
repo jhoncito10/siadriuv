@@ -33,6 +33,8 @@ export class ParesExternosSalientesComponent implements OnInit {
 
   estadoComponenteInferior = 0 //0 = ninguno; 1 =  nueva solicitud; 2 = datos solicitud
 
+  rowSelected
+
   year
 
   user = JSON.parse(localStorage.getItem('usuario'));
@@ -124,13 +126,15 @@ export class ParesExternosSalientesComponent implements OnInit {
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
-  selectSolicitud(solic) {
+  selectSolicitud(row) {
+    this.rowSelected = row;
+
     this.estadoComponenteInferior = 2
 
-    const _convenioSelected = this.solicitudes[solic.key];
+    const _convenioSelected = this.solicitudes[row.key];
     this.solicitud = _convenioSelected
     console.log(this.solicitud)
-    this.solicitud.key = solic.key
+    this.solicitud.key = row.key
     if (this.panelInferior.nativeElement.classList.contains('collapsed-box')) {
       this.panelinferiorButton.nativeElement.click()
     }

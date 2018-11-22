@@ -61,13 +61,11 @@ export class LoginService {
           localStorage.setItem('usuario', JSON.stringify(user));
           this.rule.getConsultaRol(user.uid).then(() => {
             this.rule.getAtrRol(this.rule.getRolEsp()).subscribe(datarol => {
-              console.log(datarol.$key);
               this.rol = datarol.$key;
               localStorage.setItem('rol', JSON.stringify(this.rol));
               if (this.rol == null) {
                 this.obtenerRol(user);
               } else {
-                console.log(this.rol);
                 resolve();
               }
             });

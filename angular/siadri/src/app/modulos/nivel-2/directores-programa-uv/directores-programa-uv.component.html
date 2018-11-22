@@ -54,7 +54,9 @@
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectSolicitud(row)">
+          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectSolicitud(row)"
+          [ngClass]="{'selected': (rowSelected == row)}">
+
           </mat-row>
         </mat-table>
 

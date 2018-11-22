@@ -1,3 +1,7 @@
 .mat-row {
-    cursor: pointer;
-  }
+  cursor: pointer;
+}
+
+.selected{
+  background: rgb(232, 28, 37); 
+}

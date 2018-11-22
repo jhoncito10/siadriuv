@@ -15,7 +15,6 @@ export class RuleservicesService {
   constructor(private ad:AngularFireDatabase,private _http: Http) {
     this.roles = null;
     if(localStorage.getItem('usuario')) {
-      console.log("funcion service");
      this.suscribirRol();
     }
   }

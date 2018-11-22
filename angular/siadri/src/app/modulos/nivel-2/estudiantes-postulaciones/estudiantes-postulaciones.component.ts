@@ -4,17 +4,16 @@ import { FirebaseApp } from 'angularfire2';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import swal from 'sweetalert2';
 import { LocalStorageService } from 'ngx-webstorage';
-import { MailServiceService } from "../../../shared/services/main-service.service";
+import { MailServiceService, NativeFirebaseService } from "../../../shared/services/main-service.service";
 import * as  moment from "moment";
 import * as firebase from "firebase";
-import { MomentModule } from 'angular2-moment';
 
 @Component({
   selector: 'app-estudiantes-postulaciones',
   templateUrl: './estudiantes-postulaciones.component.html',
   styleUrls: ['./estudiantes-postulaciones.component.css']
 })
-export class EstudiantesPostulacionesComponent implements OnInit {  
+export class EstudiantesPostulacionesComponent implements OnInit {
   user = JSON.parse(localStorage.getItem('usuario'));
 
   //datos consulta
@@ -36,6 +35,9 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
   year
 
+  rowSelected
+
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('panelSuperior') tablaSolicitudesCarrera: ElementRef;
@@ -52,146 +54,88 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     private localSt: LocalStorageService,
     @Inject(FirebaseApp) firebaseApp: any,
     private _mailServiceService: MailServiceService,
-    private _MomentModule: MomentModule
+    private _NativeFirebaseService: NativeFirebaseService
   ) {
     this.db = firebaseApp.database();
-    this.firebaseStorage = firebase.storage();
-    console.log(firebaseApp)
+    this.firebaseStorage = this._NativeFirebaseService.fb.storage();
     this.solicitudes = {}
     this.year = moment().year()
     this.setsolicitud()
   }
 
   ngOnInit() {
+    this.consultaDatosTabla()
+
   }
 
-  nuevaSolicitud() {
-    this.estadoComponenteInferior = 1
-    this.setsolicitud()
+  consultaDatosTabla() {
+    this.db.ref('/postulaciones/')
+      .orderByChild("Correo electrónico")
+      .equalTo(this.user.email)
+      .once('value', solicitudesSnap => {
+        this.dataTablaSolicitudes = [];
+        // console.log('consulta tabla', solicitudesSnap)
+
+        solicitudesSnap.forEach((solicitudSnap) => {
+
+          let dato = solicitudSnap.val()
+          if (dato.hasOwnProperty('creadoPor')) {
+            this.solicitudes[solicitudSnap.key] = dato
+            let correo = dato['Correo electrónico'] || ''
+            let ano = dato['AÑO'] || ''
+            let nombre = dato['NOMBRE'] || ''
+            let estado = dato.estado || 'En espera de aprobación DRI'
+            let destino = dato['PROGRAMA ACADÉMICO DE DESTINO (1)'] || 'Ninguno'
+            let comentarioDenegacion = dato['comentarioDenegacion'] || ''
+
+            this.dataTablaSolicitudes.push({
+              correo: correo,
+              ano: ano,
+              destino: destino,
+              nombre: nombre,
+              key: solicitudSnap.key,
+              estado: estado,
+              comentarioDenegacion: comentarioDenegacion
+            })
+
+          }
+
+        })
+
+        this.dataSource = new MatTableDataSource(this.dataTablaSolicitudes);
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+        if (this.tablaSolicitudesCarrera.nativeElement.classList.contains('collapsed-box')) {
+          this.panelSuperiorButton.nativeElement.click()
+        }
+      }).catch((error) => console.log(`${error}`))
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+  selectSolicitud(row) {
+    this.rowSelected = row;
+
+    this.estadoComponenteInferior = 2
+
+    const _convenioSelected = this.solicitudes[row.key];
+    this.solicitud = _convenioSelected
+    console.log(this.solicitud)
+    this.solicitud.key = row.key
     if (this.panelInferior.nativeElement.classList.contains('collapsed-box')) {
       this.panelinferiorButton.nativeElement.click()
     }
-    // setTimeout(function(){ 
+    this.panelInferior.nativeElement.scrollIntoView();
 
-    //  }, 2500);
-    this.panelInferior.nativeElement.scrollIntoView({ block: "start", behavior: "smooth" });
-
-
+   
   }
 
-  crearSolicitud() {
-    console.log(this.fileInput1.nativeElement.files[0])
 
-    // if (this.validarDatosFormlario()) {      
-      if (true) {      
-
-      if (
-        this.fileInput1.nativeElement.files && this.fileInput1.nativeElement.files.length > 0 &&
-        this.fileInput2.nativeElement.files && this.fileInput2.nativeElement.files.length > 0 &&
-        this.fileInput3.nativeElement.files && this.fileInput3.nativeElement.files.length > 0
-        ) {
-          swal({
-            title: 'Cargando',
-            html: '',
-            onOpen: () => {
-              swal.showLoading()
-             
-            }
-          })
-          var ref = this.db.ref('/postulaciones/').push()
-
-          let reader = new FileReader();
-        let file = this.fileInput1.nativeElement.files[0];
-        console.log(file)
-        // reader.readAsDataURL(file);
-        var storageRef = this.firebaseStorage.ref();
-        var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo1.pdf`);
-
-        var promesaFile1 = mountainsRef.put(file)
-
-        let file2 = this.fileInput2.nativeElement.files[0];
-        console.log(file2)
-        // reader.readAsDataURL(file);
-        var storageRef = this.firebaseStorage.ref();
-        var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo2.pdf`);
-
-        var promesaFile2 = mountainsRef.put(file2)
-
-        let file3 = this.fileInput3.nativeElement.files[0];
-        console.log(file3)
-        // reader.readAsDataURL(file);
-        var storageRef = this.firebaseStorage.ref();
-        var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo3.pdf`);
-
-        var promesaFile3 = mountainsRef.put(file3)
-
-
-        Promise.all([promesaFile1, promesaFile2, promesaFile3]).then((values) => {
-          console.log(values[0].a.downloadURLs[0])
-          this.solicitud['urlFile1'] = values[0].a.downloadURLs[0]
-          this.solicitud['urlFile2'] = values[1].a.downloadURLs[0]
-          this.solicitud['urlFile3'] = values[2].a.downloadURLs[0]
-
-
-
-          return ref.set(this.solicitud).then(()=>{
-            // this.consultaDatosTabla()
-
-            if (this.solicitud['Correo electrónico'] != '') {
-              var body = 'cuerpo del correo de solicitud de par externo'
-    
-              return this.enviarCorreo(this.solicitud['Correo electrónico'], "Solicitud par externo", body)
-                .subscribe((responseData) => {
-                  console.log(responseData)
-    
-                  if (responseData) {
-                    swal(
-                      'Solicitud creada correctamente',
-                      '',
-                      'success'
-                    )
-                  } else {
-                    swal(
-                      'Solicitud creada correctamente',
-                      '',
-                      'success'
-                    )
-                  }
-    
-                }, error => {
-    
-                  console.log(error)
-                })
-            } else {
-              
-              return
-            }
-            
-          })
-          
-        }).catch(error => {
-          swal(
-            `${error}`,
-            '',
-            'error'
-          )
-          console.log(error)
-        })
-
-      }else{
-        swal(
-          `Todos los documentos son requeridos`,
-          '',
-          'error'
-        )
-      }
-    
-     
-      
-     
-    }
-
-  }
 
   setsolicitud() {
     this.solicitud = {
@@ -231,9 +175,9 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       "urlFile2": "",
       "urlFile3": "",
       "creadoPor": this.user.email,
-      "fechaCreado":"",
-      "fechaActualizado":"",
-      "estado":"En espera de aprobación DRI"
+      "fechaCreado": "",
+      "fechaActualizado": "",
+      "estado": "En espera de aprobación DRI"
     }
   }
 

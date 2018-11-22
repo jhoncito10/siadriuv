@@ -28,7 +28,6 @@ export class BorradoresComponent implements OnInit {
       }
     }).subscribe(data=>{
       this.borradores = data;
-      console.log(this.borradores);
   });
 
   }

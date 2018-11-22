@@ -47,7 +47,6 @@ export class ModalPopupComponent implements OnInit {
   constructor(private data: ModalService, private busqueda: BuscadorService) {
     ModalPopupComponent.modalstatic = data;
     this.data.currentMessage.subscribe(message => {
-      console.log(message);
 
       this.message = message;
       this.busquedas(this.message);

@@ -14,6 +14,7 @@ import * as firebase from "firebase";
   styleUrls: ['./admin-directores-uv.component.css']
 })
 export class AdminDirectoresUvComponent implements OnInit {
+  user = JSON.parse(localStorage.getItem('usuario'));
 
 
 
@@ -57,6 +58,8 @@ export class AdminDirectoresUvComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    
     this.consultaDatosTabla()
 
   }
@@ -75,8 +78,9 @@ export class AdminDirectoresUvComponent implements OnInit {
           // console.log(dato)
           this.programasAcademicos[programaSnap.key] = dato
           let correo = dato['correo'] || 'Ninguno'
-          let programa = dato['programa'] || ''
+          let programa = dato['NOMBRE PROGRAMA ACADEMICO'] || ''
           let estado = dato['estado'] || 'Activo'
+          let codigo = dato['CODIGO'] || 'N/A'
 
 
 
@@ -84,7 +88,8 @@ export class AdminDirectoresUvComponent implements OnInit {
             correo: correo,
             programa: programa,
             estado: estado,
-            key: programaSnap.key
+            key: programaSnap.key,
+            codigo: codigo
           })
 
         })
@@ -219,9 +224,7 @@ export class AdminDirectoresUvComponent implements OnInit {
     }
   }
 
-  validarDatosFormlario() {
-  }
-
+ 
   enviarCorreo(email, asunto, mensaje, cc = '', cco = '') {
 
     return this._mailServiceService
