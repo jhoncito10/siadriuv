@@ -94,6 +94,9 @@ import { EstudiantesPostulacionesComponent } from './modulos/nivel-2/estudiantes
 import { SideBarMenuEstudiantesComponent } from './shared/layouts/sidebar-left-components/side-bar-menu-estudiantes/side-bar-menu-estudiantes.component';
 
 import { NativeFirebaseService } from "./shared/services/nativeFirebaseService/native-firebase.service";
+import { AdminPostEntrantesComponent } from './modulos/nivel-3/admin-post-entrantes/admin-post-entrantes.component';
+import { AdminPostSalientesComponent } from './modulos/nivel-3/admin-post-salientes/admin-post-salientes.component';
+import { SideBarMenuPostulacionesComponent } from './shared/layouts/sidebar-left-components/side-bar-menu-postulaciones/side-bar-menu-postulaciones.component';
 
 @NgModule({
   declarations: [
@@ -145,7 +148,10 @@ import { NativeFirebaseService } from "./shared/services/nativeFirebaseService/n
     SideBarMenuAdminDirectoresComponent,
     AdminParesExternosComponent,
     EstudiantesPostulacionesComponent,
-    SideBarMenuEstudiantesComponent
+    SideBarMenuEstudiantesComponent,
+    AdminPostEntrantesComponent,
+    AdminPostSalientesComponent,
+    SideBarMenuPostulacionesComponent
 
   ],
   imports: [

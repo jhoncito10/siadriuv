@@ -1,0 +1,434 @@
+<div class="box box-solid ">
+  <div id="content-box" #panelSuperior class="box box-danger collapsed-box">
+    <div class="box-header with-border">
+      <div class="overlay" *ngIf="dataTablaSolicitudes.length==0">
+        <i class="fa fa-refresh fa-spin"></i>
+      </div>
+      <h3 class="box-title">Postulaciones entrantes</h3>
+
+      <div class="box-tools pull-right">
+        <button #panelSuperiorButton type="button" class="btn btn-box-tool" data-widget="collapse">
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </div>
+    <div class="box-body">
+
+      <div class="example-header">
+        <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+      </div>
+
+      <div class="example-container mat-elevation-z8">
+
+        <mat-table [dataSource]="dataSource" matSort>
+
+          <!-- ID Column -->
+          <ng-container matColumnDef="correo">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Correo solicitante </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.correo}} </mat-cell>
+          </ng-container>
+
+          <!-- Progress Column -->
+          <ng-container matColumnDef="ano">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Año </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.ano}} </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="destino">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Programa destino </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.destino}} </mat-cell>
+          </ng-container>
+
+          <!-- Color Column -->
+          <ng-container matColumnDef="nombre">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.nombre}} </mat-cell>
+          </ng-container>
+          <!-- Color Column -->
+          <ng-container matColumnDef="estado">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.estado}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" 
+          (click)="selectSolicitud(row)"
+          [ngClass]="{'selected': (rowSelected == row)}">
+          </mat-row>
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
+
+
+
+    </div>
+    <div class="box-footer">
+      <div class="row">
+        <div class="col-md-6">
+
+        </div>
+        <div class="col-md-6">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div #panelinferior class="box box-danger collapsed-box">
+    <div class="box-header with-border">
+      <i class="fa fa-bank"></i>
+      <h3 class="box-title">Solicitud</h3>
+
+      <div class="box-tools pull-right">
+        <button #panelinferiorButton type="button" class="btn btn-box-tool" data-widget="collapse">
+          <i class="fa fa-plus" #panelinferiorButtonIcon></i>
+        </button>
+      </div>
+    </div>
+    <div class="box-body">
+      <div *ngIf="(estadoComponenteInferior==1 || estadoComponenteInferior==2)">
+        <div class="form-group">
+          <label for="NOMBRE" class="col-md-5 control-label">NOMBRE</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["NOMBRE"]' type="text" class="form-control" id="NOMBRE" placeholder="nombre"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="EMAIL" class="col-md-5 control-label">EMAIL</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["Correo electrónico"]' type="email" class="form-control" id="EMAIL"
+              placeholder="Email" [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ID_SEXO_BIOLOGICO" class="col-md-5 control-label">ID SEXO BIOLOGICO</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["ID_SEXO_BIOLOGICO"]' type="text" class="form-control" id="ID_SEXO_BIOLOGICO"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ID_ESTADO_CIVIL" class="col-md-5 control-label">ID ESTADO CIVIL</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["ID_ESTADO_CIVIL"]' type="text" class="form-control" id="ID_ESTADO_CIVIL"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="FECHA_NACIMIENTO" class="col-md-5 control-label">FECHA DE NACIMIENTO</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["FECHA_NACIMIENTO"]' type="text" class="form-control" id="FECHA_NACIMIENTO"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="TIPO_DE_INDENTIFICACION" class="col-md-5 control-label">TIPO DE IDENTIFICACIÓN</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["TIPO DE IDENTIFICACIÓN"]' type="text" class="form-control" id="TIPO_DE_INDENTIFICACION"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="NUMERO_DE_IDENTIFICACION" class="col-md-5 control-label">NÚMERO DE IDENTIFICACIÓN</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["NÚMERO DE IDENTIFICACIÓN"]' type="text" class="form-control" id="NUMERO_DE_IDENTIFICACION"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="CODIGO_ESTUDIANTE_UNIVALLE" class="col-md-5 control-label">CÓDIGO DEL ESTUDIANTE EN UNIVALLE</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["CÓDIGO DEL ESTUDIANTE EN UNIVALLE"]' type="text" class="form-control" id="CODIGO_ESTUDIANTE_UNIVALLE"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="PERIODO_ACADEMICO" class="col-md-5 control-label">PERIODO ACADÉMICO</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["PERIODO ACADÉMICO"]' type="text" class="form-control" id="PERIODO_ACADEMICO"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <!-- <div class="form-group">
+          <label for="TIPO_MOBILIDAD" class="col-md-5 control-label">TIPO DE MOVILIDAD</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["TIPO DE MOVILIDAD"]' type="text" class="form-control" id="TIPO_MOBILIDAD">
+          </div>
+        </div> -->
+        <div class="form-group">
+          <label for="TIPO_DE_CONVENIO" class="col-md-5 control-label">TIPO DE CONVENIO</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["TIPO DE CONVENIO"]' type="text" class="form-control" id="TIPO_DE_CONVENIO"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="CODIGO_CONVENIO" class="col-md-5 control-label">CODIGO CONVENIO</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["CODIGO_CONVENIO"]' type="text" class="form-control" id="CODIGO_CONVENIO"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="MODALIDAD" class="col-md-5 control-label">MODALIDAD</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["MODALIDAD"]' type="text" class="form-control" id="MODALIDAD" [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="NUM_DIAS_MOVILIDAD" class="col-md-5 control-label">NUMERO DE DIAS MOVILIDAD</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["NUM_DIAS_MOVILIDAD"]' type="text" class="form-control" id="NUM_DIAS_MOVILIDAD"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="TIPO_DE_PROGRAMA_CONVOCATORIA" class="col-md-5 control-label">TIPO DE PROGRAMA - CONVOCATORIA</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["TIPO DE PROGRAMA - CONVOCATORIA"]' type="text" class="form-control" id="TIPO_DE_PROGRAMA_CONVOCATORIA"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="NIVEL_FORMACION_ESTUDIANTE_ORIGEN" class="col-md-5 control-label">NIVEL DE FORMACIÓN DEL
+            ESTUDIANTE DE ORIGEN</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN"]' type="text" class="form-control"
+              id="NIVEL_FORMACION_ESTUDIANTE_ORIGEN" [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="NIVEL_DE_FORMACION_DE_LA_MOVILIDAD" class="col-md-5 control-label">NIVEL DE FORMACIÓN DE LA
+            MOVILIDAD</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["NIVEL DE FORMACIÓN DE LA MOVILIDAD"]' type="text" class="form-control" id="NIVEL_DE_FORMACION_DE_LA_MOVILIDAD"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="PAIS_ORIGEN" class="col-md-5 control-label">PAÍS DE ORIGEN</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["PAÍS DE ORIGEN"]' type="text" class="form-control" id="PAIS_ORIGEN"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <!-- <div class="form-group">
+          <label for="UNIVERSIDAD_DE_PROCEDENCIA" class="col-md-5 control-label">UNIVERSIDAD DE PROCEDENCIA</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud[ "UNIVERSIDAD DE PROCEDENCIA"]' type="text" class="form-control" id="UNIVERSIDAD_DE_PROCEDENCIA" [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div> -->
+        <div class="form-group">
+          <label for="CIUDAD_SEDE" class="col-md-5 control-label">CIUDAD-SEDE</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["CIUDAD-SEDE"]' type="text" class="form-control" id="CIUDAD_SEDE"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="PAIS_DESTINO" class="col-md-5 control-label">PAÍS DE DESTINO</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["PAÍS DE DESTINO"]' type="text" class="form-control" id="PAIS_DESTINO"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <!-- <div class="form-group">
+          <label for="UNIVERSIDAD_INSTITUCION_RECEPTORA" class="col-md-5 control-label">UNIVERSIDAD - INSTITUCIÓN
+            RECEPTORA</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["UNIVERSIDAD - INSTITUCIÓN RECEPTORA"]' type="text" class="form-control" id="UNIVERSIDAD_INSTITUCION_RECEPTORA">
+          </div>
+        </div> -->
+        <div class="form-group">
+          <label for="PROGRAMA_ACADEMICO_ORIGEN" class="col-md-5 control-label">PROGRAMA ACADÉMICO DE ORIGEN</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE ORIGEN"]' type="text" class="form-control" id="PROGRAMA_ACADEMICO_ORIGEN"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="CODIGO_PROGRAMA" class="col-md-5 control-label">CÓDIGO DEL PROGRAMA</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["CÓDIGO DEL PROGRAMA"]' type="text" class="form-control" id="CODIGO_PROGRAMA"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="PROGRAMA_ACADEMICO_DE_DESTINO" class="col-md-5 control-label">PROGRAMA ACADÉMICO DE DESTINO (1)</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (1)"]' type="text" class="form-control" id="PROGRAMA_ACADEMICO_DE_DESTINO"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="PROGRAMA_ACADEMICO_DE_DESTINO2" class="col-md-5 control-label">PROGRAMA ACADÉMICO DE DESTINO (2)</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (2)"]' type="text" class="form-control" id="PROGRAMA_ACADEMICO_DE_DESTINO2"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="FINANCIAMIENTO" class="col-md-5 control-label">FINANCIAMIENTO</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["FINANCIAMIENTO"]' type="text" class="form-control" id="FINANCIAMIENTO"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="VALOR_FINANCIACION_NACIONAL" class="col-md-5 control-label">VALOR FINANCIACION NACIONAL</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["VALOR_FINANCIACION_NACIONAL"]' type="text" class="form-control" id="VALOR_FINANCIACION_NACIONAL"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ID_FUENTE_INTERNACIONAL" class="col-md-5 control-label">ID FUENTE INTERNACIONAL</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["ID_FUENTE_INTERNACIONAL"]' type="text" class="form-control" id="ID_FUENTE_INTERNACIONAL"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ID_PAIS_FINANCIADOR" class="col-md-5 control-label">ID PAIS FINANCIADOR</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["ID_PAIS_FINANCIADOR"]' type="text" class="form-control" id="ID_PAIS_FINANCIADOR"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="VALOR_FINANCIACION_INTERNAC" class="col-md-5 control-label">VALOR FINANCIACION INTERNACIONAL</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='solicitud["VALOR_FINANCIACION_INTERNAC"]' type="text" class="form-control" id="VALOR_FINANCIACION_INTERNAC"
+              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="estadoComponenteInferior==1">
+          <label for="exampleInputFile">File input</label>
+          <input type="file" #fileInput1>
+
+          <p class="help-block">Example block-level help text here.</p>
+        </div>
+        <div class="form-group" *ngIf="estadoComponenteInferior==1">
+          <label for="exampleInputFile">File input</label>
+          <input type="file" #fileInput2>
+
+          <p class="help-block">Example block-level help text here.</p>
+        </div>
+        <div class="form-group" *ngIf="estadoComponenteInferior==1">
+          <label for="exampleInputFile">File input</label>
+          <input type="file" #fileInput3>
+
+          <p class="help-block">Example block-level help text here.</p>
+        </div>
+
+
+        <div class="form-group" *ngIf="(estadoComponenteInferior==2 && this.solicitud['urlFile1']!='' && this.solicitud['urlFile1']!=undefined)">
+          <label for="exampleInputFile">archivo 1</label>
+
+          <a href="{{this.solicitud['urlFile1']}}" target="_blank">link</a>
+        </div>
+        <div class="form-group" *ngIf="(estadoComponenteInferior==2 && this.solicitud['urlFile2']!='' && this.solicitud['urlFile2']!=undefined)">
+          <label for="exampleInputFile">archivo 2</label>
+
+          <a href="{{this.solicitud['urlFile2']}}" target="_blank"> link</a>
+        </div>
+        <div class="form-group" *ngIf="(estadoComponenteInferior==2 && this.solicitud['urlFile3']!='' && this.solicitud['urlFile3']!=undefined)">
+          <label for="exampleInputFile">archivo 3</label>
+
+          <a href="{{this.solicitud['urlFile3']}}" target="_blank"> link</a>
+        </div>
+
+        <!-- "AÑO": 0,
+            "NOMBRE": "",
+            "ID_SEXO_BIOLOGICO": "",
+            "ID_ESTADO_CIVIL": "",
+            "FECHA_NACIMIENTO": "",
+            "Correo electrónico": "",
+            "TIPO DE IDENTIFICACIÓN": "",
+            "NÚMERO DE IDENTIFICACIÓN": "",
+            "CÓDIGO DEL ESTUDIANTE EN UNIVALLE": "",
+            "PERIODO ACADÉMICO": 0,
+            "TIPO DE MOVILIDAD": "",
+            "TIPO DE CONVENIO": "",
+            "CODIGO_CONVENIO": "",
+            "MODALIDAD": "",
+            "NUM_DIAS_MOVILIDAD": "",
+            "TIPO DE PROGRAMA - CONVOCATORIA": "",
+            "NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN": "",
+            "NIVEL DE FORMACIÓN DE LA MOVILIDAD": "",
+            "PAÍS DE ORIGEN": "",
+            "UNIVERSIDAD DE PROCEDENCIA": "",
+            "CIUDAD-SEDE": "",
+            "PAÍS DE DESTINO": "",
+            "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "",
+            "PROGRAMA ACADÉMICO DE ORIGEN": "",
+            "CÓDIGO DEL PROGRAMA": "",
+            "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
+            "PROGRAMA ACADÉMICO DE DESTINO (2)": "",
+            "FINANCIAMIENTO": "NO APLICA",
+            "VALOR_FINANCIACION_NACIONAL": "",
+            "ID_FUENTE_INTERNACIONAL": "",
+            "ID_PAIS_FINANCIADOR": "",
+            "VALOR_FINANCIACION_INTERNAC": "" -->
+      </div>
+
+
+    </div>
+    <div class="box-footer">
+      <div class="row" *ngIf="estadoComponenteInferior==1">
+        <div class="col-md-6">
+
+        </div>
+        <div class="col-md-6">
+          <button type="button" class="btn btn-block btn-success" (click)="crearSolicitud()">Crear solicitud <i class="fa fa-arrow-circle-up"></i>
+          </button>
+        </div>
+      </div>
+      <!-- <div class="row" *ngIf="solicitud.nombre!==''">
+        <div class="col-md-6">
+            <button type="button" class="btn btn-block btn-danger" (click)="denegar()">Negar</button>
+        </div>
+        <div class="col-md-6">
+            <button type="button" class="btn btn-block btn-success" (click)="aprobar()">Success</button>
+        </div>
+      </div> -->
+    </div>
+  </div>
+
+</div>

@@ -32,6 +32,9 @@ import { EstudiantesPostulacionesComponent } from "./modulos/nivel-2/estudiantes
 //  administracion de directores de programa
 import { AdminDirectoresUvComponent } from "./modulos/nivel-3/admin-directores-uv/admin-directores-uv.component";
 import { AdminParesExternosComponent } from "./modulos/nivel-3/admin-pares-externos/admin-pares-externos.component";
+import { AdminPostEntrantesComponent } from "./modulos/nivel-3/admin-post-entrantes/admin-post-entrantes.component";
+import { AdminPostSalientesComponent } from "./modulos/nivel-3/admin-post-salientes/admin-post-salientes.component";
+
 
 const routes: Routes = [
     { path: 'inicio', component: InicioAppComponent },
@@ -62,7 +65,9 @@ const routes: Routes = [
                     { path: 'investigacion', component: ComponentInvestigacionComponent },
                     { path: '', pathMatch: 'full', redirectTo: 'dash/consultas' },
                     { path: 'AdminDirectores', component: AdminDirectoresUvComponent },
-                    { path: 'AdminParesExternos', component: AdminParesExternosComponent }
+                    { path: 'AdminParesExternos', component: AdminParesExternosComponent },
+                    { path: 'AdminPostulacionesEntrantes', component: AdminPostEntrantesComponent },
+                    { path: 'AdminPostulacionesSalientes', component: AdminPostSalientesComponent }
                 ]
             },
 

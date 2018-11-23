@@ -7,13 +7,12 @@ import { LocalStorageService } from 'ngx-webstorage';
 import { MailServiceService, NativeFirebaseService } from "../../../shared/services/main-service.service";
 import * as  moment from "moment";
 import * as firebase from "firebase";
-
 @Component({
-  selector: 'app-estudiantes-postulaciones',
-  templateUrl: './estudiantes-postulaciones.component.html',
-  styleUrls: ['./estudiantes-postulaciones.component.css']
+  selector: 'app-admin-post-entrantes',
+  templateUrl: './admin-post-entrantes.component.html',
+  styleUrls: ['./admin-post-entrantes.component.css']
 })
-export class EstudiantesPostulacionesComponent implements OnInit {
+export class AdminPostEntrantesComponent implements OnInit {
   user = JSON.parse(localStorage.getItem('usuario'));
 
   //datos consulta
@@ -70,36 +69,34 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
   consultaDatosTabla() {
     this.db.ref('/postulaciones/')
-      .orderByChild("Correo electrónico")
-      .equalTo(this.user.email)
+      // .orderByChild("estado")
+      // .equalTo('Aprobada por el director de programa')
       .once('value', solicitudesSnap => {
         this.dataTablaSolicitudes = [];
-        // console.log('consulta tabla', solicitudesSnap)
-
+        console.log('consulta tabla', solicitudesSnap.val())
         solicitudesSnap.forEach((solicitudSnap) => {
-
           let dato = solicitudSnap.val()
+
           if (dato.hasOwnProperty('creadoPor')) {
-            this.solicitudes[solicitudSnap.key] = dato
-            let correo = dato['Correo electrónico'] || ''
-            let ano = dato['AÑO'] || ''
-            let nombre = dato['NOMBRE'] || ''
-            let estado = dato.estado || 'En espera de aprobación DRI'
-            let destino = dato['PROGRAMA ACADÉMICO DE DESTINO (1)'] || 'Ninguno'
-            let comentarioDenegacion = dato['comentarioDenegacion'] || ''
+          this.solicitudes[solicitudSnap.key] = dato
+          let correo = dato['Correo electrónico'] || ''
+          let ano = dato['AÑO'] || ''
+          let nombre = dato['NOMBRE'] || ''
+          let estado = dato.estado || 'Sin estado'
+          let destino = dato['PROGRAMA ACADÉMICO DE DESTINO (1)'] || 'Ninguno'
+          let comentarioDenegacion = dato['comentarioDenegacion'] || ''
 
-            this.dataTablaSolicitudes.push({
-              correo: correo,
-              ano: ano,
-              destino: destino,
-              nombre: nombre,
-              key: solicitudSnap.key,
-              estado: estado,
-              comentarioDenegacion: comentarioDenegacion
-            })
-
+          this.dataTablaSolicitudes.push({
+            correo: correo,
+            ano: ano,
+            destino: destino,
+            nombre: nombre,
+            key: solicitudSnap.key,
+            estado: estado,
+            comentarioDenegacion: comentarioDenegacion
+          })
           }
-
+          
         })
 
         this.dataSource = new MatTableDataSource(this.dataTablaSolicitudes);
@@ -132,20 +129,20 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     }
     this.panelInferior.nativeElement.scrollIntoView();
 
-   
+
   }
 
 
 
   setsolicitud() {
     this.solicitud = {
-      "NOMBRE": "",
-      "ID_SEXO_BIOLOGICO": "",
+      "NOMBRE": "Francisco Hurtado",
+      "ID_SEXO_BIOLOGICO": "francisco.hurtado@",
       "ID_ESTADO_CIVIL": "",
-      "FECHA_NACIMIENTO": "",
-      "Correo electrónico": "",
-      "TIPO DE IDENTIFICACIÓN": "",
-      "NÚMERO DE IDENTIFICACIÓN": "",
+      "FECHA_NACIMIENTO": "07/12/1984",
+      "Correo electrónico": "francisco.hurtado@geoprocess.com.co",
+      "TIPO DE IDENTIFICACIÓN": "CEDULA",
+      "NÚMERO DE IDENTIFICACIÓN": "123456789",
       "CÓDIGO DEL ESTUDIANTE EN UNIVALLE": "",
       "PERIODO ACADÉMICO": 0,
       "TIPO DE MOVILIDAD": "ENTRANTE",
@@ -153,17 +150,17 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       "CODIGO_CONVENIO": "",
       "MODALIDAD": "",
       "NUM_DIAS_MOVILIDAD": "",
-      "TIPO DE PROGRAMA - CONVOCATORIA": "",
+      "TIPO DE PROGRAMA - CONVOCATORIA": "BILATERAL",
       "NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN": "",
       "NIVEL DE FORMACIÓN DE LA MOVILIDAD": "",
       "PAÍS DE ORIGEN": "",
-      "UNIVERSIDAD DE PROCEDENCIA": "",
+      "UNIVERSIDAD DE PROCEDENCIA": this.universidadProcedencia,
       "CIUDAD-SEDE": "",
       "PAÍS DE DESTINO": "",
-      "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "",
+      "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "UNIVERSIDAD DEL VALLE",
       "PROGRAMA ACADÉMICO DE ORIGEN": "",
       "CÓDIGO DEL PROGRAMA": "",
-      "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
+      "PROGRAMA ACADÉMICO DE DESTINO (1)": "BIOLOGÍA",
       "PROGRAMA ACADÉMICO DE DESTINO (2)": "",
       "FINANCIAMIENTO": "NO APLICA",
       "VALOR_FINANCIACION_NACIONAL": "",
@@ -173,8 +170,10 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       "urlFile1": "",
       "urlFile2": "",
       "urlFile3": "",
+      "creadoPor": this.user.email,
+      "fechaCreado": "",
       "fechaActualizado": "",
-      "estado": ""
+      "estado": "En espera de aprobación DRI"
     }
   }
 
@@ -185,4 +184,5 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       .send(email, asunto, mensaje, cc, cco)
 
   }
+
 }
