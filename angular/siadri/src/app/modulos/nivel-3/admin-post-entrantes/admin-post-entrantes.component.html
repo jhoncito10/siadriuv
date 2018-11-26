@@ -411,12 +411,13 @@
 
     </div>
     <div class="box-footer">
-      <div class="row" *ngIf="estadoComponenteInferior==1">
+      <div class="row" *ngIf="estadoComponenteInferior==2">
         <div class="col-md-6">
-
+          <button type="button" class="btn btn-block btn-danger" (click)="denegarSolicitud()">Denegar solicitud <i class="fa fa-arrow-circle-up"></i>
+          </button>
         </div>
         <div class="col-md-6">
-          <button type="button" class="btn btn-block btn-success" (click)="crearSolicitud()">Crear solicitud <i class="fa fa-arrow-circle-up"></i>
+          <button type="button" class="btn btn-block btn-success" (click)="aprobarSolicitud()">Aprobar solicitud <i class="fa fa-arrow-circle-up"></i>
           </button>
         </div>
       </div>

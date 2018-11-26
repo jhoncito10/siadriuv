@@ -6,6 +6,7 @@ import swal from 'sweetalert2';
 import { LocalStorageService } from 'ngx-webstorage';
 import { MailServiceService, NativeFirebaseService } from "../../../shared/services/main-service.service";
 import * as  moment from "moment";
+import { environment } from "../../../../environments/environment";
 import * as firebase from "firebase";
 @Component({
   selector: 'app-admin-post-entrantes',
@@ -14,7 +15,6 @@ import * as firebase from "firebase";
 })
 export class AdminPostEntrantesComponent implements OnInit {
   user = JSON.parse(localStorage.getItem('usuario'));
-
   //datos consulta
   solicitudes: any;
   // solicitud selecionada
@@ -24,19 +24,12 @@ export class AdminPostEntrantesComponent implements OnInit {
   //datos de la tabla
   firebaseStorage: any
   dataTablaSolicitudes = [];
-
   displayedColumns = ['correo', 'ano', 'destino', 'nombre', 'estado'];
   dataSource: MatTableDataSource<any>;
-
   universidadProcedencia = 'BENEMÉRITA UNIVERSIDAD AUTÓNOMA DE PUEBLA'
-
   estadoComponenteInferior = 0 //0 = ninguno; 1 =  nueva solicitud; 2 = datos solicitud
-
   year
-
-  rowSelected
-
-
+  rowSelected 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('panelSuperior') tablaSolicitudesCarrera: ElementRef;
@@ -131,7 +124,157 @@ export class AdminPostEntrantesComponent implements OnInit {
 
 
   }
+  aprobarSolicitud(){
+    swal.showLoading()
+    // var _this = this
 
+    const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update({
+      estado: 'Aprobada por DRI UV',
+      fechaActualizado: moment().format('DD/MM/YYYY HH:mm')
+    });
+    promise
+      .then(res => {
+        if (this.solicitud['Correo electrónico'] != '') {
+          var body = 'cuerpo del correo de aceptacion'
+          var correos = `${this.solicitud['Correo electrónico']}, ${environment.mails.dirDRI}`
+
+          return this.enviarCorreo(correos, "Aprobada por DRI UV", body)
+            .subscribe((responseData) => {
+              console.log(responseData)
+
+              if (responseData) {
+                swal({
+                  title: `Solicitud actualizada`
+                })
+              } else {
+                swal({
+                  title: `Solicitud actualizada`
+                })
+              }
+
+            }, error => {
+
+              console.log(error)
+            })
+        } else {
+          swal({
+            title: `Solicitud actualizada`
+          })
+          return
+        }
+
+
+      })
+      .then(() => {
+        let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
+        this._mailServiceService
+        .crearNotification(this.solicitud['Correo electrónico'],notificationInfo)
+        .subscribe((responseData) => {
+          console.log(responseData)
+
+         
+
+        }, error => {
+
+          console.log(error)
+        })
+        this._mailServiceService
+        .createNotificationPrograma(this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'],notificationInfo)
+        .subscribe((responseData) => {
+          console.log(responseData)
+
+        
+
+        }, error => {
+
+          console.log(error)
+        })
+        // let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
+        // this._mailServiceService.crearNotification(this.solicitud['Correo electrónico'],notificationInfo)
+        // let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
+        // this._mailServiceService.crearNotification(this.solicitud['Correo electrónico'],notificationInfo)
+        
+        
+        this.consultaDatosTabla()
+
+      })
+      .catch(err => {
+        swal({
+          title: `${err}`
+        })
+        console.log(err, 'You dont have access!')
+      });
+  }
+  
+  denegarSolicitud(){
+    var mensajeDenegacion = ''
+    
+
+    const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`);
+
+    swal({
+      title: 'Comentario',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Enviar',
+      showLoaderOnConfirm: true,
+      preConfirm: (mensaje) => {
+        mensajeDenegacion = mensaje
+
+        return promise.update({
+          estado: 'Denegada por DRI UV',
+          comentarioDenegacion: `${mensaje}`,
+          fechaActualizado: moment().format('DD/MM/YYYY HH:mm')
+        })
+
+      },
+      allowOutsideClick: () => !swal.isLoading()
+    }).then((result) => {
+      if (result.value) {
+        if (this.solicitud['Correo electrónico'] != '') {
+          var body = `cuerpo del correo de la razon por la cual la solicitud es denegada 
+          ${result} -- ${mensajeDenegacion}`
+          var correos = `${this.solicitud['Correo electrónico']}, ${environment.mails.dirDRI}`
+
+          return this.enviarCorreo(correos, "Solicitud Denegada por DRI UV", body)
+            .subscribe((responseData) => {
+              console.log(responseData)
+
+              if (responseData) {
+                swal({
+                  title: `Solicitud actualizada`
+                })
+              } else {
+                swal({
+                  title: `Solicitud actualizada`
+                })
+              }
+
+            }, error => {
+
+              console.log(error)
+            })
+        } else {
+          swal({
+            title: `Solicitud actualizada`
+          })
+          return
+        }
+
+      }
+    })
+      .then(() => {
+        this.consultaDatosTabla()
+
+      })
+      .catch(error => {
+        console.log(error)
+
+      })
+  }
 
 
   setsolicitud() {

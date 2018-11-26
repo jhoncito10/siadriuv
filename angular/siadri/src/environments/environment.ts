@@ -15,7 +15,7 @@ export const environment = {
   },
   cloudUrl:'https://us-central1-siadri-dev.cloudfunctions.net',
   mails:{
-    dirDRI:"francisco.hurtado.velasco@geoprocess.com.co"
+    dirDRI:"francisco.hurtado@geoprocess.com.co"
   }
 };
 

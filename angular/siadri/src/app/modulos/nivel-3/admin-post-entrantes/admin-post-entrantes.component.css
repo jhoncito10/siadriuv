@@ -4,4 +4,5 @@
 
   .selected{
     background: rgb(232, 28, 37); 
+    color: white !important;
   }

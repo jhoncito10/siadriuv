@@ -27,15 +27,15 @@ const ref = admin.database().ref();
 
 exports.CreateUser = functions.auth.user().onCreate(event => {
 
-  console.log("FUNCIONO");
+    console.log("FUNCIONO");
     crearUsuario(event);
 
 });
 
-function crearUsuario(event){
-  const uid = event.data.uid;
+function crearUsuario(event) {
+    const uid = event.data.uid;
     const displayName = event.data.displayName || "";
-     console.log(event);
+    console.log(event);
     const email = event.data.email;
     const newUser = ref.child(`/usuarios/${uid}`);
     newUser.set({
@@ -46,23 +46,23 @@ function crearUsuario(event){
         empresa: "",
         telefono: "",
         estado: ""
-    }).then(exito =>{
-      console.log('EL USUARIO SE CREO CON EXITO', exito);
+    }).then(exito => {
+        console.log('EL USUARIO SE CREO CON EXITO', exito);
     }).catch(error => {
-      console.log('SE GENERO UN ERROR AL INTENTAR CREAR USUARIO');
-      crearUsuario(event);
+        console.log('SE GENERO UN ERROR AL INTENTAR CREAR USUARIO');
+        crearUsuario(event);
     });
 }
 
-exports.consFecha = functions.https.onRequest((req,res) => {
-  cors(req, res, () => {
+exports.consFecha = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
 
-    if(res){
-      res.status(200).send(moment().format('YYYY-MM-DD'));
-    }
+        if (res) {
+            res.status(200).send(moment().format('YYYY-MM-DD'));
+        }
 
 
-  });
+    });
 
 });
 
@@ -77,15 +77,15 @@ let sendMail = (req, res) => {
     };
     return mailTrasport.sendMail(mailsolicitante).then(() => {
         if (res) {
-            res.status(200).json({status:200,mensaje:'correo enviado correctamente'});
+            res.status(200).json({ status: 200, mensaje: 'correo enviado correctamente' });
 
         } else {
             console.log("exito al enviar correo");
         }
     }).catch(error => {
 
-            console.log(`${error}`);
-        
+        console.log(`${error}`);
+
     });
     // send mail with defined transport object
     // transporter.sendMail(mailOptions, (error, info) => {
@@ -258,4 +258,96 @@ exports.weeklyEmail = functions.https.onRequest((req, res) => {
     //         res.send(error);
     //     });
     // });
+});
+
+exports.createNotification = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+        console.log(req.body)
+        if (req.body.hasOwnProperty('email')) {
+            return ref.child('usuarios')
+                .orderByChild('email')
+                .equalTo(req.body.email)
+                .once('value').then(usuariosSnap => {
+                    usuariosSnap.forEach(function (userSnap) {
+                        console.log(userSnap)
+                        var fecha = moment().format('DD/MM/YYYY HH:mm')
+                        // key will be "ada" the first time and "alan" the second time
+                        var key = userSnap.key;
+                        // childData will be the actual contents of the child
+                        var childData = userSnap.val();
+                        var notificationRef = ref.child(`usuarios/${key}/notificacion/`).push()
+                        return notificationRef.set(
+                            {
+                                "estado": "sin leer",
+                                "fecha_creacion:": fecha,
+                                "fecha_modificacion:": fecha,
+                                "icon": "fa fa-users text-aqua",
+                                "info": `${req.body.info}`
+                            }
+                        ).then(() => {
+                            return res.status(200).json({ status: 200, mensaje: 'Notificacion creada correctamente' });
+
+                        }).catch(error => {
+                            return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
+
+                        })
+                    });
+                    // return ref.child(`usuarios/${}`)
+                })
+        } else {
+            return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
+        }
+
+    });
+
+});
+
+exports.createNotificationPrograma = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+        console.log(req.body)
+        if (req.body.hasOwnProperty('programa')) {
+            return ref.child('programasAcademicos')
+                .orderByChild('NOMBRE PROGRAMA ACADEMICO')
+                .equalTo(req.body.programa)
+                .once('value')
+                .then(programasSnap => {
+                    programasSnap.forEach(function (programaSnap) {
+                        return ref.child('usuarios')
+                            .orderByChild('email')
+                            .equalTo(programaSnap.val()['correo'])
+                            .once('value').then(usuariosSnap => {
+                                usuariosSnap.forEach(function (userSnap) {
+                                    console.log(userSnap)
+                                    var fecha = moment().format('DD/MM/YYYY HH:mm')
+                                    // key will be "ada" the first time and "alan" the second time
+                                    var key = userSnap.key;
+                                    // childData will be the actual contents of the child
+                                    var childData = userSnap.val();
+                                    var notificationRef = ref.child(`usuarios/${key}/notificacion/`).push()
+                                    return notificationRef.set(
+                                        {
+                                            "estado": "sin leer",
+                                            "fecha_creacion:": fecha,
+                                            "fecha_modificacion:": fecha,
+                                            "icon": "fa fa-users text-aqua",
+                                            "info": `${req.body.info}`
+                                        }
+                                    ).then(() => {
+                                        return res.status(200).json({ status: 200, mensaje: 'Notificacion creada correctamente' });
+
+                                    }).catch(error => {
+                                        return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
+
+                                    })
+                                });
+                                // return ref.child(`usuarios/${}`)
+                            })
+                    });
+                })
+        } else {
+            return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
+        }
+
+    });
+
 });
