@@ -156,7 +156,7 @@ export class DirectoresProgramaUvComponent implements OnInit {
     // var _this = this
 
     const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update({
-      estado: 'Aprobada por el director de programa',
+      estado: 'Aprobada por dirección de programa',
       fechaActualizado: moment().format('DD/MM/YYYY HH	:mm')
     });
     promise
@@ -221,7 +221,7 @@ export class DirectoresProgramaUvComponent implements OnInit {
       preConfirm: (mensaje) => {
         mensajeDenegacion = mensaje
         return promise.update({
-          estado: 'Denegada por el director de programa',
+          estado: 'Denegada por la dirección de programa',
           comentarioDenegacion: `${mensaje}`
         })
 

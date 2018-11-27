@@ -89,7 +89,7 @@
       </div>
     </div>
     <div class="box-body">
-      <div *ngIf="(estadoComponenteInferior==1 || estadoComponenteInferior==2)">
+      <div *ngIf="(estadoComponenteInferior==1 || estadoComponenteInferior==2 || estadoComponenteInferior==3)">
         <div class="form-group">
           <label for="NOMBRE" class="col-md-5 control-label">NOMBRE</label>
 
@@ -358,17 +358,26 @@
         </div>
 
 
-        <div class="form-group" *ngIf="(estadoComponenteInferior==2 && this.solicitud['urlFile1']!='' && this.solicitud['urlFile1']!=undefined)">
+        <div class="form-group" 
+        *ngIf="((estadoComponenteInferior==2 || estadoComponenteInferior==3) && 
+        this.solicitud['urlFile1']!='' && 
+        this.solicitud['urlFile1']!=undefined)">
           <label for="exampleInputFile">archivo 1</label>
 
           <a href="{{this.solicitud['urlFile1']}}" target="_blank">link</a>
         </div>
-        <div class="form-group" *ngIf="(estadoComponenteInferior==2 && this.solicitud['urlFile2']!='' && this.solicitud['urlFile2']!=undefined)">
+        <div class="form-group" 
+        *ngIf="((estadoComponenteInferior==2 || estadoComponenteInferior==3) && 
+        this.solicitud['urlFile2']!='' && 
+        this.solicitud['urlFile2']!=undefined)">
           <label for="exampleInputFile">archivo 2</label>
 
           <a href="{{this.solicitud['urlFile2']}}" target="_blank"> link</a>
         </div>
-        <div class="form-group" *ngIf="(estadoComponenteInferior==2 && this.solicitud['urlFile3']!='' && this.solicitud['urlFile3']!=undefined)">
+        <div class="form-group" 
+        *ngIf="((estadoComponenteInferior==2 || estadoComponenteInferior==3) && 
+        this.solicitud['urlFile3']!='' && 
+        this.solicitud['urlFile3']!=undefined)">
           <label for="exampleInputFile">archivo 3</label>
 
           <a href="{{this.solicitud['urlFile3']}}" target="_blank"> link</a>
@@ -418,6 +427,15 @@
         </div>
         <div class="col-md-6">
           <button type="button" class="btn btn-block btn-success" (click)="aprobarSolicitud()">Aprobar solicitud <i class="fa fa-arrow-circle-up"></i>
+          </button>
+        </div>
+      </div>
+      <div class="row" *ngIf="estadoComponenteInferior==3">
+        <div class="col-md-6">
+          
+        </div>
+        <div class="col-md-6">
+          <button type="button" class="btn btn-block btn-success" (click)="enviarCarta()">Enviar carta de aprovacion <i class="fa fa-arrow-circle-up"></i>
           </button>
         </div>
       </div>

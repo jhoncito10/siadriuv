@@ -351,3 +351,9 @@ exports.createNotificationPrograma = functions.https.onRequest((req, res) => {
     });
 
 });
+
+exports.createLetter = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+        console.log(req.body)       
+    });
+});

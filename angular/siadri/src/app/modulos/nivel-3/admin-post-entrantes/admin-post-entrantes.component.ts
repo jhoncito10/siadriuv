@@ -27,9 +27,9 @@ export class AdminPostEntrantesComponent implements OnInit {
   displayedColumns = ['correo', 'ano', 'destino', 'nombre', 'estado'];
   dataSource: MatTableDataSource<any>;
   universidadProcedencia = 'BENEMÉRITA UNIVERSIDAD AUTÓNOMA DE PUEBLA'
-  estadoComponenteInferior = 0 //0 = ninguno; 1 =  nueva solicitud; 2 = datos solicitud
+  estadoComponenteInferior = 0 //0 = ninguno; 1 =  nueva solicitud; 2 = En espera de aprobación DRI; 3 = Aprobada por dirección de programa;
   year
-  rowSelected 
+  rowSelected
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('panelSuperior') tablaSolicitudesCarrera: ElementRef;
@@ -71,25 +71,25 @@ export class AdminPostEntrantesComponent implements OnInit {
           let dato = solicitudSnap.val()
 
           if (dato.hasOwnProperty('creadoPor')) {
-          this.solicitudes[solicitudSnap.key] = dato
-          let correo = dato['Correo electrónico'] || ''
-          let ano = dato['AÑO'] || ''
-          let nombre = dato['NOMBRE'] || ''
-          let estado = dato.estado || 'Sin estado'
-          let destino = dato['PROGRAMA ACADÉMICO DE DESTINO (1)'] || 'Ninguno'
-          let comentarioDenegacion = dato['comentarioDenegacion'] || ''
+            this.solicitudes[solicitudSnap.key] = dato
+            let correo = dato['Correo electrónico'] || ''
+            let ano = dato['AÑO'] || ''
+            let nombre = dato['NOMBRE'] || ''
+            let estado = dato.estado || 'Sin estado'
+            let destino = dato['PROGRAMA ACADÉMICO DE DESTINO (1)'] || 'Ninguno'
+            let comentarioDenegacion = dato['comentarioDenegacion'] || ''
 
-          this.dataTablaSolicitudes.push({
-            correo: correo,
-            ano: ano,
-            destino: destino,
-            nombre: nombre,
-            key: solicitudSnap.key,
-            estado: estado,
-            comentarioDenegacion: comentarioDenegacion
-          })
+            this.dataTablaSolicitudes.push({
+              correo: correo,
+              ano: ano,
+              destino: destino,
+              nombre: nombre,
+              key: solicitudSnap.key,
+              estado: estado,
+              comentarioDenegacion: comentarioDenegacion
+            })
           }
-          
+
         })
 
         this.dataSource = new MatTableDataSource(this.dataTablaSolicitudes);
@@ -111,9 +111,22 @@ export class AdminPostEntrantesComponent implements OnInit {
   selectSolicitud(row) {
     this.rowSelected = row;
 
-    this.estadoComponenteInferior = 2
 
     const _convenioSelected = this.solicitudes[row.key];
+    const estado = _convenioSelected['estado']
+    switch (estado) {
+      case 'En espera de aprobación DRI':
+        this.estadoComponenteInferior = 2
+        break;
+      case 'Aprobada por dirección de programa':
+        this.estadoComponenteInferior = 3
+        break;
+
+      default:
+        this.estadoComponenteInferior = 0
+        break;
+    }
+
     this.solicitud = _convenioSelected
     console.log(this.solicitud)
     this.solicitud.key = row.key
@@ -124,12 +137,13 @@ export class AdminPostEntrantesComponent implements OnInit {
 
 
   }
-  aprobarSolicitud(){
+  aprobarSolicitud() {
     swal.showLoading()
     // var _this = this
 
     const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update({
       estado: 'Aprobada por DRI UV',
+      actualizadoPor: this.user.email,
       fechaActualizado: moment().format('DD/MM/YYYY HH:mm')
     });
     promise
@@ -168,33 +182,28 @@ export class AdminPostEntrantesComponent implements OnInit {
       .then(() => {
         let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
         this._mailServiceService
-        .crearNotification(this.solicitud['Correo electrónico'],notificationInfo)
-        .subscribe((responseData) => {
-          console.log(responseData)
+          .crearNotification(this.solicitud['Correo electrónico'], notificationInfo)
+          .subscribe((responseData) => {
+            console.log(responseData)
+          }, error => { console.log(error) })
 
-         
-
-        }, error => {
-
-          console.log(error)
-        })
         this._mailServiceService
-        .createNotificationPrograma(this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'],notificationInfo)
-        .subscribe((responseData) => {
-          console.log(responseData)
+          .createNotificationPrograma(this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'], notificationInfo)
+          .subscribe((responseData) => {
+            console.log(responseData)
 
-        
 
-        }, error => {
 
-          console.log(error)
-        })
+          }, error => {
+
+            console.log(error)
+          })
         // let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
         // this._mailServiceService.crearNotification(this.solicitud['Correo electrónico'],notificationInfo)
         // let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
         // this._mailServiceService.crearNotification(this.solicitud['Correo electrónico'],notificationInfo)
-        
-        
+
+
         this.consultaDatosTabla()
 
       })
@@ -205,10 +214,10 @@ export class AdminPostEntrantesComponent implements OnInit {
         console.log(err, 'You dont have access!')
       });
   }
-  
-  denegarSolicitud(){
+
+  denegarSolicitud() {
     var mensajeDenegacion = ''
-    
+
 
     const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`);
 
@@ -227,6 +236,7 @@ export class AdminPostEntrantesComponent implements OnInit {
         return promise.update({
           estado: 'Denegada por DRI UV',
           comentarioDenegacion: `${mensaje}`,
+          actualizadoPor: this.user.email,
           fechaActualizado: moment().format('DD/MM/YYYY HH:mm')
         })
 
@@ -237,7 +247,7 @@ export class AdminPostEntrantesComponent implements OnInit {
         if (this.solicitud['Correo electrónico'] != '') {
           var body = `cuerpo del correo de la razon por la cual la solicitud es denegada 
           ${result} -- ${mensajeDenegacion}`
-          var correos = `${this.solicitud['Correo electrónico']}, ${environment.mails.dirDRI}`
+          var correos = `${this.solicitud['Correo electrónico']}, ${this.solicitud['creadoPor']}`
 
           return this.enviarCorreo(correos, "Solicitud Denegada por DRI UV", body)
             .subscribe((responseData) => {
@@ -267,6 +277,12 @@ export class AdminPostEntrantesComponent implements OnInit {
       }
     })
       .then(() => {
+        let notificationInfo = 'La solicitud ha sido Rechazada por DRI UV'
+        this._mailServiceService
+          .crearNotification(this.solicitud['creadoPor'], notificationInfo)
+          .subscribe((responseData) => {
+            console.log(responseData)
+          }, error => { console.log(error) })
         this.consultaDatosTabla()
 
       })
@@ -275,35 +291,41 @@ export class AdminPostEntrantesComponent implements OnInit {
 
       })
   }
-
+  enviarCarta(){
+    this._mailServiceService
+    .enviarCarta(this.solicitud,environment.mails.dirDRI)
+    .subscribe(res=>{
+      console.log(res)
+    })
+  }
 
   setsolicitud() {
     this.solicitud = {
-      "NOMBRE": "Francisco Hurtado",
-      "ID_SEXO_BIOLOGICO": "francisco.hurtado@",
+      "NOMBRE": "",
+      "ID_SEXO_BIOLOGICO": "",
       "ID_ESTADO_CIVIL": "",
-      "FECHA_NACIMIENTO": "07/12/1984",
-      "Correo electrónico": "francisco.hurtado@geoprocess.com.co",
-      "TIPO DE IDENTIFICACIÓN": "CEDULA",
-      "NÚMERO DE IDENTIFICACIÓN": "123456789",
+      "FECHA_NACIMIENTO": "",
+      "Correo electrónico": "",
+      "TIPO DE IDENTIFICACIÓN": "",
+      "NÚMERO DE IDENTIFICACIÓN": "",
       "CÓDIGO DEL ESTUDIANTE EN UNIVALLE": "",
       "PERIODO ACADÉMICO": 0,
-      "TIPO DE MOVILIDAD": "ENTRANTE",
+      "TIPO DE MOVILIDAD": "",
       "TIPO DE CONVENIO": "",
       "CODIGO_CONVENIO": "",
       "MODALIDAD": "",
       "NUM_DIAS_MOVILIDAD": "",
-      "TIPO DE PROGRAMA - CONVOCATORIA": "BILATERAL",
+      "TIPO DE PROGRAMA - CONVOCATORIA": "",
       "NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN": "",
       "NIVEL DE FORMACIÓN DE LA MOVILIDAD": "",
       "PAÍS DE ORIGEN": "",
-      "UNIVERSIDAD DE PROCEDENCIA": this.universidadProcedencia,
+      "UNIVERSIDAD DE PROCEDENCIA": '',
       "CIUDAD-SEDE": "",
       "PAÍS DE DESTINO": "",
-      "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "UNIVERSIDAD DEL VALLE",
+      "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "",
       "PROGRAMA ACADÉMICO DE ORIGEN": "",
       "CÓDIGO DEL PROGRAMA": "",
-      "PROGRAMA ACADÉMICO DE DESTINO (1)": "BIOLOGÍA",
+      "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
       "PROGRAMA ACADÉMICO DE DESTINO (2)": "",
       "FINANCIAMIENTO": "NO APLICA",
       "VALOR_FINANCIACION_NACIONAL": "",
@@ -313,7 +335,6 @@ export class AdminPostEntrantesComponent implements OnInit {
       "urlFile1": "",
       "urlFile2": "",
       "urlFile3": "",
-      "creadoPor": this.user.email,
       "fechaCreado": "",
       "fechaActualizado": "",
       "estado": "En espera de aprobación DRI"
