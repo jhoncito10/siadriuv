@@ -291,12 +291,19 @@ export class AdminPostEntrantesComponent implements OnInit {
 
       })
   }
-  enviarCarta(){
+  enviarCarta() {
+    swal.showLoading()
+
     this._mailServiceService
-    .enviarCarta(this.solicitud,environment.mails.dirDRI)
-    .subscribe(res=>{
-      console.log(res)
-    })
+      .enviarCarta(this.solicitud, environment.mails.dirDRI)
+      .subscribe((responseData) => {
+        if (responseData) {
+          swal({
+            title: `Solicitud actualizada`
+          })
+        }
+      }, error => { console.log(error) })
+    this.consultaDatosTabla()
   }
 
   setsolicitud() {

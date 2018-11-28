@@ -46,6 +46,7 @@ export class MailServiceService {
       numeroDocumento = `${solicitud['NÚMERO DE IDENTIFICACIÓN']}`,
       genero = `${solicitud['ID_SEXO_BIOLOGICO']}`,
       areaDestino = `${solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)']}`;
+      console.log(email)
 
     const bodyNotification = {
       email, nombre, fechaNacimiento, nacionalidad, numeroDocumento, genero, areaDestino
