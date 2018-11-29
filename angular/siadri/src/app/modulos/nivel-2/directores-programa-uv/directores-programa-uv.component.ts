@@ -78,7 +78,7 @@ export class DirectoresProgramaUvComponent implements OnInit {
             console.log(dato['PROGRAMA ACADÉMICO DE DESTINO (1)'])
             if (
               dato['TIPO DE MOVILIDAD'] == 'ENTRANTE' &&
-              dato['TIPO DE MOVILIDAD'] =='Aprobada por DRI UV'
+              dato['estado'] =='Aprobada por DRI UV'
             ) {
               this.solicitudes[solicitudSnap.key] = dato
               let correo = dato['Correo electrónico'] || ''

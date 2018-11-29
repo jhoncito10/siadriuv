@@ -10,6 +10,6 @@ export const environment = {
   },
   cloudUrl:'https://us-central1-siadri-dev.cloudfunctions.net',
   mails:{
-    dirDRI:"francisco.hurtado@geoprocess.com.co"
+    dirDRI:"sistema.siadri@correounivalle.edu.co"
   }
 };
