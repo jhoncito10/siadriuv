@@ -61,13 +61,13 @@ exports.consFecha = functions.https.onRequest((req, res) => {
 });
 
 
-let sendMail = (req, res) => {
+let sendMail = (para, asunto,mensaje, res) => {
 
     var mailsolicitante = {
         from: 'SIADRI <sistema.siadri@correounivalle.edu.co>',
-        bcc: `${req.para}`,
-        subject: req.asunto,
-        html: req.mensaje
+        bcc: `${para}`,
+        subject: asunto,
+        html: mensaje
     };
     return mailTrasport.sendMail(mailsolicitante).then(() => {
         if (res) {
@@ -87,7 +87,7 @@ let sendMail = (req, res) => {
 
 exports.enviarCorreo = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
-        sendMail(req.body, res);
+        sendMail(req.body.para,req.body.asunto,req.body.mensaje, res);
     });
 });
 
@@ -177,41 +177,45 @@ exports.weeklyEmail = functions.https.onRequest((req, res) => {
         res.send(error);
     });
 });
-
+var crearNotificacionFuncion = (email, info) => {
+    return ref.child('usuarios')
+        .orderByChild('email')
+        .equalTo(email)
+        .once('value').then(usuariosSnap => {
+            usuariosSnap.forEach(function (userSnap) {
+                console.log(userSnap)
+                var fecha = moment().format('DD/MM/YYYY HH:mm')
+                // key will be "ada" the first time and "alan" the second time
+                var key = userSnap.key;
+                // childData will be the actual contents of the child
+                var childData = userSnap.val();
+                var notificationRef = ref.child(`usuarios/${key}/notificacion/`).push()
+                return notificationRef.set(
+                    {
+                        "estado": "sin leer",
+                        "fecha_creacion:": fecha,
+                        "fecha_modificacion:": fecha,
+                        "icon": "fa fa-users text-aqua",
+                        "info": `${info}`
+                    }
+                )
+            });
+            // return ref.child(`usuarios/${}`)
+        })
+}
 exports.createNotification = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
         console.log(req.body)
         if (req.body.hasOwnProperty('email')) {
-            return ref.child('usuarios')
-                .orderByChild('email')
-                .equalTo(req.body.email)
-                .once('value').then(usuariosSnap => {
-                    usuariosSnap.forEach(function (userSnap) {
-                        console.log(userSnap)
-                        var fecha = moment().format('DD/MM/YYYY HH:mm')
-                        // key will be "ada" the first time and "alan" the second time
-                        var key = userSnap.key;
-                        // childData will be the actual contents of the child
-                        var childData = userSnap.val();
-                        var notificationRef = ref.child(`usuarios/${key}/notificacion/`).push()
-                        return notificationRef.set(
-                            {
-                                "estado": "sin leer",
-                                "fecha_creacion:": fecha,
-                                "fecha_modificacion:": fecha,
-                                "icon": "fa fa-users text-aqua",
-                                "info": `${req.body.info}`
-                            }
-                        ).then(() => {
-                            return res.status(200).json({ status: 200, mensaje: 'Notificacion creada correctamente' });
+            crearNotificacionFuncion(req.body.email, req.body.info)
+                .then(() => {
+                    return res.status(200).json({ status: 200, mensaje: 'Notificacion creada correctamente' });
 
-                        }).catch(error => {
-                            return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
+                }).catch(error => {
+                    return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
 
-                        })
-                    });
-                    // return ref.child(`usuarios/${}`)
                 })
+
         } else {
             return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
         }
@@ -219,6 +223,8 @@ exports.createNotification = functions.https.onRequest((req, res) => {
     });
 
 });
+
+
 
 exports.createNotificationPrograma = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
@@ -230,35 +236,13 @@ exports.createNotificationPrograma = functions.https.onRequest((req, res) => {
                 .once('value')
                 .then(programasSnap => {
                     programasSnap.forEach(function (programaSnap) {
-                        return ref.child('usuarios')
-                            .orderByChild('email')
-                            .equalTo(programaSnap.val()['correo'])
-                            .once('value').then(usuariosSnap => {
-                                usuariosSnap.forEach(function (userSnap) {
-                                    console.log(userSnap)
-                                    var fecha = moment().format('DD/MM/YYYY HH:mm')
-                                    // key will be "ada" the first time and "alan" the second time
-                                    var key = userSnap.key;
-                                    // childData will be the actual contents of the child
-                                    var childData = userSnap.val();
-                                    var notificationRef = ref.child(`usuarios/${key}/notificacion/`).push()
-                                    return notificationRef.set(
-                                        {
-                                            "estado": "sin leer",
-                                            "fecha_creacion:": fecha,
-                                            "fecha_modificacion:": fecha,
-                                            "icon": "fa fa-users text-aqua",
-                                            "info": `${req.body.info}`
-                                        }
-                                    ).then(() => {
-                                        return res.status(200).json({ status: 200, mensaje: 'Notificacion creada correctamente' });
+                        crearNotificacionFuncion(programaSnap.val()['correo'], req.body.info)
+                            .then(() => {
+                                return res.status(200).json({ status: 200, mensaje: 'Notificacion creada correctamente' });
 
-                                    }).catch(error => {
-                                        return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
+                            }).catch(error => {
+                                return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
 
-                                    })
-                                });
-                                // return ref.child(`usuarios/${}`)
                             })
                     });
                 })
@@ -311,8 +295,9 @@ exports.createLetter = functions.https.onRequest((req, res) => {
                     correos = `${req.body.email}`
 
                 }
+                var stringSubjk = (req.body.estado == 'aceptada') ? 'aceptacion':'denegacion';
                 console.log(correos)
-                var cuerpoPDF = `${req.body.nombre} tu solicitud a sido aprovada.
+                var cuerpoPDF = `${req.body.nombre} tu solicitud a sido ${req.body.estado}.
                 Estos son los datos de tu solicitud
                 ${req.body.fechaNacimiento}
                 ${req.body.nacionalidad}
@@ -323,7 +308,7 @@ exports.createLetter = functions.https.onRequest((req, res) => {
                 var mailsolicitante = {
                     from: 'SIADRI <sistema.siadri@correounivalle.edu.co>',
                     bcc: `${correos}`,
-                    subject: `Carta de aceptacion "${req.body.nombre}"`,
+                    subject: `Carta de ${stringSubjk} "${req.body.nombre}"`,
                     html: cuerpoPDF
                 };
                 try {
@@ -337,6 +322,22 @@ exports.createLetter = functions.https.onRequest((req, res) => {
                     res.status(204).json({ status: 204, mensaje: 'Error en el correo' });
 
                 }
+            });
+
+        })
+
+    });
+});
+
+exports.enviarCorreoPrograma = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+
+        correoPrograma(req.body.programa).then(function (correPro) {
+            correPro.forEach(function (programaSnap) {
+                var correoPrograma = programaSnap.val()['correo']
+              
+                sendMail(correoPrograma,req.body.asunto,req.body.mensaje, res);
+
             });
 
         })

@@ -77,7 +77,8 @@ export class DirectoresProgramaUvComponent implements OnInit {
             let dato = solicitudSnap.val()
             console.log(dato['PROGRAMA ACADÉMICO DE DESTINO (1)'])
             if (
-              dato['TIPO DE MOVILIDAD'] == 'ENTRANTE'
+              dato['TIPO DE MOVILIDAD'] == 'ENTRANTE' &&
+              dato['TIPO DE MOVILIDAD'] =='Aprobada por DRI UV'
             ) {
               this.solicitudes[solicitudSnap.key] = dato
               let correo = dato['Correo electrónico'] || ''
@@ -221,7 +222,7 @@ export class DirectoresProgramaUvComponent implements OnInit {
       preConfirm: (mensaje) => {
         mensajeDenegacion = mensaje
         return promise.update({
-          estado: 'Denegada por la dirección de programa',
+          estado: 'Denegada por dirección de programa',
           comentarioDenegacion: `${mensaje}`
         })
 

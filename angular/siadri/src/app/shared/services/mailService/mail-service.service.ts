@@ -20,6 +20,17 @@ export class MailServiceService {
     };
     return this._http.post(url, mailData)
   }
+  sendMailprograma(programa, asunto, mensaje, cc = '', cco = '') {
+    const url = `${environment.cloudUrl}/enviarCorreoPrograma`;
+    const mailData = {
+      programa: programa,
+      cc: cc,
+      cco: cco,
+      asunto: asunto,
+      mensaje: mensaje
+    };
+    return this._http.post(url, mailData)
+  }
 
   crearNotification(email, info = '') {
     const url = `${environment.cloudUrl}/createNotification`;
@@ -37,7 +48,7 @@ export class MailServiceService {
     };
     return this._http.post(url, bodyNotification)
   }
-  enviarCarta(solicitud, dirDRI) {
+  enviarCarta(solicitud, dirDRI,estado) {
     const url = `${environment.cloudUrl}/createLetter`;
     var email = `${solicitud['Correo electrónico']},${dirDRI}`,
       nombre = `${solicitud['NOMBRE']}`,
@@ -45,11 +56,13 @@ export class MailServiceService {
       nacionalidad = `${solicitud['PAÍS DE ORIGEN']}`,
       numeroDocumento = `${solicitud['NÚMERO DE IDENTIFICACIÓN']}`,
       genero = `${solicitud['ID_SEXO_BIOLOGICO']}`,
-      areaDestino = `${solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)']}`;
+      areaDestino = `${solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)']}`,
+      estado = estado;
+      
       console.log(email)
 
     const bodyNotification = {
-      email, nombre, fechaNacimiento, nacionalidad, numeroDocumento, genero, areaDestino
+      email, nombre, fechaNacimiento, nacionalidad, numeroDocumento, genero, areaDestino,estado
     };
     return this._http.post(url, bodyNotification)
   }
