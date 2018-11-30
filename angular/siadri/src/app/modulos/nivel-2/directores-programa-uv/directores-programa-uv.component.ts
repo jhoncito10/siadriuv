@@ -28,8 +28,6 @@ export class DirectoresProgramaUvComponent implements OnInit {
   displayedColumns = ['correo', 'ano', 'destino', 'nombre', 'estado'];
   dataSource: MatTableDataSource<any>;
 
-  programaAcademicoDestino = 'BIOLOGÍA'
-
   programasAcademicos = []
 
   estadoComponent

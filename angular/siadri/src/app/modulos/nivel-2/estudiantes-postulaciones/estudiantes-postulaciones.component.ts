@@ -65,7 +65,6 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
   ngOnInit() {
     this.consultaDatosTabla()
-
   }
 
   consultaDatosTabla() {
