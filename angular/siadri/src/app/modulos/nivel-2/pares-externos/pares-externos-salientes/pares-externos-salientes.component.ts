@@ -6,6 +6,7 @@ import swal from 'sweetalert2';
 import { LocalStorageService } from 'ngx-webstorage';
 import { MailServiceService, NativeFirebaseService } from "../../../../shared/services/main-service.service";
 import * as  moment from "moment";
+import { environment } from 'environments/environment';
 
 
 
@@ -208,17 +209,25 @@ export class ParesExternosSalientesComponent implements OnInit {
           this.solicitud['urlFile2'] = values[1].a.downloadURLs[0]
           this.solicitud['urlFile3'] = values[2].a.downloadURLs[0]
 
-          this.solicitud['fechaCreado']  =  moment().format('DD/MM/YYYY HH:mm')
-          this.solicitud['fechaActualizado']  =  moment().format('DD/MM/YYYY HH	:mm')
+          this.solicitud['fechaCreado'] = moment().format('DD/MM/YYYY HH:mm')
+          this.solicitud['fechaActualizado'] = moment().format('DD/MM/YYYY HH	:mm')
 
 
           return ref.set(this.solicitud).then(() => {
             this.consultaDatosTabla()
 
             if (this.solicitud['Correo electrónico'] != '') {
-              var body = 'cuerpo del correo de solicitud de par externo'
+              let notificationInfo = 'Solicitud de movilidad entrante creada por un par externo'
+              this._mailServiceService
+                .crearNotification(environment.mails.dirDRI, notificationInfo)
+                .subscribe((responseData) => {
+                  console.log(responseData)
+                }, error => { console.log(error) })
 
-              return this.enviarCorreo(this.solicitud['Correo electrónico'], "Solicitud par externo", body)
+
+              var body = 'cuerpo del correo de solicitud de par externo'
+              var correos = `${this.solicitud['Correo electrónico']},${environment.mails.dirDRI}`
+              return this.enviarCorreo(correos, "Solicitud de movilidad entrante creada por un par externo", body)
                 .subscribe((responseData) => {
                   console.log(responseData)
 
@@ -240,6 +249,7 @@ export class ParesExternosSalientesComponent implements OnInit {
 
                   console.log(error)
                 })
+
             } else {
 
               return
@@ -302,7 +312,7 @@ export class ParesExternosSalientesComponent implements OnInit {
       "PERIODO ACADÉMICO": 0,
       "TIPO DE MOVILIDAD": "ENTRANTE",
       "TIPO DE CONVENIO": "",
-      "CODIGO_CONVENIO": "",
+      "CODIGO_CONVENIO": "ARG005",
       "MODALIDAD": "",
       "NUM_DIAS_MOVILIDAD": "",
       "TIPO DE PROGRAMA - CONVOCATORIA": "BILATERAL",
@@ -326,9 +336,9 @@ export class ParesExternosSalientesComponent implements OnInit {
       "urlFile2": "",
       "urlFile3": "",
       "creadoPor": this.user.email,
-      "fechaCreado":"",
-      "fechaActualizado":"",
-      "estado":"En espera de aprobación DRI"
+      "fechaCreado": "",
+      "fechaActualizado": "",
+      "estado": "En espera de aprobación DRI"
     }
     console.log(this.solicitud)
   }

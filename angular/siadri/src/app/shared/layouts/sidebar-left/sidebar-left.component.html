@@ -21,10 +21,10 @@
       <app-agreements ></app-agreements>
       <app-inscripcion *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-inscripcion>
       <app-side-bar-menu-estudiantes></app-side-bar-menu-estudiantes>
-      <app-side-bar-menu-directores></app-side-bar-menu-directores>
-      <app-side-bar-menu-pares-externos></app-side-bar-menu-pares-externos>  
-      <app-side-bar-menu-admin-directores></app-side-bar-menu-admin-directores>
-      <app-side-bar-menu-postulaciones></app-side-bar-menu-postulaciones>
+      <app-side-bar-menu-directores *ngIf="(this.rol == 'NIVEL2') || dir"></app-side-bar-menu-directores>
+      <app-side-bar-menu-pares-externos *ngIf="par"></app-side-bar-menu-pares-externos>  
+      <app-side-bar-menu-admin-directores *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-side-bar-menu-admin-directores>
+      <app-side-bar-menu-postulaciones *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-side-bar-menu-postulaciones>
       <app-borradores *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-borradores>
       <app-solicitudes *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-solicitudes>
       <app-renovacion *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-renovacion>
