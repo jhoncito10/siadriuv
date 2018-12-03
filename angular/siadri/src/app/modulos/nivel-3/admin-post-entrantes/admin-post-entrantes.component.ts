@@ -61,6 +61,8 @@ export class AdminPostEntrantesComponent implements OnInit {
   }
 
   consultaDatosTabla() {
+    this.estadoComponenteInferior = 0
+
     this.db.ref('/postulaciones/')
       // .orderByChild("estado")
       // .equalTo('Aprobada por el director de programa')
@@ -128,7 +130,7 @@ export class AdminPostEntrantesComponent implements OnInit {
         this.estadoComponenteInferior = 0
         break;
     }
-
+    console.log(this.estadoComponenteInferior)
     this.solicitud = _convenioSelected
     console.log(this.solicitud)
     this.solicitud.key = row.key

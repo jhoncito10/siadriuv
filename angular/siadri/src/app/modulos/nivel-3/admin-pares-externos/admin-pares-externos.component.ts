@@ -6,6 +6,8 @@ import swal from 'sweetalert2';
 import { LocalStorageService } from 'ngx-webstorage';
 import { MailServiceService, MixedFunctions } from "../../../shared/services/main-service.service";
 import { AngularFireAuth } from 'angularfire2/auth';
+import * as  moment from "moment";
+
 
 @Component({
   selector: 'app-admin-pares-externos',
@@ -66,6 +68,8 @@ export class AdminParesExternosComponent implements OnInit {
     this.getInstituciones()
   }
   consultaDatosTabla() {
+    this.estadoComponenteInferior = 0
+
     console.log('consulta tabla')
     this.db.ref('/paresExternos/')
       // .orderByChild("TIPO DE MOVILIDAD")
@@ -178,7 +182,7 @@ export class AdminParesExternosComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
   selectCuenta(row) {
-    this.estadoComponenteInferior = 2
+    this.estadoComponenteInferior = 1
     this.rowSelected = row;
 
     this.cuenta = row
@@ -211,6 +215,7 @@ export class AdminParesExternosComponent implements OnInit {
 
       this._AngularFireAuth.auth.createUserWithEmailAndPassword(newmail, pass)
         .then((user) => {
+          user.sendEmailVerification()
           var ref = this.db.ref(`/paresExternos/${user.uid}`)
           let setUser = 
           {
@@ -289,8 +294,16 @@ export class AdminParesExternosComponent implements OnInit {
   }
 
   editar() {
-    // this.estadoComponenteInferior = 1
+    swal.showLoading()
 
+    var ref = this.db.ref(`/paresExternos/${this.cuenta.key}`)
+    this.cuenta.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
+ 
+    ref.update(this.cuenta).then(()=>{
+      swal({
+        title: `Cuenta actualizada`
+      })
+    })
   }
   setCuenta() {
     this.cuenta = {

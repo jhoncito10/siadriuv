@@ -23,6 +23,7 @@ export class SidebarLeftComponent implements OnInit {
   db;
   par = false;
   dir = false;
+  estudiante = false;
 
   constructor(public fs: RuleservicesService,
     private busqueda: BuscadorService,
@@ -30,7 +31,7 @@ export class SidebarLeftComponent implements OnInit {
     private _NativeFirebaseService: NativeFirebaseService
   ) {
     this.db = this._NativeFirebaseService.fb.database()
-    
+
   }
 
 
@@ -49,7 +50,7 @@ export class SidebarLeftComponent implements OnInit {
     }
     this.isPar()
     this.isDir()
-
+    this.isPostulant()
   }
 
   isPar() {
@@ -58,19 +59,31 @@ export class SidebarLeftComponent implements OnInit {
       .orderByChild("correo")
       .equalTo(this.datosUser.email)
       .once('value', parSnap => {
-        if (parSnap) {
+        console.log()
+        if (parSnap.val()) {
           this.par = true
         }
       })
   }
   isDir() {
-    var refParExterno = this.db.ref('/programasAcademicos/')
-    return refParExterno
+    var refProgramas = this.db.ref('/programasAcademicos/')
+    return refProgramas
       .orderByChild("correo")
       .equalTo(this.datosUser.email)
       .once('value', parSnap => {
-        if (parSnap) {
+        if (parSnap.val()) {
           this.dir = true
+        }
+      })
+  }
+  isPostulant() {
+    var refPostulaciones = this.db.ref('/postulaciones/')
+    return refPostulaciones
+      .orderByChild("Correo electrónico")
+      .equalTo(this.datosUser.email)
+      .once('value', parSnap => {
+        if (parSnap.val()) {
+          this.estudiante = true
         }
       })
   }

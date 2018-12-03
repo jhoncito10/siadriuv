@@ -73,6 +73,8 @@ export class ParesExternosSalientesComponent implements OnInit {
 
   }
   consultaDatosTabla() {
+    this.estadoComponenteInferior = 0
+
     this.db.ref('/postulaciones/')
       .orderByChild("creadoPor")
       .equalTo(this.user.email)
@@ -210,7 +212,7 @@ export class ParesExternosSalientesComponent implements OnInit {
           this.solicitud['urlFile3'] = values[2].a.downloadURLs[0]
 
           this.solicitud['fechaCreado'] = moment().format('DD/MM/YYYY HH:mm')
-          this.solicitud['fechaActualizado'] = moment().format('DD/MM/YYYY HH	:mm')
+          this.solicitud['fechaActualizado'] = moment().format('DD/MM/YYYY HH:mm')
 
 
           return ref.set(this.solicitud).then(() => {

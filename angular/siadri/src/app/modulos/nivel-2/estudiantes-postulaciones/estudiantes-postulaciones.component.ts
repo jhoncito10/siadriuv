@@ -6,6 +6,7 @@ import swal from 'sweetalert2';
 import { LocalStorageService } from 'ngx-webstorage';
 import { MailServiceService, NativeFirebaseService } from "../../../shared/services/main-service.service";
 import * as  moment from "moment";
+import { environment } from "../../../../environments/environment";
 import * as firebase from "firebase";
 
 @Component({
@@ -68,6 +69,8 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   }
 
   consultaDatosTabla() {
+    this.estadoComponenteInferior = 0
+
     this.db.ref('/postulaciones/')
       .orderByChild("Correo electrónico")
       .equalTo(this.user.email)
@@ -120,7 +123,16 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   selectSolicitud(row) {
     this.rowSelected = row;
 
-    this.estadoComponenteInferior = 2
+    const estado = row['estado']
+    switch (estado) {
+      case 'Aprobada por DRI UV':
+        this.estadoComponenteInferior = 3
+        break;
+      
+      default:
+        this.estadoComponenteInferior = 2
+        break;
+    }
 
     const _convenioSelected = this.solicitudes[row.key];
     this.solicitud = _convenioSelected
@@ -131,7 +143,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     }
     this.panelInferior.nativeElement.scrollIntoView();
 
-   
+
   }
 
 
@@ -176,7 +188,201 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       "estado": ""
     }
   }
+  actualizarSolicitud() {
+    swal.showLoading()
+    // var _this = this
+    this.solicitud.estado = 'En espera de aprobación dirección de programa'
+    this.solicitud.actualizadoPor = this.user.email
 
+    this.solicitud.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
+    const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update(this.solicitud);
+    promise
+      .then(res => {
+        if (this.solicitud['Correo electrónico'] != '') {
+          var body = 'cuerpo del correo de En espera de aprobación dirección de programa'
+          var correos = `${this.solicitud['Correo electrónico']}, ${environment.mails.dirDRI}`
+          this._mailServiceService.sendMailprograma
+            (this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'], 'El estado de tu solicitud ha sido actualizada : "En espera de aprobación dirección de programa"', body)
+            .subscribe((responseData) => {
+              console.log(responseData)
+
+            }, error => {
+
+              console.log(error)
+            })
+
+          return this.enviarCorreo(correos, 'El estado de tu solicitud ha sido actualizada : "En espera de aprobación dirección de programa"', body)
+            .subscribe((responseData) => {
+              console.log(responseData)
+
+              if (responseData) {
+                swal({
+                  title: `Solicitud actualizada`
+                })
+              } else {
+                swal({
+                  title: `Solicitud actualizada`
+                })
+              }
+
+            }, error => {
+
+              console.log(error)
+            })
+        } else {
+          swal({
+            title: `Solicitud actualizada`
+          })
+          return
+        }
+
+
+      })
+      .then(() => {
+        let notificationInfo = 'El estado de tu solicitud ha sido actualizada : "En espera de aprobación dirección de programa"'
+        this._mailServiceService
+          .crearNotification(this.solicitud['Correo electrónico'], notificationInfo)
+          .subscribe((responseData) => {
+            console.log(responseData)
+          }, error => { console.log(error) })
+
+        this._mailServiceService
+          .createNotificationPrograma(this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'], notificationInfo)
+          .subscribe((responseData) => {
+            console.log(responseData)
+
+
+
+          }, error => {
+
+            console.log(error)
+          })
+        // let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
+        // this._mailServiceService.crearNotification(this.solicitud['Correo electrónico'],notificationInfo)
+        // let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
+        // this._mailServiceService.crearNotification(this.solicitud['Correo electrónico'],notificationInfo)
+
+
+        this.consultaDatosTabla()
+
+      })
+      .catch(err => {
+        swal({
+          title: `${err}`
+        })
+        console.log(err, 'You dont have access!')
+      });
+  }
+  cancelarSolicitud() {
+    swal.showLoading()
+    // var _this = this
+    this.solicitud.estado = 'Cancelada por usuario'
+    this.solicitud.actualizadoPor = this.user.email
+
+    this.solicitud.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
+    const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update(this.solicitud);
+    promise
+      .then(res => {
+        if (this.solicitud['Correo electrónico'] != '') {
+          var body = 'Cancelada por usuario'
+          var correos = `${this.solicitud['Correo electrónico']}, ${environment.mails.dirDRI}`
+          this._mailServiceService.sendMailprograma
+            (this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'], 'El estado de tu solicitud ha sido actualizada : "Cancelada por usuario"', body)
+            .subscribe((responseData) => {
+              console.log(responseData)
+
+            }, error => {
+
+              console.log(error)
+            })
+
+          return this.enviarCorreo(correos, 'El estado de tu solicitud ha sido actualizada : "Cancelada por usuario"', body)
+            .subscribe((responseData) => {
+              console.log(responseData)
+
+              if (responseData) {
+                swal({
+                  title: `Solicitud actualizada`
+                })
+              } else {
+                swal({
+                  title: `Solicitud actualizada`
+                })
+              }
+
+            }, error => {
+
+              console.log(error)
+            })
+        } else {
+          swal({
+            title: `Solicitud actualizada`
+          })
+          return
+        }
+
+
+      })
+      .then(() => {
+        let notificationInfo = 'El estado de tu solicitud ha sido actualizada : "Cancelada por usuario"'
+        this._mailServiceService
+          .crearNotification(this.solicitud['Correo electrónico'], notificationInfo)
+          .subscribe((responseData) => {
+            console.log(responseData)
+          }, error => { console.log(error) })
+
+        this._mailServiceService
+          .createNotificationPrograma(this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'], notificationInfo)
+          .subscribe((responseData) => {
+            console.log(responseData)
+
+
+
+          }, error => {
+
+            console.log(error)
+          })
+        // let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
+        // this._mailServiceService.crearNotification(this.solicitud['Correo electrónico'],notificationInfo)
+        // let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
+        // this._mailServiceService.crearNotification(this.solicitud['Correo electrónico'],notificationInfo)
+
+
+        this.consultaDatosTabla()
+
+      })
+      .catch(err => {
+        swal({
+          title: `${err}`
+        })
+        console.log(err, 'You dont have access!')
+      });
+  }
+  guardarSolicitud() {
+    swal.showLoading()
+    // var _this = this
+    this.solicitud.actualizadoPor = this.user.email
+
+    this.solicitud.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
+    const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update(this.solicitud);
+    promise
+      .then(res => {
+       
+        swal({
+          title: `Solicitud actualizada`
+        })
+        this.consultaDatosTabla()
+
+
+      })
+     
+      .catch(err => {
+        swal({
+          title: `${err}`
+        })
+        console.log(err, 'You dont have access!')
+      });
+  }
 
   enviarCorreo(email, asunto, mensaje, cc = '', cco = '') {
 

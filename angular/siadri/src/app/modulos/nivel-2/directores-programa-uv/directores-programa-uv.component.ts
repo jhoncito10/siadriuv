@@ -29,6 +29,7 @@ export class DirectoresProgramaUvComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   programasAcademicos = []
+  estadoComponenteInferior = 0 //0 = ninguno; 1 =  nueva solicitud; 2 = datos solicitud
 
   estadoComponent
 
@@ -62,6 +63,8 @@ export class DirectoresProgramaUvComponent implements OnInit {
 
   }
   consultaDatosTabla() {
+this.estadoComponenteInferior = 0 
+
     for (let index = 0; index < this.programaDir.length; index++) {
       const element = this.programaDir[index];
       this.dataTablaSolicitudes = [];
@@ -76,7 +79,7 @@ export class DirectoresProgramaUvComponent implements OnInit {
             console.log(dato['PROGRAMA ACADÉMICO DE DESTINO (1)'])
             if (
               dato['TIPO DE MOVILIDAD'] == 'ENTRANTE' &&
-              dato['estado'] =='Aprobada por DRI UV'
+              dato['estado'] =='En espera de aprobación dirección de programa'
             ) {
               this.solicitudes[solicitudSnap.key] = dato
               let correo = dato['Correo electrónico'] || ''
@@ -136,11 +139,11 @@ export class DirectoresProgramaUvComponent implements OnInit {
   }
   selectSolicitud(row) {
     this.rowSelected = row;
+    this.estadoComponenteInferior = 2
 
     const _convenioSelected = this.solicitudes[row.key];
     this.solicitud = _convenioSelected
     this.solicitud.key = row.key
-    this.estadoComponent = 1
 
     if (this.panelInferior.nativeElement.classList.contains('collapsed-box')) {
       this.panelinferiorButton.nativeElement.click()
