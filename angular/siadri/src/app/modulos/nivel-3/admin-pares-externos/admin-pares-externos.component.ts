@@ -40,6 +40,7 @@ export class AdminParesExternosComponent implements OnInit {
   loading = true;
 
   spinnerConvenios = false;
+  conve = {}
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -66,6 +67,8 @@ export class AdminParesExternosComponent implements OnInit {
   ngOnInit() {
     this.consultaDatosTabla()
     this.getInstituciones()
+
+   
   }
   consultaDatosTabla() {
     this.estadoComponenteInferior = 0
@@ -142,6 +145,10 @@ export class AdminParesExternosComponent implements OnInit {
 
         });
     }
+    for (let index = 0; index < this.convenios.length; index++) {
+      const element = this.convenios[index];
+      this.conve[index] = false
+    }
   }
 
   getConveniosInstitucion(insti) {
@@ -198,78 +205,79 @@ export class AdminParesExternosComponent implements OnInit {
   }
 
   crearnuevaCuenta() {
-    console.log(this.cuenta)
-    if (this._MixedFunctions.isEmail(this.cuenta.correo)) {
-      swal({
-        title: 'Cargando',
-        html: '',
-        onOpen: () => {
-          swal.showLoading()
+    console.log(this.cuenta, this.convenios, this.conve)
+    
+    // if (this._MixedFunctions.isEmail(this.cuenta.correo)) {
+    //   swal({
+    //     title: 'Cargando',
+    //     html: '',
+    //     onOpen: () => {
+    //       swal.showLoading()
 
-        }
-      })
-      var newmail = this.cuenta.correo
-      newmail = newmail.trim(); // Remove whitespace
-      newmail = newmail.toLowerCase();
-      var pass = this._MixedFunctions.makePassword()
+    //     }
+    //   })
+    //   var newmail = this.cuenta.correo
+    //   newmail = newmail.trim(); // Remove whitespace
+    //   newmail = newmail.toLowerCase();
+    //   var pass = this._MixedFunctions.makePassword()
 
-      this._AngularFireAuth.auth.createUserWithEmailAndPassword(newmail, pass)
-        .then((user) => {
-          user.sendEmailVerification()
-          var ref = this.db.ref(`/paresExternos/${user.uid}`)
-          let setUser = 
-          {
-            "nombre": this.cuenta['nombre'],
-            "correo": this.cuenta['correo'],
-            "institucion": this.cuenta['institucion'],
-            "otraInstitucion": this.cuenta['otraInstitucion'] ,   
-            "key": this.cuenta['key'],
-            "convenio": this.convenios[this.cuenta['convenio']]
-          }
-          return ref.set(setUser).then(() => {
-            this.consultaDatosTabla()
-            let body = `
-              Cuerpo del correo de cuenta de par externo creada
-              usuario: ${this.cuenta['correo']}
-              password: ${pass} "Este password es tempral, No olvide cambiarlo"
-            `
+    //   this._AngularFireAuth.auth.createUserWithEmailAndPassword(newmail, pass)
+    //     .then((user) => {
+    //       user.sendEmailVerification()
+    //       var ref = this.db.ref(`/paresExternos/${user.uid}`)
+    //       let setUser = 
+    //       {
+    //         "nombre": this.cuenta['nombre'],
+    //         "correo": this.cuenta['correo'],
+    //         "institucion": this.cuenta['institucion'],
+    //         "otraInstitucion": this.cuenta['otraInstitucion'] ,   
+    //         "key": this.cuenta['key'],
+    //         "convenio": this.convenios[this.cuenta['convenio']]
+    //       }
+    //       return ref.set(setUser).then(() => {
+    //         this.consultaDatosTabla()
+    //         let body = `
+    //           Cuerpo del correo de cuenta de par externo creada
+    //           usuario: ${this.cuenta['correo']}
+    //           password: ${pass} "Este password es tempral, No olvide cambiarlo"
+    //         `
 
-            this.enviarCorreo(newmail, "Cuenta creada", body)
-              .subscribe((responseData) => {
-                console.log(responseData)
-                if (responseData) {
-                  swal(
-                    `La cuenta para el usuario : "${this.cuenta['nombre']}" se a creado correctamente`,
-                    '',
-                    'success'
-                  )
-                } else {
-                  swal(
-                    `La cuenta para el usuario : "${this.cuenta['nombre']}" se a creado correctamente`,
-                    '',
-                    'success'
-                  )
-                }
-                this.setCuenta()
+    //         this.enviarCorreo(newmail, "Cuenta creada", body)
+    //           .subscribe((responseData) => {
+    //             console.log(responseData)
+    //             if (responseData) {
+    //               swal(
+    //                 `La cuenta para el usuario : "${this.cuenta['nombre']}" se a creado correctamente`,
+    //                 '',
+    //                 'success'
+    //               )
+    //             } else {
+    //               swal(
+    //                 `La cuenta para el usuario : "${this.cuenta['nombre']}" se a creado correctamente`,
+    //                 '',
+    //                 'success'
+    //               )
+    //             }
+    //             this.setCuenta()
 
-              })
-          })
-        })
-        .catch(error => {
-          swal(
-            `${error}`,
-            '',
-            'error'
-          )
-        })
+    //           })
+    //       })
+    //     })
+    //     .catch(error => {
+    //       swal(
+    //         `${error}`,
+    //         '',
+    //         'error'
+    //       )
+    //     })
 
-    } else {
-      swal(
-        `Correo invalido`,
-        '',
-        'error'
-      )
-    }
+    // } else {
+    //   swal(
+    //     `Correo invalido`,
+    //     '',
+    //     'error'
+    //   )
+    // }
 
   }
 

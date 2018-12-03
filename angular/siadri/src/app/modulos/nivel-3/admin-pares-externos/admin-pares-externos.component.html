@@ -45,9 +45,7 @@
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;" 
-          (click)="selectCuenta(row)" 
-          [ngClass]="{'selected': (rowSelected == row)}">
+          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectCuenta(row)" [ngClass]="{'selected': (rowSelected == row)}">
           </mat-row>
         </mat-table>
 
@@ -97,51 +95,56 @@
 
           <div class="col-md-7">
             <input [(ngModel)]='cuenta["correo"]' type="text" class="form-control" id="correo" placeholder="Correo electronico"
-            [attr.disabled]="estadoComponenteInferior==1 ? '' : null">
+              [attr.disabled]="estadoComponenteInferior==1 ? '' : null">
           </div>
         </div>
 
         <div class="form-group">
           <label for="institucion" class="col-md-5 control-label">Institución</label>
           <div class="col-md-7">
-            <select [(ngModel)]='cuenta["institucion"]' (click)="getConveniosInstitucion(cuenta['institucion'])" class="form-control col-md-7" id="institucion">
+            <select [(ngModel)]='cuenta["institucion"]' (click)="getConveniosInstitucion(cuenta['institucion'])" class="form-control col-md-7"
+              id="institucion">
               <option *ngFor="let insti of instituciones ; index as i;" [ngValue]="insti"> {{insti}}</option>
               <option value="otra">Otra</option>
             </select>
           </div>
 
         </div>
+  
         <div class="form-group">
           <label for="convenio" class="col-md-5 control-label">Convenio</label>
           <div class="overlay" *ngIf="spinnerConvenios">
             <i class="fa fa-refresh fa-spin"></i>
           </div>
           <div class="col-md-7">
-            <select [(ngModel)]='cuenta["convenio"]' class="form-control col-md-7" id="convenio" [disabled]="!(convenios.length > 0)">
-              <option *ngFor="let conv of convenios ; index as i;" [ngValue]="i"> {{conv.id}}</option>
-            </select>
+            <div class="checkbox" *ngFor="let conv of convenios ; index as i;">
+              <label><input type="checkbox" [(ngModel)] = "conve[i]"  >{{conv.id}}</label>
+            </div>
+
           </div>
 
         </div>
 
         <div class="form-group" *ngIf="cuenta['institucion'] == 'otra'">
-            <label for="correo" class="col-md-5 control-label">Nombre de la institución</label>
-  
-            <div class="col-md-7">
-              <input [(ngModel)]='cuenta["otraInstitucion"]' type="text" class="form-control" id="correo" placeholder="Nombre de la institución">
-            </div>
+          <label for="correo" class="col-md-5 control-label">Nombre de la institución</label>
+
+          <div class="col-md-7">
+            <input [(ngModel)]='cuenta["otraInstitucion"]' type="text" class="form-control" id="correo" placeholder="Nombre de la institución">
           </div>
+        </div>
       </div>
     </div>
     <div class="box-footer">
-      <div class="row" >
+      <div class="row">
         <div class="col-md-6">
 
         </div>
         <div class="col-md-6">
-          <button type="button" class="btn btn-block btn-success" (click)="crearnuevaCuenta()" *ngIf="estadoComponenteInferior == 2">Crear <i class="fa fa-arrow-circle-up"></i>
+          <button type="button" class="btn btn-block btn-success" (click)="crearnuevaCuenta()" *ngIf="estadoComponenteInferior == 2">Crear
+            <i class="fa fa-arrow-circle-up"></i>
           </button>
-          <button type="button" class="btn btn-block btn-success" (click)="editar()" *ngIf="estadoComponenteInferior == 1">Actualizar <i class="fa fa-arrow-circle-up"></i>
+          <button type="button" class="btn btn-block btn-success" (click)="editar()" *ngIf="estadoComponenteInferior == 1">Actualizar
+            <i class="fa fa-arrow-circle-up"></i>
           </button>
         </div>
       </div>
