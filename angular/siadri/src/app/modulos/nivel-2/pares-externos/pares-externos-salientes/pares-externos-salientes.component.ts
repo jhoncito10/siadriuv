@@ -27,6 +27,8 @@ export class ParesExternosSalientesComponent implements OnInit {
   firebaseStorage: any
   dataTablaSolicitudes = [];
 
+  programas = []
+
   displayedColumns = ['correo', 'ano', 'destino', 'nombre', 'estado'];
   dataSource: MatTableDataSource<any>;
 
@@ -70,7 +72,7 @@ export class ParesExternosSalientesComponent implements OnInit {
 
   ngOnInit() {
     this.consultaDatosTabla()
-
+    this.consultarProgramas()
   }
   consultaDatosTabla() {
     this.estadoComponenteInferior = 0
@@ -121,6 +123,24 @@ export class ParesExternosSalientesComponent implements OnInit {
         if (this.tablaSolicitudesCarrera.nativeElement.classList.contains('collapsed-box')) {
           this.panelSuperiorButton.nativeElement.click()
         }
+      }).catch((error) => console.log(`${error}`))
+  }
+
+  consultarProgramas() {
+    this.db.ref('/programasAcademicos/')
+      .orderByChild("NOMBRE PROGRAMA ACADEMICO")
+      .once('value', pgrogramas => {
+
+        pgrogramas.forEach((programa) => {
+
+          let dato = programa.val()
+          this.programas.push(dato['NOMBRE PROGRAMA ACADEMICO'])
+          console.log(this.programas)
+
+
+        })
+
+
       }).catch((error) => console.log(`${error}`))
   }
 

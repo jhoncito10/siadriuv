@@ -283,7 +283,7 @@
               [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
           </div>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="PROGRAMA_ACADEMICO_DE_DESTINO" class="col-md-5 control-label">PROGRAMA ACADÉMICO DE DESTINO (1)</label>
 
           <div class="col-md-7">
@@ -298,6 +298,26 @@
             <input [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (2)"]' type="text" class="form-control" id="PROGRAMA_ACADEMICO_DE_DESTINO2"
               [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
           </div>
+        </div> -->
+        <div class="form-group">
+          <label for="institucion" class="col-md-5 control-label">PROGRAMA ACADÉMICO DE DESTINO (1)</label>
+          <div class="col-md-7">
+            <select [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (1)"]'  class="form-control" >
+              <option *ngFor="let prog of programas ; index as i;" [ngValue]="prog"> {{prog}}</option>
+              <option value="otra">Otra</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="form-group">
+          <label for="institucion" class="col-md-5 control-label">PROGRAMA ACADÉMICO DE DESTINO (2)</label>
+          <div class="col-md-7">
+            <select [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (2)"]'  class="form-control" >
+              <option *ngFor="let prog of programas ; index as i;" [ngValue]="prog"> {{prog}}</option>
+              <option value="otra">Otra</option>
+            </select>
+          </div>
+
         </div>
         <div class="form-group">
           <label for="FINANCIAMIENTO" class="col-md-5 control-label">FINANCIAMIENTO</label>
