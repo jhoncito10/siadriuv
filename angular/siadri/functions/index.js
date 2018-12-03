@@ -1,13 +1,10 @@
 'use strict';
-
 const functions = require('firebase-functions');
 const moment = require('moment');
 const cors = require('cors')({ origin: true });
 const nodemailer = require('nodemailer');
 const admin = require('firebase-admin');
 const CUT_OFF_TIME = 6 * 30 * 24 * 60 * 60 * 1000; // 6 months in milliseconds.
-//const INTERVAL_TIME = 24 * 24 * 60 * 60 * 1000; // 24 days in milliseconds.
-const INTERVAL_TIME = 1000 * 60 * 60; // 1 hour in milliseconds.
 admin.initializeApp(functions.config().firebase);
 
 const mailTrasport = nodemailer.createTransport({
@@ -56,24 +53,21 @@ function crearUsuario(event) {
 
 exports.consFecha = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
-
         if (res) {
             res.status(200).send(moment().format('YYYY-MM-DD'));
         }
-
-
     });
 
 });
 
 
-let sendMail = (req, res) => {
+let sendMail = (para, asunto,mensaje, res) => {
 
     var mailsolicitante = {
         from: 'SIADRI <sistema.siadri@correounivalle.edu.co>',
-        bcc: `${req.para}`,
-        subject: req.asunto,
-        html: req.mensaje
+        bcc: `${para}`,
+        subject: asunto,
+        html: mensaje
     };
     return mailTrasport.sendMail(mailsolicitante).then(() => {
         if (res) {
@@ -87,31 +81,13 @@ let sendMail = (req, res) => {
         console.log(`${error}`);
 
     });
-    // send mail with defined transport object
-    // transporter.sendMail(mailOptions, (error, info) => {
-    //     if (error) {
-    //         return console.log(error);
-    //     }
-    //     console.log('Message sent: %s', info.messageId);
-    //     // Preview only available when sending through an Ethereal account
-    //     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
-    //     // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@blurdybloop.com>
-    //     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
-    // });
 }
 
 
 exports.enviarCorreo = functions.https.onRequest((req, res) => {
-    //res.send('Inicia enviarCorreo');
-    //res.status(200).send('Para: ' + req.body.para + ' Asunto: ' + req.body.asunto + ' Mensaje: ' + req.body.mensaje);
-    // Enable CORS using the `cors` express middleware.
     cors(req, res, () => {
-        //res.status(200).send('Para: ' + req.body.para + ' Asunto: ' + req.body.asunto + ' Mensaje: ' + req.body.mensaje);
-        // FUNCIONA OK
-        // Nodemailer req.body
-        sendMail(req.body, res);
-
+        sendMail(req.body.para,req.body.asunto,req.body.mensaje, res);
     });
 });
 
@@ -122,7 +98,7 @@ var verificaFechas = (req, res) => {
         keys: [],
         emails: []
     };
-    return ref.child('usuarios')
+    const snap = ref.child('usuarios')
         .orderByChild('roles')
         .equalTo('NIVEL3')
         .once('value').then(snap => {
@@ -351,42 +327,47 @@ exports.validarPostulaciones = functions.https.onRequest((req, res) => {
 
 });
 
+var crearNotificacionFuncion = (email, info) => {
+    return ref.child('usuarios')
+        .orderByChild('email')
+        .equalTo(email)
+        .once('value').then(usuariosSnap => {
+            usuariosSnap.forEach(function (userSnap) {
+                console.log(userSnap)
+                var fecha = moment().format('DD/MM/YYYY HH:mm')
+                // key will be "ada" the first time and "alan" the second time
+                var key = userSnap.key;
+                // childData will be the actual contents of the child
+                var childData = userSnap.val();
+                var notificationRef = ref.child(`usuarios/${key}/notificacion/`).push()
+                return notificationRef.set(
+                    {
+                        "estado": "sin leer",
+                        "fecha_creacion:": fecha,
+                        "fecha_modificacion:": fecha,
+                        "icon": "fa fa-users text-aqua",
+                        "info": `${info}`
+                    }
+                )
+            });
+            // return ref.child(`usuarios/${}`)
+        })
+}
 
 
 exports.createNotification = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
         console.log(req.body)
         if (req.body.hasOwnProperty('email')) {
-            return ref.child('usuarios')
-                .orderByChild('email')
-                .equalTo(req.body.email)
-                .once('value').then(usuariosSnap => {
-                    usuariosSnap.forEach(function (userSnap) {
-                        console.log(userSnap)
-                        var fecha = moment().format('DD/MM/YYYY HH:mm')
-                        // key will be "ada" the first time and "alan" the second time
-                        var key = userSnap.key;
-                        // childData will be the actual contents of the child
-                        var childData = userSnap.val();
-                        var notificationRef = ref.child(`usuarios/${key}/notificacion/`).push()
-                        return notificationRef.set(
-                            {
-                                "estado": "sin leer",
-                                "fecha_creacion:": fecha,
-                                "fecha_modificacion:": fecha,
-                                "icon": "fa fa-users text-aqua",
-                                "info": `${req.body.info}`
-                            }
-                        ).then(() => {
-                            return res.status(200).json({ status: 200, mensaje: 'Notificacion creada correctamente' });
+            crearNotificacionFuncion(req.body.email, req.body.info)
+                .then(() => {
+                    return res.status(200).json({ status: 200, mensaje: 'Notificacion creada correctamente' });
 
-                        }).catch(error => {
-                            return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
+                }).catch(error => {
+                    return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
 
-                        })
-                    });
-                    // return ref.child(`usuarios/${}`)
                 })
+
         } else {
             return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
         }
@@ -394,6 +375,8 @@ exports.createNotification = functions.https.onRequest((req, res) => {
     });
 
 });
+
+
 
 exports.createNotificationPrograma = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
@@ -405,35 +388,13 @@ exports.createNotificationPrograma = functions.https.onRequest((req, res) => {
                 .once('value')
                 .then(programasSnap => {
                     programasSnap.forEach(function (programaSnap) {
-                        return ref.child('usuarios')
-                            .orderByChild('email')
-                            .equalTo(programaSnap.val()['correo'])
-                            .once('value').then(usuariosSnap => {
-                                usuariosSnap.forEach(function (userSnap) {
-                                    console.log(userSnap)
-                                    var fecha = moment().format('DD/MM/YYYY HH:mm')
-                                    // key will be "ada" the first time and "alan" the second time
-                                    var key = userSnap.key;
-                                    // childData will be the actual contents of the child
-                                    var childData = userSnap.val();
-                                    var notificationRef = ref.child(`usuarios/${key}/notificacion/`).push()
-                                    return notificationRef.set(
-                                        {
-                                            "estado": "sin leer",
-                                            "fecha_creacion:": fecha,
-                                            "fecha_modificacion:": fecha,
-                                            "icon": "fa fa-users text-aqua",
-                                            "info": `${req.body.info}`
-                                        }
-                                    ).then(() => {
-                                        return res.status(200).json({ status: 200, mensaje: 'Notificacion creada correctamente' });
+                        crearNotificacionFuncion(programaSnap.val()['correo'], req.body.info)
+                            .then(() => {
+                                return res.status(200).json({ status: 200, mensaje: 'Notificacion creada correctamente' });
 
-                                    }).catch(error => {
-                                        return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
+                            }).catch(error => {
+                                return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
 
-                                    })
-                                });
-                                // return ref.child(`usuarios/${}`)
                             })
                     });
                 })
@@ -445,8 +406,93 @@ exports.createNotificationPrograma = functions.https.onRequest((req, res) => {
 
 });
 
+var isEmail = (email) => {
+    var response;
+    var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    response = regexp.test(email);
+    if (response) {
+        return {
+            state: response,
+            msg: ""
+        }
+    } else {
+        return {
+            state: response,
+            msg: `Correo no válido!
+            `
+        }
+    }
+
+}
+
+
+var correoPrograma = (programa) => {
+    return ref.child('programasAcademicos')
+        .orderByChild('NOMBRE PROGRAMA ACADEMICO')
+        .equalTo(programa)
+        .limitToFirst(1)
+        .once('value')
+}
+
+
 exports.createLetter = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
-        console.log(req.body)
+        correoPrograma(req.body.areaDestino).then(function (correPro) {
+            correPro.forEach(function (programaSnap) {
+                var correoPrograma = programaSnap.val()['correo']
+                var correos = ''
+                if (isEmail(correoPrograma)) {
+                    correos = `${req.body.email},${correoPrograma}`
+                } else {
+                    correos = `${req.body.email}`
+
+                }
+                var stringSubjk = (req.body.estado == 'aceptada') ? 'aceptacion':'denegacion';
+                console.log(correos)
+                var cuerpoPDF = `${req.body.nombre} tu solicitud a sido ${req.body.estado}.
+                Estos son los datos de tu solicitud
+                ${req.body.fechaNacimiento}
+                ${req.body.nacionalidad}
+                ${req.body.numeroDocumento}
+                ${req.body.genero}
+                ${req.body.areaDestino}`;
+
+                var mailsolicitante = {
+                    from: 'SIADRI <sistema.siadri@correounivalle.edu.co>',
+                    bcc: `${correos}`,
+                    subject: `Carta de ${stringSubjk} "${req.body.nombre}"`,
+                    html: cuerpoPDF
+                };
+                try {
+                    mailTrasport.sendMail(mailsolicitante);
+                    if (res) {
+                        res.status(200).json({ status: 200, mensaje: 'correo enviado correctamente' });
+                    }
+                }
+                catch (error) {
+                    console.log(`${error}`);
+                    res.status(204).json({ status: 204, mensaje: 'Error en el correo' });
+
+                }
+            });
+
+        })
+
+    });
+});
+
+exports.enviarCorreoPrograma = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+
+        correoPrograma(req.body.programa).then(function (correPro) {
+            correPro.forEach(function (programaSnap) {
+                var correoPrograma = programaSnap.val()['correo']
+              
+                sendMail(correoPrograma,req.body.asunto,req.body.mensaje, res);
+
+            });
+
+        })
+
     });
 });

@@ -58,6 +58,16 @@ const routes: Routes = [
                 ]
             },
             {
+                path: 'nivel2', component: DashNivel2Component,
+                children: [
+                    
+                    { path: 'directores', component: DirectoresProgramaUvComponent },
+                    { path: 'paresExternos', component: ParesExternosComponent },
+                    { path: 'postulacionesEstudiantes', component: EstudiantesPostulacionesComponent }
+
+                ]
+            },
+            {
                 path: 'admin', component: DashNivel3Component, canActivate: [Nivel3Guard],
                 children: [
                     { path: 'grafico1', component: Grafico1Component },

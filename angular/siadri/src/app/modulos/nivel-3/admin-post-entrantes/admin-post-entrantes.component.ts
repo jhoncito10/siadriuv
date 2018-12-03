@@ -61,6 +61,8 @@ export class AdminPostEntrantesComponent implements OnInit {
   }
 
   consultaDatosTabla() {
+    this.estadoComponenteInferior = 0
+
     this.db.ref('/postulaciones/')
       // .orderByChild("estado")
       // .equalTo('Aprobada por el director de programa')
@@ -121,12 +123,14 @@ export class AdminPostEntrantesComponent implements OnInit {
       case 'Aprobada por dirección de programa':
         this.estadoComponenteInferior = 3
         break;
-
+        case 'Denegada por dirección de programa':
+        this.estadoComponenteInferior = 3
+        break;
       default:
         this.estadoComponenteInferior = 0
         break;
     }
-
+    console.log(this.estadoComponenteInferior)
     this.solicitud = _convenioSelected
     console.log(this.solicitud)
     this.solicitud.key = row.key
@@ -151,6 +155,15 @@ export class AdminPostEntrantesComponent implements OnInit {
         if (this.solicitud['Correo electrónico'] != '') {
           var body = 'cuerpo del correo de aceptacion'
           var correos = `${this.solicitud['Correo electrónico']}, ${environment.mails.dirDRI}`
+          this._mailServiceService.sendMailprograma
+            (this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'], "Aprobada por DRI UV", body)
+            .subscribe((responseData) => {
+              console.log(responseData)
+
+            }, error => {
+
+              console.log(error)
+            })
 
           return this.enviarCorreo(correos, "Aprobada por DRI UV", body)
             .subscribe((responseData) => {
@@ -291,14 +304,66 @@ export class AdminPostEntrantesComponent implements OnInit {
 
       })
   }
-  enviarCarta(){
-    this._mailServiceService
-    .enviarCarta(this.solicitud,environment.mails.dirDRI)
-    .subscribe(res=>{
-      console.log(res)
-    })
+  enviarCarta() {
+    swal.showLoading()
+
+    switch (this.solicitud.estado) {
+      case 'Aprobada por dirección de programa':
+        if (this.datosObligatoriosDri()) {
+          const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`);
+          this.solicitud.estado = 'En curso'
+          this.solicitud.actualizadoPor = this.user.email
+          this.solicitud.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
+
+          promise.update(this.solicitud).then(() => {
+            this._mailServiceService
+              .enviarCarta(this.solicitud, environment.mails.dirDRI,'aceptada')
+              .subscribe((responseData) => {
+                if (responseData) {
+                  swal({
+                    title: `Solicitud actualizada`
+                  })
+                }
+              }, error => { console.log(error) })
+            this.consultaDatosTabla()
+
+          })
+            .catch(error => {
+
+            })
+
+        } else {
+          swal('Datos exclusivos de la DRI incompletos','','error')
+        }
+
+        break;
+      case 'Denegada por la dirección de programa':
+        this._mailServiceService
+          .enviarCarta(this.solicitud, environment.mails.dirDRI,'denegada')
+          .subscribe((responseData) => {
+            if (responseData) {
+              swal({
+                title: `Solicitud actualizada`
+              })
+            }
+          }, error => { console.log(error) })
+        this.consultaDatosTabla()
+        break;
+    }
+
+
   }
 
+
+  datosObligatoriosDri() {
+    if (this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'].trim() == '') {
+      return false
+    } else if (this.solicitud['VALOR_FINANCIACION_NACIONAL'].trim() == '') {
+      return false
+    } else {
+      return true
+    }
+  }
   setsolicitud() {
     this.solicitud = {
       "NOMBRE": "",

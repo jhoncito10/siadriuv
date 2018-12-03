@@ -64,6 +64,8 @@ export class AdminDirectoresUvComponent implements OnInit {
 
   }
   consultaDatosTabla() {
+    this.estadoComponenteInferior = 0
+
     this.db.ref('/programasAcademicos/')
       // .orderByChild("TIPO DE MOVILIDAD")
       // .equalTo('ENTRANTE')

@@ -96,7 +96,8 @@
           <label for="correo" class="col-md-5 control-label">Correo electronico</label>
 
           <div class="col-md-7">
-            <input [(ngModel)]='cuenta["correo"]' type="text" class="form-control" id="correo" placeholder="Correo electronico">
+            <input [(ngModel)]='cuenta["correo"]' type="text" class="form-control" id="correo" placeholder="Correo electronico"
+            [attr.disabled]="estadoComponenteInferior==1 ? '' : null">
           </div>
         </div>
 
@@ -133,12 +134,14 @@
       </div>
     </div>
     <div class="box-footer">
-      <div class="row" *ngIf="estadoComponenteInferior == 2">
+      <div class="row" >
         <div class="col-md-6">
 
         </div>
         <div class="col-md-6">
-          <button type="button" class="btn btn-block btn-success" (click)="crearnuevaCuenta()">Crear <i class="fa fa-arrow-circle-up"></i>
+          <button type="button" class="btn btn-block btn-success" (click)="crearnuevaCuenta()" *ngIf="estadoComponenteInferior == 2">Crear <i class="fa fa-arrow-circle-up"></i>
+          </button>
+          <button type="button" class="btn btn-block btn-success" (click)="editar()" *ngIf="estadoComponenteInferior == 1">Actualizar <i class="fa fa-arrow-circle-up"></i>
           </button>
         </div>
       </div>

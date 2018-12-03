@@ -54,9 +54,7 @@
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;" 
-          (click)="selectSolicitud(row)"
-          [ngClass]="{'selected': (rowSelected == row)}">
+          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectSolicitud(row)" [ngClass]="{'selected': (rowSelected == row)}">
           </mat-row>
         </mat-table>
 
@@ -89,7 +87,7 @@
       </div>
     </div>
     <div class="box-body">
-      <div *ngIf="(estadoComponenteInferior==1 || estadoComponenteInferior==2)">
+      <div *ngIf="(estadoComponenteInferior==1 || estadoComponenteInferior==2 || estadoComponenteInferior==3)">
         <div class="form-group">
           <label for="NOMBRE" class="col-md-5 control-label">NOMBRE</label>
 
@@ -338,19 +336,19 @@
           </div>
         </div>
 
-        <div class="form-group" *ngIf="estadoComponenteInferior==1">
+        <div class="form-group" *ngIf="estadoComponenteInferior==3">
           <label for="exampleInputFile">File input</label>
           <input type="file" #fileInput1>
 
           <p class="help-block">Example block-level help text here.</p>
         </div>
-        <div class="form-group" *ngIf="estadoComponenteInferior==1">
+        <div class="form-group" *ngIf="estadoComponenteInferior==3">
           <label for="exampleInputFile">File input</label>
           <input type="file" #fileInput2>
 
           <p class="help-block">Example block-level help text here.</p>
         </div>
-        <div class="form-group" *ngIf="estadoComponenteInferior==1">
+        <div class="form-group" *ngIf="estadoComponenteInferior==3">
           <label for="exampleInputFile">File input</label>
           <input type="file" #fileInput3>
 
@@ -374,51 +372,31 @@
           <a href="{{this.solicitud['urlFile3']}}" target="_blank"> link</a>
         </div>
 
-        <!-- "AÑO": 0,
-            "NOMBRE": "",
-            "ID_SEXO_BIOLOGICO": "",
-            "ID_ESTADO_CIVIL": "",
-            "FECHA_NACIMIENTO": "",
-            "Correo electrónico": "",
-            "TIPO DE IDENTIFICACIÓN": "",
-            "NÚMERO DE IDENTIFICACIÓN": "",
-            "CÓDIGO DEL ESTUDIANTE EN UNIVALLE": "",
-            "PERIODO ACADÉMICO": 0,
-            "TIPO DE MOVILIDAD": "",
-            "TIPO DE CONVENIO": "",
-            "CODIGO_CONVENIO": "",
-            "MODALIDAD": "",
-            "NUM_DIAS_MOVILIDAD": "",
-            "TIPO DE PROGRAMA - CONVOCATORIA": "",
-            "NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN": "",
-            "NIVEL DE FORMACIÓN DE LA MOVILIDAD": "",
-            "PAÍS DE ORIGEN": "",
-            "UNIVERSIDAD DE PROCEDENCIA": "",
-            "CIUDAD-SEDE": "",
-            "PAÍS DE DESTINO": "",
-            "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "",
-            "PROGRAMA ACADÉMICO DE ORIGEN": "",
-            "CÓDIGO DEL PROGRAMA": "",
-            "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
-            "PROGRAMA ACADÉMICO DE DESTINO (2)": "",
-            "FINANCIAMIENTO": "NO APLICA",
-            "VALOR_FINANCIACION_NACIONAL": "",
-            "ID_FUENTE_INTERNACIONAL": "",
-            "ID_PAIS_FINANCIADOR": "",
-            "VALOR_FINANCIACION_INTERNAC": "" -->
+       
       </div>
 
 
     </div>
     <div class="box-footer">
-      <div class="row" *ngIf="estadoComponenteInferior==1">
-        <div class="col-md-6">
-
-        </div>
-        <div class="col-md-6">
-          <button type="button" class="btn btn-block btn-success" (click)="crearSolicitud()">Crear solicitud <i class="fa fa-arrow-circle-up"></i>
+      <div class="row">
+        <div class="col-md-4">
+          <button type="button" class="col-md-4 btn btn-block btn-danger" (click)="cancelarSolicitud()" *ngIf="estadoComponenteInferior==3">Cancelar
+            solicitud <i class="fa fa-arrow-circle-up"></i>
           </button>
         </div>
+        <div class="col-md-4">
+          <button type="button" class="col-md-4 btn btn-block btn-info" (click)="guardarSolicitud()" *ngIf="estadoComponenteInferior==3">Guardar
+            solicitud <i class="fa fa-arrow-circle-up"></i>
+          </button>
+        </div>
+        <div class="col-md-4">
+          <button type="button" class="col-md-4 btn btn-block btn-success" (click)="actualizarSolicitud()" *ngIf="estadoComponenteInferior==3">Actualizar
+            solicitud <i class="fa fa-arrow-circle-up"></i>
+          </button>
+        </div>
+
+
+
       </div>
       <!-- <div class="row" *ngIf="solicitud.nombre!==''">
         <div class="col-md-6">
