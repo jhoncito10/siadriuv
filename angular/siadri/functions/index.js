@@ -134,131 +134,224 @@ var verificaFechas = (req, res) => {
             });
             return usuarios;
         }).then(usuarios => {
-            console.log('emails ' + usuarios.emails.join());
+
+            const fechaActual = moment();
+
+            ref.child('convenios')
+                .orderByChild('Vencimiento')
+                .equalTo(true)
+                .once('value').then(conv => {
+                    conv.forEach(doc => {
+                        const aux2 = doc.val()['Fecha de vencimiento'];
+       
+                        const comparacion = moment(aux2, 'DD/M/YYYY');
+
+                        const diferencia = comparacion.diff(fechaActual, 'days');
 
 
-            const convenios = ref.child(`/convenios_inicio/`);
-            const refUsuarios = ref.child(`/usuarios/`);
-            const now = Date.now();
-            console.log(moment().utcOffset("-05:00"));
-            const oldItemsQuery = convenios.orderByChild('fecha_de_vencimiento');
-            convenios.once('value').then(snapshot => {
-                // create a map with all children that need to be removed
+                        if (diferencia == 90 || diferencia == 30 || diferencia == 15 || diferencia == -1) {
 
-                snapshot.forEach(child => {
+                            const refUsuarios = ref.child('usuarios');
+                            let mensaje = "";
+                            let horaactual = moment().utcOffset("-05:00").format("DD/MM/YYYY HH:mm:ss") + "";
+                            let notificacion = {};
+                            if (diferencia == -1) {
+                                mensaje = `El convenio ID: "${doc.key}", con la institucion "${doc.val()['Institucion']}" vencio, en la fecha ${fechaActual.format('DD-MM-YYYY')}`;
+                                notificacion = {
+                                    "estado": "sin leer",
+                                    "icon": "fa fa-users text-aqua",
+                                    "info": mensaje,
+                                    "fecha_creacion:": horaactual,
+                                    "fecha_modificacion:": horaactual
+                                };
 
-                    let fechaFormat = moment(child.val().fecha_de_vencimiento, 'M/D/YYYY', true).format('x');
-                    let cutoff = fechaFormat - now;
-                    if (cutoff <= CUT_OFF_TIME) {
-                        let mensaje = "";
-                        let horaactual = moment().utcOffset("-05:00").format("DD/MM/YYYY HH:mm:ss") + "";
-                        let notificacion = {};
-                        if (cutoff < 0) {
-                            mensaje = `El convenio con la institucion "${child.val().institucion}" vencio, en la fecha ${child.val().fecha_de_vencimiento}`;
-                            notificacion = {
-                                "estado": "sin leer",
-                                "icon": "fa fa-users text-aqua",
-                                "info": mensaje,
-                                "fecha_creacion:": horaactual,
-                                "fecha_modificacion:": horaactual
-                            };
+                                let conven = ref.child(`convenios/${doc.key}`);
 
-                        } else {
-                            mensaje = `El convenio con la institucion "${child.val().institucion}" vencera en menos de 6 meses, en la fecha ${child.val().fecha_de_vencimiento}`;
-                            notificacion = {
-                                "estado": "sin leer",
-                                "icon": "fa fa-users text-aqua",
-                                "info": mensaje,
-                                "fecha_creacion:": horaactual,
-                                "fecha_modificacion:": horaactual
-                            };
-                        }
-                        for (const key in usuarios.keys) {
-                            if (usuarios.keys.hasOwnProperty(key)) {
-                                const usuariokey = usuarios.keys[key];
+                                conven.update({'Estado': 'Vencido', 'Vencidos': 'Si'});
+
+                            } else {
+                                mensaje = `El convenio ID: "${doc.key}", con la institucion "${doc.val()['Institucion']}" vencera en ${diferencia} dias, en la fecha ${comparacion.format('DD-MM-YYYY')}`;
+                                notificacion = {
+                                    "estado": "sin leer",
+                                    "icon": "fa fa-users text-aqua",
+                                    "info": mensaje,
+                                    "fecha_creacion:": horaactual,
+                                    "fecha_modificacion:": horaactual
+                                };
+                            }
 
 
-
-                                let newNotification = refUsuarios.child(`/${usuariokey}/notificacion/${child.key}/`);
+                            for (let i = 0; i < usuarios.keys.length; i++) {
+                                const usuariokey = usuarios.keys[i];
+                                console.log('array: ', usuariokey, doc.key);
+                                let newNotification = refUsuarios.child(`${usuariokey}/notificacion/${doc.key}`);
 
                                 newNotification.set(notificacion);
-
                             }
+       
+                            let mailData = {
+                                from: '"SIADRI" <sistema.siadri@correounivalle.edu.co>',
+                                bcc: usuarios.emails.join(),
+                                subject: 'convenio apunto de vencer',
+                                html: mensaje
+
+                            };
+
+
+                            // sendMail(mailData);
+                            mailTrasport.sendMail(mailData).then(() => {
+                                console.log('email enviado');
+                            }).catch(error => {
+                                console.log(error);
+                            });
                         }
-                        let mailData = {
-                            from: '"SIADRI" <sistema.siadri@correounivalle.edu.co>',
-                            bcc: usuarios.emails.join(),
-                            subject: 'convenio apunto de vencer',
-                            html: mensaje
 
-                        };
+                        console.log(comparacion, fechaActual, diferencia);
 
-
-                        // sendMail(mailData);
-                        mailTrasport.sendMail(mailData).then(() => {
-                            console.log('email enviado');
-                        }).catch(error => {
-                            console.log(error);
-                        });
-
-
-                        // We've appended a new message to the message_list location.
-                    }
-
+                    });
                 });
-                // execute all updates in one go and return the result to end the function
-                // return ref.update(updates);
-            });
+
+
         });
 
 };
 console.log(moment().utcOffset("-05:00"));
 // setInterval(verificaFechas, INTERVAL_TIME);
 
+exports.validarConvenios = functions.https.onRequest((req, res) => {
+    console.log('ENTRANDO');
+    cors(req, res, () => {
+        console.log('EJECUTANDO');
 
-
-
-exports.weeklyEmail = functions.https.onRequest((req, res) => {
-
-    verificaFechas().then(() => {
-        res.send('email enviado');
-    }).catch(error => {
-        res.send(error);
+        verificaFechas().then(() => {
+            res.send('email enviado');
+        }).catch(error => {
+            res.send(error);
+        });
+    
     });
 
-
-
-
-
-
-
-    // const currentTime = new Date().getTime();
-    // const lastWeek = currentTime - 604800000;
-    // const emails = [];
-    // ref.child('usuarios')
-    // .orderByChild('roles')
-    // .equalTo('NIVEL3')
-    // .once('value').then(snap=>{
-    //     snap.forEach(childSnap=>{
-    //         const email = childSnap.val().email;
-    //         emails.push(email);
-    //     });
-    //     return emails;
-    // }).then(emails=>{
-    //     console.log('emails '+emails.join() );
-    //     const mailOptions = {
-    //         from:'"SIADRI" <sistema.siadri@correounivalle.edu.co>',
-    //         bcc:emails.join(),
-    //         subject:'convenio apunto de vencer',
-    //         text:'el convenio xxx esta por vencer'
-    //     };
-    //     return mailTrasport.sendMail(mailOptions).then(()=>{
-    //         res.send('email enviado');
-    //     }).catch(error=>{
-    //         res.send(error);
-    //     });
-    // });
 });
+
+var verificaFechasPostulaciones = (req, res) => {
+
+    const usuarios = {
+        keys: [],
+        emails: []
+    };
+    return ref.child('usuarios')
+        .orderByChild('roles')
+        .equalTo('NIVEL6')
+        .once('value').then(snap => {
+            snap.forEach(childSnap => {
+                const email = childSnap.val().email;
+                const key = childSnap.key;
+                usuarios.emails.push(email);
+                usuarios.keys.push(key);
+            });
+            return usuarios;
+        }).then(usuarios => {
+
+            const fechaActual = moment();
+
+            ref.child('postulaciones')
+                .orderByChild('estado')
+                .equalTo('Aprobado por DRI UV')
+                .once('value').then(conv => {
+                    conv.forEach(doc => {
+                        const aux2 = doc.val()['fechaActualizado'].split(' ')[0];
+       
+                        const comparacion = moment(aux2, 'DD/M/YYYY');
+
+                        const diferencia = fechaActual.diff(comparacion, 'days');
+
+                        moment()
+                        if (diferencia == 30 || diferencia == 15 || diferencia == 60) {
+
+                            const refUsuarios = ref.child('usuarios');
+                            let mensaje = "";
+                            let horaactual = moment().utcOffset("-05:00").format("DD/MM/YYYY HH:mm:ss") + "";
+                            let notificacion = {};
+                            if (diferencia == 60) {
+                                mensaje = `La postulacion con ID: "${doc.key}", y codigo de convenio: "${doc.val()['CODIGO_CONVENIO']}", realizada por "${doc.val()['Correo electónico']}" vencio y sera cancelada, en la fecha ${fechaActual.format('DD-MM-YYYY')}`;
+                                notificacion = {
+                                    "estado": "sin leer",
+                                    "icon": "fa fa-users text-aqua",
+                                    "info": mensaje,
+                                    "fecha_creacion:": horaactual,
+                                    "fecha_modificacion:": horaactual
+                                };
+
+                                let conven = ref.child(`postulaciones/${doc.key}`);
+
+                                conven.update({'estado': 'Cancelada'});
+
+                            } else {
+                                mensaje = `La postulacion con ID: "${doc.key}", y codigo de convenio: "${doc.val()['CODIGO_CONVENIO']}", realizada por "${doc.val()['Correo electónico']}" vencera en ${diferencia} dias, en la fecha ${comparacion.format('DD-MM-YYYY')}`;
+                             
+                                notificacion = {
+                                    "estado": "sin leer",
+                                    "icon": "fa fa-users text-aqua",
+                                    "info": mensaje,
+                                    "fecha_creacion:": horaactual,
+                                    "fecha_modificacion:": horaactual
+                                };
+                            }
+
+
+                            for (let i = 0; i < usuarios.keys.length; i++) {
+                                const usuariokey = usuarios.keys[i];
+                                console.log('array: ', usuariokey, doc.key);
+                                let newNotification = refUsuarios.child(`${usuariokey}/notificacion/${doc.key}`);
+
+                                newNotification.set(notificacion);
+                            }
+       
+                            let mailData = {
+                                from: '"SIADRI" <sistema.siadri@correounivalle.edu.co>',
+                                bcc: usuarios.emails.join(),
+                                subject: 'convenio apunto de vencer',
+                                html: mensaje
+
+                            };
+
+
+                            // sendMail(mailData);
+                            mailTrasport.sendMail(mailData).then(() => {
+                                console.log('email enviado');
+                            }).catch(error => {
+                                console.log(error);
+                            });
+                        }
+
+                        console.log(comparacion, fechaActual, diferencia);
+
+                    });
+                });
+
+
+        });
+
+};
+console.log(moment().utcOffset("-05:00"));
+// setInterval(verificaFechas, INTERVAL_TIME);
+
+exports.validarPostulaciones = functions.https.onRequest((req, res) => {
+    console.log('ENTRANDO');
+    cors(req, res, () => {
+        console.log('EJECUTANDO');
+
+        verificaFechasPostulaciones().then(() => {
+            res.send('email enviado');
+        }).catch(error => {
+            res.send(error);
+        });
+    
+    });
+
+});
+
+
 
 exports.createNotification = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
@@ -354,6 +447,6 @@ exports.createNotificationPrograma = functions.https.onRequest((req, res) => {
 
 exports.createLetter = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
-        console.log(req.body)       
+        console.log(req.body)
     });
 });

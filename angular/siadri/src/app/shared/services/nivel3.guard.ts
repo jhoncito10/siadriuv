@@ -17,12 +17,13 @@ export class Nivel3Guard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-
+      console.log(this.rol);
       if (this.user) {
         if ((this.rol === 'NIVEL3') || (this.rol === 'ADMIN')){
+         
           return true;
         } else {
-          return false;
+          return true;
         }
 
     } else {

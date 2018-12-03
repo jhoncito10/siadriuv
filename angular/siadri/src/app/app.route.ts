@@ -15,25 +15,26 @@ import { DashNivel3Component } from 'app/shared/layouts/dash-nivel3/dash-nivel3.
 import { ComponentCorreoComponent } from 'app/shared/layouts/dash-nivel3/component-correo/component-correo.component';
 import { InvestigacionesComponent } from 'app/shared/layouts/dash-nivel2/investigaciones/investigaciones.component';
 //MODULO AUTH
-import { InicioAppComponent } from "./modulos/auth/inicio-app/inicio-app.component";
+import { InicioAppComponent } from './modulos/auth/inicio-app/inicio-app.component';
 import { LoginComponent } from './modulos/auth/login/login.component';
 // MODULO NIVEL 1
-import { TablaConsultasComponent } from "./modulos/nivel-1/tabla-consultas/tabla-consultas.component";
+import { TablaConsultasComponent } from './modulos/nivel-1/tabla-consultas/tabla-consultas.component';
 
 // MODULO NIVEL 2
 //directores de programa
-import { DirectoresProgramaUvComponent } from "./modulos/nivel-2/directores-programa-uv/directores-programa-uv.component";
+import { DirectoresProgramaUvComponent } from './modulos/nivel-2/directores-programa-uv/directores-programa-uv.component';
 // pares externos
-import { ParesExternosComponent } from "./modulos/nivel-2/pares-externos/pares-externos.component";
+import { ParesExternosComponent } from './modulos/nivel-2/pares-externos/pares-externos.component';
 // postulaciones Estudiantes
-import { EstudiantesPostulacionesComponent } from "./modulos/nivel-2/estudiantes-postulaciones/estudiantes-postulaciones.component";
+import { EstudiantesPostulacionesComponent } from './modulos/nivel-2/estudiantes-postulaciones/estudiantes-postulaciones.component';
 
 //MODULO NIVEL 3
 //  administracion de directores de programa
-import { AdminDirectoresUvComponent } from "./modulos/nivel-3/admin-directores-uv/admin-directores-uv.component";
-import { AdminParesExternosComponent } from "./modulos/nivel-3/admin-pares-externos/admin-pares-externos.component";
-import { AdminPostEntrantesComponent } from "./modulos/nivel-3/admin-post-entrantes/admin-post-entrantes.component";
-import { AdminPostSalientesComponent } from "./modulos/nivel-3/admin-post-salientes/admin-post-salientes.component";
+import { AdminDirectoresUvComponent } from './modulos/nivel-3/admin-directores-uv/admin-directores-uv.component';
+import { AdminParesExternosComponent } from './modulos/nivel-3/admin-pares-externos/admin-pares-externos.component';
+import { AdminPostEntrantesComponent } from './modulos/nivel-3/admin-post-entrantes/admin-post-entrantes.component';
+import { AdminPostSalientesComponent } from './modulos/nivel-3/admin-post-salientes/admin-post-salientes.component';
+import { AdminConveniosComponent } from './modulos/nivel-3/admin-convenios/admin-convenios.component';
 
 
 const routes: Routes = [
@@ -67,7 +68,8 @@ const routes: Routes = [
                     { path: 'AdminDirectores', component: AdminDirectoresUvComponent },
                     { path: 'AdminParesExternos', component: AdminParesExternosComponent },
                     { path: 'AdminPostulacionesEntrantes', component: AdminPostEntrantesComponent },
-                    { path: 'AdminPostulacionesSalientes', component: AdminPostSalientesComponent }
+                    { path: 'AdminPostulacionesSalientes', component: AdminPostSalientesComponent },
+                    { path: 'AdminConvenios', component: AdminConveniosComponent }
                 ]
             },
 

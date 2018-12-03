@@ -97,6 +97,7 @@ import { NativeFirebaseService } from "./shared/services/nativeFirebaseService/n
 import { AdminPostEntrantesComponent } from './modulos/nivel-3/admin-post-entrantes/admin-post-entrantes.component';
 import { AdminPostSalientesComponent } from './modulos/nivel-3/admin-post-salientes/admin-post-salientes.component';
 import { SideBarMenuPostulacionesComponent } from './shared/layouts/sidebar-left-components/side-bar-menu-postulaciones/side-bar-menu-postulaciones.component';
+import { AdminConveniosComponent } from './modulos/nivel-3/admin-convenios/admin-convenios.component';
 
 @NgModule({
   declarations: [
@@ -151,7 +152,8 @@ import { SideBarMenuPostulacionesComponent } from './shared/layouts/sidebar-left
     SideBarMenuEstudiantesComponent,
     AdminPostEntrantesComponent,
     AdminPostSalientesComponent,
-    SideBarMenuPostulacionesComponent
+    SideBarMenuPostulacionesComponent,
+    AdminConveniosComponent
 
   ],
   imports: [
