@@ -118,7 +118,7 @@
           </div>
           <div class="col-md-7">
             <div class="checkbox" *ngFor="let conv of convenios ; index as i;">
-              <label><input type="checkbox" [(ngModel)] = "conve[i]"  >{{conv.id}}</label>
+              <label><input type="checkbox" [(ngModel)] = "conveniosSeleccionados[conv.id]"  >{{conv.id}}</label>
             </div>
 
           </div>

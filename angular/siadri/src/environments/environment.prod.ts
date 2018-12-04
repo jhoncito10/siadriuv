@@ -10,6 +10,6 @@ export const environment = {
   },
   cloudUrl:'https://us-central1-siadri-dev.cloudfunctions.net',
   mails:{
-    dirDRI:"sistema.siadri@correounivalle.edu.co,julian.rodriguez@correounivalle.edu.co,sandra.toro@correounivalle.edu.co"
+    dirDRI:"sistema.siadri@correounivalle.edu.co"
   }
 };
