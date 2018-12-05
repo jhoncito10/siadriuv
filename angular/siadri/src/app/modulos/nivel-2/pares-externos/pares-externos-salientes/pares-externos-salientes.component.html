@@ -54,9 +54,7 @@
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;"
-           (click)="selectSolicitud(row)"
-           [ngClass]="{'selected': (rowSelected == row)}">
+          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectSolicitud(row)" [ngClass]="{'selected': (rowSelected == row)}">
           </mat-row>
         </mat-table>
 
@@ -164,13 +162,7 @@
               [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
           </div>
         </div>
-        <!-- <div class="form-group">
-          <label for="TIPO_MOBILIDAD" class="col-md-5 control-label">TIPO DE MOVILIDAD</label>
 
-          <div class="col-md-7">
-            <input [(ngModel)]='solicitud["TIPO DE MOVILIDAD"]' type="text" class="form-control" id="TIPO_MOBILIDAD">
-          </div>
-        </div> -->
         <div class="form-group">
           <label for="TIPO_DE_CONVENIO" class="col-md-5 control-label">TIPO DE CONVENIO</label>
 
@@ -179,14 +171,18 @@
               [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
           </div>
         </div>
+       
         <div class="form-group">
-          <label for="CODIGO_CONVENIO" class="col-md-5 control-label">CODIGO CONVENIO</label>
-
+          <label for="institucion" class="col-md-5 control-label">Institución</label>
           <div class="col-md-7">
-            <input [(ngModel)]='solicitud["CODIGO_CONVENIO"]' type="text" class="form-control" id="CODIGO_CONVENIO"
-              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+            <select [(ngModel)]='solicitud["CODIGO_CONVENIO"]' 
+              class="form-control col-md-7" [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+              <option *ngFor="let conv of conveniosPar ; index as i;" [ngValue]="conv"> {{conv}}</option>
+            </select>
           </div>
+
         </div>
+
         <div class="form-group">
           <label for="MODALIDAD" class="col-md-5 control-label">MODALIDAD</label>
 
@@ -236,13 +232,7 @@
               [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
           </div>
         </div>
-        <!-- <div class="form-group">
-          <label for="UNIVERSIDAD_DE_PROCEDENCIA" class="col-md-5 control-label">UNIVERSIDAD DE PROCEDENCIA</label>
 
-          <div class="col-md-7">
-            <input [(ngModel)]='solicitud[ "UNIVERSIDAD DE PROCEDENCIA"]' type="text" class="form-control" id="UNIVERSIDAD_DE_PROCEDENCIA" [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
-          </div>
-        </div> -->
         <div class="form-group">
           <label for="CIUDAD_SEDE" class="col-md-5 control-label">CIUDAD-SEDE</label>
 
@@ -259,14 +249,7 @@
               [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
           </div>
         </div>
-        <!-- <div class="form-group">
-          <label for="UNIVERSIDAD_INSTITUCION_RECEPTORA" class="col-md-5 control-label">UNIVERSIDAD - INSTITUCIÓN
-            RECEPTORA</label>
 
-          <div class="col-md-7">
-            <input [(ngModel)]='solicitud["UNIVERSIDAD - INSTITUCIÓN RECEPTORA"]' type="text" class="form-control" id="UNIVERSIDAD_INSTITUCION_RECEPTORA">
-          </div>
-        </div> -->
         <div class="form-group">
           <label for="PROGRAMA_ACADEMICO_ORIGEN" class="col-md-5 control-label">PROGRAMA ACADÉMICO DE ORIGEN</label>
 
@@ -283,26 +266,11 @@
               [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
           </div>
         </div>
-        <!-- <div class="form-group">
-          <label for="PROGRAMA_ACADEMICO_DE_DESTINO" class="col-md-5 control-label">PROGRAMA ACADÉMICO DE DESTINO (1)</label>
 
-          <div class="col-md-7">
-            <input [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (1)"]' type="text" class="form-control" id="PROGRAMA_ACADEMICO_DE_DESTINO"
-              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="PROGRAMA_ACADEMICO_DE_DESTINO2" class="col-md-5 control-label">PROGRAMA ACADÉMICO DE DESTINO (2)</label>
-
-          <div class="col-md-7">
-            <input [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (2)"]' type="text" class="form-control" id="PROGRAMA_ACADEMICO_DE_DESTINO2"
-              [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
-          </div>
-        </div> -->
         <div class="form-group">
           <label for="institucion" class="col-md-5 control-label">PROGRAMA ACADÉMICO DE DESTINO (1)</label>
           <div class="col-md-7">
-            <select [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (1)"]'  class="form-control" >
+            <select [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (1)"]' class="form-control">
               <option *ngFor="let prog of programas ; index as i;" [ngValue]="prog"> {{prog}}</option>
               <option value="otra">Otra</option>
             </select>
@@ -312,7 +280,7 @@
         <div class="form-group">
           <label for="institucion" class="col-md-5 control-label">PROGRAMA ACADÉMICO DE DESTINO (2)</label>
           <div class="col-md-7">
-            <select [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (2)"]'  class="form-control" >
+            <select [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (2)"]' class="form-control">
               <option *ngFor="let prog of programas ; index as i;" [ngValue]="prog"> {{prog}}</option>
               <option value="otra">Otra</option>
             </select>

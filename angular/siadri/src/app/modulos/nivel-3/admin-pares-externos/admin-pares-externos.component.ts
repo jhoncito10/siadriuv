@@ -178,7 +178,7 @@ export class AdminParesExternosComponent implements OnInit {
               id: conv,
               data: ResConvenios[conv]
             })
-            this.conveniosSeleccionados[conv] = false
+            // this.conveniosSeleccionados[conv] = false
           }
         }
         this.spinnerConvenios = false
@@ -197,16 +197,17 @@ export class AdminParesExternosComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
   selectCuenta(row) {
+    this.setCuenta()
     this.estadoComponenteInferior = 1
     this.rowSelected = row;
 
-    this.cuenta = row
+    this.cuenta = this.cuentasParesExt[row.key]
     this.cuenta.key = row.key
-    console.log('205',this.conveniosSeleccionados)
+    console.log('205', this.conveniosSeleccionados)
 
-    this.getConveniosInstitucion(this.cuenta['institucion']).then(()=>{
+    this.getConveniosInstitucion(this.cuenta['institucion']).then(() => {
       this.conveniosSeleccionados = this.cuentasParesExt[row.key].convenio
-      console.log('209',this.conveniosSeleccionados,this.cuentasParesExt[row.key])
+      console.log('209', this.conveniosSeleccionados, this.cuentasParesExt[row.key].convenio)
     })
 
     if (this.panelInferior.nativeElement.classList.contains('collapsed-box')) {
@@ -354,7 +355,7 @@ export class AdminParesExternosComponent implements OnInit {
 
     var ref = this.db.ref(`/paresExternos/${this.cuenta.key}`)
     this.cuenta.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
-
+    this.cuenta.convenio = this.conveniosSeleccionados
     ref.update(this.cuenta).then(() => {
       swal({
         title: `Cuenta actualizada`
@@ -371,6 +372,7 @@ export class AdminParesExternosComponent implements OnInit {
       "convenio": ""
     }
     this.convenios = []
+    this.conveniosSeleccionados = []
 
   }
 

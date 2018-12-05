@@ -41,7 +41,8 @@ export class ParesExternosSalientesComponent implements OnInit {
   year
 
   user = JSON.parse(localStorage.getItem('usuario'));
-
+  datosParExt
+conveniosPar = []
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -73,6 +74,9 @@ export class ParesExternosSalientesComponent implements OnInit {
   ngOnInit() {
     this.consultaDatosTabla()
     this.consultarProgramas()
+    this.consultaDatosPar().then(res=> {
+      console.log('78',this.datosParExt)
+    })
   }
   consultaDatosTabla() {
     this.estadoComponenteInferior = 0
@@ -135,13 +139,33 @@ export class ParesExternosSalientesComponent implements OnInit {
 
           let dato = programa.val()
           this.programas.push(dato['NOMBRE PROGRAMA ACADEMICO'])
-          console.log(this.programas)
 
 
         })
 
 
       }).catch((error) => console.log(`${error}`))
+  }
+
+  consultaDatosPar(){
+    return this.db.ref('/paresExternos/')
+      .orderByChild("correo")
+      .equalTo(this.user.email)
+      .once('value')
+
+      .then(snapParExt => {
+        snapParExt.forEach(par=>{
+          this.datosParExt = par.val()
+          for (const conv in this.datosParExt.convenio) {
+            if (this.datosParExt.convenio.hasOwnProperty(conv)) {
+              const element = this.datosParExt.convenio[conv];
+              this.conveniosPar.push(conv)
+            }
+          }
+        })
+      }).catch(error=>{
+        console.log(error)
+      })
   }
 
   applyFilter(filterValue: string) {
@@ -156,7 +180,6 @@ export class ParesExternosSalientesComponent implements OnInit {
 
     const _convenioSelected = this.solicitudes[row.key];
     this.solicitud = _convenioSelected
-    console.log(this.solicitud)
     this.solicitud.key = row.key
     if (this.panelInferior.nativeElement.classList.contains('collapsed-box')) {
       this.panelinferiorButton.nativeElement.click()
@@ -180,7 +203,6 @@ export class ParesExternosSalientesComponent implements OnInit {
   }
 
   crearSolicitud() {
-    console.log(this.fileInput1.nativeElement.files[0])
 
     if (this.validarDatosFormlario()) {
 
@@ -201,24 +223,18 @@ export class ParesExternosSalientesComponent implements OnInit {
 
         let reader = new FileReader();
         let file = this.fileInput1.nativeElement.files[0];
-        console.log(file)
-        // reader.readAsDataURL(file);
         var storageRef = this.firebaseStorage.ref();
         var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo1.pdf`);
 
         var promesaFile1 = mountainsRef.put(file)
 
         let file2 = this.fileInput2.nativeElement.files[0];
-        console.log(file2)
-        // reader.readAsDataURL(file);
         var storageRef = this.firebaseStorage.ref();
         var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo2.pdf`);
 
         var promesaFile2 = mountainsRef.put(file2)
 
         let file3 = this.fileInput3.nativeElement.files[0];
-        console.log(file3)
-        // reader.readAsDataURL(file);
         var storageRef = this.firebaseStorage.ref();
         var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo3.pdf`);
 
@@ -226,7 +242,6 @@ export class ParesExternosSalientesComponent implements OnInit {
 
 
         Promise.all([promesaFile1, promesaFile2, promesaFile3]).then((values) => {
-          console.log(values[0].a.downloadURLs[0])
           this.solicitud['urlFile1'] = values[0].a.downloadURLs[0]
           this.solicitud['urlFile2'] = values[1].a.downloadURLs[0]
           this.solicitud['urlFile3'] = values[2].a.downloadURLs[0]
@@ -334,7 +349,7 @@ export class ParesExternosSalientesComponent implements OnInit {
       "PERIODO ACADÉMICO": 0,
       "TIPO DE MOVILIDAD": "ENTRANTE",
       "TIPO DE CONVENIO": "",
-      "CODIGO_CONVENIO": "ARG005",
+      "CODIGO_CONVENIO": "",
       "MODALIDAD": "",
       "NUM_DIAS_MOVILIDAD": "",
       "TIPO DE PROGRAMA - CONVOCATORIA": "BILATERAL",
