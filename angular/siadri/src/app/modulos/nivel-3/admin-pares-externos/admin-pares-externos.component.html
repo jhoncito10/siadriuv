@@ -44,6 +44,14 @@
             <mat-cell *matCellDef="let row"> {{row.convenio}} </mat-cell>
           </ng-container>
 
+          <ng-container matColumnDef="pais">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Pais </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.pais}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="estado">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.estado}} </mat-cell>
+          </ng-container>
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectCuenta(row)" [ngClass]="{'selected': (rowSelected == row)}">
           </mat-row>
@@ -81,55 +89,86 @@
     </div>
     <div class="box-body">
       <div *ngIf="(estadoComponenteInferior==1 || estadoComponenteInferior==2)">
+        <div class="form-horizontal">
 
-        <div class="form-group">
-          <label for="programa" class="col-md-5 control-label">Nombre completo</label>
+          <div class="form-group">
+            <label for="programa" class="col-md-5 control-label">Nombre completo</label>
 
-          <div class="col-md-7">
+            <div class="col-md-7">
 
-            <input [(ngModel)]='cuenta["nombre"]' type="text" class="form-control" id="programa" placeholder="Nombre completo">
+              <input [(ngModel)]='cuenta["nombre"]' type="text" class="form-control" id="programa" placeholder="Nombre completo">
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label for="correo" class="col-md-5 control-label">Correo electronico</label>
+          <div class="form-group">
+            <label for="correo" class="col-md-5 control-label">Correo electronico</label>
 
-          <div class="col-md-7">
-            <input [(ngModel)]='cuenta["correo"]' type="text" class="form-control" id="correo" placeholder="Correo electronico"
-              [attr.disabled]="estadoComponenteInferior==1 ? '' : null">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="institucion" class="col-md-5 control-label">Institución</label>
-          <div class="col-md-7">
-            <select [(ngModel)]='cuenta["institucion"]' (click)="getConveniosInstitucion(cuenta['institucion'])" class="form-control col-md-7"
-              id="institucion">
-              <option *ngFor="let insti of instituciones ; index as i;" [ngValue]="insti"> {{insti}}</option>
-              <option value="otra">Otra</option>
-            </select>
+            <div class="col-md-7">
+              <input [(ngModel)]='cuenta["correo"]' type="text" class="form-control" id="correo" placeholder="Correo electronico"
+                [attr.disabled]="estadoComponenteInferior==1 ? '' : null">
+            </div>
           </div>
 
-        </div>
-  
-        <div class="form-group">
-          <label for="convenio" class="col-md-5 control-label">Convenio</label>
-          <div class="overlay" *ngIf="spinnerConvenios">
-            <i class="fa fa-refresh fa-spin"></i>
-          </div>
-          <div class="col-md-7">
-            <div class="checkbox" *ngFor="let conv of convenios ; index as i;">
-              <label><input type="checkbox" [(ngModel)] = "conveniosSeleccionados[conv.id]"  >{{conv.id}}</label>
+          <div class="form-group">
+            <label for="institucion" class="col-md-5 control-label">Universidad / Entidad Socia</label>
+            <div class="col-md-7">
+              <select [(ngModel)]='cuenta["institucion"]' (click)="getConveniosInstitucion(cuenta['institucion'])"
+                class="form-control col-md-7">
+                <option *ngFor="let insti of instituciones ; index as i;" [ngValue]="insti"> {{insti}}</option>
+                <option value="otra">Otra</option>
+              </select>
             </div>
 
           </div>
 
-        </div>
+          <div class="form-group">
+            <label for="pais" class="col-md-5 control-label">País de Universidad / Entidad Socia</label>
+            <div class="col-md-7">
+              <select [(ngModel)]='cuenta["pais"]' class="form-control col-md-7" id="pais">
+                <option *ngFor="let pais of paises ; index as i;" [ngValue]="pais"> {{pais}}</option>
+              </select>
+            </div>
 
-        <div class="form-group" *ngIf="cuenta['institucion'] == 'otra'">
-          <label for="correo" class="col-md-5 control-label">Nombre de la institución</label>
+          </div>
+          <div class="form-group">
+            <label for="convenio" class="col-md-5 control-label">Código(s) de Convenios </label>
+            <div class="overlay" *ngIf="spinnerConvenios">
+              <i class="fa fa-refresh fa-spin"></i>
+            </div>
+            <div class="col-md-7">
+              <div class="checkbox" *ngFor="let conv of convenios ; index as i;">
+                <label><input type="checkbox" [(ngModel)]="conveniosSeleccionados[conv.id]">{{conv.id}}</label>
+              </div>
 
-          <div class="col-md-7">
-            <input [(ngModel)]='cuenta["otraInstitucion"]' type="text" class="form-control" id="correo" placeholder="Nombre de la institución">
+            </div>
+
+          </div>
+          <br>
+          <div class="form-group" *ngIf="cuenta['institucion'] == 'otra'">
+            <label for="correo" class="col-md-5 control-label">Nombre de la institución</label>
+
+            <div class="col-md-7">
+              <input [(ngModel)]='cuenta["otraInstitucion"]' type="text" class="form-control" id="correo" placeholder="Nombre de la institución">
+            </div>
+          </div>
+          <br>
+          <div class="form-group">
+            <label for="estado" class="col-md-5 control-label">Estado</label>
+
+            <div class="col-md-7" id="estado">
+              <div class="radio">
+                <label>
+                  <input [(ngModel)]='cuenta["estado"]' type="radio" value="activo" checked>
+                  Activo
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input [(ngModel)]='cuenta["estado"]' type="radio" value="desactivo">
+                  Inactivo
+                </label>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>

@@ -29,10 +29,12 @@ export class AdminParesExternosComponent implements OnInit {
   firebaseStorage: any
   dataTablaCuentasParesExt = [];
 
-  displayedColumns = ['correo', 'nombre', 'institucion', 'convenio'];
+  displayedColumns = ['correo', 'nombre', 'institucion', 'convenio','pais','estado'];
   dataSource: MatTableDataSource<any>;
   instituciones = []
   convenios = []
+
+  paises = []
 
   estadoComponenteInferior = 0 //0 = ninguno; 1 =  nueva programa; 2 = datos programa
 
@@ -68,7 +70,7 @@ export class AdminParesExternosComponent implements OnInit {
   ngOnInit() {
     this.consultaDatosTabla()
     this.getInstituciones()
-
+    this.getPaises()
 
   }
   consultaDatosTabla() {
@@ -91,6 +93,10 @@ export class AdminParesExternosComponent implements OnInit {
           let correo = dato['correo'] || ''
           let nombre = dato['nombre'] || ''
           let institucion = dato['institucion'] || ''
+          let pais = dato['pais'] || ''
+
+          let estado = dato['estado'] || ''
+
           var convenio = ''
           for (const key in dato['convenio']) {
             if (dato['convenio'].hasOwnProperty(key)) {
@@ -106,7 +112,9 @@ export class AdminParesExternosComponent implements OnInit {
             nombre: nombre,
             key: solicitudSnap.key,
             institucion: institucion,
-            convenio: convenio
+            convenio: convenio,
+            pais:pais,
+            estado:estado
           })
         })
 
@@ -190,6 +198,24 @@ export class AdminParesExternosComponent implements OnInit {
       })
 
   }
+  getPaises() {
+    this.paises = []
+    return this.db.ref('/paises/')
+      .orderByChild("nombre_pais")
+      .once('value')
+      .then(paisesSnap => {
+        console.log(paisesSnap.val())
+        paisesSnap.forEach(pais=>{
+          this.paises.push(pais.val().nombre_pais)
+
+        })
+        
+      })
+      .catch(erro => {
+        console.log(erro)
+      })
+
+  }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
@@ -218,7 +244,7 @@ export class AdminParesExternosComponent implements OnInit {
   }
 
   crearnuevaCuenta() {
-    console.log(this.conveniosSeleccionados)
+    console.log(this.cuenta)
 
     if (this._MixedFunctions.isEmail(this.cuenta.correo)) {
       swal({
@@ -276,16 +302,11 @@ export class AdminParesExternosComponent implements OnInit {
             )
           } else {
             var ref = this.db.ref(`/paresExternos/`).push()
-            let setUser =
-            {
-              "nombre": this.cuenta['nombre'],
-              "correo": this.cuenta['correo'],
-              "institucion": this.cuenta['institucion'],
-              "otraInstitucion": this.cuenta['otraInstitucion'],
-              "key": this.cuenta['key'],
-              "convenio": this.conveniosSeleccionados
-            }
-            return ref.set(setUser).then(() => {
+
+            this.cuenta["fechaActualizado"] = moment().format('DD/MM/YYYY HH:mm')
+            this.cuenta["fechaCreado"] = moment().format('DD/MM/YYYY HH:mm')
+            
+            return ref.set(this.cuenta).then(() => {
               this.consultaDatosTabla()
               let body = `
               Cuerpo del correo de cuenta de par externo creada
@@ -294,7 +315,6 @@ export class AdminParesExternosComponent implements OnInit {
 
               this.enviarCorreo(newmail, "Cuenta creada", body)
                 .subscribe((responseData) => {
-                  console.log(responseData)
                   if (responseData) {
                     swal(
                       `La cuenta para el usuario : "${this.cuenta['nombre']}" se a creado correctamente`,
@@ -309,7 +329,6 @@ export class AdminParesExternosComponent implements OnInit {
                     )
                   }
                   this.setCuenta()
-
                 })
             })
           }
@@ -340,15 +359,7 @@ export class AdminParesExternosComponent implements OnInit {
     }
     this.panelInferior.nativeElement.scrollIntoView();
   }
-
-  validarCorreoUnivalle(email) {
-    // let mail = email.split('@')
-    // if (mail[1] == 'correounivalle.edu.co') {
-    //   return true
-    // } else {
-    //   return false
-    // }
-  }
+  
 
   editar() {
     swal.showLoading()
@@ -366,10 +377,12 @@ export class AdminParesExternosComponent implements OnInit {
     this.cuenta = {
       "nombre": "Francisco par",
       "correo": "francisco.hurtado@geoprocess.com.co",
+      "pais":"",
       "institucion": "",
       "key": "",
       "otraInstitucion": "",
-      "convenio": ""
+      "convenio": "",
+      "estado":"activo"
     }
     this.convenios = []
     this.conveniosSeleccionados = []
