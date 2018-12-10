@@ -305,6 +305,7 @@ export class AdminParesExternosComponent implements OnInit {
 
             this.cuenta["fechaActualizado"] = moment().format('DD/MM/YYYY HH:mm')
             this.cuenta["fechaCreado"] = moment().format('DD/MM/YYYY HH:mm')
+            this.cuenta.convenio = this.conveniosSeleccionados
             
             return ref.set(this.cuenta).then(() => {
               this.consultaDatosTabla()
@@ -377,6 +378,7 @@ export class AdminParesExternosComponent implements OnInit {
     this.cuenta = {
       "nombre": "Francisco par",
       "correo": "francisco.hurtado@geoprocess.com.co",
+      "correoNotas":"",
       "pais":"",
       "institucion": "",
       "key": "",

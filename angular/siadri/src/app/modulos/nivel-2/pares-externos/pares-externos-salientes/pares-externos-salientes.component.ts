@@ -32,7 +32,7 @@ export class ParesExternosSalientesComponent implements OnInit {
   displayedColumns = ['correo', 'ano', 'destino', 'nombre', 'estado'];
   dataSource: MatTableDataSource<any>;
 
-  universidadProcedencia = 'BENEMÉRITA UNIVERSIDAD AUTÓNOMA DE PUEBLA'
+  universidadProcedencia = ''
 
   estadoComponenteInferior = 0 //0 = ninguno; 1 =  nueva solicitud; 2 = datos solicitud
 
@@ -42,7 +42,11 @@ export class ParesExternosSalientesComponent implements OnInit {
 
   user = JSON.parse(localStorage.getItem('usuario'));
   datosParExt
-conveniosPar = []
+
+  spinertablapostulaciones = false
+  conveniosPar = []
+   convenios = this.localSt.retrieve('convenios');
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -74,13 +78,13 @@ conveniosPar = []
   ngOnInit() {
     this.consultaDatosTabla()
     this.consultarProgramas()
-    this.consultaDatosPar().then(res=> {
-      console.log('78',this.datosParExt)
+    this.consultaDatosPar().then(res => {
+      console.log('78', this.datosParExt)
     })
   }
   consultaDatosTabla() {
     this.estadoComponenteInferior = 0
-
+    this.spinertablapostulaciones = true
     this.db.ref('/postulaciones/')
       .orderByChild("creadoPor")
       .equalTo(this.user.email)
@@ -123,11 +127,16 @@ conveniosPar = []
 
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.spinertablapostulaciones = false
 
         if (this.tablaSolicitudesCarrera.nativeElement.classList.contains('collapsed-box')) {
           this.panelSuperiorButton.nativeElement.click()
         }
-      }).catch((error) => console.log(`${error}`))
+      }).catch((error) => {
+        console.log(`${error}`)
+        this.spinertablapostulaciones = false
+
+      })
   }
 
   consultarProgramas() {
@@ -147,23 +156,33 @@ conveniosPar = []
       }).catch((error) => console.log(`${error}`))
   }
 
-  consultaDatosPar(){
+  consultaDatosPar() {
     return this.db.ref('/paresExternos/')
       .orderByChild("correo")
       .equalTo(this.user.email)
       .once('value')
 
       .then(snapParExt => {
-        snapParExt.forEach(par=>{
+        
+        snapParExt.forEach(par => {
           this.datosParExt = par.val()
+          this.universidadProcedencia = this.datosParExt.institucion
           for (const conv in this.datosParExt.convenio) {
             if (this.datosParExt.convenio.hasOwnProperty(conv)) {
               const element = this.datosParExt.convenio[conv];
-              this.conveniosPar.push(conv)
+
+              this.db.ref(`/convenios/${conv}`).once('value').then(snapConv => {
+
+                if (snapConv.val()['Estado'] == 'Activo') {
+                  this.conveniosPar.push(conv)
+
+                }
+              })
+
             }
           }
         })
-      }).catch(error=>{
+      }).catch(error => {
         console.log(error)
       })
   }
@@ -206,110 +225,114 @@ conveniosPar = []
 
     if (this.validarDatosFormlario()) {
 
-      if (
-        this.fileInput1.nativeElement.files && this.fileInput1.nativeElement.files.length > 0 &&
-        this.fileInput2.nativeElement.files && this.fileInput2.nativeElement.files.length > 0 &&
-        this.fileInput3.nativeElement.files && this.fileInput3.nativeElement.files.length > 0
-      ) {
-        swal({
-          title: 'Cargando',
-          html: '',
-          onOpen: () => {
-            swal.showLoading()
+      swal({
+        title: 'Cargando',
+        html: '',
+        onOpen: () => {
+          swal.showLoading()
 
+        }
+      })
+      var ref = this.db.ref('/postulaciones/').push()
+
+      this.solicitud['fechaCreado'] = moment().format('DD/MM/YYYY HH:mm')
+        this.solicitud['fechaActualizado'] = moment().format('DD/MM/YYYY HH:mm')
+
+
+        return ref.set(this.solicitud).then(() => {
+          this.consultaDatosTabla()
+
+          if (this.solicitud['Correo electrónico'] != '') {
+            let notificationInfo = 'Solicitud de movilidad entrante creada por un par externo'
+            this._mailServiceService
+              .crearNotification(environment.mails.dirDRI, notificationInfo)
+              .subscribe((responseData) => {
+                console.log(responseData)
+              }, error => { console.log(error) })
+
+
+            var body = 'cuerpo del correo de solicitud de par externo'
+            var correos = `${this.solicitud['Correo electrónico']},${environment.mails.dirDRI}`
+            return this.enviarCorreo(correos, "Solicitud de movilidad entrante creada por un par externo", body)
+              .subscribe((responseData) => {
+                console.log(responseData)
+
+                if (responseData) {
+                  swal(
+                    'Solicitud creada correctamente',
+                    '',
+                    'success'
+                  )
+                } else {
+                  swal(
+                    'Solicitud creada correctamente',
+                    '',
+                    'success'
+                  )
+                }
+
+              }, error => {
+
+                console.log(error)
+              })
+
+          } else {
+
+            return
           }
-        })
-        var ref = this.db.ref('/postulaciones/').push()
 
-        let reader = new FileReader();
-        let file = this.fileInput1.nativeElement.files[0];
-        var storageRef = this.firebaseStorage.ref();
-        var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo1.pdf`);
-
-        var promesaFile1 = mountainsRef.put(file)
-
-        let file2 = this.fileInput2.nativeElement.files[0];
-        var storageRef = this.firebaseStorage.ref();
-        var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo2.pdf`);
-
-        var promesaFile2 = mountainsRef.put(file2)
-
-        let file3 = this.fileInput3.nativeElement.files[0];
-        var storageRef = this.firebaseStorage.ref();
-        var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo3.pdf`);
-
-        var promesaFile3 = mountainsRef.put(file3)
-
-
-        Promise.all([promesaFile1, promesaFile2, promesaFile3]).then((values) => {
-          this.solicitud['urlFile1'] = values[0].a.downloadURLs[0]
-          this.solicitud['urlFile2'] = values[1].a.downloadURLs[0]
-          this.solicitud['urlFile3'] = values[2].a.downloadURLs[0]
-
-          this.solicitud['fechaCreado'] = moment().format('DD/MM/YYYY HH:mm')
-          this.solicitud['fechaActualizado'] = moment().format('DD/MM/YYYY HH:mm')
-
-
-          return ref.set(this.solicitud).then(() => {
-            this.consultaDatosTabla()
-
-            if (this.solicitud['Correo electrónico'] != '') {
-              let notificationInfo = 'Solicitud de movilidad entrante creada por un par externo'
-              this._mailServiceService
-                .crearNotification(environment.mails.dirDRI, notificationInfo)
-                .subscribe((responseData) => {
-                  console.log(responseData)
-                }, error => { console.log(error) })
-
-
-              var body = 'cuerpo del correo de solicitud de par externo'
-              var correos = `${this.solicitud['Correo electrónico']},${environment.mails.dirDRI}`
-              return this.enviarCorreo(correos, "Solicitud de movilidad entrante creada por un par externo", body)
-                .subscribe((responseData) => {
-                  console.log(responseData)
-
-                  if (responseData) {
-                    swal(
-                      'Solicitud creada correctamente',
-                      '',
-                      'success'
-                    )
-                  } else {
-                    swal(
-                      'Solicitud creada correctamente',
-                      '',
-                      'success'
-                    )
-                  }
-
-                }, error => {
-
-                  console.log(error)
-                })
-
-            } else {
-
-              return
-            }
-
-          })
-
-        }).catch(error => {
-          swal(
-            `${error}`,
-            '',
-            'error'
-          )
-          console.log(error)
         })
 
-      } else {
-        swal(
-          `Todos los documentos son requeridos`,
-          '',
-          'error'
-        )
-      }
+      // if (
+      //   this.fileInput1.nativeElement.files && this.fileInput1.nativeElement.files.length > 0 &&
+      //   this.fileInput2.nativeElement.files && this.fileInput2.nativeElement.files.length > 0 &&
+      //   this.fileInput3.nativeElement.files && this.fileInput3.nativeElement.files.length > 0
+      // ) {
+        
+
+        // let reader = new FileReader();
+        // let file = this.fileInput1.nativeElement.files[0];
+        // var storageRef = this.firebaseStorage.ref();
+        // var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo1.pdf`);
+
+        // var promesaFile1 = mountainsRef.put(file)
+
+        // let file2 = this.fileInput2.nativeElement.files[0];
+        // var storageRef = this.firebaseStorage.ref();
+        // var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo2.pdf`);
+
+        // var promesaFile2 = mountainsRef.put(file2)
+
+        // let file3 = this.fileInput3.nativeElement.files[0];
+        // var storageRef = this.firebaseStorage.ref();
+        // var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo3.pdf`);
+
+        // var promesaFile3 = mountainsRef.put(file3)
+
+
+        // Promise.all([promesaFile1, promesaFile2, promesaFile3]).then((values) => {
+        //   this.solicitud['urlFile1'] = values[0].a.downloadURLs[0]
+        //   this.solicitud['urlFile2'] = values[1].a.downloadURLs[0]
+        //   this.solicitud['urlFile3'] = values[2].a.downloadURLs[0]
+
+          
+
+        // }).catch(error => {
+        //   swal(
+        //     `${error}`,
+        //     '',
+        //     'error'
+        //   )
+        //   console.log(error)
+        // })
+
+      // } else {
+      //   swal(
+      //     `Todos los documentos son requeridos`,
+      //     '',
+      //     'error'
+      //   )
+      // }
 
 
 
@@ -318,30 +341,15 @@ conveniosPar = []
 
   }
 
-  // onFileChange(event) {
-  //   let reader = new FileReader();
 
-  //   if (event.target.files && event.target.files.length > 0) {
-  //     let file = event.target.files[0];
-  //     console.log(file)
-  //     // reader.readAsDataURL(file);
-  //     var storageRef = this.firebaseStorage.ref();
-  //     var mountainsRef = storageRef.child(`llave/archivo1.pdf`);
-
-  //     mountainsRef.put(file).then(function (snapshot) {
-  //       console.log('Uploaded a blob or file!');
-  //     });
-
-  //   };
-
-  // }
   setsolicitud() {
     this.solicitud = {
       "AÑO": this.year,
       "NOMBRE": "Francisco Hurtado",
-      "ID_SEXO_BIOLOGICO": "francisco.hurtado@",
+      "APELLIDOS": "",
+      "ID_SEXO_BIOLOGICO": "",
       "ID_ESTADO_CIVIL": "",
-      "FECHA_NACIMIENTO": "07/12/1984",
+      "FECHA_NACIMIENTO": "",
       "Correo electrónico": "francisco.hurtado@geoprocess.com.co",
       "TIPO DE IDENTIFICACIÓN": "CEDULA",
       "NÚMERO DE IDENTIFICACIÓN": "123456789",
@@ -362,7 +370,7 @@ conveniosPar = []
       "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "UNIVERSIDAD DEL VALLE",
       "PROGRAMA ACADÉMICO DE ORIGEN": "",
       "CÓDIGO DEL PROGRAMA": "",
-      "PROGRAMA ACADÉMICO DE DESTINO (1)": "BIOLOGÍA",
+      "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
       "PROGRAMA ACADÉMICO DE DESTINO (2)": "",
       "FINANCIAMIENTO": "NO APLICA",
       "VALOR_FINANCIACION_NACIONAL": "",
@@ -388,13 +396,6 @@ conveniosPar = []
         'error'
       )
       return false
-    } else if (this.solicitud["FECHA_NACIMIENTO"] == '') {
-      swal(
-        'El campo fecha de nacimiento no puede estar vacio',
-        '',
-        'error'
-      )
-      return false
     }
     else if (this.solicitud["Correo electrónico"] == '') {
       swal(
@@ -404,38 +405,8 @@ conveniosPar = []
       )
       return false
     }
-    else if (this.solicitud["IDENTIFICACIÓN"] == '') {
-      swal(
-        'El campo identificación no puede estar vacio',
-        '',
-        'error'
-      )
-      return false
-    }
-    else if (this.solicitud["NÚMERO DE IDENTIFICACIÓN"] == '') {
-      swal(
-        'El campo número de identificación no puede estar vacio',
-        '',
-        'error'
-      )
-      return false
-    }
-    else if (this.solicitud["PROGRAMA ACADÉMICO DE DESTINO (1)"] == '') {
-      swal(
-        'El campo programa académico de destino no puede estar vacio',
-        '',
-        'error'
-      )
-      return false
-    }
-    else if (this.solicitud["TIPO DE PROGRAMA - CONVOCATORIA"] == '') {
-      swal(
-        'El campo tipo de programa - convocatoria  no puede estar vacio',
-        '',
-        'error'
-      )
-      return false
-    }
+   
+   
     else {
       return true
 
