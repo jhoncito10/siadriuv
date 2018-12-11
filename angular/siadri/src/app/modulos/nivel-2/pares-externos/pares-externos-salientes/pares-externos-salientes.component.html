@@ -23,6 +23,12 @@
       <div class="example-container mat-elevation-z8">
 
         <mat-table [dataSource]="dataSource" matSort>
+          
+          <!-- Name Column -->
+          <ng-container matColumnDef="key">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Código </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.key}} </mat-cell>
+          </ng-container>
 
           <!-- ID Column -->
           <ng-container matColumnDef="correo">
@@ -31,16 +37,11 @@
           </ng-container>
 
           <!-- Progress Column -->
-          <ng-container matColumnDef="ano">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Año </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.ano}} </mat-cell>
+          <ng-container matColumnDef="fechaCreado">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha creado </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.fechaCreado}} </mat-cell>
           </ng-container>
 
-          <!-- Name Column -->
-          <ng-container matColumnDef="destino">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Programa destino </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.destino}} </mat-cell>
-          </ng-container>
 
           <!-- Color Column -->
           <ng-container matColumnDef="nombre">
@@ -150,10 +151,10 @@
           </div>
 
           <div class="form-group">
-            <label for="NOMBRE" class="col-md-5 control-label">Surname (s)/Apellido (s)</label>
+            <label for="APELLIDO" class="col-md-5 control-label">Surname (s)/Apellido (s)</label>
 
             <div class="col-md-7">
-              <input [(ngModel)]='solicitud["APELLIDOS"]' type="text" class="form-control" id="NOMBRE" placeholder="nombre"
+              <input [(ngModel)]='solicitud["APELLIDOS"]' type="text" class="form-control" id="APELLIDO" placeholder="apellidos"
                 [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
             </div>
           </div>
@@ -183,7 +184,7 @@
                 placeholder="Email" [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
             </div>
           </div>
-          
+
           <div class="form-group">
             <label for="nivelacademico" class="col-md-5 control-label">Academic Level/Nivel de formación</label>
             <div class="col-md-7">
@@ -206,21 +207,32 @@
           </div>
 
           <div class="form-group">
-              <label for="codConvenio" class="col-md-5 control-label">Convenio</label>
-              <div class="col-md-7">
-                <select [(ngModel)]='solicitud["CODIGO_CONVENIO"]' 
-                [attr.disabled]="estadoComponenteInferior==2 ? '' : null"
-                  id="codConvenio" class="form-control col-md-7">
-                  <option *ngFor="let conv of conveniosPar ; index as i;" [ngValue]="conv"> {{conv}}</option>
-  
-  
-  
-                </select>
-              </div>
-  
+            <label for="codConvenio" class="col-md-5 control-label">Convenio</label>
+            <div class="col-md-7">
+              <select [(ngModel)]='solicitud["CODIGO_CONVENIO"]' [attr.disabled]="estadoComponenteInferior==2 ? '' : null"
+                id="codConvenio" class="form-control col-md-7">
+                <option *ngFor="let conv of conveniosPar ; index as i;" [ngValue]="conv"> {{conv}}</option>
+
+
+
+              </select>
             </div>
 
+          </div>
 
+          <div class="form-group">
+            <label for="campus" class="col-md-5 control-label">Campus</label>
+            <div class="col-md-7">
+              <select [(ngModel)]='solicitud["CAMPUS"]' [attr.disabled]="estadoComponenteInferior==2 ? '' : null" id="campus"
+                class="form-control col-md-7">
+                <option *ngFor="let camp of campus ; index as i;" [ngValue]="camp"> {{camp}}</option>
+
+
+
+              </select>
+            </div>
+
+          </div>
 
 
 

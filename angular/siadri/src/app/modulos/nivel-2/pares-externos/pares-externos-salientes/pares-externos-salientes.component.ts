@@ -29,7 +29,7 @@ export class ParesExternosSalientesComponent implements OnInit {
 
   programas = []
 
-  displayedColumns = ['correo', 'ano', 'destino', 'nombre', 'estado'];
+  displayedColumns = ["key", 'correo', 'fechaCreado', 'nombre', 'estado'];
   dataSource: MatTableDataSource<any>;
 
   universidadProcedencia = ''
@@ -45,7 +45,8 @@ export class ParesExternosSalientesComponent implements OnInit {
 
   spinertablapostulaciones = false
   conveniosPar = []
-   convenios = this.localSt.retrieve('convenios');
+  convenios = this.localSt.retrieve('convenios');
+  campus = []
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -76,11 +77,21 @@ export class ParesExternosSalientesComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Or you can save a line of code by using an inline function
+    // and on()'s return value.
+    var ref = this.db.ref('/postulaciones/')
+    var _this = this
+    var onValueChange = ref.on('child_changed', function (dataSnapshot) {
+      _this.consultaDatosTabla()
+    });
+    // Sometime later...
+    ref.off('value', onValueChange);
     this.consultaDatosTabla()
+
     this.consultarProgramas()
-    this.consultaDatosPar().then(res => {
-      console.log('78', this.datosParExt)
-    })
+    this.consultaDatosPar()
+    this.consultaCampus()
+
   }
   consultaDatosTabla() {
     this.estadoComponenteInferior = 0
@@ -99,17 +110,19 @@ export class ParesExternosSalientesComponent implements OnInit {
           if (dato['TIPO DE MOVILIDAD'] == 'ENTRANTE') {
             this.solicitudes[solicitudSnap.key] = dato
             let correo = dato['Correo electrónico'] || ''
-            let ano = dato['AÑO'] || ''
+            let fechaCreado = dato['fechaCreado'] || ''
             let nombre = dato['NOMBRE'] || ''
+            let apellidos = dato['APELLIDOS'] || ''
+            let nombreCompleto = `${nombre} ${apellidos}`
             let estado = dato.estado || 'En espera de aprobación DRI'
             let destino = dato['PROGRAMA ACADÉMICO DE DESTINO (1)'] || 'Ninguno'
             let comentarioDenegacion = dato['comentarioDenegacion'] || ''
 
             this.dataTablaSolicitudes.push({
               correo: correo,
-              ano: ano,
+              fechaCreado: fechaCreado,
               destino: destino,
-              nombre: nombre,
+              nombre: nombreCompleto,
               key: solicitudSnap.key,
               estado: estado,
               comentarioDenegacion: comentarioDenegacion
@@ -156,6 +169,20 @@ export class ParesExternosSalientesComponent implements OnInit {
       }).catch((error) => console.log(`${error}`))
   }
 
+  consultaCampus() {
+    return this.db.ref('/campus/')
+
+      .once('value')
+
+      .then(snapCampus => {
+        this.campus = snapCampus.val()
+        // snapCampus.forEach(campus => {
+        //   this.campus.push ( campus.val())         
+        // })
+      }).catch(error => {
+        console.log(error)
+      })
+  }
   consultaDatosPar() {
     return this.db.ref('/paresExternos/')
       .orderByChild("correo")
@@ -163,7 +190,7 @@ export class ParesExternosSalientesComponent implements OnInit {
       .once('value')
 
       .then(snapParExt => {
-        
+
         snapParExt.forEach(par => {
           this.datosParExt = par.val()
           this.universidadProcedencia = this.datosParExt.institucion
@@ -186,7 +213,6 @@ export class ParesExternosSalientesComponent implements OnInit {
         console.log(error)
       })
   }
-
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
@@ -236,95 +262,107 @@ export class ParesExternosSalientesComponent implements OnInit {
       var ref = this.db.ref('/postulaciones/').push()
 
       this.solicitud['fechaCreado'] = moment().format('DD/MM/YYYY HH:mm')
-        this.solicitud['fechaActualizado'] = moment().format('DD/MM/YYYY HH:mm')
+      this.solicitud['fechaActualizado'] = moment().format('DD/MM/YYYY HH:mm')
 
 
-        return ref.set(this.solicitud).then(() => {
-          this.consultaDatosTabla()
+      return ref.set(this.solicitud).then(() => {
+        this.consultaDatosTabla()
+        swal(
+          'Solicitud creada correctamente',
+          '',
+          'success'
+        )
+        if (this.solicitud['Correo electrónico'] != '') {
 
-          if (this.solicitud['Correo electrónico'] != '') {
-            let notificationInfo = 'Solicitud de movilidad entrante creada por un par externo'
-            this._mailServiceService
-              .crearNotification(environment.mails.dirDRI, notificationInfo)
-              .subscribe((responseData) => {
-                console.log(responseData)
-              }, error => { console.log(error) })
+          /* seccion de envio de notificaciones*/
+
+          let notificationInfonivel3 = 'Solicitud de movilidad entrante creada por un par externo'
+
+          this._mailServiceService
+            .createNotificationNivel3(notificationInfonivel3)
+            .subscribe((responseData) => {
+              console.log(responseData)
+            }, error => { console.log(error) })
 
 
-            var body = 'cuerpo del correo de solicitud de par externo'
-            var correos = `${this.solicitud['Correo electrónico']},${environment.mails.dirDRI}`
-            return this.enviarCorreo(correos, "Solicitud de movilidad entrante creada por un par externo", body)
-              .subscribe((responseData) => {
-                console.log(responseData)
+          /* seccion de envio de correos*/
+          var bodyNivel3 = 'cuerpo del correo de para el DRI nivel 3 creación de postulacion'
+          var correos = `${this.solicitud['Correo electrónico']}`
+          this._mailServiceService
+            .sendMailNivel3("asunto para el DRI nivel 3 creación de postulacion", bodyNivel3)
+            .subscribe((responseData) => {
+              console.log(responseData)
+            }, error => {
+              console.log(error)
+            })
 
-                if (responseData) {
-                  swal(
-                    'Solicitud creada correctamente',
-                    '',
-                    'success'
-                  )
-                } else {
-                  swal(
-                    'Solicitud creada correctamente',
-                    '',
-                    'success'
-                  )
-                }
+          var bodyPar = 'cuerpo del correo de para el Par de la creacion de postulacion'
+          var correos = `${this.solicitud['creadoPor']}`
+          this.enviarCorreo(correos, "asunto para el Par de la creacion de postulación", body)
+            .subscribe((responseData) => {
+              console.log(responseData)
+            }, error => {
+              console.log(error)
+            })
 
-              }, error => {
+          var body = 'cuerpo del correo de para el estudiante de la creacion de postulación'
+          var correos = `${this.solicitud['Correo electrónico']}`
+          return this.enviarCorreo(correos, "asunto para el estudiante de la creacion de postulación", body)
+            .subscribe((responseData) => {
+              console.log(responseData)
+            }, error => {
+              console.log(error)
+            })
 
-                console.log(error)
-              })
+        } else {
 
-          } else {
+          return
+        }
 
-            return
-          }
-
-        })
+      })
 
       // if (
       //   this.fileInput1.nativeElement.files && this.fileInput1.nativeElement.files.length > 0 &&
       //   this.fileInput2.nativeElement.files && this.fileInput2.nativeElement.files.length > 0 &&
       //   this.fileInput3.nativeElement.files && this.fileInput3.nativeElement.files.length > 0
       // ) {
-        
-
-        // let reader = new FileReader();
-        // let file = this.fileInput1.nativeElement.files[0];
-        // var storageRef = this.firebaseStorage.ref();
-        // var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo1.pdf`);
-
-        // var promesaFile1 = mountainsRef.put(file)
-
-        // let file2 = this.fileInput2.nativeElement.files[0];
-        // var storageRef = this.firebaseStorage.ref();
-        // var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo2.pdf`);
-
-        // var promesaFile2 = mountainsRef.put(file2)
-
-        // let file3 = this.fileInput3.nativeElement.files[0];
-        // var storageRef = this.firebaseStorage.ref();
-        // var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo3.pdf`);
-
-        // var promesaFile3 = mountainsRef.put(file3)
 
 
-        // Promise.all([promesaFile1, promesaFile2, promesaFile3]).then((values) => {
-        //   this.solicitud['urlFile1'] = values[0].a.downloadURLs[0]
-        //   this.solicitud['urlFile2'] = values[1].a.downloadURLs[0]
-        //   this.solicitud['urlFile3'] = values[2].a.downloadURLs[0]
+      // let reader = new FileReader();
+      // let file = this.fileInput1.nativeElement.files[0];
+      // var storageRef = this.firebaseStorage.ref();
+      // var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo1.pdf`);
 
-          
+      // var promesaFile1 = mountainsRef.put(file)
 
-        // }).catch(error => {
-        //   swal(
-        //     `${error}`,
-        //     '',
-        //     'error'
-        //   )
-        //   console.log(error)
-        // })
+      // let file2 = this.fileInput2.nativeElement.files[0];
+      // var storageRef = this.firebaseStorage.ref();
+      // var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo2.pdf`);
+
+      // var promesaFile2 = mountainsRef.put(file2)
+
+      // let file3 = this.fileInput3.nativeElement.files[0];
+      // var storageRef = this.firebaseStorage.ref();
+      // var mountainsRef = storageRef.child(`postulaciones/${ref.key}/archivo3.pdf`);
+
+      // var promesaFile3 = mountainsRef.put(file3)
+
+
+      // Promise.all([promesaFile1, promesaFile2, promesaFile3]).then((values) => {
+      //   this.solicitud['urlFile1'] = values[0].a.downloadURLs[0]
+      //   this.solicitud['urlFile2'] = values[1].a.downloadURLs[0]
+      //   this.solicitud['urlFile3'] = values[2].a.downloadURLs[0]
+
+
+
+      // }).catch(error => {
+      //   swal(
+      //     `${error}`,
+      //     '',
+      //     'error'
+      //   )
+      //   console.log(error)
+      // })
 
       // } else {
       //   swal(
@@ -351,16 +389,16 @@ export class ParesExternosSalientesComponent implements OnInit {
       "ID_ESTADO_CIVIL": "",
       "FECHA_NACIMIENTO": "",
       "Correo electrónico": "francisco.hurtado@geoprocess.com.co",
-      "TIPO DE IDENTIFICACIÓN": "CEDULA",
-      "NÚMERO DE IDENTIFICACIÓN": "123456789",
+      "TIPO DE IDENTIFICACIÓN": "",
+      "NÚMERO DE IDENTIFICACIÓN": "",
       "CÓDIGO DEL ESTUDIANTE EN UNIVALLE": "",
-      "PERIODO ACADÉMICO": 0,
+      "PERIODO ACADÉMICO": "",
       "TIPO DE MOVILIDAD": "ENTRANTE",
       "TIPO DE CONVENIO": "",
       "CODIGO_CONVENIO": "",
       "MODALIDAD": "",
       "NUM_DIAS_MOVILIDAD": "",
-      "TIPO DE PROGRAMA - CONVOCATORIA": "BILATERAL",
+      "TIPO DE PROGRAMA - CONVOCATORIA": "",
       "NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN": "",
       "NIVEL DE FORMACIÓN DE LA MOVILIDAD": "",
       "PAÍS DE ORIGEN": "",
@@ -372,18 +410,23 @@ export class ParesExternosSalientesComponent implements OnInit {
       "CÓDIGO DEL PROGRAMA": "",
       "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
       "PROGRAMA ACADÉMICO DE DESTINO (2)": "",
-      "FINANCIAMIENTO": "NO APLICA",
+      "FINANCIAMIENTO": "",
       "VALOR_FINANCIACION_NACIONAL": "",
       "ID_FUENTE_INTERNACIONAL": "",
       "ID_PAIS_FINANCIADOR": "",
       "VALOR_FINANCIACION_INTERNAC": "",
+      "CAMPUS": "Meléndez",
       "urlFile1": "",
       "urlFile2": "",
       "urlFile3": "",
       "creadoPor": this.user.email,
       "fechaCreado": "",
       "fechaActualizado": "",
-      "estado": "En espera de aprobación DRI"
+      "estado": "En espera de aprobación DRI",
+      "comentariosDRI":"",
+      "comentariosDirector":"",
+      "comentariosEstudiante":"",
+      "comentariosPar":""
     }
     console.log(this.solicitud)
   }
@@ -405,8 +448,8 @@ export class ParesExternosSalientesComponent implements OnInit {
       )
       return false
     }
-   
-   
+
+
     else {
       return true
 

@@ -24,12 +24,14 @@ export class AdminPostEntrantesComponent implements OnInit {
   //datos de la tabla
   firebaseStorage: any
   dataTablaSolicitudes = [];
-  displayedColumns = ['correo', 'ano', 'destino', 'nombre', 'estado'];
+  displayedColumns = ['key','correo', 'ano', 'destino', 'nombre', 'estado'];
   dataSource: MatTableDataSource<any>;
   universidadProcedencia = 'BENEMÉRITA UNIVERSIDAD AUTÓNOMA DE PUEBLA'
   estadoComponenteInferior = 0 //0 = ninguno; 1 =  nueva solicitud; 2 = En espera de aprobación DRI; 3 = Aprobada por dirección de programa;
   year
   rowSelected
+  spinertablapostulaciones = false
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('panelSuperior') tablaSolicitudesCarrera: ElementRef;
@@ -56,12 +58,20 @@ export class AdminPostEntrantesComponent implements OnInit {
   }
 
   ngOnInit() {
+    var ref = this.db.ref('/postulaciones/')
+    var _this = this
+    var onValueChange = ref.on('child_changed', function (dataSnapshot) {
+      _this.consultaDatosTabla()
+    });
+    // Sometime later...
+    ref.off('value', onValueChange);
     this.consultaDatosTabla()
 
   }
 
   consultaDatosTabla() {
     this.estadoComponenteInferior = 0
+    this.spinertablapostulaciones = true
 
     this.db.ref('/postulaciones/')
       // .orderByChild("estado")
@@ -75,8 +85,10 @@ export class AdminPostEntrantesComponent implements OnInit {
           if (dato.hasOwnProperty('creadoPor')) {
             this.solicitudes[solicitudSnap.key] = dato
             let correo = dato['Correo electrónico'] || ''
-            let ano = dato['AÑO'] || ''
+            let ano = dato['fechaActualizado'] || ''
             let nombre = dato['NOMBRE'] || ''
+            let apellidos = dato['APELLIDOS'] || ''
+            let nombreCompleto = `${nombre} ${apellidos}`
             let estado = dato.estado || 'Sin estado'
             let destino = dato['PROGRAMA ACADÉMICO DE DESTINO (1)'] || 'Ninguno'
             let comentarioDenegacion = dato['comentarioDenegacion'] || ''
@@ -85,7 +97,7 @@ export class AdminPostEntrantesComponent implements OnInit {
               correo: correo,
               ano: ano,
               destino: destino,
-              nombre: nombre,
+              nombre: nombreCompleto,
               key: solicitudSnap.key,
               estado: estado,
               comentarioDenegacion: comentarioDenegacion
@@ -98,11 +110,17 @@ export class AdminPostEntrantesComponent implements OnInit {
 
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.spinertablapostulaciones = false
 
         if (this.tablaSolicitudesCarrera.nativeElement.classList.contains('collapsed-box')) {
           this.panelSuperiorButton.nativeElement.click()
         }
-      }).catch((error) => console.log(`${error}`))
+      })
+      .catch((error) => {
+        console.log(`${error}`)
+        this.spinertablapostulaciones = false
+
+      })
   }
 
   applyFilter(filterValue: string) {
@@ -124,7 +142,10 @@ export class AdminPostEntrantesComponent implements OnInit {
         this.estadoComponenteInferior = 3
         break;
         case 'Denegada por dirección de programa':
-        this.estadoComponenteInferior = 3
+        this.estadoComponenteInferior = 2
+        break;
+        case 'Denegada por DRI UV':
+        this.estadoComponenteInferior = 2
         break;
       default:
         this.estadoComponenteInferior = 0
@@ -153,6 +174,8 @@ export class AdminPostEntrantesComponent implements OnInit {
     promise
       .then(res => {
         if (this.solicitud['Correo electrónico'] != '') {
+
+
           var body = 'cuerpo del correo de aceptacion'
           var correos = `${this.solicitud['Correo electrónico']}, ${environment.mails.dirDRI}`
           this._mailServiceService.sendMailprograma
@@ -245,10 +268,11 @@ export class AdminPostEntrantesComponent implements OnInit {
       showLoaderOnConfirm: true,
       preConfirm: (mensaje) => {
         mensajeDenegacion = mensaje
-
+        this.solicitud.comentariosDRI = this.solicitud.comentariosDRI || ''
         return promise.update({
           estado: 'Denegada por DRI UV',
-          comentarioDenegacion: `${mensaje}`,
+          comentariosDRI: `${this.solicitud.comentariosDRI}.
+                            ${mensaje}`,
           actualizadoPor: this.user.email,
           fechaActualizado: moment().format('DD/MM/YYYY HH:mm')
         })
@@ -366,16 +390,18 @@ export class AdminPostEntrantesComponent implements OnInit {
   }
   setsolicitud() {
     this.solicitud = {
-      "NOMBRE": "",
+      "AÑO": this.year,
+      "NOMBRE": "Francisco Hurtado",
+      "APELLIDOS": "",
       "ID_SEXO_BIOLOGICO": "",
       "ID_ESTADO_CIVIL": "",
       "FECHA_NACIMIENTO": "",
-      "Correo electrónico": "",
+      "Correo electrónico": "francisco.hurtado@geoprocess.com.co",
       "TIPO DE IDENTIFICACIÓN": "",
       "NÚMERO DE IDENTIFICACIÓN": "",
       "CÓDIGO DEL ESTUDIANTE EN UNIVALLE": "",
-      "PERIODO ACADÉMICO": 0,
-      "TIPO DE MOVILIDAD": "",
+      "PERIODO ACADÉMICO": "",
+      "TIPO DE MOVILIDAD": "ENTRANTE",
       "TIPO DE CONVENIO": "",
       "CODIGO_CONVENIO": "",
       "MODALIDAD": "",
@@ -384,25 +410,31 @@ export class AdminPostEntrantesComponent implements OnInit {
       "NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN": "",
       "NIVEL DE FORMACIÓN DE LA MOVILIDAD": "",
       "PAÍS DE ORIGEN": "",
-      "UNIVERSIDAD DE PROCEDENCIA": '',
+      "UNIVERSIDAD DE PROCEDENCIA": "",
       "CIUDAD-SEDE": "",
       "PAÍS DE DESTINO": "",
-      "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "",
+      "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "UNIVERSIDAD DEL VALLE",
       "PROGRAMA ACADÉMICO DE ORIGEN": "",
       "CÓDIGO DEL PROGRAMA": "",
       "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
       "PROGRAMA ACADÉMICO DE DESTINO (2)": "",
-      "FINANCIAMIENTO": "NO APLICA",
+      "FINANCIAMIENTO": "",
       "VALOR_FINANCIACION_NACIONAL": "",
       "ID_FUENTE_INTERNACIONAL": "",
       "ID_PAIS_FINANCIADOR": "",
       "VALOR_FINANCIACION_INTERNAC": "",
+      "CAMPUS": "",
       "urlFile1": "",
       "urlFile2": "",
       "urlFile3": "",
+      "creadoPor": this.user.email,
       "fechaCreado": "",
       "fechaActualizado": "",
-      "estado": "En espera de aprobación DRI"
+      "estado": "",
+      "comentariosDRI":"",
+      "comentariosDirector":"",
+      "comentariosEstudiante":"",
+      "comentariosPar":""
     }
   }
 
