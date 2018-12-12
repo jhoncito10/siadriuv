@@ -22,6 +22,28 @@ export class ConveniosService {
 
     });
   }
-  
+
+
+  getCollection(item) {
+    return this._angularfire.list(item);
+  }
+
+
+
+
+  getProgramas() {
+    return this._angularfire.list('/programasAcademicos');
+  }
+
+
+  getnodeGeneral(collection, node, value) {
+    return this._angularfire.list(collection, {
+      query: {
+        orderByChild: node,
+        equalTo: value
+      }
+    });
+  }
+
 
 }

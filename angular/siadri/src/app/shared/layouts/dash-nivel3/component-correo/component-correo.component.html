@@ -1,49 +1,336 @@
+<!-- Main content -->
+<section class="content">
 
- <div class="modal-content">
-  <div class="modal-header">
-      <h4 class="modal-title"><i class="fa fa-envelope-o"></i> Redacta un nuevo mensaje</h4>
-  </div>
-  <!-- (ngSubmit)="onSubmit($event)" -->
-  <form #loginForm="ngForm" > 
-      <div class="modal-body">
-          <div class="form-group">
-              <div class="input-group">
-                  <span class="input-group-addon">Para:</span>
-                  <input [(ngModel)]="email" #ctrl="ngModel" name="email" type="email" class="form-control" placeholder="Email " required>
-              </div>
-          </div>
-          <div class="form-group">
-              <div class="input-group">
-                  <span class="input-group-addon">CC:</span>
-                  <input [(ngModel)]="cc" #ctrl="ngModel" name="cc" type="email" class="form-control" placeholder="Email CC" >
-              </div>
-          </div>
-          <div class="form-group">
-              <div class="input-group">
-                  <span class="input-group-addon">BCC:</span>
-                  <input [(ngModel)]="cco" #ctrl="ngModel" name="cco" type="email" class="form-control" placeholder="Email BCC" >
-              </div>
-          </div>
-          <div class="form-group">
-            <div class="input-group">
-                <span class="input-group-addon">Asunto:</span>
-                <input [(ngModel)]="asunto" #ctrl="ngModel" name="asunto" type="text" class="form-control" placeholder="Asunto" required>
+    <!-- Componente central de busqueda -->
+    <div class="row">
+        <div class="col-md-12 col-lg-12">
+            <div class="box box-danger">
+                <div class="box-header">
+                    <i class="fa fa-audio-description"></i>
+
+                    <h3 class="box-title">COMUNICACION MASIVA</h3>
+
+                </div>
+
+                <div class="box-body">
+                    <div class="box-header">
+                        <i class="fa fa-flask"></i>
+
+                        <h3 class="box-title">FILTROS</h3>
+                    </div>
+
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <p>
+                                        <mat-checkbox [formControl]="formCheckBox.todos" (change)="controlChecks('todos')">Todos</mat-checkbox>
+                                    </p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p>
+                                        <mat-checkbox [formControl]="formCheckBox.admin">Administradores</mat-checkbox>
+                                    </p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p>
+                                        <mat-checkbox [formControl]="formCheckBox.nivel3">Nivel 3 (DRI)</mat-checkbox>
+                                    </p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p>
+                                        <mat-checkbox [formControl]="formCheckBox.nivel2" (change)="controlChecks('nivel2')">Nivel 2</mat-checkbox>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-3">
+                                    <p>
+                                        <mat-checkbox [formControl]="formCheckBox.directores" (change)="controlChecks('directores')"> Directores</mat-checkbox>
+                                    </p>
+                                    <p>
+                                        <mat-form-field>
+                                            <mat-select placeholder="Todos los directores" [formControl]="selectDir" multiple>
+                                                <mat-option *ngFor="let item of facultades" [value]="item">{{item}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p>
+                                        <mat-checkbox [formControl]="formCheckBox.pares">Pares Externos</mat-checkbox>
+                                    </p>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <p>
+                                        <mat-checkbox [formControl]="formCheckBox.estudiantesAct">Solicitantes Activos</mat-checkbox>
+                                    </p>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <p>
+                                        <mat-checkbox [formControl]="formCheckBox.estudiantesInac">Solicitantes Inactivos</mat-checkbox>
+                                    </p>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <button (click)="aplicarFiltros()">dfdf</button>
+
+                    </div>
+
+                    <div class="row" style="margin-top:30px;">
+                        <div class="col-md-12">
+                            <ul class="nav nav-tabs">
+                                <li>
+                                    <a class="tablas" data-toggle="tab" href="#home">
+                                        CORREO</a>
+                                </li>
+                                <li>
+                                    <a class="tablas" data-toggle="tab" href="#menu1">
+                                        NOTIFICACION</a>
+                                </li>
+                                <li>
+                                    <a class="tablas" data-toggle="tab" href="#menu2">
+                                        HISTORIAL</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div id="home" class="tab-pane fade in active">
+
+                                    <div class="box box-danger">
+                                        <div class="box-header">
+                                            <i class="fa fa-flask"></i>
+
+                                            <h3 class="box-title">CORREO</h3>
+                                        </div>
+
+                                        <div class="box-body">
+                                            <form id="form-work" class="" name="form-work" action="#">
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label" for="asunt">
+                                                                <strong>Asunto</strong>
+                                                            </label>
+                                                            <input class="form-control" name="asunt" [(ngModel)]="correo.asunto" id="" type="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label" for="mensaje">
+                                                                <strong>Mensaje</strong>
+                                                            </label>
+                                                            <app-ngx-editor name="mensaje" [placeholder]="'Enter text here...'" [spellcheck]="true" [(ngModel)]="correo.mensaje"></app-ngx-editor>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            <button type="button" style="float: right;" (click)="enviarCorreoNotificacion('correo')" class="btn2 btn-danger btn-lg danger">Enviar</button>
+                                                        </div>
+
+                                                    </div>
+
+                                                </fieldset>
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div id="menu1" class="tab-pane fade">
+
+                                    <div class="box box-danger">
+                                        <div class="box-header">
+                                            <i class="fa fa-flask"></i>
+
+                                            <h3 class="box-title">NUEVA NOTIFICACION</h3>
+                                        </div>
+
+                                        <div class="box-body">
+                                            <form id="form-work" class="" name="form-work" action="#">
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label" for="just">
+                                                                <strong>Notificacion (max {{caracteres}} caracteres)</strong>
+                                                            </label>
+                                                            <textarea class="form-control" name="just" id="" maxlength="140" [(ngModel)]="notificacion" rows="5" (input)="cambiarNumeroCaracteres($event.target.value)"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-12">
+                                                            <button type="button" style="float: right;" (click)="enviarCorreoNotificacion('notificacion')" class="btn2 btn-danger btn-lg danger">Enviar</button>
+                                                        </div>
+
+                                                    </div>
+
+                                                </fieldset>
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div id="menu2" class="tab-pane fade">
+                                    <div class="box-header">
+                                        <i class="fa fa-flask"></i>
+
+                                        <h3 class="box-title">HISTORIAL</h3>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="box-body">
+                                            <div *ngIf="dataSource.data.length == 0">
+                                                <h3>AUN NO SE HAN ENVIADO CORREOS O NOTIFICACIONES</h3>
+                                            </div>
+
+                                            <div class="example-container mat-elevation-z8" *ngIf="dataSource.data.length != 0">
+                                                <div class="example-header">
+                                                    <mat-form-field>
+                                                        <input style="outline: none;" matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar Personal">
+                                                    </mat-form-field>
+                                                </div>
+
+                                                <mat-table #tableComunicacion #sort="matSort" [dataSource]="dataSource" matSort>
+
+
+                                                    <ng-container matColumnDef="asunto">
+                                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Asunto </mat-header-cell>
+                                                        <mat-cell *matCellDef="let element"> {{element.asunto}} </mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="tipo">
+                                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </mat-header-cell>
+                                                        <mat-cell *matCellDef="let element"> {{element.type}} </mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="email">
+                                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Email remitente </mat-header-cell>
+                                                        <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="fecha">
+                                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </mat-header-cell>
+                                                        <mat-cell *matCellDef="let element"> {{element.fecha.split('T')[0]}} </mat-cell>
+                                                    </ng-container>
+
+                                                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                                    <mat-row *matRowDef="let row; columns: displayedColumns;" style="cursor: pointer;" (click)="cambiarDataHistorial(row)" data-toggle="modal"
+                                                        data-target="#modal1"></mat-row>
+                                                </mat-table>
+
+                                                <mat-paginator #paginator="matPaginator" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
+                                                </mat-paginator>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-          <div class="form-group">
-              <textarea [(ngModel)]="mensaje" #ctrl="ngModel" name="message" id="email_message" class="form-control" placeholder="Message" style="height: 120px;" required></textarea>
-          </div>
-          
-
-      </div>
-      <div class="modal-footer clearfix">
+    </div>
 
 
-          <button [disabled]="!loginForm.form.valid" type="submit" class="btn btn-primary pull-left" (click)="enviarCorreo()"><i class="fa fa-envelope"></i> Enviar message</button>
-      </div>
-  </form>
-</div> 
+</section>
 
 
 
+<!-- MODAL QUE PERMITE LA EDICION DE LOS DATOS DEL LABORATORIO -->
+<div *ngIf="historialsel" class="modal fade" id="modal1" role="dialog">
+    <div [ngClass]="{'modal-dialog':true, 'modal-md':true}">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="box box-danger">
+                    <div class="box-header text-center">
+                        <i class="fa fa-address-card-o"></i>
+
+                        <h3 class="box-title">Informacion de {{historialsel.type}}</h3>
+                    </div>
+
+                    <div class="box-body">
+
+                        <form>
+                            <fieldset>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label class="control-label" for="estadoserv">
+                                            <strong>Fecha:</strong> {{historialsel.fecha.split('T')[0]}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label class="control-label" for="nombreprub">
+                                            <strong>Asunto :</strong> {{historialsel.asunto}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label class="control-label" for="estadoserv">
+                                            <strong>Email remitente:</strong> {{historialsel.email}}</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label class="control-label" for="estadoserv">
+                                            <strong>Mensaje:</strong>
+                                            <br>
+                                            <div id="mensajeHtml"></div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-12 text-center">
+                                        <h3>
+                                            <strong>Filtros usados</strong>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div *ngFor="let item of historialsel.filtro" class="form-group">
+                                    <div class="col-md-12">
+                                        <label class="control-label" for="estadoserv">
+                                            <strong>{{item}}: </strong>
+                                            <div *ngIf="item != 'universidad'">
+                                                <p *ngFor="let text of historialsel.texto[item]">{{text}}</p>
+                                            </div>
+                                            <div *ngIf="item == 'universidad'">
+                                                <p>{{historialsel.texto[item]}}</p>
+                                            </div>
+
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-10">
+                                        <button type="button" style="float: right;" (click)="editarFiltros('reenviar')" class="btn btn-success">Reenviar</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-2">
+                                        <button type="button" style="float: right;" (click)="editarFiltros('editar')" class="btn btn-danger">Editar</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
