@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+
 import { FirebaseApp } from 'angularfire2';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import swal from 'sweetalert2';
 import { LocalStorageService } from 'ngx-webstorage';
-import { MailServiceService, NativeFirebaseService } from "../../../shared/services/main-service.service";
+import { MailServiceService, NativeFirebaseService, MixedFunctions} from "../../../shared/services/main-service.service";
 import * as  moment from "moment";
 import { environment } from "../../../../environments/environment";
 import * as firebase from "firebase";
@@ -48,7 +50,9 @@ export class AdminPostEntrantesComponent implements OnInit {
     private localSt: LocalStorageService,
     @Inject(FirebaseApp) firebaseApp: any,
     private _mailServiceService: MailServiceService,
-    private _NativeFirebaseService: NativeFirebaseService
+    private _NativeFirebaseService: NativeFirebaseService,
+    private _MixedFunctions:MixedFunctions,
+    private _AngularFireAuth:AngularFireAuth
   ) {
     this.db = firebaseApp.database();
     this.firebaseStorage = this._NativeFirebaseService.fb.storage();
@@ -164,8 +168,38 @@ export class AdminPostEntrantesComponent implements OnInit {
   }
   aprobarSolicitud() {
     swal.showLoading()
-    // var _this = this
+    var newmail = this.solicitud['Correo electrónico']
+    newmail = newmail.trim(); // Remove whitespace
+    newmail = newmail.toLowerCase();
+    var pass = this._MixedFunctions.makePassword()
 
+    this._AngularFireAuth.auth.createUserWithEmailAndPassword(newmail, pass)
+      .then((user) => {
+        user.sendEmailVerification()
+
+        let body = `
+            Cuerpo del correo de cuenta de usuario postulante
+            usuario: ${newmail}
+            password: ${pass} "Este password es tempral, No olvide cambiarlo"
+          `
+
+        this.enviarCorreo(newmail, "Cuenta creada para estudiante", body)
+          .subscribe((responseData) => {
+
+
+          })
+      })
+      .catch(error => {
+        console.log(error)
+        if (error.message != 'The email address is already in use by another account.') {
+          swal(
+            `${error}`,
+            '',
+            'error'
+          )
+        }
+
+      })
     const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update({
       estado: 'Aprobada por DRI UV',
       actualizadoPor: this.user.email,
@@ -173,46 +207,21 @@ export class AdminPostEntrantesComponent implements OnInit {
     });
     promise
       .then(res => {
+        swal({
+          title: `Solicitud actualizada`
+        })
         if (this.solicitud['Correo electrónico'] != '') {
-
-
-          var body = 'cuerpo del correo de aceptacion'
-          var correos = `${this.solicitud['Correo electrónico']}, ${environment.mails.dirDRI}`
-          this._mailServiceService.sendMailprograma
-            (this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'], "Aprobada por DRI UV", body)
+          var body = 'cuerpo del correo de aceptacion para estudiante'
+          var correos = `${this.solicitud['Correo electrónico']}`
+          this.enviarCorreo(this.solicitud['Correo electrónico'], "Aprobada por DRI UV", body)
             .subscribe((responseData) => {
-              console.log(responseData)
+              console.log(responseData)}, error => {console.log(error)})
+          var bodyPar = 'cuerpo del correo de aceptacion para par externo'
 
-            }, error => {
-
-              console.log(error)
-            })
-
-          return this.enviarCorreo(correos, "Aprobada por DRI UV", body)
-            .subscribe((responseData) => {
-              console.log(responseData)
-
-              if (responseData) {
-                swal({
-                  title: `Solicitud actualizada`
-                })
-              } else {
-                swal({
-                  title: `Solicitud actualizada`
-                })
-              }
-
-            }, error => {
-
-              console.log(error)
-            })
-        } else {
-          swal({
-            title: `Solicitud actualizada`
-          })
-          return
-        }
-
+          return this.enviarCorreo(this.solicitud['Correo electrónico'], "Aprobada por DRI UV", bodyPar)
+            .subscribe((responseData) => {console.log(responseData)}, error => {console.log(error)})
+        } 
+        
 
       })
       .then(() => {
@@ -223,24 +232,23 @@ export class AdminPostEntrantesComponent implements OnInit {
             console.log(responseData)
           }, error => { console.log(error) })
 
-        this._mailServiceService
-          .createNotificationPrograma(this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'], notificationInfo)
+          this._mailServiceService
+          .crearNotification(this.solicitud['creadoPor'], notificationInfo)
           .subscribe((responseData) => {
             console.log(responseData)
+          }, error => { console.log(error) })
 
-
-
-          }, error => {
-
-            console.log(error)
-          })
+        // this._mailServiceService
+        //   .createNotificationPrograma(this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'], notificationInfo)
+        //   .subscribe((responseData) => {
+        //     console.log(responseData)}, error => {console.log(error)})
         // let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
         // this._mailServiceService.crearNotification(this.solicitud['Correo electrónico'],notificationInfo)
         // let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
         // this._mailServiceService.crearNotification(this.solicitud['Correo electrónico'],notificationInfo)
 
 
-        this.consultaDatosTabla()
+        // this.consultaDatosTabla()
 
       })
       .catch(err => {
@@ -284,7 +292,7 @@ export class AdminPostEntrantesComponent implements OnInit {
         if (this.solicitud['Correo electrónico'] != '') {
           var body = `cuerpo del correo de la razon por la cual la solicitud es denegada 
           ${result} -- ${mensajeDenegacion}`
-          var correos = `${this.solicitud['Correo electrónico']}, ${this.solicitud['creadoPor']}`
+          var correos = `${this.solicitud['creadoPor']}`
 
           return this.enviarCorreo(correos, "Solicitud Denegada por DRI UV", body)
             .subscribe((responseData) => {
@@ -427,7 +435,8 @@ export class AdminPostEntrantesComponent implements OnInit {
       "urlFile1": "",
       "urlFile2": "",
       "urlFile3": "",
-      "creadoPor": this.user.email,
+      "creadoPor": "",
+      "actualizadoPor": this.user.email,
       "fechaCreado": "",
       "fechaActualizado": "",
       "estado": "",

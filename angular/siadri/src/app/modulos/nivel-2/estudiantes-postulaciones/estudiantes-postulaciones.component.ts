@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core'
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseApp } from 'angularfire2';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+
 import swal from 'sweetalert2';
 import { LocalStorageService } from 'ngx-webstorage';
 import { MailServiceService, NativeFirebaseService } from "../../../shared/services/main-service.service";
@@ -38,6 +39,9 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
   rowSelected
 
+  spinertablapostulaciones = false
+
+  paises =  []
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -65,11 +69,20 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   }
 
   ngOnInit() {
+    var ref = this.db.ref('/postulaciones/')
+    var _this = this
+    var onValueChange = ref.on('child_changed', function (dataSnapshot) {
+      _this.consultaDatosTabla()
+    });
+    // Sometime later...
+    ref.off('value', onValueChange);
     this.consultaDatosTabla()
+    this.getPaises()
   }
 
   consultaDatosTabla() {
     this.estadoComponenteInferior = 0
+    this.spinertablapostulaciones = true
 
     this.db.ref('/postulaciones/')
       .orderByChild("Correo electrónico")
@@ -108,11 +121,31 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+        this.spinertablapostulaciones = false
 
         if (this.tablaSolicitudesCarrera.nativeElement.classList.contains('collapsed-box')) {
           this.panelSuperiorButton.nativeElement.click()
         }
-      }).catch((error) => console.log(`${error}`))
+      }).catch((error) => {console.log(`${error}`);     this.spinertablapostulaciones = true; })
+  }
+
+  getPaises() {
+    this.paises = []
+    return this.db.ref('/paises/')
+      .orderByChild("nombre_pais")
+      .once('value')
+      .then(paisesSnap => {
+        console.log(paisesSnap.val())
+        paisesSnap.forEach(pais=>{
+          this.paises.push(pais.val().nombre_pais)
+
+        })
+        
+      })
+      .catch(erro => {
+        console.log(erro)
+      })
+
   }
 
   applyFilter(filterValue: string) {
@@ -128,7 +161,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       case 'Aprobada por DRI UV':
         this.estadoComponenteInferior = 3
         break;
-      
+
       default:
         this.estadoComponenteInferior = 2
         break;
@@ -157,6 +190,10 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       "Correo electrónico": "",
       "TIPO DE IDENTIFICACIÓN": "",
       "NÚMERO DE IDENTIFICACIÓN": "",
+      "FECHA_EXPIRACION_DOCUMENTO":"",
+      "LUGAR_NACIMIENTO":"",
+      "PAIS_NACIMIENTO":"",
+      "NACIONALIDAD":"",
       "CÓDIGO DEL ESTUDIANTE EN UNIVALLE": "",
       "PERIODO ACADÉMICO": 0,
       "TIPO DE MOVILIDAD": "ENTRANTE",
@@ -367,7 +404,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update(this.solicitud);
     promise
       .then(res => {
-       
+
         swal({
           title: `Solicitud actualizada`
         })
@@ -375,7 +412,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
 
       })
-     
+
       .catch(err => {
         swal({
           title: `${err}`

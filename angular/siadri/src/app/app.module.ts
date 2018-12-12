@@ -18,7 +18,9 @@ import {
   MatButtonModule,
   MatFormFieldModule,
   MatInputModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 
 } from '@angular/material';
 
@@ -176,6 +178,8 @@ import { AdminConveniosComponent } from './modulos/nivel-3/admin-convenios/admin
     MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     Ng2Webstorage
   ],
   // exports: [
