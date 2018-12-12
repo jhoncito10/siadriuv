@@ -61,7 +61,7 @@ exports.consFecha = functions.https.onRequest((req, res) => {
 });
 
 
-let sendMail = (para, asunto,mensaje, res) => {
+let sendMail = (para, asunto, mensaje, res) => {
 
     var mailsolicitante = {
         from: 'SIADRI <sistema.siadri@correounivalle.edu.co>',
@@ -87,7 +87,7 @@ let sendMail = (para, asunto,mensaje, res) => {
 
 exports.enviarCorreo = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
-        sendMail(req.body.para,req.body.asunto,req.body.mensaje, res);
+        sendMail(req.body.para, req.body.asunto, req.body.mensaje, res);
     });
 });
 
@@ -119,7 +119,7 @@ var verificaFechas = (req, res) => {
                 .once('value').then(conv => {
                     conv.forEach(doc => {
                         const aux2 = doc.val()['Fecha de vencimiento'];
-       
+
                         const comparacion = moment(aux2, 'DD/M/YYYY');
 
                         const diferencia = comparacion.diff(fechaActual, 'days');
@@ -143,7 +143,7 @@ var verificaFechas = (req, res) => {
 
                                 let conven = ref.child(`convenios/${doc.key}`);
 
-                                conven.update({'Estado': 'Vencido', 'Vencidos': 'Si'});
+                                conven.update({ 'Estado': 'Vencido', 'Vencidos': 'Si' });
 
                             } else {
                                 mensaje = `El convenio ID: "${doc.key}", con la institucion "${doc.val()['Institucion']}" vencera en ${diferencia} dias, en la fecha ${comparacion.format('DD-MM-YYYY')}`;
@@ -164,7 +164,7 @@ var verificaFechas = (req, res) => {
 
                                 newNotification.set(notificacion);
                             }
-       
+
                             let mailData = {
                                 from: '"SIADRI" <sistema.siadri@correounivalle.edu.co>',
                                 bcc: usuarios.emails.join(),
@@ -204,7 +204,7 @@ exports.validarConvenios = functions.https.onRequest((req, res) => {
         }).catch(error => {
             res.send(error);
         });
-    
+
     });
 
 });
@@ -236,7 +236,7 @@ var verificaFechasPostulaciones = (req, res) => {
                 .once('value').then(conv => {
                     conv.forEach(doc => {
                         const aux2 = doc.val()['fechaActualizado'].split(' ')[0];
-       
+
                         const comparacion = moment(aux2, 'DD/M/YYYY');
 
                         const diferencia = fechaActual.diff(comparacion, 'days');
@@ -260,11 +260,11 @@ var verificaFechasPostulaciones = (req, res) => {
 
                                 let conven = ref.child(`postulaciones/${doc.key}`);
 
-                                conven.update({'estado': 'Cancelada'});
+                                conven.update({ 'estado': 'Cancelada' });
 
                             } else {
                                 mensaje = `La postulacion con ID: "${doc.key}", y codigo de convenio: "${doc.val()['CODIGO_CONVENIO']}", realizada por "${doc.val()['Correo electónico']}" vencera en ${diferencia} dias, en la fecha ${comparacion.format('DD-MM-YYYY')}`;
-                             
+
                                 notificacion = {
                                     "estado": "sin leer",
                                     "icon": "fa fa-users text-aqua",
@@ -282,7 +282,7 @@ var verificaFechasPostulaciones = (req, res) => {
 
                                 newNotification.set(notificacion);
                             }
-       
+
                             let mailData = {
                                 from: '"SIADRI" <sistema.siadri@correounivalle.edu.co>',
                                 bcc: usuarios.emails.join(),
@@ -322,7 +322,7 @@ exports.validarPostulaciones = functions.https.onRequest((req, res) => {
         }).catch(error => {
             res.send(error);
         });
-    
+
     });
 
 });
@@ -406,6 +406,52 @@ exports.createNotificationPrograma = functions.https.onRequest((req, res) => {
 
 });
 
+exports.createNotificationNivel3 = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+        console.log(req.body)
+        return ref.child('usuarios')
+            .orderByChild('roles')
+            .equalTo('NIVEL3')
+            .once('value')
+            .then(snapusuariosnivel3 => {
+                snapusuariosnivel3.forEach(function (snapUsuario) {
+                    crearNotificacionFuncion(snapUsuario.val()['email'], req.body.info)
+                        .then(() => {
+                            return res.status(200).json({ status: 200, mensaje: 'Notificacion creada correctamente' });
+
+                        }).catch(error => {
+                            return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
+
+                        })
+                });
+            })
+
+
+    });
+
+});
+
+exports.enviarCorreoNivel3 = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+        console.log(req.body)
+        return ref.child('usuarios')
+            .orderByChild('roles')
+            .equalTo('NIVEL3')
+            .once('value')
+            .then(snapusuariosnivel3 => {
+                snapusuariosnivel3.forEach(function (snapUsuario) {
+                    var correoPrograma = snapUsuario.val()['email']
+
+                    sendMail(correoPrograma, req.body.asunto, req.body.mensaje, res);
+
+                });
+            })
+
+
+    });
+
+});
+
 var isEmail = (email) => {
     var response;
     var regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
@@ -447,7 +493,7 @@ exports.createLetter = functions.https.onRequest((req, res) => {
                     correos = `${req.body.email}`
 
                 }
-                var stringSubjk = (req.body.estado == 'aceptada') ? 'aceptacion':'denegacion';
+                var stringSubjk = (req.body.estado == 'aceptada') ? 'aceptacion' : 'denegacion';
                 console.log(correos)
                 var cuerpoPDF = `${req.body.nombre} tu solicitud a sido ${req.body.estado}.
                 Estos son los datos de tu solicitud
@@ -487,8 +533,8 @@ exports.enviarCorreoPrograma = functions.https.onRequest((req, res) => {
         correoPrograma(req.body.programa).then(function (correPro) {
             correPro.forEach(function (programaSnap) {
                 var correoPrograma = programaSnap.val()['correo']
-              
-                sendMail(correoPrograma,req.body.asunto,req.body.mensaje, res);
+
+                sendMail(correoPrograma, req.body.asunto, req.body.mensaje, res);
 
             });
 

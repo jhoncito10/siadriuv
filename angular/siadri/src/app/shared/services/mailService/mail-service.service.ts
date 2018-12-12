@@ -31,6 +31,16 @@ export class MailServiceService {
     };
     return this._http.post(url, mailData)
   }
+  sendMailNivel3(asunto, mensaje, cc = '', cco = '') {
+    const url = `${environment.cloudUrl}/enviarCorreoNivel3`;
+    const mailData = {
+      cc: cc,
+      cco: cco,
+      asunto: asunto,
+      mensaje: mensaje
+    };
+    return this._http.post(url, mailData)
+  }
 
   crearNotification(email, info = '') {
     const url = `${environment.cloudUrl}/createNotification`;
@@ -48,6 +58,14 @@ export class MailServiceService {
     };
     return this._http.post(url, bodyNotification)
   }
+  createNotificationNivel3( info = '') {
+    const url = `${environment.cloudUrl}/createNotificationNivel3`;
+    const bodyNotification = {
+      info: info
+    };
+    return this._http.post(url, bodyNotification)
+  }
+ 
   enviarCarta(solicitud, dirDRI, estadod) {
     const url = `${environment.cloudUrl}/createLetter`;
     const email = `${solicitud['Correo electrónico']},${dirDRI}`;

@@ -21,7 +21,9 @@ import {
   MatPaginatorModule,
   MatCheckboxModule,
   MatSortModule,
-  MatSelectModule
+  MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 
 } from '@angular/material';
 
@@ -185,8 +187,10 @@ import { NgxEditorModule } from 'ngx-editor';
     MatInputModule,
     MatPaginatorModule,
     MatCheckboxModule,
-    Ng2Webstorage,
-    NgxEditorModule
+    NgxEditorModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    Ng2Webstorage
   ],
   // exports: [
   //   MatButtonModule,
