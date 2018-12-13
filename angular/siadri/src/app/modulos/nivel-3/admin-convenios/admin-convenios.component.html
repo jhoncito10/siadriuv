@@ -28,7 +28,10 @@
       <div class="example-container mat-elevation-z8">
 
         <mat-table [dataSource]="dataSource" matSort>
-
+          <ng-container matColumnDef="key">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.key}} </mat-cell>
+          </ng-container>
           <!-- ID Column -->
           <ng-container matColumnDef="pais">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Pais </mat-header-cell>
@@ -46,6 +49,21 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header> Facultad </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.Facultad}} </mat-cell>
           </ng-container>
+
+          <ng-container matColumnDef="estado">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.Estado}} </mat-cell>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.Email}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="unidad">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Unidad Academica </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row['Unidad Academica']}} </mat-cell>
+          </ng-container> -->
 
           <!-- Color Column -->
           <ng-container matColumnDef="tipo">
@@ -150,12 +168,6 @@
           <div class="row">
             <div class="form-group" style="margin-top: 20px;">
               <div class="col-md-4">
-                <label for="correo" class="control-label">FAI</label>
-                <input [(ngModel)]='this.convenio["FAI"]' type="text" class="form-control" id="correo">
-              </div>
-            </div>
-            <div class="form-group" style="margin-top: 20px;">
-              <div class="col-md-4">
                 <label for="programa" class="control-label">Facultad</label>
                 <input [(ngModel)]='this.convenio["Facultad"]' type="text" class="form-control" id="programa">
               </div>
@@ -164,6 +176,12 @@
               <div class="col-md-4">
                 <label for="correo" class="control-label">Fecha de firma</label>
                 <input [(ngModel)]='this.convenio["Fecha de firma"]' type="date" class="form-control" id="correo">
+              </div>
+            </div>
+            <div class="form-group" style="margin-top: 20px;">
+              <div class="col-md-4">
+                <label for="programa" class="control-label">Fecha de vencimiento</label>
+                <input [(ngModel)]='this.convenio["Fecha de vencimiento"]' type="date" class="form-control" id="programa">
               </div>
             </div>
           </div>
@@ -195,8 +213,8 @@
           <div class="row">
             <div class="form-group" style="margin-top: 20px;">
               <div class="col-md-4">
-                <label for="programa" class="control-label">Fecha de vencimiento</label>
-                <input [(ngModel)]='this.convenio["Fecha de vencimiento"]' type="date" class="form-control" id="programa">
+                <label for="correo" class="control-label">Email</label>
+                <input [(ngModel)]='this.convenio["email"]' type="text" class="form-control" id="correo">
               </div>
             </div>
             <div class="form-group" style="margin-top: 20px;">
@@ -260,20 +278,20 @@
           <div class="row">
             <div class="form-group" style="margin-top: 20px;">
               <div class="col-md-4">
-                <label for="correo" class="control-label">Email</label>
-                <input [(ngModel)]='this.convenio["email"]' type="text" class="form-control" id="correo">
+                <label for="correo" class="control-label">FAI</label>
+                <textarea class="form-control" [(ngModel)]='this.convenio["FAI"]' name="" id="" rows="4"></textarea>
               </div>
             </div>
             <div class="form-group" style="margin-top: 20px;">
               <div class="col-md-4">
                 <label for="correo" class="control-label">SALUD</label>
-                <input [(ngModel)]='this.convenio["SALUD"]' type="text" class="form-control" id="correo">
+                <textarea class="form-control" [(ngModel)]='this.convenio["SALUD"]' name="" id="" rows="4"></textarea>
               </div>
             </div>
             <div class="form-group" style="margin-top: 20px;">
               <div class="col-md-4">
                 <label for="correo" class="control-label">CIENCIAS</label>
-                <input [(ngModel)]='this.convenio["CIENCIAS"]' type="text" class="form-control" id="correo">
+                <textarea class="form-control" [(ngModel)]='this.convenio["CIENCIAS"]' name="" id="" rows="4"></textarea>
               </div>
             </div>
           </div>
@@ -282,19 +300,19 @@
             <div class="form-group" style="margin-top: 20px;">
               <div class="col-md-4">
                 <label for="correo" class="control-label">CIENCIAS DE LA ADMINISTRACIÓN</label>
-                <input [(ngModel)]='this.convenio["CIENCIAS DE LA ADMINISTRACIÓN"]' type="text" class="form-control" id="correo">
+                <textarea class="form-control" [(ngModel)]='this.convenio["CIENCIAS DE LA ADMINISTRACIÓN"]' name="" id="" rows="4"></textarea>
               </div>
             </div>
             <div class="form-group" style="margin-top: 20px;">
               <div class="col-md-4">
                 <label for="correo" class="control-label">CIENCIAS SOCIALES Y ECONOMICAS</label>
-                <input [(ngModel)]='this.convenio["CIENCIAS SOCIALES Y ECONOMICAS"]' type="text" class="form-control" id="correo">
+                <textarea class="form-control" [(ngModel)]='this.convenio["CIENCIAS SOCIALES Y ECONOMICAS"]' name="" id="" rows="4"></textarea>
               </div>
             </div>
             <div class="form-group" style="margin-top: 20px;">
               <div class="col-md-4">
                 <label for="correo" class="control-label">HUMANIDADES</label>
-                <input [(ngModel)]='this.convenio["HUMANIDADES"]' type="text" class="form-control" id="correo">
+                <textarea class="form-control" [(ngModel)]='this.convenio["HUMANIDADES"]' name="" id="" rows="4"></textarea>
               </div>
             </div>
           </div>
@@ -303,19 +321,19 @@
             <div class="form-group" style="margin-top: 20px;">
               <div class="col-md-4">
                 <label for="correo" class="control-label">INGENIERIA</label>
-                <input [(ngModel)]='this.convenio["INGENIERIA"]' type="text" class="form-control" id="correo">
+                <textarea class="form-control" [(ngModel)]='this.convenio["INGENIERIA"]' name="" id="" rows="4"></textarea>
               </div>
             </div>
             <div class="form-group" style="margin-top: 20px;">
               <div class="col-md-4">
                 <label for="correo" class="control-label">INSTITUTO DE PEDAGOGIA</label>
-                <input [(ngModel)]='this.convenio["INSTITUTO DE PEDAGOGIA"]' type="text" class="form-control" id="correo">
+                <textarea class="form-control" [(ngModel)]='this.convenio["INSTITUTO DE PEDAGOGIA"]' name="" id="" rows="4"></textarea>
               </div>
             </div>
             <div class="form-group" style="margin-top: 20px;">
               <div class="col-md-4">
                 <label for="correo" class="control-label">INSTITUTO DE PSICOLOGIA</label>
-                <input [(ngModel)]='this.convenio["INSTITUTO DE PSICOLOGIA"]' type="text" class="form-control" id="correo">
+                <textarea class="form-control" [(ngModel)]='this.convenio["INSTITUTO DE PSICOLOGIA"]' name="" id="" rows="4"></textarea>
               </div>
             </div>
           </div>
@@ -338,7 +356,8 @@
           <div class="row">
             <div class="form-group" style="margin-top: 20px;">
               <div class="col-md-12">
-                <button style="float: right;" type="button" class="btn btn-success" (click)="guardar()">Guardar Cambios</button>
+                <button *ngIf="!this.nuevoConv" style="float: right;" type="button" class="btn btn-success" (click)="guardar()">Guardar Cambios</button>
+                <button *ngIf="this.nuevoConv" style="float: right;" type="button" class="btn btn-success" (click)="guardar()">Crear Convenio</button>
               </div>
             </div>
           </div>
@@ -352,6 +371,3 @@
   </div>
 
 </div>
-
-
-<button (click)="probar()">probar</button>

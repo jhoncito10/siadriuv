@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import swal from 'sweetalert2';
-import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+import { ConveniosService } from '../../../shared/services/main-service.service';
 
 
 @Component({
@@ -15,10 +16,10 @@ export class TablaConsultasComponent implements OnInit {
   convenios: any;
   convenio: any;
   dataTablaConvenios = [];
-  spiner:boolean;
+  spiner: boolean;
 
-  displayedColumns = ['pais', 'institucion', 'facultad', 'tipo'];
-  dataSource:any;
+  displayedColumns = ['key', 'pais', 'institucion', 'tipo', 'vigencia'];
+  dataSource: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -27,8 +28,9 @@ export class TablaConsultasComponent implements OnInit {
   @ViewChild('conveniosButton') conveniosButton: ElementRef;
   @ViewChild('descripcionConvenioButton') descripcionConvenioButton: ElementRef;
 
+  programas = [];
 
-  constructor(private _angularfire: AngularFireDatabase,private localSt:LocalStorageService) {
+  constructor(private service: ConveniosService, private localSt: LocalStorageService) {
     this.spiner = true;
 
     this.convenio = {
@@ -45,7 +47,7 @@ export class TablaConsultasComponent implements OnInit {
   }
   ngOnInit(): void {
 
-    
+
 
   }
   /**
@@ -53,70 +55,44 @@ export class TablaConsultasComponent implements OnInit {
    * be able to query its view for the initialized paginator and sort.
    */
   ngAfterViewInit() {
-      //Observa el cambio en la variable local que contiene los convenios
-      setTimeout(() => {
-        this.getDataConvenios()
-      });
+    // Observa el cambio en la variable local que contiene los convenios
+    setTimeout(() => {
+      this.getDataConvenios()
+    });
 
   }
- 
 
-  getDataConvenios(){
-    this.spiner=true;
-     var consultaConvenios = this.localSt.retrieve('convenios');
-     console.log('local',consultaConvenios);
-    if (consultaConvenios) {
-        this.convenios = consultaConvenios;
-        for (const key in consultaConvenios) {
-  
-          if (consultaConvenios.hasOwnProperty(key)) {
-            const element = consultaConvenios[key];
-            if (element.Archivo == 'Activo') {
-              this.dataTablaConvenios.push(createConvenio(key, element));
-  
-            }
-  
-          }
-        }
-        this.dataSource = new MatTableDataSource(this.dataTablaConvenios);
-  
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.spiner=false;
 
-        this.tablaConvenios.nativeElement.classList.remove('collapsed-box')
-        this.conveniosButton.nativeElement.classList.remove('fa-plus')
-        this.conveniosButton.nativeElement.classList.add('fa-minus')
-    } else {
-      consultaConvenios=[]
-      return this.localSt.observe('convenios')
-			.subscribe((data) => {
-        //executa el script al cambio en la variable local de canvios
+  getDataConvenios() {
+    this.spiner = true;
+    return this.service.getCollection('convenios')
+      .subscribe((data) => {
+        // executa el script al cambio en la variable local de canvios
         // this.storage.store('convenios', data);
         this.convenios = data;
+
         for (const key in data) {
-  
           if (data.hasOwnProperty(key)) {
             const element = data[key];
-            if (element.Archivo == 'Activo') {
+            if (element.Archivo === 'Activo') {
               this.dataTablaConvenios.push(createConvenio(key, element));
-  
+
             }
-  
+
           }
         }
         this.dataSource = new MatTableDataSource(this.dataTablaConvenios);
-  
+
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        this.spiner=false;
+        this.spiner = false;
 
         this.tablaConvenios.nativeElement.classList.remove('collapsed-box')
         this.conveniosButton.nativeElement.classList.remove('fa-plus')
         this.conveniosButton.nativeElement.classList.add('fa-minus')
       });
-    }
-   
+
+
   }
 
   applyFilter(filterValue: string) {
@@ -128,18 +104,44 @@ export class TablaConsultasComponent implements OnInit {
   selectConvenio(conv) {
     const _convenioSelected = this.convenios[conv.key];
     this.convenio = {
+      cod: _convenioSelected['$key'],
       pais: _convenioSelected.Pais,
       institucion: _convenioSelected.Institucion,
-      documentacion: '',
-      site: _convenioSelected["Página Web"] || '',
-      cooperacion: '',
+      documentacion: _convenioSelected['Archivo'],
+      site: _convenioSelected['Página Web'] || '',
+      cooperacion: _convenioSelected['Areas de Cooperación'] || '',
       objeto: _convenioSelected.Objeto,
       email: _convenioSelected.Email || '',
       tipo: _convenioSelected.Tipo || '',
-      facultad: _convenioSelected.Facultad || ''
+      facultad: _convenioSelected.Facultad || '',
+      estado: _convenioSelected.Estado || '',
+      vigencia: _convenioSelected['Fecha de vencimiento'] || ''
     }
     console.log(conv.key, this.convenio);
     this.toglePanelDescripcion()
+
+    this.estructurarProgramas(_convenioSelected);
+  }
+
+  estructurarProgramas(conv) {
+    const array = ['CIENCIAS', 'SALUD', 'CIENCIAS DE LA ADMINISTRACIÓN', 'CIENCIAS SOCIALES Y ECONOMICAS',
+      'HUMANIDADES', 'INGENIERIA', 'INSTITUTO DE PEDAGOGIA', 'INSTITUTO DE PSICOLOGIA', 'FAI'];
+
+    this.programas = [];
+
+    for (let i = 0; i < array.length; i++) {
+      const e = conv[array[i]]
+      if (e !== '-' && e !== '') {
+        const prog = conv[array[i]].split(',');
+        for (let j = 0; j < prog.length; j++) {
+          if (prog[j] !== '') {
+            this.programas.push(prog[j]);
+          }
+        }
+      }
+    }
+
+    console.log(this.programas);
   }
 
   toglePanelDescripcion() {
@@ -156,17 +158,21 @@ export class TablaConsultasComponent implements OnInit {
 /** Builds and returns a new User. */
 function createConvenio(_key: any, el: any): Convenio {
   const key = _key
+  const numcon = el['$key'];
   const pais = el.Pais || ''
   const institucion = el.Institucion || ''
   const facultad = el.Facultad || ''
+  const vigencia = el['Fecha de vencimiento'] || ''
   const email = el.Email || ''
   const tipo = el.Tipo || ''
 
   return {
     key: key,
+    numcon: numcon,
     pais: pais,
     institucion: institucion,
     facultad: facultad,
+    vigencia: vigencia,
     email: email,
     tipo: tipo
   };
@@ -175,9 +181,11 @@ function createConvenio(_key: any, el: any): Convenio {
 
 export interface Convenio {
   key: string,
+  numcon: string;
   pais: string;
   institucion: string;
   facultad: string;
+  vigencia: string;
   email: string;
   tipo: string;
 }
