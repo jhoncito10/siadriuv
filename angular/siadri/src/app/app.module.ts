@@ -19,6 +19,9 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatPaginatorModule,
+  MatCheckboxModule,
+  MatSortModule,
+  MatSelectModule,
   MatDatepickerModule,
   MatNativeDateModule,
   MatDividerModule,
@@ -27,7 +30,7 @@ import {
 } from '@angular/material';
 
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -103,6 +106,8 @@ import { AdminPostSalientesComponent } from './modulos/nivel-3/admin-post-salien
 import { SideBarMenuPostulacionesComponent } from './shared/layouts/sidebar-left-components/side-bar-menu-postulaciones/side-bar-menu-postulaciones.component';
 import { AdminConveniosComponent } from './modulos/nivel-3/admin-convenios/admin-convenios.component';
 
+import { NgxEditorModule } from 'ngx-editor';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -163,6 +168,7 @@ import { AdminConveniosComponent } from './modulos/nivel-3/admin-convenios/admin
   imports: [
     app_routing,
     FormsModule,
+    ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     LeafletModule.forRoot(),
@@ -178,8 +184,12 @@ import { AdminConveniosComponent } from './modulos/nivel-3/admin-convenios/admin
     MatTableModule,
     MatButtonModule,
     MatFormFieldModule,
+    MatSortModule,
+    MatSelectModule,
     MatInputModule,
     MatPaginatorModule,
+    MatCheckboxModule,
+    NgxEditorModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatDividerModule,

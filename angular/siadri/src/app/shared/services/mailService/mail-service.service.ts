@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from "../../../../environments/environment";
+import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -66,21 +66,21 @@ export class MailServiceService {
     return this._http.post(url, bodyNotification)
   }
  
-  enviarCarta(solicitud, dirDRI,estado) {
+  enviarCarta(solicitud, dirDRI, estadod) {
     const url = `${environment.cloudUrl}/createLetter`;
-    var email = `${solicitud['Correo electrónico']},${dirDRI}`,
-      nombre = `${solicitud['NOMBRE']}`,
-      fechaNacimiento = `${solicitud['FECHA_NACIMIENTO']}`,
-      nacionalidad = `${solicitud['PAÍS DE ORIGEN']}`,
-      numeroDocumento = `${solicitud['NÚMERO DE IDENTIFICACIÓN']}`,
-      genero = `${solicitud['ID_SEXO_BIOLOGICO']}`,
-      areaDestino = `${solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)']}`,
-      estado = estado;
-      
+    const email = `${solicitud['Correo electrónico']},${dirDRI}`;
+    const  nombre = `${solicitud['NOMBRE']}`;
+    const  fechaNacimiento = `${solicitud['FECHA_NACIMIENTO']}`;
+    const  nacionalidad = `${solicitud['PAÍS DE ORIGEN']}`;
+    const numeroDocumento = `${solicitud['NÚMERO DE IDENTIFICACIÓN']}`;
+    const  genero = `${solicitud['ID_SEXO_BIOLOGICO']}`;
+    const areaDestino = `${solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)']}`;
+    const estado = estadod;
+
       console.log(email)
 
     const bodyNotification = {
-      email, nombre, fechaNacimiento, nacionalidad, numeroDocumento, genero, areaDestino,estado
+      email, nombre, fechaNacimiento, nacionalidad, numeroDocumento, genero, areaDestino, estado
     };
     return this._http.post(url, bodyNotification)
   }
