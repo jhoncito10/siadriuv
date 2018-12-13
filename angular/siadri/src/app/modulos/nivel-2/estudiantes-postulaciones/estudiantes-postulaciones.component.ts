@@ -5,7 +5,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 import swal from 'sweetalert2';
 import { LocalStorageService } from 'ngx-webstorage';
-import { MailServiceService, NativeFirebaseService } from "../../../shared/services/main-service.service";
+import { MailServiceService, NativeFirebaseService, MixedFunctions } from "../../../shared/services/main-service.service";
 import * as  moment from "moment";
 import { environment } from "../../../../environments/environment";
 import * as firebase from "firebase";
@@ -35,13 +35,20 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
   estadoComponenteInferior = 0 //0 = ninguno; 1 =  nueva solicitud; 2 = datos solicitud
 
-  year
+  year: any
 
-  rowSelected
+  rowSelected: any
 
   spinertablapostulaciones = false
 
-  paises =  []
+  paises = []
+
+  programas:any
+  arrayProgramas = []
+  arrayFacultades = []
+
+  inicioMobilidad: any
+  finMobilidad: any
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -59,7 +66,8 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     private localSt: LocalStorageService,
     @Inject(FirebaseApp) firebaseApp: any,
     private _mailServiceService: MailServiceService,
-    private _NativeFirebaseService: NativeFirebaseService
+    private _NativeFirebaseService: NativeFirebaseService,
+    private _MixedFunctions:MixedFunctions
   ) {
     this.db = firebaseApp.database();
     this.firebaseStorage = this._NativeFirebaseService.fb.storage();
@@ -78,6 +86,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     ref.off('value', onValueChange);
     this.consultaDatosTabla()
     this.getPaises()
+    this.getProgramas()
   }
 
   consultaDatosTabla() {
@@ -126,7 +135,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
         if (this.tablaSolicitudesCarrera.nativeElement.classList.contains('collapsed-box')) {
           this.panelSuperiorButton.nativeElement.click()
         }
-      }).catch((error) => {console.log(`${error}`);     this.spinertablapostulaciones = true; })
+      }).catch((error) => { console.log(`${error}`); this.spinertablapostulaciones = true; })
   }
 
   getPaises() {
@@ -136,11 +145,11 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       .once('value')
       .then(paisesSnap => {
         console.log(paisesSnap.val())
-        paisesSnap.forEach(pais=>{
+        paisesSnap.forEach(pais => {
           this.paises.push(pais.val().nombre_pais)
 
         })
-        
+
       })
       .catch(erro => {
         console.log(erro)
@@ -190,10 +199,10 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       "Correo electrónico": "",
       "TIPO DE IDENTIFICACIÓN": "",
       "NÚMERO DE IDENTIFICACIÓN": "",
-      "FECHA_EXPIRACION_DOCUMENTO":"",
-      "LUGAR_NACIMIENTO":"",
-      "PAIS_NACIMIENTO":"",
-      "NACIONALIDAD":"",
+      "FECHA_EXPIRACION_DOCUMENTO": "",
+      "LUGAR_NACIMIENTO": "",
+      "PAIS_NACIMIENTO": "",
+      "NACIONALIDAD": "",
       "CÓDIGO DEL ESTUDIANTE EN UNIVALLE": "",
       "PERIODO ACADÉMICO": 0,
       "TIPO DE MOVILIDAD": "ENTRANTE",
@@ -210,6 +219,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       "PAÍS DE DESTINO": "",
       "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "",
       "PROGRAMA ACADÉMICO DE ORIGEN": "",
+      "PROGRAMA ACADÉMICO DE ORIGEN 2":"",
       "CÓDIGO DEL PROGRAMA": "",
       "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
       "PROGRAMA ACADÉMICO DE DESTINO (2)": "",
@@ -222,7 +232,13 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       "urlFile2": "",
       "urlFile3": "",
       "fechaActualizado": "",
-      "estado": ""
+      "estado": "",
+      "DIRECCION": "",
+      "PAIS_DIRECCION": "",
+      "CIUDAD_DIRECCION": "",
+      "POSTAL_CODE_DIRECCION": "",
+      "ESTADO_PROVINCIA_REGION": "",
+      "INSTITUCION_MEDICA":""
     }
   }
   actualizarSolicitud() {
@@ -421,10 +437,40 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       });
   }
 
+  getProgramas(){
+    let programs = this.db.ref('/programasAcademicos/')
+    return programs.once('value').then(snapProgramas=>{
+      this.programas = snapProgramas.val()
+      console.log('444',this.programas)
+      return snapProgramas.forEach(programa => {
+        this.arrayFacultades.push(programa.val()['FACULTAD-INSTITUTO'])
+      })
+    })
+    .then(resolve=>{
+      console.log('450',this.arrayFacultades)
+      this.arrayFacultades = this._MixedFunctions.removeDuplicadesArray(this.arrayFacultades)
+      console.log('452',this.arrayFacultades)
+
+    })
+  }
+
   enviarCorreo(email, asunto, mensaje, cc = '', cco = '') {
 
     return this._mailServiceService
       .send(email, asunto, mensaje, cc, cco)
+
+  }
+
+  calculaDias() {
+
+    if (this.finMobilidad && this.inicioMobilidad) {
+      let dias = moment(this.finMobilidad).diff(this.inicioMobilidad, 'days')
+      if (dias < 1) {
+        swal('Las fechas que has ingresado son incorrectas', '', 'error')
+      } else {
+        this.solicitud['NUM_DIAS_MOVILIDAD'] = dias
+      }
+    }
 
   }
 }
