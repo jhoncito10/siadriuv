@@ -388,27 +388,85 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="institucionMedica" class="col-md-5 control-label">Medical department in your home institution
+                <label for="institucionMedica" class="col-md-5 control-label">Medical department in your home
+                  institution
                   (only for clinical rotations and medical speciality) <br>
                   Departamento médico en tu Universidad de origen (aplica solo por rotaciones médicas y Posgrado
                   Especialización Clínico Quirúrgica)</label>
 
                 <div class="col-md-7">
                   <input [(ngModel)]='solicitud["INSTITUCION_MEDICA"]' type="text" class="form-control" id="institucionMedica"
-                    placeholder="OPTION 2 / OPCIÓN 2" [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+                    placeholder="institution" [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
                 </div>
               </div>
 
+              <!-- opcion 1 de programa a cursar -->
               <div class="form-group">
-                  <label for="facultadOpcion1" class="col-md-5 control-label">School/Facultad/Instituto</label>
-                  <div class="col-md-7">
-                    <select [(ngModel)]='solicitud["Facultad"]' class="form-control col-md-7" id="facultadOpcion1">
-                      <option *ngFor="let facultad of arrayFacultades ; index as i;" [ngValue]="facultad"> {{facultad}}</option>
-                    </select>
-                  </div>
-  
+                <label for="facultadOpcion1" class="col-md-5 control-label">Academic program you want to come at the
+                  Universidad del Valle or research area/Programa académico o grupo de investigación en el cual desea
+                  estudiar/investigar</label>
+                <div class="col-md-7">
+
                 </div>
 
+              </div>
+              <div class="form-group" >
+                <label for="facultadOpcion1" class="col-md-5 control-label">School/Facultad/Instituto</label>
+                <div class="col-md-7">
+                  <select [(ngModel)]='solicitud["Facultad"]' class="form-control col-md-7" id="facultadOpcion1"
+                    (click)="getProgramasPorFacultad()">
+                    <option value="" disabled selected>Select your option</option>
+                    <option *ngFor="let facultad of arrayFacultades ; index as i;" [ngValue]="facultad"> {{facultad}}</option>
+
+                  </select>
+                </div>
+
+              </div>
+              <div class="form-group">
+                <label for="programaOpcion1" class="col-md-5 control-label">Academic Program/Programa académico</label>
+                <div class="col-md-7">
+                  <select [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (1)"]' class="form-control col-md-7" id="programaOpcion1">
+                    <option value="" disabled selected>Select your option</option>
+                    <option *ngFor="let prog of arrayProgramas ; index as i;" [ngValue]="prog"> {{prog}}</option>
+
+                  </select>
+                </div>
+
+              </div>
+
+              <!-- opcion 2 de programa a cursar -->
+              <div class="form-group">
+                <label for="facultadOpcion" class="col-md-5 control-label">Academic program you want to come at the
+                  Universidad del Valle or research area/Programa académico o grupo de investigación en el cual desea
+                  estudiar/investigar  Option 2</label>
+                <div class="col-md-7">
+
+                </div>
+
+              </div>
+              <div class="form-group" >
+                <label for="facultadOpcion2" class="col-md-5 control-label">School/Facultad/Instituto (2)</label>
+                <div class="col-md-7">
+                  <select [(ngModel)]='solicitud["Facultad2"]' class="form-control col-md-7" id="facultadOpcion2"
+                    (click)="getProgramasPorFacultad2()">
+                    <option value="" disabled selected>Select your option</option>
+                    <option *ngFor="let facultad of arrayFacultades2 ; index as i;" [ngValue]="facultad"> {{facultad}}</option>
+
+                  </select>
+                </div>
+
+              </div>
+              <div class="form-group">
+                <label for="programaOpcion2" class="col-md-5 control-label">Academic Program/Programa académico (2)</label>
+                <div class="col-md-7">
+                  <select [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (2)"]' class="form-control col-md-7" id="programaOpcion2">
+                    <option value="" disabled selected>Select your option</option>
+                    <option *ngFor="let prog of arrayProgramas2 ; index as i;" [ngValue]="prog"> {{prog}}</option>
+
+                  </select>
+                </div>
+
+              </div>
             </mat-expansion-panel>
 
 
