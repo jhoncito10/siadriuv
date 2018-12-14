@@ -50,6 +50,17 @@ export class MailServiceService {
     };
     return this._http.post(url, bodyNotification)
   }
+
+  AnycrearNotifications(email, info = '') {
+    const url = `${environment.cloudUrl}/AnycreateNotifications`;
+    const bodyNotification = {
+      email: email,
+      info: info
+    };
+    return this._http.post(url, bodyNotification)
+  }
+
+
   createNotificationPrograma(programa, info = '') {
     const url = `${environment.cloudUrl}/createNotificationPrograma`;
     const bodyNotification = {

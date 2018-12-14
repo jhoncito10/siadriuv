@@ -376,6 +376,35 @@ exports.createNotification = functions.https.onRequest((req, res) => {
 
 });
 
+exports.AnycreateNotifications = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+        console.log(req.body)
+        if (req.body.hasOwnProperty('email')) {
+            for (let i = 0; i < req.body.email.length; i++) {
+                const element = req.body.email[i];
+                console.log(element)                
+
+                crearNotificacionFuncion(element, req.body.info).then(() => {
+                    if (i === req.body.email.length - 1) {
+                        return res.status(200).json({ status: 200, mensaje: 'Notificaciones creadas correctamente' });
+                    }
+                }).catch(error => {
+                    return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
+
+                })
+
+
+            }
+
+
+        } else {
+            return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
+        }
+
+    });
+
+});
+
 
 
 exports.createNotificationPrograma = functions.https.onRequest((req, res) => {

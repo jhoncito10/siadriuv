@@ -28,7 +28,13 @@ export class ConveniosService {
     return this._angularfire.list(item);
   }
 
+  agregarHistorial(obj) {
+    return this._angularfire.list('cfMailNotification').push(obj);
+  }
 
+  consultarHistorial() {
+    return this._angularfire.list('cfMailNotification');
+  }
 
 
   getProgramas() {

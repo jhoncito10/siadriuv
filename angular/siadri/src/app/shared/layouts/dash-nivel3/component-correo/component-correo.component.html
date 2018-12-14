@@ -79,7 +79,6 @@
 
                             </div>
                         </div>
-                        <button (click)="aplicarFiltros()">dfdf</button>
 
                     </div>
 
@@ -130,7 +129,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="col-md-12">
-                                                            <button type="button" style="float: right;" (click)="enviarCorreoNotificacion('correo')" class="btn2 btn-danger btn-lg danger">Enviar</button>
+                                                            <button type="button" style="float: right; margin-top: 20px;" (click)="aplicarFiltros('correo')" class="btn btn-danger">Enviar</button>
                                                         </div>
 
                                                     </div>
@@ -166,7 +165,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="col-md-12">
-                                                            <button type="button" style="float: right;" (click)="enviarCorreoNotificacion('notificacion')" class="btn2 btn-danger btn-lg danger">Enviar</button>
+                                                            <button type="button" style="float: right; margin-top: 20px;" (click)="aplicarFiltros('notificacion')" class="btn btn-danger">Enviar</button>
                                                         </div>
 
                                                     </div>
@@ -221,7 +220,7 @@
 
                                                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                                                     <mat-row *matRowDef="let row; columns: displayedColumns;" style="cursor: pointer;" (click)="cambiarDataHistorial(row)" data-toggle="modal"
-                                                        data-target="#modal1"></mat-row>
+                                                        data-target="#modalHisto"></mat-row>
                                                 </mat-table>
 
                                                 <mat-paginator #paginator="matPaginator" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" [showFirstLastButtons]="true">
@@ -246,11 +245,11 @@
 
 
 <!-- MODAL QUE PERMITE LA EDICION DE LOS DATOS DEL LABORATORIO -->
-<div *ngIf="historialsel" class="modal fade" id="modal1" role="dialog">
-    <div [ngClass]="{'modal-dialog':true, 'modal-md':true}">
+<div class="modal fade" id="modalHisto" role="dialog">
+    <div class="modal-dialog modal-md">
 
         <!-- Modal content-->
-        <div class="modal-content">
+        <div *ngIf="this.historialsel" class="modal-content">
             <div class="modal-body">
                 <div class="box box-danger">
                     <div class="box-header text-center">
@@ -301,13 +300,10 @@
                                 <div *ngFor="let item of historialsel.filtro" class="form-group">
                                     <div class="col-md-12">
                                         <label class="control-label" for="estadoserv">
-                                            <strong>{{item}}: </strong>
-                                            <div *ngIf="item != 'universidad'">
-                                                <p *ngFor="let text of historialsel.texto[item]">{{text}}</p>
-                                            </div>
-                                            <div *ngIf="item == 'universidad'">
-                                                <p>{{historialsel.texto[item]}}</p>
-                                            </div>
+                                            <strong>{{historialsel.texto[item]}}</strong>
+                                            <div *ngIf="item == 'directores'">
+                                                <p *ngFor="let text of historialsel.valores[item]">{{text}}</p>
+                                            </div> 
 
                                         </label>
                                     </div>

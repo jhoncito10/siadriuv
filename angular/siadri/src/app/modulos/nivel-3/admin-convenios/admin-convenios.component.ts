@@ -22,7 +22,7 @@ export class AdminConveniosComponent implements OnInit, AfterViewInit {
   dataTablaConvenios = [];
   spiner: boolean;
 
-  displayedColumns = ['pais', 'institucion', 'facultad', 'tipo'];
+  displayedColumns = ['key', 'pais', 'institucion', 'facultad', 'tipo', 'estado'];
   dataSource: any;
 
   paises = [];
