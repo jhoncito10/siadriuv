@@ -17,23 +17,10 @@
         </li>
 
         <li *ngIf="this.session" class="dropdown notifications-menu" style="padding-top: 3px;">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+          <a href="#" class="dropdown-toggle" aria-expanded="true" data-toggle="modal" data-target="#modalNoti">
             <i class="fa fa-bell-o"></i>
             <span class="label label-warning">{{notificaciones.length}}</span>
           </a>
-          <ul class="dropdown-menu">
-            <li class="header">You have {{notificaciones.length}} notifications</li>
-            <li>
-              <!-- inner menu: contains the actual data -->
-              <ul class="menu">
-                <li *ngFor="let item of this.notificaciones" (click)="info(item)">
-                  <a style="cursor:pointer;">
-                    <i class="{{item.icon}}"></i> {{item.info}}
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
         </li>
 
         <li *ngIf="this.session" class="dropdown notifications-menu">
@@ -56,4 +43,34 @@
     </div>
 
   </nav>
+</div>
+
+<div class="modal fade" id="modalNoti" role="dialog">
+  <div class="modal-dialog modal-md">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="box box-danger">
+          <div class="box-header text-center">
+            <i class="fa fa-address-card-o"></i>
+
+            <h3 class="box-title">Listado de Notificaciones</h3>
+          </div>
+
+          <div class="box-body">
+            <ul class="list-group list-group-flush">
+              <li style="cursor: pointer;" class="list-group-item" *ngFor="let item of this.notificaciones" (click)="info(item)">
+                <i class="{{item.icon}}"></i>
+                {{item.info}}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+  </div>
 </div>

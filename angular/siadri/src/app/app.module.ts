@@ -25,7 +25,8 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatDividerModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatAutocompleteModule
 
 } from '@angular/material';
 
@@ -194,6 +195,7 @@ import { NgxEditorModule } from 'ngx-editor';
     MatNativeDateModule,
     MatDividerModule,
     MatExpansionModule,
+    MatAutocompleteModule,
     Ng2Webstorage
   ],
   // exports: [

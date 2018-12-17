@@ -89,14 +89,14 @@
             <div class="col-sm-6 border-right">
               <div class="description-block">
                 <h5 class="description-header">Objeto</h5>
-                <span class="description-text">{{convenio.objeto}}</span>
+                <span class="description-text">{{convenio.objeto ? convenio.objeto : 'No especifica'}}</span>
               </div>
 
             </div>
             <div class="col-sm-6 border-right">
               <div class="description-block">
                 <h5 class="description-header">Cooperacion</h5>
-                <span class="description-text">{{convenio.cooperacion}}</span>
+                <span class="description-text">{{convenio.cooperacion ? convenio.cooperacion : 'No especifica'}}</span>
               </div>
 
             </div>
@@ -107,25 +107,25 @@
             <div class="col-sm-3 border-right">
               <div class="description-block">
                 <h5 class="description-header">Tipo</h5>
-                <span class="description-text">{{convenio.Tipo}}</span>
+                <span class="description-text">{{convenio.Tipo ? convenio.Tipo : 'No especifica'}}</span>
               </div>
             </div>
             <div class="col-sm-3 border-right">
               <div class="description-block">
                 <h5 class="description-header">Facultad</h5>
-                <span class="description-text">{{convenio.facultad}}</span>
+                <span class="description-text">{{convenio.facultad ? convenio.facultad : 'No especifica'}}</span>
               </div>
             </div>
             <div class="col-sm-3 border-right">
               <div class="description-block">
                 <h5 class="description-header">Fecha de Vigencia</h5>
-                <span class="description-text">{{convenio.vigencia}}</span>
+                <span class="description-text">{{convenio.vigencia ? convenio.vigencia : 'No especifica'}}</span>
               </div>
             </div>
             <div class="col-sm-3">
               <div class="description-block">
                 <h5 class="description-header">Estado</h5>
-                <span class="description-text">{{convenio.estado}}</span>
+                <span class="description-text">{{convenio.estado ? convenio.estado : 'No especifica'}}</span>
               </div>
             </div>
           </div>

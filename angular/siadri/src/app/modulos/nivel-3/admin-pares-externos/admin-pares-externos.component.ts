@@ -8,6 +8,11 @@ import { MailServiceService, MixedFunctions } from "../../../shared/services/mai
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as  moment from "moment";
 import { ReturnStatement } from '@angular/compiler';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
+
+import { startWith } from 'rxjs/operators/startWith';
+import { map } from 'rxjs/operators/map';
 
 
 @Component({
@@ -29,7 +34,7 @@ export class AdminParesExternosComponent implements OnInit {
   firebaseStorage: any
   dataTablaCuentasParesExt = [];
 
-  displayedColumns = ['correo', 'nombre', 'institucion', 'convenio','pais','estado'];
+  displayedColumns = ['correo', 'nombre', 'institucion', 'convenio', 'pais', 'estado'];
   dataSource: MatTableDataSource<any>;
   instituciones = []
   convenios = []
@@ -44,6 +49,16 @@ export class AdminParesExternosComponent implements OnInit {
 
   spinnerConvenios = false;
   conveniosSeleccionados = {}
+
+
+  myControl: FormControl = new FormControl();
+
+  filteredOptions: Observable<string[]>;
+
+
+  myControl2: FormControl = new FormControl();
+
+  filteredOptions2: Observable<string[]>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -67,12 +82,40 @@ export class AdminParesExternosComponent implements OnInit {
     this.setCuenta()
   }
 
+
+
   ngOnInit() {
     this.consultaDatosTabla()
     this.getInstituciones()
     this.getPaises()
 
+    this.filteredOptions = this.myControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(val => this.filter(val))
+      );
+
+
+    this.filteredOptions2 = this.myControl2.valueChanges
+    .pipe(
+      startWith(''),
+      map(val => this.filter2(val))
+    );
+
   }
+
+  filter(val: string): string[] {
+    return this.paises.filter(option =>
+      option.trim().toLowerCase().indexOf(val.trim().toLowerCase()) !== -1);
+  }
+
+  filter2(val: string): string[] {
+    return this.instituciones.filter(option =>
+      option.trim().toLowerCase().indexOf(val.trim().toLowerCase()) !== -1);
+  }
+
+
+
   consultaDatosTabla() {
     this.estadoComponenteInferior = 0
 
@@ -113,8 +156,8 @@ export class AdminParesExternosComponent implements OnInit {
             key: solicitudSnap.key,
             institucion: institucion,
             convenio: convenio,
-            pais:pais,
-            estado:estado
+            pais: pais,
+            estado: estado
           })
         })
 
@@ -205,11 +248,11 @@ export class AdminParesExternosComponent implements OnInit {
       .once('value')
       .then(paisesSnap => {
         console.log(paisesSnap.val())
-        paisesSnap.forEach(pais=>{
+        paisesSnap.forEach(pais => {
           this.paises.push(pais.val().nombre_pais)
 
         })
-        
+
       })
       .catch(erro => {
         console.log(erro)
@@ -223,11 +266,16 @@ export class AdminParesExternosComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
   selectCuenta(row) {
+ 
     this.setCuenta()
     this.estadoComponenteInferior = 1
     this.rowSelected = row;
 
-    this.cuenta = this.cuentasParesExt[row.key]
+    this.myControl.setValue(row['pais']);
+    this.myControl2.setValue(row['institucion']);
+
+    this.cuenta = this.cuentasParesExt[row.key];
+    console.log(this.cuenta);
     this.cuenta.key = row.key
     console.log('205', this.conveniosSeleccionados)
 
@@ -306,7 +354,7 @@ export class AdminParesExternosComponent implements OnInit {
             this.cuenta["fechaActualizado"] = moment().format('DD/MM/YYYY HH:mm')
             this.cuenta["fechaCreado"] = moment().format('DD/MM/YYYY HH:mm')
             this.cuenta.convenio = this.conveniosSeleccionados
-            
+
             return ref.set(this.cuenta).then(() => {
               this.consultaDatosTabla()
               let body = `
@@ -360,7 +408,7 @@ export class AdminParesExternosComponent implements OnInit {
     }
     this.panelInferior.nativeElement.scrollIntoView();
   }
-  
+
 
   editar() {
     swal.showLoading()
@@ -378,13 +426,13 @@ export class AdminParesExternosComponent implements OnInit {
     this.cuenta = {
       "nombre": "Francisco par",
       "correo": "francisco.hurtado@geoprocess.com.co",
-      "correoNotas":"",
-      "pais":"",
+      "correoNotas": "",
+      "pais": "",
       "institucion": "",
       "key": "",
       "otraInstitucion": "",
       "convenio": "",
-      "estado":"activo"
+      "estado": "activo"
     }
     this.convenios = []
     this.conveniosSeleccionados = []

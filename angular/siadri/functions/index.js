@@ -211,101 +211,91 @@ exports.validarConvenios = functions.https.onRequest((req, res) => {
 
 var verificaFechasPostulaciones = (req, res) => {
 
-    const usuarios = {
-        keys: [],
-        emails: []
-    };
-    return ref.child('usuarios')
-        .orderByChild('roles')
-        .equalTo('NIVEL6')
-        .once('value').then(snap => {
-            snap.forEach(childSnap => {
-                const email = childSnap.val().email;
-                const key = childSnap.key;
-                usuarios.emails.push(email);
-                usuarios.keys.push(key);
-            });
-            return usuarios;
-        }).then(usuarios => {
+    const fechaActual = moment();
 
-            const fechaActual = moment();
+    return ref.child('postulaciones')
+        .orderByChild('estado')
+        .equalTo('Aprobada por DRI UV')
+        .once('value').then(conv => {
+            conv.forEach(doc => {
+                const aux2 = doc.val()['fechaActualizado'].split(' ')[0];
 
-            ref.child('postulaciones')
-                .orderByChild('estado')
-                .equalTo('Aprobado por DRI UV')
-                .once('value').then(conv => {
-                    conv.forEach(doc => {
-                        const aux2 = doc.val()['fechaActualizado'].split(' ')[0];
+                const comparacion = moment(aux2, 'DD/M/YYYY');
 
-                        const comparacion = moment(aux2, 'DD/M/YYYY');
+                const diferencia = fechaActual.diff(comparacion, 'days');
 
-                        const diferencia = fechaActual.diff(comparacion, 'days');
+                const email = doc.val()['Correo electrónico'];
 
-                        moment()
-                        if (diferencia == 30 || diferencia == 15 || diferencia == 60) {
+                console.log('Se encontro este objeto' + doc.key, diferencia);
 
-                            const refUsuarios = ref.child('usuarios');
-                            let mensaje = "";
-                            let horaactual = moment().utcOffset("-05:00").format("DD/MM/YYYY HH:mm:ss") + "";
-                            let notificacion = {};
-                            if (diferencia == 60) {
-                                mensaje = `La postulacion con ID: "${doc.key}", y codigo de convenio: "${doc.val()['CODIGO_CONVENIO']}", realizada por "${doc.val()['Correo electónico']}" vencio y sera cancelada, en la fecha ${fechaActual.format('DD-MM-YYYY')}`;
-                                notificacion = {
-                                    "estado": "sin leer",
-                                    "icon": "fa fa-users text-aqua",
-                                    "info": mensaje,
-                                    "fecha_creacion:": horaactual,
-                                    "fecha_modificacion:": horaactual
-                                };
+                if (diferencia == 30 || diferencia == 15 || diferencia == 60) {
 
-                                let conven = ref.child(`postulaciones/${doc.key}`);
+                    const refUsuarios = ref.child('usuarios');
+                    let mensaje = "";
+                    let horaactual = moment().utcOffset("-05:00").format("DD/MM/YYYY HH:mm:ss") + "";
+                    let notificacion = {};
+                    if (diferencia == 60) {
+                        mensaje = `La postulacion con ID: "${doc.key}", y codigo de convenio: "${doc.val()['CODIGO_CONVENIO']}", realizada por "${email}" vencio y sera cancelada, en la fecha ${fechaActual.format('DD-MM-YYYY')}`;
+                        notificacion = {
+                            "estado": "sin leer",
+                            "icon": "fa fa-users text-aqua",
+                            "info": mensaje,
+                            "fecha_creacion:": horaactual,
+                            "fecha_modificacion:": horaactual
+                        };
 
-                                conven.update({ 'estado': 'Cancelada' });
+                        let conven = ref.child(`postulaciones/${doc.key}`);
 
-                            } else {
-                                mensaje = `La postulacion con ID: "${doc.key}", y codigo de convenio: "${doc.val()['CODIGO_CONVENIO']}", realizada por "${doc.val()['Correo electónico']}" vencera en ${diferencia} dias, en la fecha ${comparacion.format('DD-MM-YYYY')}`;
+                        conven.update({ 'estado': 'Cancelada' });
 
-                                notificacion = {
-                                    "estado": "sin leer",
-                                    "icon": "fa fa-users text-aqua",
-                                    "info": mensaje,
-                                    "fecha_creacion:": horaactual,
-                                    "fecha_modificacion:": horaactual
-                                };
-                            }
+                    } else {
+                        mensaje = `La postulacion con ID: "${doc.key}", y codigo de convenio: "${doc.val()['CODIGO_CONVENIO']}", realizada por "${email}" vencera en ${60 - diferencia} dias, en la fecha ${comparacion.format('DD-MM-YYYY')}`;
 
+                        notificacion = {
+                            "estado": "sin leer",
+                            "icon": "fa fa-users text-aqua",
+                            "info": mensaje,
+                            "fecha_creacion:": horaactual,
+                            "fecha_modificacion:": horaactual
+                        };
+                    }
 
-                            for (let i = 0; i < usuarios.keys.length; i++) {
-                                const usuariokey = usuarios.keys[i];
-                                console.log('array: ', usuariokey, doc.key);
+                    console.log(email);
+
+                    ref.child('usuarios')
+                        .orderByChild('email')
+                        .equalTo(email)
+                        .once('value').then(conv => {
+                            conv.forEach(doc => {
+                                const usuariokey = doc.key;
+                                console.log('array: ', usuariokey);
                                 let newNotification = refUsuarios.child(`${usuariokey}/notificacion/${doc.key}`);
-
                                 newNotification.set(notificacion);
-                            }
-
-                            let mailData = {
-                                from: '"SIADRI" <sistema.siadri@correounivalle.edu.co>',
-                                bcc: usuarios.emails.join(),
-                                subject: 'convenio apunto de vencer',
-                                html: mensaje
-
-                            };
-
-
-                            // sendMail(mailData);
-                            mailTrasport.sendMail(mailData).then(() => {
-                                console.log('email enviado');
-                            }).catch(error => {
-                                console.log(error);
                             });
-                        }
+                        });
 
-                        console.log(comparacion, fechaActual, diferencia);
 
+
+
+                    let mailData = {
+                        from: '"SIADRI" <sistema.siadri@correounivalle.edu.co>',
+                        bcc: email,
+                        subject: 'convenio apunto de vencer',
+                        html: mensaje
+                    };
+
+
+                    console.log(mailData);
+                    mailTrasport.sendMail(mailData).then(() => {
+                        console.log('email enviado');
+                    }).catch(error => {
+                        console.log(error);
                     });
-                });
+                }
 
+            });
 
+            console.log(comparacion, fechaActual, diferencia);
         });
 
 };
@@ -382,7 +372,7 @@ exports.AnycreateNotifications = functions.https.onRequest((req, res) => {
         if (req.body.hasOwnProperty('email')) {
             for (let i = 0; i < req.body.email.length; i++) {
                 const element = req.body.email[i];
-                console.log(element)                
+                console.log(element)
 
                 crearNotificacionFuncion(element, req.body.info).then(() => {
                     if (i === req.body.email.length - 1) {
@@ -426,7 +416,7 @@ exports.createNotificationPrograma = functions.https.onRequest((req, res) => {
 
                             })
                     });
-                })
+                });
         } else {
             return res.status(204).json({ status: 204, mensaje: 'error creando la notifiacion' });
         }

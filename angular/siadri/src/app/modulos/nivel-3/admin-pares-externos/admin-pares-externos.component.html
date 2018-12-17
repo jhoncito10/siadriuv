@@ -69,7 +69,8 @@
 
         </div>
         <div class="col-md-6">
-          <button type="button" class="btn btn-block btn-success" (click)="nuevaCuenta()">Nueva cuenta <i class="fa fa-plus"></i>
+          <button type="button" class="btn btn-block btn-success" (click)="nuevaCuenta()">Nueva cuenta
+            <i class="fa fa-plus"></i>
           </button>
         </div>
       </div>
@@ -103,8 +104,7 @@
             <label for="correo" class="col-md-5 control-label">Email del coordinador de la Universidad / Entidad Socia</label>
 
             <div class="col-md-7">
-              <input [(ngModel)]='cuenta["correo"]' type="text" class="form-control" id="correo" placeholder="Correo electronico"
-                [attr.disabled]="estadoComponenteInferior==1 ? '' : null">
+              <input [(ngModel)]='cuenta["correo"]' type="text" class="form-control" id="correo" placeholder="Correo electronico" [attr.disabled]="estadoComponenteInferior==1 ? '' : null">
             </div>
           </div>
           <div class="form-group">
@@ -118,11 +118,14 @@
           <div class="form-group">
             <label for="institucion" class="col-md-5 control-label">Universidad / Entidad Socia</label>
             <div class="col-md-7">
-              <select [(ngModel)]='cuenta["institucion"]' (click)="getConveniosInstitucion(cuenta['institucion'])"
-                class="form-control col-md-7">
-                <option *ngFor="let insti of instituciones ; index as i;" [ngValue]="insti"> {{insti}}</option>
-                <option value="otra">Otra</option>
-              </select>
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]='cuenta["institucion"]'  type="text" placeholder="Seleccione la institucion" aria-label="Number" matInput [formControl]="myControl2" [matAutocomplete]="auto2">
+                <mat-autocomplete #auto2="matAutocomplete">
+                  <mat-option *ngFor="let insti of filteredOptions2 | async" [value]="insti" (click)="getConveniosInstitucion(cuenta['institucion'])">
+                    {{ insti }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
             </div>
 
           </div>
@@ -130,10 +133,17 @@
           <div class="form-group">
             <label for="pais" class="col-md-5 control-label">País de Universidad / Entidad Socia</label>
             <div class="col-md-7">
-              <select [(ngModel)]='cuenta["pais"]' class="form-control col-md-7" id="pais">
-                <option *ngFor="let pais of paises ; index as i;" [ngValue]="pais"> {{pais}}</option>
-              </select>
+
+              <mat-form-field class="example-full-width">
+                <input [(ngModel)]='cuenta["pais"]'  type="text" placeholder="Seleccione el pais" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let pais of filteredOptions | async" [value]="pais">
+                    {{ pais }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
             </div>
+
 
           </div>
           <div class="form-group">
@@ -143,7 +153,8 @@
             </div>
             <div class="col-md-7">
               <div class="checkbox" *ngFor="let conv of convenios ; index as i;">
-                <label><input type="checkbox" [(ngModel)]="conveniosSeleccionados[conv.id]">{{conv.id}}</label>
+                <label>
+                  <input type="checkbox" [(ngModel)]="conveniosSeleccionados[conv.id]">{{conv.id}}</label>
               </div>
 
             </div>
@@ -164,14 +175,12 @@
             <div class="col-md-7" id="estado">
               <div class="radio">
                 <label>
-                  <input [(ngModel)]='cuenta["estado"]' type="radio" value="activo" checked>
-                  Activo
+                  <input [(ngModel)]='cuenta["estado"]' type="radio" value="activo" checked> Activo
                 </label>
               </div>
               <div class="radio">
                 <label>
-                  <input [(ngModel)]='cuenta["estado"]' type="radio" value="desactivo">
-                  Inactivo
+                  <input [(ngModel)]='cuenta["estado"]' type="radio" value="desactivo"> Inactivo
                 </label>
               </div>
             </div>
