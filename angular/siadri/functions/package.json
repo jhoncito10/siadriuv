@@ -2,9 +2,12 @@
   "name": "functions",
   "description": "Cloud Functions for Firebase",
   "dependencies": {
+    "base64-stream": "^1.0.0",
+    "concat-stream": "^1.6.2",
     "cors": "^2.8.1",
     "firebase-admin": "~4.2.1",
     "firebase-functions": "^0.8.1",
+    "jspdf": "^1.4.1",
     "moment": "^2.18.1",
     "nodemailer": "^4.0.1"
   },

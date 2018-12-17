@@ -4,6 +4,13 @@ const moment = require('moment');
 const cors = require('cors')({ origin: true });
 const nodemailer = require('nodemailer');
 const admin = require('firebase-admin');
+global.window = {document: {createElementNS: () => {return {}} }};
+global.navigator = {};
+global.btoa = () => {};
+const jsPDF = require ('jspdf');
+const fs = require('fs');
+
+
 const CUT_OFF_TIME = 6 * 30 * 24 * 60 * 60 * 1000; // 6 months in milliseconds.
 admin.initializeApp(functions.config().firebase);
 
@@ -63,12 +70,14 @@ exports.consFecha = functions.https.onRequest((req, res) => {
 
 let sendMail = (para, asunto, mensaje, res) => {
 
-    var mailsolicitante = {
+    const mailsolicitante = {
         from: 'SIADRI <sistema.siadri@correounivalle.edu.co>',
         bcc: `${para}`,
         subject: asunto,
         html: mensaje
     };
+
+
     return mailTrasport.sendMail(mailsolicitante).then(() => {
         if (res) {
             res.status(200).json({ status: 200, mensaje: 'correo enviado correctamente' });
@@ -382,7 +391,7 @@ exports.AnycreateNotifications = functions.https.onRequest((req, res) => {
         if (req.body.hasOwnProperty('email')) {
             for (let i = 0; i < req.body.email.length; i++) {
                 const element = req.body.email[i];
-                console.log(element)                
+                console.log(element)
 
                 crearNotificacionFuncion(element, req.body.info).then(() => {
                     if (i === req.body.email.length - 1) {
@@ -502,11 +511,11 @@ var isEmail = (email) => {
 
 
 var correoPrograma = (programa) => {
-    return ref.child('programasAcademicos')
-        .orderByChild('NOMBRE PROGRAMA ACADEMICO')
-        .equalTo(programa)
-        .limitToFirst(1)
-        .once('value')
+  return ref.child('programasAcademicos')
+      .orderByChild('NOMBRE PROGRAMA ACADEMICO')
+      .equalTo(programa)
+      .limitToFirst(1)
+      .once('value')
 }
 
 
@@ -526,39 +535,70 @@ exports.createLetter = functions.https.onRequest((req, res) => {
                 } else {
                     correos = `${req.body.email}`
 
+      correoPrograma(req.body.areaDestino).then(  function  (correPro) {
+          console.log('488',correPro.val())
+
+          correPro.forEach( function (programaSnap) {
+              console.log('491',programaSnap)
+
+              var correoPrograma = programaSnap.val()['correo']
+              var correos = ''
+              if (isEmail(correoPrograma)) {
+                  correos = `${req.body.email},${correoPrograma}`
+              } else {
+                  correos = `${req.body.email}`
+
+              }
+              var stringSubjk = (req.body.estado == 'aceptada') ? 'aceptacion' : 'denegacion';
+              console.log(correos)
+              var cuerpoPDF = `${req.body.nombre} tu solicitud a sido ${req.body.estado}.
+              Estos son los datos de tu solicitud
+              ${req.body.fechaNacimiento}
+              ${req.body.nacionalidad}
+              ${req.body.numeroDocumento}
+              ${req.body.genero}
+              ${req.body.areaDestino}`;
+              const doc = new jsPDF();
+              doc.setLanguage("es-CO")
+              doc.text(`Detalles de la solicitud `, 70, 40);
+              doc.setFontSize(12);
+              doc.text( `${req.body.nombre} tu solicitud ha sido ${req.body.estado}`, 10, 60);
+              doc.text(`Fecha de nacimiento: ${req.body.fechaNacimiento} `, 10, 70);
+              doc.text(`Nacionalidad: ${req.body.nacionalidad}`, 10, 80);
+              doc.text(`Numero de documento: ${req.body.numeroDocumento}`, 10, 90);
+              doc.text(`Genero: ${req.body.genero}`, 10, 100);
+              doc.text(`Area de destino: ${req.body.areaDestino}`, 10, 110);
+               const pdf =  doc.output();
+               console.log('datos del pdf',pdf);
+
+                const mailsolicitante = {
+                  from: 'SIADRI <sistema.siadri@correounivalle.edu.co>',
+                  bcc: `${correos}`,
+                  subject: `Carta de ${stringSubjk} "${req.body.nombre}"`,
+                  attachments: [{
+                    filename: 'solicitud.pdf',
+                    content: pdf }]
+              };
+              try {
+                mailTrasport.sendMail(mailsolicitante);
+                if (res) {
+                    res.status(200).json({ status: 200, mensaje: 'correo enviado correctamente' });
                 }
-                var stringSubjk = (req.body.estado == 'aceptada') ? 'aceptacion' : 'denegacion';
-                console.log(correos)
-                var cuerpoPDF = `${req.body.nombre} tu solicitud a sido ${req.body.estado}.
-                Estos son los datos de tu solicitud
-                ${req.body.fechaNacimiento}
-                ${req.body.nacionalidad}
-                ${req.body.numeroDocumento}
-                ${req.body.genero}
-                ${req.body.areaDestino}`;
+            }
+            catch (error) {
+                console.log(`${error}`);
+                res.status(204).json({ status: 204, mensaje: 'Error en el correo' });
 
-                var mailsolicitante = {
-                    from: 'SIADRI <sistema.siadri@correounivalle.edu.co>',
-                    bcc: `${correos}`,
-                    subject: `Carta de ${stringSubjk} "${req.body.nombre}"`,
-                    html: cuerpoPDF
-                };
-                try {
-                    mailTrasport.sendMail(mailsolicitante);
-                    if (res) {
-                        res.status(200).json({ status: 200, mensaje: 'correo enviado correctamente' });
-                    }
-                }
-                catch (error) {
-                    console.log(`${error}`);
-                    res.status(204).json({ status: 204, mensaje: 'Error en el correo' });
+            }
 
-                }
-            });
 
-        })
 
-    });
+
+          });
+
+      })
+
+  });
 });
 
 exports.enviarCorreoPrograma = functions.https.onRequest((req, res) => {
@@ -576,3 +616,4 @@ exports.enviarCorreoPrograma = functions.https.onRequest((req, res) => {
 
     });
 });
+

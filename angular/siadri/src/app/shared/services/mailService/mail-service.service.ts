@@ -76,7 +76,7 @@ export class MailServiceService {
     };
     return this._http.post(url, bodyNotification)
   }
- 
+
   enviarCarta(solicitud, dirDRI, estadod) {
     const url = `${environment.cloudUrl}/createLetter`;
     const email = `${solicitud['Correo electrónico']},${dirDRI}`;
