@@ -43,7 +43,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
   paises = []
 
-  programas:any
+  programas: any
   arrayProgramas = []
   arrayFacultades = []
 
@@ -70,7 +70,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     @Inject(FirebaseApp) firebaseApp: any,
     private _mailServiceService: MailServiceService,
     private _NativeFirebaseService: NativeFirebaseService,
-    private _MixedFunctions:MixedFunctions
+    private _MixedFunctions: MixedFunctions
   ) {
     this.db = firebaseApp.database();
     this.firebaseStorage = this._NativeFirebaseService.fb.storage();
@@ -106,9 +106,9 @@ export class EstudiantesPostulacionesComponent implements OnInit {
         solicitudesSnap.forEach((solicitudSnap) => {
 
           let dato = solicitudSnap.val()
-          console.log('106',dato)
+          console.log('106', dato)
           if (dato.hasOwnProperty('creadoPor')) {
-            console.log('108',dato)
+            console.log('108', dato)
 
             this.solicitudes[solicitudSnap.key] = dato
             let correo = dato['Correo electrónico'] || ''
@@ -224,13 +224,13 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       "PAÍS DE DESTINO": "",
       "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "",
       "PROGRAMA ACADÉMICO DE ORIGEN": "",
-      "PROGRAMA ACADÉMICO DE ORIGEN 2":"",
+      "PROGRAMA ACADÉMICO DE ORIGEN 2": "",
       "CÓDIGO DEL PROGRAMA": "",
       "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
       "PROGRAMA ACADÉMICO DE DESTINO (2)": "",
-      "Facultad":"",
-      "Facultad2":"",
-      "FINANCIAMIENTO": "NO APLICA",
+      "Facultad": "",
+      "Facultad2": "",
+      "FINANCIAMIENTO": "",
       "VALOR_FINANCIACION_NACIONAL": "",
       "ID_FUENTE_INTERNACIONAL": "",
       "ID_PAIS_FINANCIADOR": "",
@@ -245,7 +245,21 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       "CIUDAD_DIRECCION": "",
       "POSTAL_CODE_DIRECCION": "",
       "ESTADO_PROVINCIA_REGION": "",
-      "INSTITUCION_MEDICA":""
+      "INSTITUCION_MEDICA": "",
+      "matriculaIngles": "no",
+      "curso1": "",
+      "curso2": "",
+      "curso3": "",
+      "curso4": "",
+      "curso5": "",
+      "curso6": "",
+      "finaciacionBeca_rango": "",
+      "finaciacionInstitucionNacional": "",
+      "finaciacionPaisInstitucionNacional": "",
+      "finaciacionInstitucionInternacional": "",
+      "finaciacionPaisInstitucionInternacional": "",
+      "finaciacionONG": ""
+
     }
   }
   actualizarSolicitud() {
@@ -444,9 +458,9 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       });
   }
 
-  getProgramas(){
+  getProgramas() {
     let programs = this.db.ref('/programasAcademicos/')
-    return programs.once('value').then(snapProgramas=>{
+    return programs.once('value').then(snapProgramas => {
       this.programas = snapProgramas.val()
       return snapProgramas.forEach(programa => {
         this.arrayFacultades.push(programa.val()['FACULTAD-INSTITUTO'])
@@ -454,37 +468,37 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
       })
     })
-    .then(resolve=>{
-      this.arrayFacultades = this._MixedFunctions.removeDuplicadesArray(this.arrayFacultades)
-      this.arrayFacultades2 = this._MixedFunctions.removeDuplicadesArray(this.arrayFacultades2)
+      .then(resolve => {
+        this.arrayFacultades = this._MixedFunctions.removeDuplicadesArray(this.arrayFacultades)
+        this.arrayFacultades2 = this._MixedFunctions.removeDuplicadesArray(this.arrayFacultades2)
 
-    })
+      })
   }
 
-  getProgramasPorFacultad(){
+  getProgramasPorFacultad() {
     this.arrayProgramas = []
     for (const prog in this.programas) {
       if (this.programas.hasOwnProperty(prog)) {
         const element = this.programas[prog];
 
-        if (element['FACULTAD-INSTITUTO'] == this.solicitud['Facultad'] ) {
+        if (element['FACULTAD-INSTITUTO'] == this.solicitud['Facultad']) {
           this.arrayProgramas.push(element['NOMBRE PROGRAMA ACADEMICO'])
         }
-        
+
       }
     }
   }
 
-  getProgramasPorFacultad2(){
+  getProgramasPorFacultad2() {
     this.arrayProgramas2 = []
     for (const prog in this.programas) {
       if (this.programas.hasOwnProperty(prog)) {
         const element = this.programas[prog];
 
-        if (element['FACULTAD-INSTITUTO'] == this.solicitud['Facultad2'] ) {
+        if (element['FACULTAD-INSTITUTO'] == this.solicitud['Facultad2']) {
           this.arrayProgramas2.push(element['NOMBRE PROGRAMA ACADEMICO'])
         }
-        
+
       }
     }
   }

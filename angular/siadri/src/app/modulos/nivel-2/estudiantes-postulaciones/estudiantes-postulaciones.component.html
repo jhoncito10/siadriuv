@@ -401,6 +401,8 @@
               </div>
 
               <!-- opcion 1 de programa a cursar -->
+              <mat-divider></mat-divider>
+
               <div class="form-group">
                 <label for="facultadOpcion1" class="col-md-5 control-label">Academic program you want to come at the
                   Universidad del Valle or research area/Programa académico o grupo de investigación en el cual desea
@@ -410,7 +412,7 @@
                 </div>
 
               </div>
-              <div class="form-group" >
+              <div class="form-group">
                 <label for="facultadOpcion1" class="col-md-5 control-label">School/Facultad/Instituto</label>
                 <div class="col-md-7">
                   <select [(ngModel)]='solicitud["Facultad"]' class="form-control col-md-7" id="facultadOpcion1"
@@ -435,16 +437,18 @@
               </div>
 
               <!-- opcion 2 de programa a cursar -->
+              <mat-divider></mat-divider>
+
               <div class="form-group">
                 <label for="facultadOpcion" class="col-md-5 control-label">Academic program you want to come at the
                   Universidad del Valle or research area/Programa académico o grupo de investigación en el cual desea
-                  estudiar/investigar  Option 2</label>
+                  estudiar/investigar Option 2</label>
                 <div class="col-md-7">
 
                 </div>
 
               </div>
-              <div class="form-group" >
+              <div class="form-group">
                 <label for="facultadOpcion2" class="col-md-5 control-label">School/Facultad/Instituto (2)</label>
                 <div class="col-md-7">
                   <select [(ngModel)]='solicitud["Facultad2"]' class="form-control col-md-7" id="facultadOpcion2"
@@ -467,11 +471,190 @@
                 </div>
 
               </div>
+              <!-- Cursos que desea matricular -->
+              <mat-divider></mat-divider>
+
+              <div class="form-group">
+                <label class="col-md-5 control-label">Courses you want to register at Universidad del Valle (if apply)/
+                  Cursos que desea matricular en la Univesidad del Valle (si aplica) </label>
+                <div class="col-md-7">
+
+                </div>
+
+              </div>
+              <div class="form-group">
+                <div class="col-md-5"></div>
+
+                <div class="col-md-7">
+                  <input [(ngModel)]='solicitud["cursos1"]' type="text" class="form-control" placeholder="Curso 1"
+                    [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+                </div>
+
+              </div>
+              <div class="form-group">
+                <div class="col-md-5"></div>
+
+                <div class="col-md-7">
+                  <input [(ngModel)]='solicitud["curso2"]' type="text" class="form-control" placeholder="Curso 2"
+                    [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+                </div>
+
+              </div>
+              <div class="form-group">
+                <div class="col-md-5"></div>
+
+                <div class="col-md-7">
+                  <input [(ngModel)]='solicitud["curso3"]' type="text" class="form-control" placeholder="Curso 3"
+                    [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+                </div>
+
+              </div>
+              <div class="form-group">
+                <div class="col-md-5"></div>
+
+                <div class="col-md-7">
+                  <input [(ngModel)]='solicitud["curso4"]' type="text" class="form-control" placeholder="Curso 4"
+                    [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+                </div>
+
+              </div>
+              <div class="form-group">
+                <div class="col-md-5"></div>
+
+                <div class="col-md-7">
+                  <input [(ngModel)]='solicitud["curso5"]' type="text" class="form-control" placeholder="Curso 5"
+                    [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+                </div>
+
+              </div>
+              <div class="form-group">
+                <div class="col-md-5"></div>
+
+                <div class="col-md-7">
+                  <input [(ngModel)]='solicitud["curso6"]' type="text" class="form-control" placeholder="Curso 6"
+                    [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+                </div>
+
+              </div>
+              <!-- Desea matricular ingles-->
+
+              <mat-divider></mat-divider>
+
+              <div class="form-group">
+                <label class="col-md-5 control-label">Are you interested in attending a spanish course during your stay
+                  at UniValle? (only available for semester stay)/Está interesado en matricular español como lengua
+                  extranjera? </label>
+                <div class="col-md-7">
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="matriculaIngles" [(ngModel)]='solicitud["matriculaIngles"]' value="si"
+                        [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+                      Yes/si
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="matriculaIngles" [(ngModel)]='solicitud["matriculaIngles"]' value="no"
+                        [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+                      No/no
+                    </label>
+                  </div>
+                </div>
+
+
+              </div>
+
             </mat-expansion-panel>
 
+            <!-- MOBILITY FUNDING INFOTMATION/INFORMACIÓN DE FINANCIAMIENTO DE LA MOVILIDAD -->
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  MOBILITY FUNDING INFOTMATION/INFORMACIÓN DE FINANCIAMIENTO DE LA MOVILIDAD:
+                </mat-panel-title>
+              </mat-expansion-panel-header>
 
 
 
+              <div class="form-group">
+                <label for="genero" class="col-md-5 control-label">FUNDING/FINANCIAMIENTO</label>
+                <div class="col-md-7">
+                  <select [(ngModel)]='solicitud["FINANCIAMIENTO"]' [attr.disabled]="estadoComponenteInferior==2 ? '' : null"
+                    id="genero" class="form-control col-md-7">
+                    <option>Personal funds/Recursos Propios</option>
+
+                    <option> Scholarship/Beca</option>
+
+                    <option> Personal funds and Scholarship/Recursos Propios y Beca</option>
+
+                    <option> Other / Otro</option>
+
+                  </select>
+                </div>
+
+              </div>
+
+
+              <div class="form-group">
+                <label for="genero" class="col-md-5 control-label">In case of scholarship, please select range the of
+                  the total amount/en caso de beca, por favor selecciones el rango de la cantidad recibida</label>
+
+                <div class="col-md-7">
+                  <input [(ngModel)]='solicitud["finaciacionBeca_rango"]' type="text" class="form-control" placeholder="Range"
+                    [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                <label for="genero" class="col-md-9 control-label">In case of scholarship, please select the funding
+                  source /En caso de beca, por favor seleccione la fuente de los recursos</label>
+
+                <div class="col-md-7">
+
+                </div>
+
+              </div>
+              <div class="form-group">
+                <div class="col-md-6">
+                  <input [(ngModel)]='solicitud["finaciacionInstitucionNacional"]' type="text" class="form-control" placeholder="National institution/Institución Nacional"
+                    [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+                </div>
+
+                <div class="col-md-6">
+                    <select [(ngModel)]='solicitud["finaciacionPaisInstitucionNacional"]' class="form-control">
+                      <option *ngFor="let pais of paises ; index as i;" [ngValue]="pais"> {{pais}}</option>
+                    </select>
+                </div>
+
+              </div>
+              <div class="form-group">
+                <div class="col-md-6">
+                  <input [(ngModel)]='solicitud["finaciacionInstitucionInternacional"]' type="text" class="form-control"
+                    placeholder="International institution/Institución Internacional" [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+                </div>
+
+                <div class="col-md-6">
+                    <select [(ngModel)]='solicitud["finaciacionPaisInstitucionInternacional"]' class="form-control ">
+                      <option *ngFor="let pais of paises ; index as i;" [ngValue]="pais"> {{pais}}</option>
+                    </select>
+                </div>
+
+              </div>
+              <div class="form-group">
+                <div class="col-md-6">
+                  <input [(ngModel)]='solicitud["finaciacionONG"]' type="text" class="form-control" placeholder="NGO/ONG"
+                    [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
+                </div>
+
+                <div class="col-md-6">
+
+                </div>
+
+              </div>
+
+            </mat-expansion-panel>
+            <!-- /MOBILITY FUNDING INFOTMATION/INFORMACIÓN DE FINANCIAMIENTO DE LA MOVILIDAD -->
 
 
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
@@ -493,14 +676,7 @@
               </div>
 
 
-              <div class="form-group">
-                <label for="NUM_DIAS_MOVILIDAD" class="col-md-5 control-label">NUMERO DE DIAS MOVILIDAD</label>
 
-                <div class="col-md-7">
-                  <input [(ngModel)]='solicitud["NUM_DIAS_MOVILIDAD"]' type="text" class="form-control" id="NUM_DIAS_MOVILIDAD"
-                    [attr.disabled]="estadoComponenteInferior==2 ? '' : null">
-                </div>
-              </div>
               <div class="form-group">
                 <label for="TIPO_DE_PROGRAMA_CONVOCATORIA" class="col-md-5 control-label">TIPO DE PROGRAMA -
                   CONVOCATORIA</label>
