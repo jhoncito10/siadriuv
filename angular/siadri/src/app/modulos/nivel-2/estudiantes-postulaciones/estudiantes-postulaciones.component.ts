@@ -47,6 +47,9 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   arrayProgramas = []
   arrayFacultades = []
 
+  arrayProgramas2 = []
+  arrayFacultades2 = []
+
   inicioMobilidad: any
   finMobilidad: any
 
@@ -103,7 +106,10 @@ export class EstudiantesPostulacionesComponent implements OnInit {
         solicitudesSnap.forEach((solicitudSnap) => {
 
           let dato = solicitudSnap.val()
+          console.log('106',dato)
           if (dato.hasOwnProperty('creadoPor')) {
+            console.log('108',dato)
+
             this.solicitudes[solicitudSnap.key] = dato
             let correo = dato['Correo electrónico'] || ''
             let ano = dato['AÑO'] || ''
@@ -144,7 +150,6 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       .orderByChild("nombre_pais")
       .once('value')
       .then(paisesSnap => {
-        console.log(paisesSnap.val())
         paisesSnap.forEach(pais => {
           this.paises.push(pais.val().nombre_pais)
 
@@ -223,6 +228,8 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       "CÓDIGO DEL PROGRAMA": "",
       "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
       "PROGRAMA ACADÉMICO DE DESTINO (2)": "",
+      "Facultad":"",
+      "Facultad2":"",
       "FINANCIAMIENTO": "NO APLICA",
       "VALOR_FINANCIACION_NACIONAL": "",
       "ID_FUENTE_INTERNACIONAL": "",
@@ -441,19 +448,46 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     let programs = this.db.ref('/programasAcademicos/')
     return programs.once('value').then(snapProgramas=>{
       this.programas = snapProgramas.val()
-      console.log('444',this.programas)
       return snapProgramas.forEach(programa => {
         this.arrayFacultades.push(programa.val()['FACULTAD-INSTITUTO'])
+        this.arrayFacultades2.push(programa.val()['FACULTAD-INSTITUTO'])
+
       })
     })
     .then(resolve=>{
-      console.log('450',this.arrayFacultades)
       this.arrayFacultades = this._MixedFunctions.removeDuplicadesArray(this.arrayFacultades)
-      console.log('452',this.arrayFacultades)
+      this.arrayFacultades2 = this._MixedFunctions.removeDuplicadesArray(this.arrayFacultades2)
 
     })
   }
 
+  getProgramasPorFacultad(){
+    this.arrayProgramas = []
+    for (const prog in this.programas) {
+      if (this.programas.hasOwnProperty(prog)) {
+        const element = this.programas[prog];
+
+        if (element['FACULTAD-INSTITUTO'] == this.solicitud['Facultad'] ) {
+          this.arrayProgramas.push(element['NOMBRE PROGRAMA ACADEMICO'])
+        }
+        
+      }
+    }
+  }
+
+  getProgramasPorFacultad2(){
+    this.arrayProgramas2 = []
+    for (const prog in this.programas) {
+      if (this.programas.hasOwnProperty(prog)) {
+        const element = this.programas[prog];
+
+        if (element['FACULTAD-INSTITUTO'] == this.solicitud['Facultad2'] ) {
+          this.arrayProgramas2.push(element['NOMBRE PROGRAMA ACADEMICO'])
+        }
+        
+      }
+    }
+  }
   enviarCorreo(email, asunto, mensaje, cc = '', cco = '') {
 
     return this._mailServiceService

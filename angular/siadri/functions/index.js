@@ -520,8 +520,20 @@ var correoPrograma = (programa) => {
 
 
 exports.createLetter = functions.https.onRequest((req, res) => {
-  console.log('485',req.body)
-  cors(req, res, () => {
+    console.log('485',req.body)
+    cors(req, res, () => {
+        correoPrograma(req.body.areaDestino).then(function (correPro) {
+            console.log('488',correPro.val())
+
+            correPro.forEach(function (programaSnap) {
+                console.log('491',programaSnap)
+
+                var correoPrograma = programaSnap.val()['correo']
+                var correos = ''
+                if (isEmail(correoPrograma)) {
+                    correos = `${req.body.email},${correoPrograma}`
+                } else {
+                    correos = `${req.body.email}`
 
       correoPrograma(req.body.areaDestino).then(  function  (correPro) {
           console.log('488',correPro.val())
