@@ -3,13 +3,17 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 
 import { FirebaseApp } from 'angularfire2';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 import swal from 'sweetalert2';
 import { LocalStorageService } from 'ngx-webstorage';
-import { MailServiceService, NativeFirebaseService, MixedFunctions} from "../../../shared/services/main-service.service";
-import * as  moment from "moment";
-import { environment } from "../../../../environments/environment";
-import * as firebase from "firebase";
+import { MailServiceService, NativeFirebaseService, MixedFunctions} from '../../../shared/services/main-service.service';
+import * as  moment from 'moment';
+import { environment } from '../../../../environments/environment';
+import * as firebase from 'firebase';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
+
+import { DialogComponent } from './dialog/dialog.component';
 @Component({
   selector: 'app-admin-post-entrantes',
   templateUrl: './admin-post-entrantes.component.html',
@@ -17,19 +21,19 @@ import * as firebase from "firebase";
 })
 export class AdminPostEntrantesComponent implements OnInit {
   user = JSON.parse(localStorage.getItem('usuario'));
-  //datos consulta
+  // datos consulta
   solicitudes: any;
   // solicitud selecionada
   solicitud: any;
   // variable para la instacia de realtime databe de firebase
   db: any
-  //datos de la tabla
+  // datos de la tabla
   firebaseStorage: any
   dataTablaSolicitudes = [];
-  displayedColumns = ['key','correo', 'ano', 'destino', 'nombre', 'estado'];
+  displayedColumns = ['key', 'correo', 'ano', 'destino', 'nombre', 'estado'];
   dataSource: MatTableDataSource<any>;
   universidadProcedencia = 'BENEMÉRITA UNIVERSIDAD AUTÓNOMA DE PUEBLA'
-  estadoComponenteInferior = 0 //0 = ninguno; 1 =  nueva solicitud; 2 = En espera de aprobación DRI; 3 = Aprobada por dirección de programa;
+  estadoComponenteInferior = 0 // 0 = ninguno; 1 =  nueva solicitud; 2 = En espera de aprobación DRI; 3 = Aprobada por dirección de programa;
   year
   rowSelected
   spinertablapostulaciones = false
@@ -51,8 +55,9 @@ export class AdminPostEntrantesComponent implements OnInit {
     @Inject(FirebaseApp) firebaseApp: any,
     private _mailServiceService: MailServiceService,
     private _NativeFirebaseService: NativeFirebaseService,
-    private _MixedFunctions:MixedFunctions,
-    private _AngularFireAuth:AngularFireAuth
+    private _MixedFunctions: MixedFunctions,
+    private _AngularFireAuth: AngularFireAuth,
+    private dialog: MatDialog
   ) {
     this.db = firebaseApp.database();
     this.firebaseStorage = this._NativeFirebaseService.fb.storage();
@@ -62,14 +67,17 @@ export class AdminPostEntrantesComponent implements OnInit {
   }
 
   ngOnInit() {
-    var ref = this.db.ref('/postulaciones/')
-    var _this = this
-    var onValueChange = ref.on('child_changed', function (dataSnapshot) {
-      _this.consultaDatosTabla()
+    const ref = this.db.ref('/postulaciones/')
+    const _sthis = this
+    const onValueChange = ref.on('child_changed', function (dataSnapshot) {
+      _sthis.consultaDatosTabla()
     });
     // Sometime later...
     ref.off('value', onValueChange);
     this.consultaDatosTabla()
+
+
+ 
 
   }
 
@@ -84,18 +92,18 @@ export class AdminPostEntrantesComponent implements OnInit {
         this.dataTablaSolicitudes = [];
         console.log('consulta tabla', solicitudesSnap.val())
         solicitudesSnap.forEach((solicitudSnap) => {
-          let dato = solicitudSnap.val()
+          const dato = solicitudSnap.val()
 
           if (dato.hasOwnProperty('creadoPor')) {
             this.solicitudes[solicitudSnap.key] = dato
-            let correo = dato['Correo electrónico'] || ''
-            let ano = dato['fechaActualizado'] || ''
-            let nombre = dato['NOMBRE'] || ''
-            let apellidos = dato['APELLIDOS'] || ''
-            let nombreCompleto = `${nombre} ${apellidos}`
-            let estado = dato.estado || 'Sin estado'
-            let destino = dato['PROGRAMA ACADÉMICO DE DESTINO (1)'] || 'Ninguno'
-            let comentarioDenegacion = dato['comentarioDenegacion'] || ''
+            const correo = dato['Correo electrónico'] || ''
+            const ano = dato['fechaActualizado'] || ''
+            const nombre = dato['NOMBRE'] || ''
+            const apellidos = dato['APELLIDOS'] || ''
+            const nombreCompleto = `${nombre} ${apellidos}`
+            const estado = dato.estado || 'Sin estado'
+            const destino = dato['PROGRAMA ACADÉMICO DE DESTINO (1)'] || 'Ninguno'
+            const comentarioDenegacion = dato['comentarioDenegacion'] || ''
 
             this.dataTablaSolicitudes.push({
               correo: correo,
@@ -151,6 +159,9 @@ export class AdminPostEntrantesComponent implements OnInit {
         case 'Denegada por DRI UV':
         this.estadoComponenteInferior = 2
         break;
+        case 'Solicitud completada por estudiante':
+        this.estadoComponenteInferior = 4
+        break;
       default:
         this.estadoComponenteInferior = 0
         break;
@@ -168,22 +179,22 @@ export class AdminPostEntrantesComponent implements OnInit {
   }
   aprobarSolicitud() {
     swal.showLoading()
-    var newmail = this.solicitud['Correo electrónico']
+    let newmail = this.solicitud['Correo electrónico']
     newmail = newmail.trim(); // Remove whitespace
     newmail = newmail.toLowerCase();
-    var pass = this._MixedFunctions.makePassword()
+    const pass = this._MixedFunctions.makePassword()
 
     this._AngularFireAuth.auth.createUserWithEmailAndPassword(newmail, pass)
       .then((user) => {
         user.sendEmailVerification()
 
-        let body = `
+        const body = `
             Cuerpo del correo de cuenta de usuario postulante
             usuario: ${newmail}
             password: ${pass} "Este password es tempral, No olvide cambiarlo"
           `
 
-        this.enviarCorreo(newmail, "Cuenta creada para estudiante", body)
+        this.enviarCorreo(newmail, 'Cuenta creada para estudiante', body)
           .subscribe((responseData) => {
 
 
@@ -191,7 +202,7 @@ export class AdminPostEntrantesComponent implements OnInit {
       })
       .catch(error => {
         console.log(error)
-        if (error.message != 'The email address is already in use by another account.') {
+        if (error.message !== 'The email address is already in use by another account.') {
           swal(
             `${error}`,
             '',
@@ -210,22 +221,22 @@ export class AdminPostEntrantesComponent implements OnInit {
         swal({
           title: `Solicitud actualizada`
         })
-        if (this.solicitud['Correo electrónico'] != '') {
-          var body = 'cuerpo del correo de aceptacion para estudiante'
-          var correos = `${this.solicitud['Correo electrónico']}`
-          this.enviarCorreo(this.solicitud['Correo electrónico'], "Aprobada por DRI UV", body)
+        if (this.solicitud['Correo electrónico'] !== '') {
+          const body = 'cuerpo del correo de aceptacion para estudiante'
+          const correos = `${this.solicitud['Correo electrónico']}`
+          this.enviarCorreo(this.solicitud['Correo electrónico'], 'Aprobada por DRI UV', body)
             .subscribe((responseData) => {
               console.log(responseData)}, error => {console.log(error)})
-          var bodyPar = 'cuerpo del correo de aceptacion para par externo'
+          const bodyPar = 'cuerpo del correo de aceptacion para par externo'
 
-          return this.enviarCorreo(this.solicitud['Correo electrónico'], "Aprobada por DRI UV", bodyPar)
+          return this.enviarCorreo(this.solicitud['Correo electrónico'], 'Aprobada por DRI UV', bodyPar)
             .subscribe((responseData) => {console.log(responseData)}, error => {console.log(error)})
-        } 
-        
+        }
+
 
       })
       .then(() => {
-        let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
+        const notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
         this._mailServiceService
           .crearNotification(this.solicitud['Correo electrónico'], notificationInfo)
           .subscribe((responseData) => {
@@ -260,7 +271,7 @@ export class AdminPostEntrantesComponent implements OnInit {
   }
 
   denegarSolicitud() {
-    var mensajeDenegacion = ''
+    let mensajeDenegacion = ''
 
 
     const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`);
@@ -289,12 +300,12 @@ export class AdminPostEntrantesComponent implements OnInit {
       allowOutsideClick: () => !swal.isLoading()
     }).then((result) => {
       if (result.value) {
-        if (this.solicitud['Correo electrónico'] != '') {
-          var body = `cuerpo del correo de la razon por la cual la solicitud es denegada 
+        if (this.solicitud['Correo electrónico'] !== '') {
+          const body = `cuerpo del correo de la razon por la cual la solicitud es denegada
           ${result} -- ${mensajeDenegacion}`
-          var correos = `${this.solicitud['creadoPor']}`
+          const correos = `${this.solicitud['creadoPor']}`
 
-          return this.enviarCorreo(correos, "Solicitud Denegada por DRI UV", body)
+          return this.enviarCorreo(correos, 'Solicitud Denegada por DRI UV', body)
             .subscribe((responseData) => {
               console.log(responseData)
 
@@ -322,7 +333,7 @@ export class AdminPostEntrantesComponent implements OnInit {
       }
     })
       .then(() => {
-        let notificationInfo = 'La solicitud ha sido Rechazada por DRI UV'
+        const notificationInfo = 'La solicitud ha sido Rechazada por DRI UV'
         this._mailServiceService
           .crearNotification(this.solicitud['creadoPor'], notificationInfo)
           .subscribe((responseData) => {
@@ -349,7 +360,7 @@ export class AdminPostEntrantesComponent implements OnInit {
 
           promise.update(this.solicitud).then(() => {
             this._mailServiceService
-              .enviarCarta(this.solicitud, environment.mails.dirDRI,'aceptada')
+              .enviarCarta(this.solicitud, environment.mails.dirDRI, 'aceptada')
               .subscribe((responseData) => {
                 if (responseData) {
                   swal({
@@ -365,13 +376,13 @@ export class AdminPostEntrantesComponent implements OnInit {
             })
 
         } else {
-          swal('Datos exclusivos de la DRI incompletos','','error')
+          swal('Datos exclusivos de la DRI incompletos', '', 'error')
         }
 
         break;
       case 'Denegada por la dirección de programa':
         this._mailServiceService
-          .enviarCarta(this.solicitud, environment.mails.dirDRI,'denegada')
+          .enviarCarta(this.solicitud, environment.mails.dirDRI, 'denegada')
           .subscribe((responseData) => {
             if (responseData) {
               swal({
@@ -388,9 +399,9 @@ export class AdminPostEntrantesComponent implements OnInit {
 
 
   datosObligatoriosDri() {
-    if (this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'].trim() == '') {
+    if (this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'].trim() === '') {
       return false
-    } else if (this.solicitud['VALOR_FINANCIACION_NACIONAL'].trim() == '') {
+    } else if (this.solicitud['VALOR_FINANCIACION_NACIONAL'].trim() === '') {
       return false
     } else {
       return true
@@ -398,54 +409,70 @@ export class AdminPostEntrantesComponent implements OnInit {
   }
   setsolicitud() {
     this.solicitud = {
-      "AÑO": this.year,
-      "NOMBRE": "Francisco Hurtado",
-      "APELLIDOS": "",
-      "ID_SEXO_BIOLOGICO": "",
-      "ID_ESTADO_CIVIL": "",
-      "FECHA_NACIMIENTO": "",
-      "Correo electrónico": "francisco.hurtado@geoprocess.com.co",
-      "TIPO DE IDENTIFICACIÓN": "",
-      "NÚMERO DE IDENTIFICACIÓN": "",
-      "CÓDIGO DEL ESTUDIANTE EN UNIVALLE": "",
-      "PERIODO ACADÉMICO": "",
-      "TIPO DE MOVILIDAD": "ENTRANTE",
-      "TIPO DE CONVENIO": "",
-      "CODIGO_CONVENIO": "",
-      "MODALIDAD": "",
-      "NUM_DIAS_MOVILIDAD": "",
-      "TIPO DE PROGRAMA - CONVOCATORIA": "",
-      "NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN": "",
-      "NIVEL DE FORMACIÓN DE LA MOVILIDAD": "",
-      "PAÍS DE ORIGEN": "",
-      "UNIVERSIDAD DE PROCEDENCIA": "",
-      "CIUDAD-SEDE": "",
-      "PAÍS DE DESTINO": "",
-      "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "UNIVERSIDAD DEL VALLE",
-      "PROGRAMA ACADÉMICO DE ORIGEN": "",
-      "CÓDIGO DEL PROGRAMA": "",
-      "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
-      "PROGRAMA ACADÉMICO DE DESTINO (2)": "",
-      "FINANCIAMIENTO": "",
-      "VALOR_FINANCIACION_NACIONAL": "",
-      "ID_FUENTE_INTERNACIONAL": "",
-      "ID_PAIS_FINANCIADOR": "",
-      "VALOR_FINANCIACION_INTERNAC": "",
-      "CAMPUS": "",
-      "urlFile1": "",
-      "urlFile2": "",
-      "urlFile3": "",
-      "creadoPor": "",
-      "actualizadoPor": this.user.email,
-      "fechaCreado": "",
-      "fechaActualizado": "",
-      "estado": "",
-      "comentariosDRI":"",
-      "comentariosDirector":"",
-      "comentariosEstudiante":"",
-      "comentariosPar":""
+      'AÑO': this.year,
+      'NOMBRE': 'Francisco Hurtado',
+      'APELLIDOS': '',
+      'ID_SEXO_BIOLOGICO': '',
+      'ID_ESTADO_CIVIL': '',
+      'FECHA_NACIMIENTO': '',
+      'Correo electrónico': 'francisco.hurtado@geoprocess.com.co',
+      'TIPO DE IDENTIFICACIÓN': '',
+      'NÚMERO DE IDENTIFICACIÓN': '',
+      'CÓDIGO DEL ESTUDIANTE EN UNIVALLE': '',
+      'PERIODO ACADÉMICO': '',
+      'TIPO DE MOVILIDAD': 'ENTRANTE',
+      'TIPO DE CONVENIO': '',
+      'CODIGO_CONVENIO': '',
+      'MODALIDAD': '',
+      'NUM_DIAS_MOVILIDAD': '',
+      'TIPO DE PROGRAMA - CONVOCATORIA': '',
+      'NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN': '',
+      'NIVEL DE FORMACIÓN DE LA MOVILIDAD': '',
+      'PAÍS DE ORIGEN': '',
+      'UNIVERSIDAD DE PROCEDENCIA': '',
+      'CIUDAD-SEDE': '',
+      'PAÍS DE DESTINO': '',
+      'UNIVERSIDAD - INSTITUCIÓN RECEPTORA': 'UNIVERSIDAD DEL VALLE',
+      'PROGRAMA ACADÉMICO DE ORIGEN': '',
+      'CÓDIGO DEL PROGRAMA': '',
+      'PROGRAMA ACADÉMICO DE DESTINO (1)': '',
+      'PROGRAMA ACADÉMICO DE DESTINO (2)': '',
+      'FINANCIAMIENTO': '',
+      'VALOR_FINANCIACION_NACIONAL': '',
+      'ID_FUENTE_INTERNACIONAL': '',
+      'ID_PAIS_FINANCIADOR': '',
+      'VALOR_FINANCIACION_INTERNAC': '',
+      'CAMPUS': '',
+      'urlFile1': '',
+      'urlFile2': '',
+      'urlFile3': '',
+      'creadoPor': '',
+      'actualizadoPor': this.user.email,
+      'fechaCreado': '',
+      'fechaActualizado': '',
+      'estado': '',
+      'comentariosDRI': '',
+      'comentariosDirector': '',
+      'comentariosEstudiante': '',
+      'comentariosPar': ''
     }
   }
+
+ 
+  openDialog(item) {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      id: this.solicitud.key,
+      variable: item
+    };
+
+    this.dialog.open(DialogComponent, dialogConfig);
+}
 
 
   enviarCorreo(email, asunto, mensaje, cc = '', cco = '') {

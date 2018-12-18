@@ -26,7 +26,8 @@ import {
   MatNativeDateModule,
   MatDividerModule,
   MatExpansionModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatDialogModule
 
 } from '@angular/material';
 
@@ -108,6 +109,7 @@ import { SideBarMenuPostulacionesComponent } from './shared/layouts/sidebar-left
 import { AdminConveniosComponent } from './modulos/nivel-3/admin-convenios/admin-convenios.component';
 
 import { NgxEditorModule } from 'ngx-editor';
+import { DialogComponent } from './modulos/nivel-3/admin-post-entrantes/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -163,7 +165,8 @@ import { NgxEditorModule } from 'ngx-editor';
     AdminPostEntrantesComponent,
     AdminPostSalientesComponent,
     SideBarMenuPostulacionesComponent,
-    AdminConveniosComponent
+    AdminConveniosComponent,
+    DialogComponent
 
   ],
   imports: [
@@ -196,6 +199,7 @@ import { NgxEditorModule } from 'ngx-editor';
     MatDividerModule,
     MatExpansionModule,
     MatAutocompleteModule,
+    MatDialogModule,
     Ng2Webstorage
   ],
   // exports: [
@@ -222,6 +226,7 @@ import { NgxEditorModule } from 'ngx-editor';
     MixedFunctions,
     NativeFirebaseService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ DialogComponent ]
 })
 export class AppModule { }

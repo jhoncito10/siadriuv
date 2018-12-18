@@ -51,5 +51,9 @@ export class ConveniosService {
     });
   }
 
+  updateSolicitud(idsol, obj) {
+    return this._angularfire.object('postulaciones/' + idsol).update(obj);
+  }
+
 
 }

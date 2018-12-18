@@ -4,9 +4,9 @@ import { FirebaseApp } from 'angularfire2';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import swal from 'sweetalert2';
 import { LocalStorageService } from 'ngx-webstorage';
-import { MailServiceService, MixedFunctions } from "../../../shared/services/main-service.service";
+import { MailServiceService, MixedFunctions } from '../../../shared/services/main-service.service';
 import { AngularFireAuth } from 'angularfire2/auth';
-import * as  moment from "moment";
+import * as  moment from 'moment';
 import { ReturnStatement } from '@angular/compiler';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
@@ -24,7 +24,7 @@ export class AdminParesExternosComponent implements OnInit {
 
 
 
-  //datos consulta
+  // datos consulta
   cuentasParesExt: any;
   // solicitud selecionada
   cuenta: any;
@@ -41,7 +41,7 @@ export class AdminParesExternosComponent implements OnInit {
 
   paises = []
 
-  estadoComponenteInferior = 0 //0 = ninguno; 1 =  nueva programa; 2 = datos programa
+  estadoComponenteInferior = 0 // 0 = ninguno; 1 =  nueva programa; 2 = datos programa
 
   rowSelected
 
@@ -129,18 +129,18 @@ export class AdminParesExternosComponent implements OnInit {
         this.dataTablaCuentasParesExt = [];
 
         solicitudesSnap.forEach((solicitudSnap) => {
-          let dato = solicitudSnap.val()
+          const dato = solicitudSnap.val()
           console.log(dato)
 
           this.cuentasParesExt[solicitudSnap.key] = dato
-          let correo = dato['correo'] || ''
-          let nombre = dato['nombre'] || ''
-          let institucion = dato['institucion'] || ''
-          let pais = dato['pais'] || ''
+          const correo = dato['correo'] || ''
+          const nombre = dato['nombre'] || ''
+          const institucion = dato['institucion'] || ''
+          const pais = dato['pais'] || ''
 
-          let estado = dato['estado'] || ''
+          const estado = dato['estado'] || ''
 
-          var convenio = ''
+          let convenio = ''
           for (const key in dato['convenio']) {
             if (dato['convenio'].hasOwnProperty(key)) {
               const element = dato['convenio'][key];
@@ -172,7 +172,7 @@ export class AdminParesExternosComponent implements OnInit {
       }).catch((error) => console.log(`${error}`))
   }
   getInstituciones() {
-    var consultaConvenios = this.localSt.retrieve('convenios');
+    let consultaConvenios = this.localSt.retrieve('convenios');
     console.log('local', consultaConvenios);
     if (consultaConvenios) {
       for (const key in consultaConvenios) {
@@ -216,13 +216,13 @@ export class AdminParesExternosComponent implements OnInit {
     this.convenios = []
     console.log(insti)
     return this.db.ref('/convenios/')
-      .orderByChild("Institucion")
+      .orderByChild('Institucion')
       .equalTo(insti)
       .once('value')
 
       .then(conveniosSnap => {
         console.log(conveniosSnap.val())
-        var ResConvenios = conveniosSnap.val()
+        const ResConvenios = conveniosSnap.val()
         for (const conv in ResConvenios) {
           if (ResConvenios.hasOwnProperty(conv)) {
             this.convenios.push({
@@ -244,7 +244,7 @@ export class AdminParesExternosComponent implements OnInit {
   getPaises() {
     this.paises = []
     return this.db.ref('/paises/')
-      .orderByChild("nombre_pais")
+      .orderByChild('nombre_pais')
       .once('value')
       .then(paisesSnap => {
         console.log(paisesSnap.val())
@@ -266,7 +266,7 @@ export class AdminParesExternosComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
   selectCuenta(row) {
- 
+
     this.setCuenta()
     this.estadoComponenteInferior = 1
     this.rowSelected = row;
@@ -303,22 +303,22 @@ export class AdminParesExternosComponent implements OnInit {
 
         }
       })
-      var newmail = this.cuenta.correo
+      let newmail = this.cuenta.correo
       newmail = newmail.trim(); // Remove whitespace
       newmail = newmail.toLowerCase();
-      var pass = this._MixedFunctions.makePassword()
+      const pass = this._MixedFunctions.makePassword()
 
       this._AngularFireAuth.auth.createUserWithEmailAndPassword(newmail, pass)
         .then((user) => {
           user.sendEmailVerification()
 
-          let body = `
+          const body = `
               Cuerpo del correo de cuenta de par externo creada
               usuario: ${this.cuenta['correo']}
               password: ${pass} "Este password es tempral, No olvide cambiarlo"
             `
 
-          this.enviarCorreo(newmail, "Cuenta creada", body)
+          this.enviarCorreo(newmail, 'Cuenta creada', body)
             .subscribe((responseData) => {
 
 
@@ -326,7 +326,7 @@ export class AdminParesExternosComponent implements OnInit {
         })
         .catch(error => {
           console.log(error)
-          if (error.message != 'The email address is already in use by another account.') {
+          if (error.message !== 'The email address is already in use by another account.') {
             swal(
               `${error}`,
               '',
@@ -336,9 +336,9 @@ export class AdminParesExternosComponent implements OnInit {
 
         })
 
-      var refPares = this.db.ref(`/paresExternos/`)
+      const refPares = this.db.ref(`/paresExternos/`)
       refPares
-        .orderByChild("correo")
+        .orderByChild('correo')
         .equalTo(this.cuenta['correo'])
         .once('value')
         .then(snap => {
@@ -349,20 +349,20 @@ export class AdminParesExternosComponent implements OnInit {
               'info'
             )
           } else {
-            var ref = this.db.ref(`/paresExternos/`).push()
+            const ref = this.db.ref(`/paresExternos/`).push()
 
-            this.cuenta["fechaActualizado"] = moment().format('DD/MM/YYYY HH:mm')
-            this.cuenta["fechaCreado"] = moment().format('DD/MM/YYYY HH:mm')
+            this.cuenta['fechaActualizado'] = moment().format('DD/MM/YYYY HH:mm')
+            this.cuenta['fechaCreado'] = moment().format('DD/MM/YYYY HH:mm')
             this.cuenta.convenio = this.conveniosSeleccionados
 
             return ref.set(this.cuenta).then(() => {
               this.consultaDatosTabla()
-              let body = `
+              const body = `
               Cuerpo del correo de cuenta de par externo creada
               usuario: ${this.cuenta['correo']} ahora eres par externo
             `
 
-              this.enviarCorreo(newmail, "Cuenta creada", body)
+              this.enviarCorreo(newmail, 'Cuenta creada', body)
                 .subscribe((responseData) => {
                   if (responseData) {
                     swal(
@@ -413,7 +413,7 @@ export class AdminParesExternosComponent implements OnInit {
   editar() {
     swal.showLoading()
 
-    var ref = this.db.ref(`/paresExternos/${this.cuenta.key}`)
+    const ref = this.db.ref(`/paresExternos/${this.cuenta.key}`)
     this.cuenta.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
     this.cuenta.convenio = this.conveniosSeleccionados
     ref.update(this.cuenta).then(() => {
@@ -424,15 +424,15 @@ export class AdminParesExternosComponent implements OnInit {
   }
   setCuenta() {
     this.cuenta = {
-      "nombre": "Francisco par",
-      "correo": "francisco.hurtado@geoprocess.com.co",
-      "correoNotas": "",
-      "pais": "",
-      "institucion": "",
-      "key": "",
-      "otraInstitucion": "",
-      "convenio": "",
-      "estado": "activo"
+      'nombre': 'Francisco par',
+      'correo': 'francisco.hurtado@geoprocess.com.co',
+      'correoNotas': '',
+      'pais': '',
+      'institucion': '',
+      'key': '',
+      'otraInstitucion': '',
+      'convenio': '',
+      'estado': 'activo'
     }
     this.convenios = []
     this.conveniosSeleccionados = []
