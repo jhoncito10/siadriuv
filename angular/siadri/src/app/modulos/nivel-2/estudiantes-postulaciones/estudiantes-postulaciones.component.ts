@@ -28,7 +28,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   firebaseStorage: any
   dataTablaSolicitudes = [];
 
-  displayedColumns = ['correo', 'ano', 'destino', 'nombre', 'estado'];
+  displayedColumns = ['key','correo', 'ano', 'destino', 'nombre', 'estado'];
   dataSource: MatTableDataSource<any>;
 
   universidadProcedencia = 'BENEMÉRITA UNIVERSIDAD AUTÓNOMA DE PUEBLA'
@@ -59,9 +59,23 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   @ViewChild('panelinferior') panelInferior: ElementRef;
   @ViewChild('panelSuperiorButton') panelSuperiorButton: ElementRef;
   @ViewChild('panelinferiorButton') panelinferiorButton: ElementRef;
-  @ViewChild('fileInput1') fileInput1: ElementRef;
-  @ViewChild('fileInput2') fileInput2: ElementRef;
-  @ViewChild('fileInput3') fileInput3: ElementRef;
+
+
+
+  // FILES
+  @ViewChild('fileInputCartaPresentacion') fileInputCartaPresentacion: ElementRef;
+  @ViewChild('fileInputCertificadoNotas') fileInputCertificadoNotas: ElementRef;
+  @ViewChild('fileInputConocimientoEspanol') fileInputConocimientoEspanol: ElementRef;
+  @ViewChild('fileInputCartaMotivacion') fileInputCartaMotivacion: ElementRef;
+  @ViewChild('fileInputDocumentoID') fileInputDocumentoID: ElementRef;
+  @ViewChild('fileInputFoto') fileInputFoto: ElementRef;
+  // REQUISITOS ADICIONALES
+  @ViewChild('fileInputEuropassCV') fileInputEuropassCV: ElementRef;
+  @ViewChild('fileInputFellows') fileInputFellows: ElementRef;
+
+
+  @ViewChild('fileInputCartaTutor') fileInputCartaTutor: ElementRef;
+  @ViewChild('fileInputDescripcionProyecto') fileInputDescripcionProyecto: ElementRef;
 
 
 
@@ -258,14 +272,15 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       "finaciacionPaisInstitucionNacional": "",
       "finaciacionInstitucionInternacional": "",
       "finaciacionPaisInstitucionInternacional": "",
-      "finaciacionONG": ""
+      "finaciacionONG": "",
+      "CartaPresentacion":""
 
     }
   }
   actualizarSolicitud() {
     swal.showLoading()
     // var _this = this
-    this.solicitud.estado = 'En espera de aprobación dirección de programa'
+    this.solicitud.estado = 'Solicitud completada por estudiante'
     this.solicitud.actualizadoPor = this.user.email
 
     this.solicitud.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
@@ -438,24 +453,169 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     this.solicitud.actualizadoPor = this.user.email
 
     this.solicitud.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
-    const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update(this.solicitud);
-    promise
-      .then(res => {
+    let reader = new FileReader();
+    var arrayPromesasFiles = []
 
-        swal({
-          title: `Solicitud actualizada`
+    if (this.fileInputCartaPresentacion &&
+      this.fileInputCartaPresentacion.nativeElement.files
+      && this.fileInputCartaPresentacion.nativeElement.files.length > 0
+    ) {
+      let file = this.fileInputCartaPresentacion.nativeElement.files[0];
+      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+      let storageRef = this.firebaseStorage.ref();
+      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaPresentacion.${extention[extention.length-1]}`);
+
+      arrayPromesasFiles.push(mountainsRef.put(file))
+    }
+
+    if (this.fileInputCertificadoNotas &&
+      this.fileInputCertificadoNotas.nativeElement.files
+      && this.fileInputCertificadoNotas.nativeElement.files.length > 0
+    ) {
+      let file = this.fileInputCertificadoNotas.nativeElement.files[0];
+      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+
+      let storageRef = this.firebaseStorage.ref();
+      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CertificadoNotas.${extention[extention.length-1]}`);
+
+      arrayPromesasFiles.push(mountainsRef.put(file))
+    }
+    if (this.fileInputConocimientoEspanol &&
+      this.fileInputConocimientoEspanol.nativeElement.files
+      && this.fileInputConocimientoEspanol.nativeElement.files.length > 0
+    ) {
+      let file = this.fileInputConocimientoEspanol.nativeElement.files[0];
+      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+
+      let storageRef = this.firebaseStorage.ref();
+      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/ConocimientoEspanol.${extention[extention.length-1]}`);
+
+      arrayPromesasFiles.push(mountainsRef.put(file))
+    }
+    if (this.fileInputCartaMotivacion &&
+      this.fileInputCartaMotivacion.nativeElement.files
+      && this.fileInputCartaMotivacion.nativeElement.files.length > 0
+    ) {
+      let file = this.fileInputCartaMotivacion.nativeElement.files[0];
+      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+
+      let storageRef = this.firebaseStorage.ref();
+      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaMotivacion.${extention[extention.length-1]}`);
+
+      arrayPromesasFiles.push(mountainsRef.put(file))
+    }
+    if (this.fileInputDocumentoID &&
+      this.fileInputDocumentoID.nativeElement.files
+      && this.fileInputDocumentoID.nativeElement.files.length > 0
+    ) {
+      let file = this.fileInputDocumentoID.nativeElement.files[0];
+      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+
+      let storageRef = this.firebaseStorage.ref();
+      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/InputDocumentoID.${extention[extention.length-1]}`);
+
+      arrayPromesasFiles.push(mountainsRef.put(file))
+    }
+    if (this.fileInputFoto &&
+      this.fileInputFoto.nativeElement.files
+      && this.fileInputFoto.nativeElement.files.length > 0
+    ) {
+      let file = this.fileInputFoto.nativeElement.files[0];
+      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+
+      let storageRef = this.firebaseStorage.ref();
+      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/InputFoto.${extention[extention.length-1]}`);
+
+      arrayPromesasFiles.push(mountainsRef.put(file))
+    }
+    if (this.fileInputEuropassCV &&
+      this.fileInputEuropassCV.nativeElement.files
+      && this.fileInputEuropassCV.nativeElement.files.length > 0
+    ) {
+      let file = this.fileInputEuropassCV.nativeElement.files[0];
+      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+
+      let storageRef = this.firebaseStorage.ref();
+      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/InputEuropassCV.${extention[extention.length-1]}`);
+
+      arrayPromesasFiles.push(mountainsRef.put(file))
+    }
+    if (this.fileInputFellows &&
+      this.fileInputFellows.nativeElement.files
+      && this.fileInputFellows.nativeElement.files.length > 0
+    ) {
+      let file = this.fileInputFellows.nativeElement.files[0];
+      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+
+      let storageRef = this.firebaseStorage.ref();
+      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/InputFellows.${extention[extention.length-1]}`);
+
+      arrayPromesasFiles.push(mountainsRef.put(file))
+    }
+    if (this.fileInputCartaTutor && this.fileInputCartaTutor.nativeElement.files
+      && this.fileInputCartaTutor.nativeElement.files.length > 0
+    ) {
+      let file = this.fileInputCartaTutor.nativeElement.files[0];
+      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+
+      let storageRef = this.firebaseStorage.ref();
+      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaTutor.${extention[extention.length-1]}`);
+
+      arrayPromesasFiles.push(mountainsRef.put(file))
+    }
+    if (this.fileInputDescripcionProyecto &&
+      this.fileInputDescripcionProyecto.nativeElement.files
+      && this.fileInputDescripcionProyecto.nativeElement.files.length > 0
+    ) {
+      let file = this.fileInputDescripcionProyecto.nativeElement.files[0];
+      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+
+      let storageRef = this.firebaseStorage.ref();
+      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/DescripcionProyecto.${extention[extention.length-1]}`);
+
+      arrayPromesasFiles.push(mountainsRef.put(file))
+    }
+
+    Promise.all(arrayPromesasFiles).then((values) => {
+
+      for (let index = 0; index < values.length; index++) {
+        const element = values[index];
+        let name = element.a.name.split('.')
+        console.log(element)
+        this.solicitud[`${name[0]}`] = element.a.downloadURLs[0]
+
+      }
+      const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update(this.solicitud);
+
+      promise
+        .then(res => {
+
+          swal({
+            title: `Solicitud actualizada`
+          })
+          this.consultaDatosTabla()
+
+
         })
-        this.consultaDatosTabla()
+
+        .catch(err => {
+          swal({
+            title: `${err}`
+          })
+          console.log(err, 'You dont have access!')
+        });
+
+    }).catch(error => {
+      swal(
+        `${error}`,
+        '',
+        'error'
+      )
+      console.log(error)
+    })
 
 
-      })
 
-      .catch(err => {
-        swal({
-          title: `${err}`
-        })
-        console.log(err, 'You dont have access!')
-      });
   }
 
   getProgramas() {
