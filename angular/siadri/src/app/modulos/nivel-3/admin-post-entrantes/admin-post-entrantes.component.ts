@@ -6,7 +6,7 @@ import { FirebaseApp } from 'angularfire2';
 import { MatPaginator, MatSort, MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 import swal from 'sweetalert2';
 import { LocalStorageService } from 'ngx-webstorage';
-import { MailServiceService, NativeFirebaseService, MixedFunctions} from '../../../shared/services/main-service.service';
+import { MailServiceService, NativeFirebaseService, MixedFunctions } from '../../../shared/services/main-service.service';
 import * as  moment from 'moment';
 import { environment } from '../../../../environments/environment';
 import * as firebase from 'firebase';
@@ -49,6 +49,14 @@ export class AdminPostEntrantesComponent implements OnInit {
   @ViewChild('fileInput3') fileInput3: ElementRef;
 
 
+  paises = [];
+
+  programas: any
+  arrayProgramas = []
+  arrayFacultades = []
+
+  arrayProgramas2 = []
+  arrayFacultades2 = []
 
   constructor(private _angularfire: AngularFireDatabase,
     private localSt: LocalStorageService,
@@ -76,8 +84,8 @@ export class AdminPostEntrantesComponent implements OnInit {
     ref.off('value', onValueChange);
     this.consultaDatosTabla()
 
-
- 
+    this.getPaises();
+    this.getProgramas();
 
   }
 
@@ -90,7 +98,7 @@ export class AdminPostEntrantesComponent implements OnInit {
       // .equalTo('Aprobada por el director de programa')
       .once('value', solicitudesSnap => {
         this.dataTablaSolicitudes = [];
-        console.log('consulta tabla', solicitudesSnap.val())
+        // console.log('consulta tabla', solicitudesSnap.val())
         solicitudesSnap.forEach((solicitudSnap) => {
           const dato = solicitudSnap.val()
 
@@ -117,6 +125,22 @@ export class AdminPostEntrantesComponent implements OnInit {
           }
 
         })
+        console.log(this.dataTablaSolicitudes);
+
+        this.dataTablaSolicitudes.sort(function (a, b) {
+
+          const A = moment(a.ano, 'DD/M/YYYY HH:mm').toISOString();
+          const B = moment(b.ano, 'DD/M/YYYY HH:mm').toISOString();
+
+          console.log(A, B);
+
+          a = new Date(A);
+          b = new Date(B);
+
+          return a > b ? -1 : a < b ? 1 : 0;
+        });
+
+        console.log(this.dataTablaSolicitudes);
 
         this.dataSource = new MatTableDataSource(this.dataTablaSolicitudes);
 
@@ -153,13 +177,13 @@ export class AdminPostEntrantesComponent implements OnInit {
       case 'Aprobada por dirección de programa':
         this.estadoComponenteInferior = 3
         break;
-        case 'Denegada por dirección de programa':
+      case 'Denegada por dirección de programa':
         this.estadoComponenteInferior = 2
         break;
-        case 'Denegada por DRI UV':
+      case 'Denegada por DRI UV':
         this.estadoComponenteInferior = 2
         break;
-        case 'Solicitud completada por estudiante':
+      case 'Solicitud completada por estudiante':
         this.estadoComponenteInferior = 4
         break;
       default:
@@ -175,6 +199,8 @@ export class AdminPostEntrantesComponent implements OnInit {
     }
     this.panelInferior.nativeElement.scrollIntoView();
 
+    this.getProgramasPorFacultad();
+    this.getProgramasPorFacultad2();
 
   }
   aprobarSolicitud() {
@@ -226,11 +252,12 @@ export class AdminPostEntrantesComponent implements OnInit {
           const correos = `${this.solicitud['Correo electrónico']}`
           this.enviarCorreo(this.solicitud['Correo electrónico'], 'Aprobada por DRI UV', body)
             .subscribe((responseData) => {
-              console.log(responseData)}, error => {console.log(error)})
+              console.log(responseData)
+            }, error => { console.log(error) })
           const bodyPar = 'cuerpo del correo de aceptacion para par externo'
 
           return this.enviarCorreo(this.solicitud['Correo electrónico'], 'Aprobada por DRI UV', bodyPar)
-            .subscribe((responseData) => {console.log(responseData)}, error => {console.log(error)})
+            .subscribe((responseData) => { console.log(responseData) }, error => { console.log(error) })
         }
 
 
@@ -243,7 +270,7 @@ export class AdminPostEntrantesComponent implements OnInit {
             console.log(responseData)
           }, error => { console.log(error) })
 
-          this._mailServiceService
+        this._mailServiceService
           .crearNotification(this.solicitud['creadoPor'], notificationInfo)
           .subscribe((responseData) => {
             console.log(responseData)
@@ -458,7 +485,69 @@ export class AdminPostEntrantesComponent implements OnInit {
     }
   }
 
- 
+  getPaises() {
+    this.paises = []
+    return this.db.ref('/paises/')
+      .orderByChild('nombre_pais')
+      .once('value')
+      .then(paisesSnap => {
+        paisesSnap.forEach(pais => {
+          this.paises.push(pais.val().nombre_pais)
+
+        })
+
+      })
+      .catch(erro => {
+        console.log(erro)
+      })
+
+  }
+  getProgramas() {
+    const programs = this.db.ref('/programasAcademicos/')
+    return programs.once('value').then(snapProgramas => {
+      this.programas = snapProgramas.val()
+      return snapProgramas.forEach(programa => {
+        this.arrayFacultades.push(programa.val()['FACULTAD-INSTITUTO'])
+        this.arrayFacultades2.push(programa.val()['FACULTAD-INSTITUTO'])
+
+      })
+    })
+      .then(resolve => {
+        this.arrayFacultades = this._MixedFunctions.removeDuplicadesArray(this.arrayFacultades)
+        this.arrayFacultades2 = this._MixedFunctions.removeDuplicadesArray(this.arrayFacultades2)
+
+      })
+  }
+
+  getProgramasPorFacultad() {
+    this.arrayProgramas = []
+    for (const prog in this.programas) {
+      if (this.programas.hasOwnProperty(prog)) {
+        const element = this.programas[prog];
+
+        if (element['FACULTAD-INSTITUTO'] === this.solicitud['Facultad']) {
+          this.arrayProgramas.push(element['NOMBRE PROGRAMA ACADEMICO'])
+        }
+
+      }
+    }
+  }
+
+  getProgramasPorFacultad2() {
+    this.arrayProgramas2 = []
+    for (const prog in this.programas) {
+      if (this.programas.hasOwnProperty(prog)) {
+        const element = this.programas[prog];
+
+        if (element['FACULTAD-INSTITUTO'] === this.solicitud['Facultad2']) {
+          this.arrayProgramas2.push(element['NOMBRE PROGRAMA ACADEMICO'])
+        }
+
+      }
+    }
+  }
+
+
   openDialog(item) {
 
     const dialogConfig = new MatDialogConfig();
@@ -471,8 +560,12 @@ export class AdminPostEntrantesComponent implements OnInit {
       variable: item
     };
 
+    if (item === 'retornar') {
+      dialogConfig.data['correo'] = this.solicitud['Correo electrónico'];
+    }
+
     this.dialog.open(DialogComponent, dialogConfig);
-}
+  }
 
 
   enviarCorreo(email, asunto, mensaje, cc = '', cco = '') {
@@ -481,5 +574,6 @@ export class AdminPostEntrantesComponent implements OnInit {
       .send(email, asunto, mensaje, cc, cco)
 
   }
+
 
 }

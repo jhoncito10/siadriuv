@@ -79,14 +79,8 @@
           <div class="form-group">
             <div class="col-md-12">
 
-              <mat-form-field class="example-full-width">
-                <input type="text" placeholder="Seleccione la institucion" aria-label="Number" matInput [formControl]="myControl2" [matAutocomplete]="auto2">
-                <mat-autocomplete #auto2="matAutocomplete">
-                  <mat-option *ngFor="let insti of filteredOptions2 | async" [value]="insti" (click)="getConveniosInstitucion(cuenta['institucion'])">
-                    {{ insti }}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
+              <label for="correo" class="control-label">Por favor agregue un comentario/motivo del retorno</label>
+              <textarea [formControl]="myControlComent" class="form-control" [(ngModel)]='this.comentario' name="" id="" rows="8"></textarea>
 
             </div>
           </div>
@@ -94,25 +88,22 @@
 
         </div>
 
-        <div class="row">
-          <div class="form-group">
-            <div class="col-md-12">
 
-              <mat-form-field class="example-full-width">
-                <input type="text" placeholder="Seleccione la institucion" aria-label="Number" matInput [formControl]="myControl2" [matAutocomplete]="auto2">
-                <mat-autocomplete #auto2="matAutocomplete">
-                  <mat-option *ngFor="let insti of filteredOptions2 | async" [value]="insti" (click)="getConveniosInstitucion(cuenta['institucion'])">
-                    {{ insti }}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
+      </div>
 
-            </div>
-          </div>
-
+    </div>
+    <div class="box-footer">
+      <div class="row">
+        <div class="col-md-12">
 
         </div>
-
+        <div class="col-md-12">
+          <button type="button" class="btn btn-block btn-success" (click)="retornar()">Retornar Solicitud
+          </button>
+          <button type="button" class="btn btn-block btn-danger" (click)="close()">Cancelar
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
       </div>
 
     </div>
