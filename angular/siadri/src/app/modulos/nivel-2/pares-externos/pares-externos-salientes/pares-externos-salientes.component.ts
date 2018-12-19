@@ -417,7 +417,7 @@ export class ParesExternosSalientesComponent implements OnInit {
       "VALOR_FINANCIACION_INTERNAC": "",
       "CAMPUS": "Meléndez",
       "creadoPor": this.user.email,
-      "fechaCreado": "",
+      " ": "",
       "fechaActualizado": "",
       "estado": "En espera de aprobación DRI",
       "comentariosDRI":"",
