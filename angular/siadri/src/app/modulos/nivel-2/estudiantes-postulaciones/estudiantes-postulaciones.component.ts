@@ -120,10 +120,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
         solicitudesSnap.forEach((solicitudSnap) => {
 
           let dato = solicitudSnap.val()
-          console.log('106', dato)
           if (dato.hasOwnProperty('creadoPor')) {
-            console.log('108', dato)
-
             this.solicitudes[solicitudSnap.key] = dato
             let correo = dato['Correo electrónico'] || ''
             let ano = dato['AÑO'] || ''
@@ -273,7 +270,14 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       "finaciacionInstitucionInternacional": "",
       "finaciacionPaisInstitucionInternacional": "",
       "finaciacionONG": "",
-      "CartaPresentacion":""
+      "CartaPresentacion":"",
+      "CertificadoNotas":"",
+      "ConocimientoEspanol": "",
+      "CartaMotivacion":"",
+      "DocumentoID":"",
+      "Foto": "",
+      "EuropassCV":"",
+      "Fellows":""
 
     }
   }
@@ -473,7 +477,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       && this.fileInputCertificadoNotas.nativeElement.files.length > 0
     ) {
       let file = this.fileInputCertificadoNotas.nativeElement.files[0];
-      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+      let extention = this.fileInputCertificadoNotas.nativeElement.files[0].name.split('.')
 
       let storageRef = this.firebaseStorage.ref();
       let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CertificadoNotas.${extention[extention.length-1]}`);
@@ -485,7 +489,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       && this.fileInputConocimientoEspanol.nativeElement.files.length > 0
     ) {
       let file = this.fileInputConocimientoEspanol.nativeElement.files[0];
-      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+      let extention = this.fileInputConocimientoEspanol.nativeElement.files[0].name.split('.')
 
       let storageRef = this.firebaseStorage.ref();
       let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/ConocimientoEspanol.${extention[extention.length-1]}`);
@@ -497,8 +501,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       && this.fileInputCartaMotivacion.nativeElement.files.length > 0
     ) {
       let file = this.fileInputCartaMotivacion.nativeElement.files[0];
-      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
-
+      let extention = this.fileInputCartaMotivacion.nativeElement.files[0].name.split('.')
       let storageRef = this.firebaseStorage.ref();
       let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaMotivacion.${extention[extention.length-1]}`);
 
@@ -509,10 +512,10 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       && this.fileInputDocumentoID.nativeElement.files.length > 0
     ) {
       let file = this.fileInputDocumentoID.nativeElement.files[0];
-      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+      let extention = this.fileInputDocumentoID.nativeElement.files[0].name.split('.')
 
       let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/InputDocumentoID.${extention[extention.length-1]}`);
+      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/DocumentoID.${extention[extention.length-1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -521,10 +524,10 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       && this.fileInputFoto.nativeElement.files.length > 0
     ) {
       let file = this.fileInputFoto.nativeElement.files[0];
-      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+      let extention = this.fileInputFoto.nativeElement.files[0].name.split('.')
 
       let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/InputFoto.${extention[extention.length-1]}`);
+      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/Foto.${extention[extention.length-1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -533,10 +536,10 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       && this.fileInputEuropassCV.nativeElement.files.length > 0
     ) {
       let file = this.fileInputEuropassCV.nativeElement.files[0];
-      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+      let extention = this.fileInputEuropassCV.nativeElement.files[0].name.split('.')
 
       let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/InputEuropassCV.${extention[extention.length-1]}`);
+      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/EuropassCV.${extention[extention.length-1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -545,10 +548,10 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       && this.fileInputFellows.nativeElement.files.length > 0
     ) {
       let file = this.fileInputFellows.nativeElement.files[0];
-      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+      let extention = this.fileInputFellows.nativeElement.files[0].name.split('.')
 
       let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/InputFellows.${extention[extention.length-1]}`);
+      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/Fellows.${extention[extention.length-1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -556,7 +559,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       && this.fileInputCartaTutor.nativeElement.files.length > 0
     ) {
       let file = this.fileInputCartaTutor.nativeElement.files[0];
-      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+      let extention = this.fileInputCartaTutor.nativeElement.files[0].name.split('.')
 
       let storageRef = this.firebaseStorage.ref();
       let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaTutor.${extention[extention.length-1]}`);
@@ -568,7 +571,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       && this.fileInputDescripcionProyecto.nativeElement.files.length > 0
     ) {
       let file = this.fileInputDescripcionProyecto.nativeElement.files[0];
-      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+      let extention = this.fileInputDescripcionProyecto.nativeElement.files[0].name.split('.')
 
       let storageRef = this.firebaseStorage.ref();
       let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/DescripcionProyecto.${extention[extention.length-1]}`);

@@ -670,227 +670,358 @@
               </mat-expansion-panel-header>
               <div *ngIf="solicitud['MODALIDAD']==='Academic exchange / Intercambio académico'">
                 <!-- INPUTS FILES UPLOAD -->
-                <div class="form-group">
-                  <label for="inputCartaPresentacion" class="col-md-5 control-label">Presentation letter from home
-                    university (It must
-                    include: name, last name, passport number, colombian ID for colombian citizens enrolled in a
-                    foreign
-                    university, dates for the exchange/rotation and specific field or area of knowledge)/Carta de
-                    presentación de la universidad de origen (debe incluir nombres y apellidos, número de pasaporte o
-                    de
-                    C.C. para nacionales colombianos, fechas del intercambio y programa académico).</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputCartaPresentacion id="inputCartaPresentacion">
-                  </div>
-                </div>
+                <div *ngIf="(estadoComponenteInferior == 3 )">
 
-                <div class="form-group">
-                  <label for="inputCertificadoNotas" class="col-md-5 control-label">Certificate with grades in spanish
-                    (official translation is not required)/Certificado de notas (traducido al español, no se requiere
-                    una
-                    traducción oficial).</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputCertificadoNotas id="inputCertificadoNotas">
+                  <div class="form-group">
+                    <label for="inputCartaPresentacion" class="col-md-5 control-label">Presentation letter from home
+                      university (It must
+                      include: name, last name, passport number, colombian ID for colombian citizens enrolled in a
+                      foreign
+                      university, dates for the exchange/rotation and specific field or area of knowledge)/Carta de
+                      presentación de la universidad de origen (debe incluir nombres y apellidos, número de pasaporte o
+                      de
+                      C.C. para nacionales colombianos, fechas del intercambio y programa académico).</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputCartaPresentacion id="inputCartaPresentacion">
+                    </div>
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <label for="inputConocimientoEspanol" class="col-md-5 control-label">Document attesting spanish
-                    knowledge
-                    (B2) for non-native spanish speakers/Documento que avale un conocimiento suficiente de español
-                    (B2) para estudiantes que sean de lengua extranjera o distinta al español.</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputConocimientoEspanol id="inputConocimientoEspanol">
+                  <div class="form-group">
+                    <label for="inputCertificadoNotas" class="col-md-5 control-label">Certificate with grades in
+                      spanish
+                      (official translation is not required)/Certificado de notas (traducido al español, no se requiere
+                      una
+                      traducción oficial).</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputCertificadoNotas id="inputCertificadoNotas">
+                    </div>
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <label for="inputCartaMotivacion" class="col-md-5 control-label">Motivation letter in spanish/Carta
-                    de
-                    Motivación en español</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputCartaMotivacion id="inputCartaMotivacion">
+                  <div class="form-group">
+                    <label for="inputConocimientoEspanol" class="col-md-5 control-label">Document attesting spanish
+                      knowledge
+                      (B2) for non-native spanish speakers/Documento que avale un conocimiento suficiente de español
+                      (B2) para estudiantes que sean de lengua extranjera o distinta al español.</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputConocimientoEspanol id="inputConocimientoEspanol">
+                    </div>
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <label for="inputDocumentoID" class="col-md-5 control-label">Copy of passport or Cédula de
-                    Ciudadanía for Colombian citizens/Fotocopia del pasaporte o cédula de ciudadanía para colombianos</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputDocumentoID id="inputDocumentoID">
+                  <div class="form-group">
+                    <label for="inputCartaMotivacion" class="col-md-5 control-label">Motivation letter in spanish/Carta
+                      de
+                      Motivación en español</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputCartaMotivacion id="inputCartaMotivacion">
+                    </div>
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <label for="inputFoto" class="col-md-5 control-label">3x4 cm photo, white background, JPF
-                    format/Foto 3x4 cm fondo blanco en .JPG.</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputFoto id="inputFoto">
+                  <div class="form-group">
+                    <label for="inputDocumentoID" class="col-md-5 control-label">Copy of passport or Cédula de
+                      Ciudadanía for Colombian citizens/Fotocopia del pasaporte o cédula de ciudadanía para colombianos</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputDocumentoID id="inputDocumentoID">
+                    </div>
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <h4 for="inputFoto" class="col-md-5 ">REQUISITOS ADICIONALES</h4>
-                  <div class="col-md-7">
+                  <div class="form-group">
+                    <label for="inputFoto" class="col-md-5 control-label">3x4 cm photo, white background, JPF
+                      format/Foto 3x4 cm fondo blanco en .JPG.</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputFoto id="inputFoto">
+                    </div>
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <label for="inputEuropassCV" class="col-md-5 control-label">Faculty of Health incoming students: you
-                    must
-                    also upload Europass CV/Para estudiantes visitantes internacionales en la Facultad de Salud:
-                    adicionar el Europass CV.</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputEuropassCV id="inputEuropassCV">
+                  <div class="form-group">
+                    <h4 class="col-md-5 ">REQUISITOS ADICIONALES</h4>
+                    <div class="col-md-7">
+                    </div>
                   </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputFellows" class="col-md-5 control-label">Fellows: please send the undergraduate and
-                    posgraduate diploma/Para Fellows: enviar los diplomas de pregrado y posgrado</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputFellows id="inputFellows">
-                  </div>
-                </div>
 
+                  <div class="form-group">
+                    <label for="inputEuropassCV" class="col-md-5 control-label">Faculty of Health incoming students:
+                      you
+                      must
+                      also upload Europass CV/Para estudiantes visitantes internacionales en la Facultad de Salud:
+                      adicionar el Europass CV.</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputEuropassCV id="inputEuropassCV">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputFellows" class="col-md-5 control-label">Fellows: please send the undergraduate and
+                      posgraduate diploma/Para Fellows: enviar los diplomas de pregrado y posgrado</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputFellows id="inputFellows">
+                    </div>
+                  </div>
+                </div>
                 <!-- FILES DONWLOAD -->
-                <div class="form-group" *ngIf="(this.solicitud['CartaPresentacion']!='' && this.solicitud['CartaPresentacion']!=undefined)">
-                    <label >Carta Presentacion 1</label>
-    
+                <div *ngIf="(estadoComponenteInferior == 3 || estadoComponenteInferior == 2)">
+                  <div class="form-group" *ngIf="(this.solicitud['CartaPresentacion']!=undefined && this.solicitud['CartaPresentacion']!='')">
+                    <label>Carta presentacion</label>
+
                     <a href="{{this.solicitud['CartaPresentacion']}}" target="_blank">link</a>
                   </div>
-                  <!-- <div class="form-group" *ngIf="(&& this.solicitud['CertificadoNotas']!='' && this.solicitud['CertificadoNotas']!=undefined)">
-                    <label >Certificado de notas</label>
-    
+
+                  <div class="form-group" *ngIf="( this.solicitud['CertificadoNotas']!=undefined && this.solicitud['CertificadoNotas']!='')">
+                    <label>Certificado de notas</label>
+
                     <a href="{{this.solicitud['CertificadoNotas']}}" target="_blank"> link</a>
                   </div>
-                  <div class="form-group" *ngIf="(&& this.solicitud['ConocimientoEspanol']!='' && this.solicitud['ConocimientoEspanol']!=undefined)">
-                    <label >Carta motivación</label>
-    
-                    <a href="{{this.solicitud['ConocimientoEspanol']}}" target="_blank"> link</a>
-                  </div> -->
 
+                  <div class="form-group" *ngIf="( this.solicitud['ConocimientoEspanol']!=undefined && this.solicitud['ConocimientoEspanol']!='')">
+                    <label>Certificado español</label>
+
+                    <a href="{{this.solicitud['ConocimientoEspanol']}}" target="_blank"> link</a>
+                  </div>
+
+
+
+                  <div class="form-group" *ngIf="( this.solicitud['CartaMotivacion']!=undefined && this.solicitud['CartaMotivacion']!='')">
+                    <label>Carta motivación</label>
+
+                    <a href="{{this.solicitud['CartaMotivacion']}}" target="_blank"> link</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['DocumentoID']!=undefined && this.solicitud['DocumentoID']!='')">
+                    <label>Documento de identidadI</label>
+
+                    <a href="{{this.solicitud['DocumentoID']}}" target="_blank"> link</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['Foto']!=undefined && this.solicitud['Foto']!='')">
+                    <label>Foto</label>
+
+                    <a href="{{this.solicitud['Foto']}}" target="_blank"> link</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['EuropassCV']!=undefined && this.solicitud['EuropassCV']!='')">
+                    <label>Europass CV</label>
+
+                    <a href="{{this.solicitud['EuropassCV']}}" target="_blank"> link</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['Fellows']!=undefined && this.solicitud['Fellows']!='')">
+                    <label>Fellows</label>
+
+                    <a href="{{this.solicitud['Fellows']}}" target="_blank"> link</a>
+                  </div>
+                </div>
               </div>
 
               <div *ngIf="(solicitud['MODALIDAD']==='Internship / Pasantía internacional' || solicitud['MODALIDAD']==='Estancia de Investigación')">
-                <div class="form-group">
-                  <label for="inputCartaTutor" class="col-md-5 control-label">Letter of introduction from the tutor at
-                    home university./Carta de presentación del Tutor en la universidad de origen.</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputCartaTutor id="inputCartaTutor">
+                <div *ngIf="(estadoComponenteInferior == 3 )">
+                  <div class="form-group">
+                    <label for="inputCartaTutor" class="col-md-5 control-label">Letter of introduction from the tutor
+                      at
+                      home university./Carta de presentación del Tutor en la universidad de origen.</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputCartaTutor id="inputCartaTutor">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputCartaProfesorUV" class="col-md-5 control-label">Letter of invitation from an
+                      appointed professor of Universidad del Valle, supported by a work schedule./Carta de
+                      invitación de
+                      un profesor nombrado de la Universidad del Valle, anexando el cronograma de trabajo.</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputCartaProfesorUV id="inputCartaProfesorUV">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputDescripcionProyecto" class="col-md-5 control-label">Brief description of the
+                      project to be developed (in English or Spanish)/Breve exposición del proyecto a realizar (inglés
+                      o
+                      español).</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputDescripcionProyecto id="inputDescripcionProyecto">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputDocumentoID" class="col-md-5 control-label">Copy of passport or Cédula de
+                      Ciudadanía for Colombian citizens/Fotocopia del pasaporte o cédula de ciudadanía para colombianos</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputDocumentoID id="inputDocumentoID">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputFoto" class="col-md-5 control-label">3x4 cm photo, white background, JPF
+                      format/Foto 3x4 cm fondo blanco en .JPG.</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputFoto id="inputFoto">
+                    </div>
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label for="inputCartaProfesorUV" class="col-md-5 control-label">Letter of invitation from an
-                    appointed professor of Universidad del Valle, supported by a work schedule./Carta de invitación de
-                    un profesor nombrado de la Universidad del Valle, anexando el cronograma de trabajo.</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputCartaProfesorUV id="inputCartaProfesorUV">
+
+                <div *ngIf="(estadoComponenteInferior == 3 || estadoComponenteInferior == 2)">
+                  <div class="form-group" *ngIf="(this.solicitud['CartaTutor']!=undefined && this.solicitud['CartaTutor']!='')">
+                    <label>Carta de tutor</label>
+
+                    <a href="{{this.solicitud['CartaTutor']}}" target="_blank">Carta de tutor</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['CartaProfesorUV']!=undefined && this.solicitud['CartaProfesorUV']!='')">
+                    <label>Carta invitación</label>
+
+                    <a href="{{this.solicitud['CartaProfesorUV']}}" target="_blank"> Carta invitación</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['DescripcionProyecto']!=undefined && this.solicitud['DescripcionProyecto']!='')">
+                    <label>proyecto </label>
+
+                    <a href="{{this.solicitud['DescripcionProyecto']}}" target="_blank"> proyecto </a>
+                  </div>
+
+
+
+                  <div class="form-group" *ngIf="( this.solicitud['DocumentoID']!=undefined && this.solicitud['DocumentoID']!='')">
+                    <label>Documento de identidadI</label>
+
+                    <a href="{{this.solicitud['DocumentoID']}}" target="_blank"> link</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['Foto']!=undefined && this.solicitud['Foto']!='')">
+                    <label>Foto</label>
+
+                    <a href="{{this.solicitud['Foto']}}" target="_blank"> Foto</a>
                   </div>
                 </div>
-
-                <div class="form-group">
-                  <label for="inputDescripcionProyecto" class="col-md-5 control-label">Brief description of the
-                    project to be developed (in English or Spanish)/Breve exposición del proyecto a realizar (inglés o
-                    español).</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputDescripcionProyecto id="inputDescripcionProyecto">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="inputDocumentoID" class="col-md-5 control-label">Copy of passport or Cédula de
-                    Ciudadanía for Colombian citizens/Fotocopia del pasaporte o cédula de ciudadanía para colombianos</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputDocumentoID id="inputDocumentoID">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="inputFoto" class="col-md-5 control-label">3x4 cm photo, white background, JPF
-                    format/Foto 3x4 cm fondo blanco en .JPG.</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputFoto id="inputFoto">
-                  </div>
-                </div>
-
 
 
               </div>
+
+
               <div *ngIf="solicitud['MODALIDAD']==='Clinical Rotation / Rotación clínica'">
-                <div class="form-group">
-                  <label for="inputCartaPresentacion" class="col-md-5 control-label">Presentation letter from home
-                    university (It must
-                    include: name, last name, passport number, colombian ID for colombian citizens enrolled in a
-                    foreign
-                    university, dates for the exchange/rotation and specific field or area of knowledge)/Carta de
-                    presentación de la universidad de origen (debe incluir nombres y apellidos, número de pasaporte o
-                    de
-                    C.C. para nacionales colombianos, fechas del intercambio y programa académico).</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputCartaPresentacion id="inputCartaPresentacion">
+                <div *ngIf="(estadoComponenteInferior == 3 )">
+
+                  <div class="form-group">
+                    <label for="inputCartaPresentacion" class="col-md-5 control-label">Presentation letter from home
+                      university (It must
+                      include: name, last name, passport number, colombian ID for colombian citizens enrolled in a
+                      foreign
+                      university, dates for the exchange/rotation and specific field or area of knowledge)/Carta de
+                      presentación de la universidad de origen (debe incluir nombres y apellidos, número de pasaporte o
+                      de
+                      C.C. para nacionales colombianos, fechas del intercambio y programa académico).</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputCartaPresentacion id="inputCartaPresentacion">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputCertificadoNotas" class="col-md-5 control-label">Certificate with grades in
+                      spanish
+                      (official translation is not required)/Certificado de notas (traducido al español, no se requiere
+                      una
+                      traducción oficial).</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputCertificadoNotas id="inputCertificadoNotas">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputConocimientoEspanol" class="col-md-5 control-label">Document attesting spanish
+                      knowledge
+                      (B2) for non-native spanish speakers/Documento que avale un conocimiento suficiente de español
+                      (B2) para estudiantes que sean de lengua extranjera o distinta al español.</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputConocimientoEspanol id="inputConocimientoEspanol">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputCartaMotivacion" class="col-md-5 control-label">Motivation letter in spanish/Carta
+                      de
+                      Motivación en español</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputCartaMotivacion id="inputCartaMotivacion">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputDocumentoID" class="col-md-5 control-label">Copy of passport or Cédula de
+                      Ciudadanía for Colombian citizens/Fotocopia del pasaporte o cédula de ciudadanía para colombianos</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputDocumentoID id="inputDocumentoID">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="inputFoto" class="col-md-5 control-label">3x4 cm photo, white background, JPF
+                      format/Foto 3x4 cm fondo blanco en .JPG.</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputFoto id="inputFoto">
+                    </div>
+                  </div>
+
+
+                  <div class="form-group">
+                    <label for="inputEuropassCV" class="col-md-5 control-label">Faculty of Health incoming students:
+                      you
+                      must
+                      also upload Europass CV/Para estudiantes visitantes internacionales en la Facultad de Salud:
+                      adicionar el Europass CV.</label>
+                    <div class="col-md-7">
+                      <input type="file" #fileInputEuropassCV id="inputEuropassCV">
+                    </div>
                   </div>
                 </div>
+                <div *ngIf="(estadoComponenteInferior == 3 || estadoComponenteInferior == 2)">
+                  <div class="form-group" *ngIf="(this.solicitud['CartaPresentacion']!=undefined && this.solicitud['CartaPresentacion']!='')">
+                    <label>Carta presentacion</label>
 
-                <div class="form-group">
-                  <label for="inputCertificadoNotas" class="col-md-5 control-label">Certificate with grades in spanish
-                    (official translation is not required)/Certificado de notas (traducido al español, no se requiere
-                    una
-                    traducción oficial).</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputCertificadoNotas id="inputCertificadoNotas">
+                    <a href="{{this.solicitud['CartaPresentacion']}}" target="_blank">link</a>
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <label for="inputConocimientoEspanol" class="col-md-5 control-label">Document attesting spanish
-                    knowledge
-                    (B2) for non-native spanish speakers/Documento que avale un conocimiento suficiente de español
-                    (B2) para estudiantes que sean de lengua extranjera o distinta al español.</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputConocimientoEspanol id="inputConocimientoEspanol">
+                  <div class="form-group" *ngIf="( this.solicitud['CertificadoNotas']!=undefined && this.solicitud['CertificadoNotas']!='')">
+                    <label>Certificado de notas</label>
+
+                    <a href="{{this.solicitud['CertificadoNotas']}}" target="_blank"> link</a>
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <label for="inputCartaMotivacion" class="col-md-5 control-label">Motivation letter in spanish/Carta
-                    de
-                    Motivación en español</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputCartaMotivacion id="inputCartaMotivacion">
+                  <div class="form-group" *ngIf="( this.solicitud['ConocimientoEspanol']!=undefined && this.solicitud['ConocimientoEspanol']!='')">
+                    <label>Certificado español</label>
+
+                    <a href="{{this.solicitud['ConocimientoEspanol']}}" target="_blank"> link</a>
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <label for="inputDocumentoID" class="col-md-5 control-label">Copy of passport or Cédula de
-                    Ciudadanía for Colombian citizens/Fotocopia del pasaporte o cédula de ciudadanía para colombianos</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputDocumentoID id="inputDocumentoID">
+
+
+                  <div class="form-group" *ngIf="( this.solicitud['CartaMotivacion']!=undefined && this.solicitud['CartaMotivacion']!='')">
+                    <label>Carta motivación</label>
+
+                    <a href="{{this.solicitud['CartaMotivacion']}}" target="_blank"> link</a>
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <label for="inputFoto" class="col-md-5 control-label">3x4 cm photo, white background, JPF
-                    format/Foto 3x4 cm fondo blanco en .JPG.</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputFoto id="inputFoto">
+                  <div class="form-group" *ngIf="( this.solicitud['DocumentoID']!=undefined && this.solicitud['DocumentoID']!='')">
+                    <label>Documento de identidadI</label>
+
+                    <a href="{{this.solicitud['DocumentoID']}}" target="_blank"> link</a>
                   </div>
-                </div>
 
+                  <div class="form-group" *ngIf="( this.solicitud['Foto']!=undefined && this.solicitud['Foto']!='')">
+                    <label>Foto</label>
 
-                <div class="form-group">
-                  <label for="inputEuropassCV" class="col-md-5 control-label">Faculty of Health incoming students: you
-                    must
-                    also upload Europass CV/Para estudiantes visitantes internacionales en la Facultad de Salud:
-                    adicionar el Europass CV.</label>
-                  <div class="col-md-7">
-                    <input type="file" #fileInputEuropassCV id="inputEuropassCV">
+                    <a href="{{this.solicitud['Foto']}}" target="_blank"> link</a>
                   </div>
-                </div>
 
+                  <div class="form-group" *ngIf="( this.solicitud['EuropassCV']!=undefined && this.solicitud['EuropassCV']!='')">
+                    <label>Europass CV</label>
+
+                    <a href="{{this.solicitud['EuropassCV']}}" target="_blank"> link</a>
+                  </div>
+
+        
+                </div>
 
               </div>
-              
+
 
             </mat-expansion-panel>
 
@@ -924,7 +1055,7 @@
 
 
       </div>
-      <!-- <div class="row" *ngIf="solicitud.nombre!==''">
+      <!-- <div class="row" *ngIf="solicitud.nombre!==undefined">
         <div class="col-md-6">
             <button type="button" class="btn btn-block btn-danger" (click)="denegar()">Negar</button>
         </div>
