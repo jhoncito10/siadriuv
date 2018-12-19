@@ -38,6 +38,18 @@ export class AdminPostEntrantesComponent implements OnInit {
   rowSelected
   spinertablapostulaciones = false
 
+  paises = []
+
+  programas: any
+  arrayProgramas = []
+  arrayFacultades = []
+
+  arrayProgramas2 = []
+  arrayFacultades2 = []
+
+  inicioMobilidad: any
+  finMobilidad: any
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('panelSuperior') tablaSolicitudesCarrera: ElementRef;
@@ -49,14 +61,6 @@ export class AdminPostEntrantesComponent implements OnInit {
   @ViewChild('fileInput3') fileInput3: ElementRef;
 
 
-  paises = [];
-
-  programas: any
-  arrayProgramas = []
-  arrayFacultades = []
-
-  arrayProgramas2 = []
-  arrayFacultades2 = []
 
   constructor(private _angularfire: AngularFireDatabase,
     private localSt: LocalStorageService,
@@ -575,5 +579,16 @@ export class AdminPostEntrantesComponent implements OnInit {
 
   }
 
+  calculaDias() {
 
+    if (this.finMobilidad && this.inicioMobilidad) {
+      let dias = moment(this.finMobilidad).diff(this.inicioMobilidad, 'days')
+      if (dias < 1) {
+        swal('Las fechas que has ingresado son incorrectas', '', 'error')
+      } else {
+        this.solicitud['NUM_DIAS_MOVILIDAD'] = dias
+      }
+    }
+
+  }
 }

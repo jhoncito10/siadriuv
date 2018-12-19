@@ -4,10 +4,10 @@ const moment = require('moment');
 const cors = require('cors')({ origin: true });
 const nodemailer = require('nodemailer');
 const admin = require('firebase-admin');
-global.window = {document: {createElementNS: () => {return {}} }};
+global.window = { document: { createElementNS: () => { return {} } } };
 global.navigator = {};
-global.btoa = () => {};
-const jsPDF = require ('jspdf');
+global.btoa = () => { };
+const jsPDF = require('jspdf');
 const fs = require('fs');
 
 
@@ -501,22 +501,23 @@ var isEmail = (email) => {
 
 
 var correoPrograma = (programa) => {
-  return ref.child('programasAcademicos')
-      .orderByChild('NOMBRE PROGRAMA ACADEMICO')
-      .equalTo(programa)
-      .limitToFirst(1)
-      .once('value')
+    return ref.child('programasAcademicos')
+        .orderByChild('NOMBRE PROGRAMA ACADEMICO')
+        .equalTo(programa)
+        .limitToFirst(1)
+        .once('value')
 }
 
 
 exports.createLetter = functions.https.onRequest((req, res) => {
-    console.log('485',req.body)
+    console.log('485', req.body)
     cors(req, res, () => {
+
         correoPrograma(req.body.areaDestino).then(function (correPro) {
-            console.log('488',correPro.val())
+            console.log('488', correPro.val())
 
             correPro.forEach(function (programaSnap) {
-                console.log('491',programaSnap)
+                console.log('491', programaSnap)
 
                 var correoPrograma = programaSnap.val()['correo']
                 var correos = ''
@@ -525,70 +526,58 @@ exports.createLetter = functions.https.onRequest((req, res) => {
                 } else {
                     correos = `${req.body.email}`
 
-      correoPrograma(req.body.areaDestino).then(  function  (correPro) {
-          console.log('488',correPro.val())
-
-          correPro.forEach( function (programaSnap) {
-              console.log('491',programaSnap)
-
-              var correoPrograma = programaSnap.val()['correo']
-              var correos = ''
-              if (isEmail(correoPrograma)) {
-                  correos = `${req.body.email},${correoPrograma}`
-              } else {
-                  correos = `${req.body.email}`
-
-              }
-              var stringSubjk = (req.body.estado == 'aceptada') ? 'aceptacion' : 'denegacion';
-              console.log(correos)
-              var cuerpoPDF = `${req.body.nombre} tu solicitud a sido ${req.body.estado}.
+                }
+                var stringSubjk = (req.body.estado == 'aceptada') ? 'aceptacion' : 'denegacion';
+                console.log(correos)
+                var cuerpoPDF = `${req.body.nombre} tu solicitud a sido ${req.body.estado}.
               Estos son los datos de tu solicitud
               ${req.body.fechaNacimiento}
               ${req.body.nacionalidad}
               ${req.body.numeroDocumento}
               ${req.body.genero}
               ${req.body.areaDestino}`;
-              const doc = new jsPDF();
-              doc.setLanguage("es-CO")
-              doc.text(`Detalles de la solicitud `, 70, 40);
-              doc.setFontSize(12);
-              doc.text( `${req.body.nombre} tu solicitud ha sido ${req.body.estado}`, 10, 60);
-              doc.text(`Fecha de nacimiento: ${req.body.fechaNacimiento} `, 10, 70);
-              doc.text(`Nacionalidad: ${req.body.nacionalidad}`, 10, 80);
-              doc.text(`Numero de documento: ${req.body.numeroDocumento}`, 10, 90);
-              doc.text(`Genero: ${req.body.genero}`, 10, 100);
-              doc.text(`Area de destino: ${req.body.areaDestino}`, 10, 110);
-               const pdf =  doc.output();
-               console.log('datos del pdf',pdf);
+                const doc = new jsPDF();
+                doc.setLanguage("es-CO")
+                doc.text(`Detalles de la solicitud `, 70, 40);
+                doc.setFontSize(12);
+                doc.text(`${req.body.nombre} tu solicitud ha sido ${req.body.estado}`, 10, 60);
+                doc.text(`Fecha de nacimiento: ${req.body.fechaNacimiento} `, 10, 70);
+                doc.text(`Nacionalidad: ${req.body.nacionalidad}`, 10, 80);
+                doc.text(`Numero de documento: ${req.body.numeroDocumento}`, 10, 90);
+                doc.text(`Genero: ${req.body.genero}`, 10, 100);
+                doc.text(`Area de destino: ${req.body.areaDestino}`, 10, 110);
+                const pdf = doc.output();
+                console.log('datos del pdf', pdf);
 
                 const mailsolicitante = {
-                  from: 'SIADRI <sistema.siadri@correounivalle.edu.co>',
-                  bcc: `${correos}`,
-                  subject: `Carta de ${stringSubjk} "${req.body.nombre}"`,
-                  attachments: [{
-                    filename: 'solicitud.pdf',
-                    content: pdf }]
-              };
-              try {
-                mailTrasport.sendMail(mailsolicitante);
-                if (res) {
-                    res.status(200).json({ status: 200, mensaje: 'correo enviado correctamente' });
+                    from: 'SIADRI <sistema.siadri@correounivalle.edu.co>',
+                    bcc: `${correos}`,
+                    subject: `Carta de ${stringSubjk} "${req.body.nombre}"`,
+                    attachments: [{
+                        filename: 'solicitud.pdf',
+                        content: pdf
+                    }]
+                };
+                try {
+                    mailTrasport.sendMail(mailsolicitante);
+                    if (res) {
+                        res.status(200).json({ status: 200, mensaje: 'correo enviado correctamente' });
+                    }
                 }
-            }
-            catch (error) {
-                console.log(`${error}`);
-                res.status(204).json({ status: 204, mensaje: 'Error en el correo' });
+                catch (error) {
+                    console.log(`${error}`);
+                    res.status(204).json({ status: 204, mensaje: 'Error en el correo' });
 
-            }
-
+                }
 
 
 
-          });
 
-      })
+            });
 
-  });
+        })
+
+    });
 });
 
 exports.enviarCorreoPrograma = functions.https.onRequest((req, res) => {
