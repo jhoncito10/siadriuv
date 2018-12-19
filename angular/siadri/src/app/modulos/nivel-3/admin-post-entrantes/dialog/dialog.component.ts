@@ -40,15 +40,21 @@ export class DialogComponent implements OnInit {
   programa2 = '';
 
 
+  myControlComent: FormControl = new FormControl();
+  comentario = '';
+  correo = '';
+
+
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<DialogComponent>,
-    @Inject(MAT_DIALOG_DATA) data, private service: ConveniosService, 
+    @Inject(MAT_DIALOG_DATA) data, private service: ConveniosService,
     private email: MailServiceService) {
     console.log(data);
     if (data.variable === 'compartir') {
       this.variable = true;
     } else {
+      this.correo = data.correo;
       this.variable = false;
     }
 
@@ -95,7 +101,7 @@ export class DialogComponent implements OnInit {
     this.service.getProgramas().subscribe(data => {
       const aray = this.removeDuplicates(data, 'NOMBRE PROGRAMA ACADEMICO');
       aray.forEach(doc => {
-        this.facultades.push({prog: doc['NOMBRE PROGRAMA ACADEMICO'], correo: doc['correo']});
+        this.facultades.push({ prog: doc['NOMBRE PROGRAMA ACADEMICO'], correo: doc['correo'] });
       })
     });
   }
@@ -117,13 +123,12 @@ export class DialogComponent implements OnInit {
       }).then((result) => {
 
         if (result.value) {
-          this.enviarCorreoPrograma();
           this.service.updateSolicitud(this.identificador, {
-            'PROGRAMA ACADÉMICO DE DESTINO (1)' : this.programa,
-            'PROGRAMA ACADÉMICO DE DESTINO (2)' : this.programa2,
+            'PROGRAMA ACADÉMICO DE DESTINO (1)': this.programa,
+            'PROGRAMA ACADÉMICO DE DESTINO (2)': this.programa2,
             'estado': 'En espera de aprobación dirección de programa'
           }).then(() => {
-           
+
             this.enviarCorreoPrograma();
             this.dialogRef.close();
             swal(
@@ -152,6 +157,53 @@ export class DialogComponent implements OnInit {
 
   }
 
+  retornar() {
+    if (this.comentario === '') {
+      swal('No ha agregado ningun comentario.', '', 'error');
+    } else {
+
+      swal({
+        type: 'error',
+        text: '¿Está seguro de retornar esta solicitud?',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, Retornar',
+        cancelButtonText: 'No, Cancelar'
+
+      }).then((result) => {
+
+        if (result.value) {
+          console.log(this.correo, this.identificador);
+          this.enviarCorreoPrograma();
+          this.service.updateSolicitud(this.identificador, {
+            'estado': 'Aprobada  por  DRI  UV'
+          }).then(() => {
+
+            this.enviarCorreoEstudiante();
+            this.dialogRef.close();
+            swal(
+              'Exito',
+              '',
+              'success'
+            );
+          }).catch(() => {
+            swal(
+              'En este momento no es posible guardar los cambios.',
+              '',
+              'error'
+            );
+          });
+        } else {
+          swal(
+            'Cancelado',
+            '',
+            'error'
+          );
+        }
+
+      });
+    }
+  }
+
   enviarCorreoPrograma() {
     const array1 = this.facultades.find(o => o['prog'] === this.programa);
     const array2 = this.facultades.find(o => o['prog'] === this.programa2);
@@ -166,12 +218,25 @@ export class DialogComponent implements OnInit {
     const fecha = new Date().toISOString().split('T')[0];
 
     const mensaje = ' Se ha generado una nueva solicitud entrante para su programa academico.'
-     + ' la solicitud tiene el codigo' + this.identificador + ' y fue generada en la fecha: '
-     + fecha;
+      + ' la solicitud tiene el codigo: "' + this.identificador + '" y fue generada en la fecha: '
+      + fecha;
 
     this.email.send(email, 'SE HA GENERADO UNA NUEVA SOLICITUD ENTRANTE', mensaje);
     this.email.AnycrearNotifications(arra, mensaje);
     console.log(email);
+
+  }
+
+  enviarCorreoEstudiante() {
+
+    const fecha = new Date().toISOString().split('T')[0];
+
+    const mensaje = ' Se le notifica que su solicitud ha sido retornada. por favor revisela.'
+      + ' la solicitud tiene el codigo: "' + this.identificador + '" y fue generada en la fecha: '
+      + fecha;
+
+    this.email.send(this.correo, 'NOTIFICACION DE RETORNO DE SOLICITUD', mensaje);
+    this.email.crearNotification(this.correo, mensaje);
 
   }
 
@@ -203,7 +268,7 @@ export class DialogComponent implements OnInit {
 
     // Los eliminamos todos
     for (let i = 0; i < specialChars.length; i++) {
-        cadena = cadena.replace(new RegExp('\\' + specialChars[i], 'gi'), '');
+      cadena = cadena.replace(new RegExp('\\' + specialChars[i], 'gi'), '');
     }
 
     // Lo queremos devolver limpio en minusculas
@@ -220,5 +285,5 @@ export class DialogComponent implements OnInit {
     cadena = cadena.replace(/ú/gi, 'u');
     cadena = cadena.replace(/ñ/gi, 'n');
     return cadena;
- }
+  }
 }
