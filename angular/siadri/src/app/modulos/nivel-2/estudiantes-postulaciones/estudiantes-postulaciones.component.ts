@@ -113,7 +113,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     this.spinertablapostulaciones = true
 
     this.db.ref('/postulaciones/')
-      .orderByChild("Correo electrónico")
+      .orderByChild('Correo electrónico')
       .equalTo(this.user.email)
       .once('value', solicitudesSnap => {
         this.dataTablaSolicitudes = [];
@@ -182,7 +182,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   }
   selectSolicitud(row) {
     this.rowSelected = row;
-    
+
     const estado = row['estado']
     switch (estado) {
       case 'Aprobada por DRI UV':
@@ -211,73 +211,73 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
   setsolicitud() {
     this.solicitud = {
-      "NOMBRE": "",
-      "ID_SEXO_BIOLOGICO": "",
-      "ID_ESTADO_CIVIL": "",
-      "FECHA_NACIMIENTO": "",
-      "Correo electrónico": "",
-      "TIPO DE IDENTIFICACIÓN": "",
-      "NÚMERO DE IDENTIFICACIÓN": "",
-      "FECHA_EXPIRACION_DOCUMENTO": "",
-      "LUGAR_NACIMIENTO": "",
-      "PAIS_NACIMIENTO": "",
-      "NACIONALIDAD": "",
-      "CÓDIGO DEL ESTUDIANTE EN UNIVALLE": "",
-      "PERIODO ACADÉMICO": 0,
-      "TIPO DE MOVILIDAD": "ENTRANTE",
-      "TIPO DE CONVENIO": "",
-      "CODIGO_CONVENIO": "",
-      "MODALIDAD": "",
-      "NUM_DIAS_MOVILIDAD": "",
-      "TIPO DE PROGRAMA - CONVOCATORIA": "",
-      "NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN": "",
-      "NIVEL DE FORMACIÓN DE LA MOVILIDAD": "",
-      "PAÍS DE ORIGEN": "",
-      "UNIVERSIDAD DE PROCEDENCIA": "",
-      "CIUDAD-SEDE": "",
-      "PAÍS DE DESTINO": "",
-      "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "",
-      "PROGRAMA ACADÉMICO DE ORIGEN": "",
-      "PROGRAMA ACADÉMICO DE ORIGEN 2": "",
-      "CÓDIGO DEL PROGRAMA": "",
-      "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
-      "PROGRAMA ACADÉMICO DE DESTINO (2)": "",
-      "Facultad": "",
-      "Facultad2": "",
-      "FINANCIAMIENTO": "",
-      "VALOR_FINANCIACION_NACIONAL": "",
-      "ID_FUENTE_INTERNACIONAL": "",
-      "ID_PAIS_FINANCIADOR": "",
-      "VALOR_FINANCIACION_INTERNAC": "",
-      "fechaActualizado": "",
-      "estado": "",
-      "DIRECCION": "",
-      "PAIS_DIRECCION": "",
-      "CIUDAD_DIRECCION": "",
-      "POSTAL_CODE_DIRECCION": "",
-      "ESTADO_PROVINCIA_REGION": "",
-      "INSTITUCION_MEDICA": "",
-      "matriculaIngles": "no",
-      "curso1": "",
-      "curso2": "",
-      "curso3": "",
-      "curso4": "",
-      "curso5": "",
-      "curso6": "",
-      "finaciacionBeca_rango": "",
-      "finaciacionInstitucionNacional": "",
-      "finaciacionPaisInstitucionNacional": "",
-      "finaciacionInstitucionInternacional": "",
-      "finaciacionPaisInstitucionInternacional": "",
-      "finaciacionONG": "",
-      "CartaPresentacion": "",
-      "CertificadoNotas": "",
-      "ConocimientoEspanol": "",
-      "CartaMotivacion": "",
-      "DocumentoID": "",
-      "Foto": "",
-      "EuropassCV": "",
-      "Fellows": ""
+      'NOMBRE': '',
+      'ID_SEXO_BIOLOGICO': '',
+      'ID_ESTADO_CIVIL': '',
+      'FECHA_NACIMIENTO': '',
+      'Correo electrónico': '',
+      'TIPO DE IDENTIFICACIÓN': '',
+      'NÚMERO DE IDENTIFICACIÓN': '',
+      'FECHA_EXPIRACION_DOCUMENTO': '',
+      'LUGAR_NACIMIENTO': '',
+      'PAIS_NACIMIENTO': '',
+      'NACIONALIDAD': '',
+      'CÓDIGO DEL ESTUDIANTE EN UNIVALLE': '',
+      'PERIODO ACADÉMICO': 0,
+      'TIPO DE MOVILIDAD': 'ENTRANTE',
+      'TIPO DE CONVENIO': '',
+      'CODIGO_CONVENIO': '',
+      'MODALIDAD': '',
+      'NUM_DIAS_MOVILIDAD': '',
+      'TIPO DE PROGRAMA - CONVOCATORIA': '',
+      'NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN': '',
+      'NIVEL DE FORMACIÓN DE LA MOVILIDAD': '',
+      'PAÍS DE ORIGEN': '',
+      'UNIVERSIDAD DE PROCEDENCIA': '',
+      'CIUDAD-SEDE': '',
+      'PAÍS DE DESTINO': '',
+      'UNIVERSIDAD - INSTITUCIÓN RECEPTORA': '',
+      'PROGRAMA ACADÉMICO DE ORIGEN': '',
+      'PROGRAMA ACADÉMICO DE ORIGEN 2': '',
+      'CÓDIGO DEL PROGRAMA': '',
+      'PROGRAMA ACADÉMICO DE DESTINO (1)': '',
+      'PROGRAMA ACADÉMICO DE DESTINO (2)': '',
+      'Facultad': '',
+      'Facultad2': '',
+      'FINANCIAMIENTO': '',
+      'VALOR_FINANCIACION_NACIONAL': '',
+      'ID_FUENTE_INTERNACIONAL': '',
+      'ID_PAIS_FINANCIADOR': '',
+      'VALOR_FINANCIACION_INTERNAC': '',
+      'fechaActualizado': '',
+      'estado': '',
+      'DIRECCION': '',
+      'PAIS_DIRECCION': '',
+      'CIUDAD_DIRECCION': '',
+      'POSTAL_CODE_DIRECCION': '',
+      'ESTADO_PROVINCIA_REGION': '',
+      'INSTITUCION_MEDICA': '',
+      'matriculaIngles': 'no',
+      'curso1': '',
+      'curso2': '',
+      'curso3': '',
+      'curso4': '',
+      'curso5': '',
+      'curso6': '',
+      'finaciacionBeca_rango': '',
+      'finaciacionInstitucionNacional': '',
+      'finaciacionPaisInstitucionNacional': '',
+      'finaciacionInstitucionInternacional': '',
+      'finaciacionPaisInstitucionInternacional': '',
+      'finaciacionONG': '',
+      'CartaPresentacion': '',
+      'CertificadoNotas': '',
+      'ConocimientoEspanol': '',
+      'CartaMotivacion': '',
+      'DocumentoID': '',
+      'Foto': '',
+      'EuropassCV': '',
+      'Fellows': ''
 
     }
   }
@@ -288,17 +288,17 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     this.solicitud.actualizadoPor = this.user.email
 
     this.solicitud.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
-    let reader = new FileReader();
-    var arrayPromesasFiles = []
+    const reader = new FileReader();
+    const arrayPromesasFiles = []
 
     if (this.fileInputCartaPresentacion &&
       this.fileInputCartaPresentacion.nativeElement.files
       && this.fileInputCartaPresentacion.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputCartaPresentacion.nativeElement.files[0];
-      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaPresentacion.${extention[extention.length - 1]}`);
+      const file = this.fileInputCartaPresentacion.nativeElement.files[0];
+      const extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaPresentacion.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -307,11 +307,11 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       this.fileInputCertificadoNotas.nativeElement.files
       && this.fileInputCertificadoNotas.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputCertificadoNotas.nativeElement.files[0];
-      let extention = this.fileInputCertificadoNotas.nativeElement.files[0].name.split('.')
+      const file = this.fileInputCertificadoNotas.nativeElement.files[0];
+      const extention = this.fileInputCertificadoNotas.nativeElement.files[0].name.split('.')
 
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CertificadoNotas.${extention[extention.length - 1]}`);
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CertificadoNotas.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -319,11 +319,11 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       this.fileInputConocimientoEspanol.nativeElement.files
       && this.fileInputConocimientoEspanol.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputConocimientoEspanol.nativeElement.files[0];
-      let extention = this.fileInputConocimientoEspanol.nativeElement.files[0].name.split('.')
+      const file = this.fileInputConocimientoEspanol.nativeElement.files[0];
+      const extention = this.fileInputConocimientoEspanol.nativeElement.files[0].name.split('.')
 
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/ConocimientoEspanol.${extention[extention.length - 1]}`);
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/ConocimientoEspanol.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -331,10 +331,10 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       this.fileInputCartaMotivacion.nativeElement.files
       && this.fileInputCartaMotivacion.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputCartaMotivacion.nativeElement.files[0];
-      let extention = this.fileInputCartaMotivacion.nativeElement.files[0].name.split('.')
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaMotivacion.${extention[extention.length - 1]}`);
+      const file = this.fileInputCartaMotivacion.nativeElement.files[0];
+      const extention = this.fileInputCartaMotivacion.nativeElement.files[0].name.split('.')
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaMotivacion.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -342,11 +342,11 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       this.fileInputDocumentoID.nativeElement.files
       && this.fileInputDocumentoID.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputDocumentoID.nativeElement.files[0];
-      let extention = this.fileInputDocumentoID.nativeElement.files[0].name.split('.')
+      const file = this.fileInputDocumentoID.nativeElement.files[0];
+      const extention = this.fileInputDocumentoID.nativeElement.files[0].name.split('.')
 
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/DocumentoID.${extention[extention.length - 1]}`);
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/DocumentoID.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -354,11 +354,11 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       this.fileInputFoto.nativeElement.files
       && this.fileInputFoto.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputFoto.nativeElement.files[0];
-      let extention = this.fileInputFoto.nativeElement.files[0].name.split('.')
+      const file = this.fileInputFoto.nativeElement.files[0];
+      const extention = this.fileInputFoto.nativeElement.files[0].name.split('.')
 
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/Foto.${extention[extention.length - 1]}`);
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/Foto.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -366,11 +366,11 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       this.fileInputEuropassCV.nativeElement.files
       && this.fileInputEuropassCV.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputEuropassCV.nativeElement.files[0];
-      let extention = this.fileInputEuropassCV.nativeElement.files[0].name.split('.')
+      const file = this.fileInputEuropassCV.nativeElement.files[0];
+      const extention = this.fileInputEuropassCV.nativeElement.files[0].name.split('.')
 
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/EuropassCV.${extention[extention.length - 1]}`);
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/EuropassCV.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -378,22 +378,22 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       this.fileInputFellows.nativeElement.files
       && this.fileInputFellows.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputFellows.nativeElement.files[0];
-      let extention = this.fileInputFellows.nativeElement.files[0].name.split('.')
+      const file = this.fileInputFellows.nativeElement.files[0];
+      const extention = this.fileInputFellows.nativeElement.files[0].name.split('.')
 
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/Fellows.${extention[extention.length - 1]}`);
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/Fellows.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
     if (this.fileInputCartaTutor && this.fileInputCartaTutor.nativeElement.files
       && this.fileInputCartaTutor.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputCartaTutor.nativeElement.files[0];
-      let extention = this.fileInputCartaTutor.nativeElement.files[0].name.split('.')
+      const file = this.fileInputCartaTutor.nativeElement.files[0];
+      const extention = this.fileInputCartaTutor.nativeElement.files[0].name.split('.')
 
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaTutor.${extention[extention.length - 1]}`);
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaTutor.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -401,11 +401,11 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       this.fileInputDescripcionProyecto.nativeElement.files
       && this.fileInputDescripcionProyecto.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputDescripcionProyecto.nativeElement.files[0];
-      let extention = this.fileInputDescripcionProyecto.nativeElement.files[0].name.split('.')
+      const file = this.fileInputDescripcionProyecto.nativeElement.files[0];
+      const extention = this.fileInputDescripcionProyecto.nativeElement.files[0].name.split('.')
 
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/DescripcionProyecto.${extention[extention.length - 1]}`);
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/DescripcionProyecto.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -413,7 +413,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
       for (let index = 0; index < values.length; index++) {
         const element = values[index];
-        let name = element.a.name.split('.')
+        const name = element.a.name.split('.')
         console.log(element)
         this.solicitud[`${name[0]}`] = element.a.downloadURLs[0]
 
@@ -421,9 +421,9 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update(this.solicitud);
       return promise
         .then(res => {
-          if (this.solicitud['Correo electrónico'] != '') {
-            var body = 'cuerpo del correo de En espera de aprobación dirección de programa'
-            var correos = `${this.solicitud['Correo electrónico']}, ${environment.mails.dirDRI}`
+          if (this.solicitud['Correo electrónico'] !== '') {
+            const body = 'cuerpo del correo de En espera de aprobación dirección de programa'
+            const correos = `${this.solicitud['Correo electrónico']}, ${environment.mails.dirDRI}`
             this._mailServiceService.sendMailprograma
               (this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'], 'El estado de tu solicitud ha sido actualizada : "En espera de aprobación dirección de programa"', body)
               .subscribe((responseData) => {
@@ -462,7 +462,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
         })
         .then(() => {
-          let notificationInfo = 'El estado de tu solicitud ha sido actualizada : "En espera de aprobación dirección de programa"'
+          const notificationInfo = 'El estado de tu solicitud ha sido actualizada : "En espera de aprobación dirección de programa"'
           this._mailServiceService
             .crearNotification(this.solicitud['Correo electrónico'], notificationInfo)
             .subscribe((responseData) => {
@@ -513,9 +513,9 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update(this.solicitud);
     promise
       .then(res => {
-        if (this.solicitud['Correo electrónico'] != '') {
-          var body = 'Cancelada por usuario'
-          var correos = `${this.solicitud['Correo electrónico']}, ${environment.mails.dirDRI}`
+        if (this.solicitud['Correo electrónico'] !== '') {
+          const body = 'Cancelada por usuario'
+          const correos = `${this.solicitud['Correo electrónico']}, ${environment.mails.dirDRI}`
           this._mailServiceService.sendMailprograma
             (this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'], 'El estado de tu solicitud ha sido actualizada : "Cancelada por usuario"', body)
             .subscribe((responseData) => {
@@ -554,7 +554,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
       })
       .then(() => {
-        let notificationInfo = 'El estado de tu solicitud ha sido actualizada : "Cancelada por usuario"'
+        const notificationInfo = 'El estado de tu solicitud ha sido actualizada : "Cancelada por usuario"'
         this._mailServiceService
           .crearNotification(this.solicitud['Correo electrónico'], notificationInfo)
           .subscribe((responseData) => {
@@ -594,17 +594,17 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     this.solicitud.actualizadoPor = this.user.email
 
     this.solicitud.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
-    let reader = new FileReader();
-    var arrayPromesasFiles = []
+    const reader = new FileReader();
+    const arrayPromesasFiles = []
 
     if (this.fileInputCartaPresentacion &&
       this.fileInputCartaPresentacion.nativeElement.files
       && this.fileInputCartaPresentacion.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputCartaPresentacion.nativeElement.files[0];
-      let extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaPresentacion.${extention[extention.length - 1]}`);
+      const file = this.fileInputCartaPresentacion.nativeElement.files[0];
+      const extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaPresentacion.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -613,11 +613,11 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       this.fileInputCertificadoNotas.nativeElement.files
       && this.fileInputCertificadoNotas.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputCertificadoNotas.nativeElement.files[0];
-      let extention = this.fileInputCertificadoNotas.nativeElement.files[0].name.split('.')
+      const file = this.fileInputCertificadoNotas.nativeElement.files[0];
+      const extention = this.fileInputCertificadoNotas.nativeElement.files[0].name.split('.')
 
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CertificadoNotas.${extention[extention.length - 1]}`);
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CertificadoNotas.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -625,11 +625,11 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       this.fileInputConocimientoEspanol.nativeElement.files
       && this.fileInputConocimientoEspanol.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputConocimientoEspanol.nativeElement.files[0];
-      let extention = this.fileInputConocimientoEspanol.nativeElement.files[0].name.split('.')
+      const file = this.fileInputConocimientoEspanol.nativeElement.files[0];
+      const extention = this.fileInputConocimientoEspanol.nativeElement.files[0].name.split('.')
 
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/ConocimientoEspanol.${extention[extention.length - 1]}`);
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/ConocimientoEspanol.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -637,10 +637,10 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       this.fileInputCartaMotivacion.nativeElement.files
       && this.fileInputCartaMotivacion.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputCartaMotivacion.nativeElement.files[0];
-      let extention = this.fileInputCartaMotivacion.nativeElement.files[0].name.split('.')
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaMotivacion.${extention[extention.length - 1]}`);
+      const file = this.fileInputCartaMotivacion.nativeElement.files[0];
+      const extention = this.fileInputCartaMotivacion.nativeElement.files[0].name.split('.')
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaMotivacion.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -648,11 +648,11 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       this.fileInputDocumentoID.nativeElement.files
       && this.fileInputDocumentoID.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputDocumentoID.nativeElement.files[0];
-      let extention = this.fileInputDocumentoID.nativeElement.files[0].name.split('.')
+      const file = this.fileInputDocumentoID.nativeElement.files[0];
+      const extention = this.fileInputDocumentoID.nativeElement.files[0].name.split('.')
 
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/DocumentoID.${extention[extention.length - 1]}`);
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/DocumentoID.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -660,11 +660,11 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       this.fileInputFoto.nativeElement.files
       && this.fileInputFoto.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputFoto.nativeElement.files[0];
-      let extention = this.fileInputFoto.nativeElement.files[0].name.split('.')
+      const file = this.fileInputFoto.nativeElement.files[0];
+      const extention = this.fileInputFoto.nativeElement.files[0].name.split('.')
 
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/Foto.${extention[extention.length - 1]}`);
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/Foto.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -672,11 +672,11 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       this.fileInputEuropassCV.nativeElement.files
       && this.fileInputEuropassCV.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputEuropassCV.nativeElement.files[0];
-      let extention = this.fileInputEuropassCV.nativeElement.files[0].name.split('.')
+      const file = this.fileInputEuropassCV.nativeElement.files[0];
+      const extention = this.fileInputEuropassCV.nativeElement.files[0].name.split('.')
 
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/EuropassCV.${extention[extention.length - 1]}`);
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/EuropassCV.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -684,22 +684,22 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       this.fileInputFellows.nativeElement.files
       && this.fileInputFellows.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputFellows.nativeElement.files[0];
-      let extention = this.fileInputFellows.nativeElement.files[0].name.split('.')
+      const file = this.fileInputFellows.nativeElement.files[0];
+      const extention = this.fileInputFellows.nativeElement.files[0].name.split('.')
 
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/Fellows.${extention[extention.length - 1]}`);
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/Fellows.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
     if (this.fileInputCartaTutor && this.fileInputCartaTutor.nativeElement.files
       && this.fileInputCartaTutor.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputCartaTutor.nativeElement.files[0];
-      let extention = this.fileInputCartaTutor.nativeElement.files[0].name.split('.')
+      const file = this.fileInputCartaTutor.nativeElement.files[0];
+      const extention = this.fileInputCartaTutor.nativeElement.files[0].name.split('.')
 
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaTutor.${extention[extention.length - 1]}`);
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaTutor.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -707,11 +707,11 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       this.fileInputDescripcionProyecto.nativeElement.files
       && this.fileInputDescripcionProyecto.nativeElement.files.length > 0
     ) {
-      let file = this.fileInputDescripcionProyecto.nativeElement.files[0];
-      let extention = this.fileInputDescripcionProyecto.nativeElement.files[0].name.split('.')
+      const file = this.fileInputDescripcionProyecto.nativeElement.files[0];
+      const extention = this.fileInputDescripcionProyecto.nativeElement.files[0].name.split('.')
 
-      let storageRef = this.firebaseStorage.ref();
-      let mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/DescripcionProyecto.${extention[extention.length - 1]}`);
+      const storageRef = this.firebaseStorage.ref();
+      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/DescripcionProyecto.${extention[extention.length - 1]}`);
 
       arrayPromesasFiles.push(mountainsRef.put(file))
     }
@@ -720,7 +720,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
       for (let index = 0; index < values.length; index++) {
         const element = values[index];
-        let name = element.a.name.split('.')
+        const name = element.a.name.split('.')
         console.log(element)
         this.solicitud[`${name[0]}`] = element.a.downloadURLs[0]
 
@@ -759,7 +759,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   }
 
   getProgramas() {
-    let programs = this.db.ref('/programasAcademicos/')
+    const programs = this.db.ref('/programasAcademicos/')
     return programs.once('value').then(snapProgramas => {
       this.programas = snapProgramas.val()
       return snapProgramas.forEach(programa => {
@@ -781,7 +781,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       if (this.programas.hasOwnProperty(prog)) {
         const element = this.programas[prog];
 
-        if (element['FACULTAD-INSTITUTO'] == this.solicitud['Facultad']) {
+        if (element['FACULTAD-INSTITUTO'] === this.solicitud['Facultad']) {
           this.arrayProgramas.push(element['NOMBRE PROGRAMA ACADEMICO'])
         }
 
@@ -795,7 +795,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       if (this.programas.hasOwnProperty(prog)) {
         const element = this.programas[prog];
 
-        if (element['FACULTAD-INSTITUTO'] == this.solicitud['Facultad2']) {
+        if (element['FACULTAD-INSTITUTO'] === this.solicitud['Facultad2']) {
           this.arrayProgramas2.push(element['NOMBRE PROGRAMA ACADEMICO'])
         }
 
@@ -812,7 +812,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   calculaDias() {
 
     if (this.finMobilidad && this.inicioMobilidad) {
-      let dias = moment(this.finMobilidad).diff(this.inicioMobilidad, 'days')
+      const dias = moment(this.finMobilidad).diff(this.inicioMobilidad, 'days')
       if (dias < 1) {
         swal('Las fechas que has ingresado son incorrectas', '', 'error')
       } else {
@@ -833,12 +833,10 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
     dialogConfig.data = {
       id: this.solicitud.key,
-      curso1: this.solicitud['curso1'],
-      curso2: this.solicitud['curso2'],
-      curso3: this.solicitud['curso3'],
-      curso4: this.solicitud['curso4'],
-      curso5: this.solicitud['curso5'],
-      curso6: this.solicitud['curso6']
+      cursos: this.solicitud['cursos'],
+      correo: this.solicitud['Correo electrónico'],
+      identificacion: this.solicitud['NÚMERO DE IDENTIFICACIÓN'],
+      nombre: this.solicitud['NOMBRE']
     };
 
     this.dialog.open(DialogEstudianteComponent, dialogConfig);
