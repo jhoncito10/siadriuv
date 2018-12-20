@@ -36,9 +36,9 @@
           </ng-container>
 
           <!-- Progress Column -->
-          <ng-container matColumnDef="ano">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Año </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.ano}} </mat-cell>
+          <ng-container matColumnDef="fechaCreado">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Creación </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.fechaCreado}} </mat-cell>
           </ng-container>
 
           <!-- Name Column -->
@@ -430,7 +430,8 @@
 
               </div>
               <div class="form-group">
-                <label for="programaOpcion1" class="col-md-5 control-label">Academic Program/Programa académico</label>
+                <label for="programaOpcion1"
+                class="col-md-5 control-label">Academic Program/Programa académico</label>
                 <div class="col-md-7">
                   <select [attr.disabled]="estadoComponenteInferior==4 ? true : false" [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (1)"]' class="form-control col-md-7" id="programaOpcion1">
                     <option value="" disabled selected>Select your option</option>
@@ -466,7 +467,8 @@
 
               </div>
               <div class="form-group">
-                <label for="programaOpcion2" class="col-md-5 control-label">Academic Program/Programa académico (2)</label>
+                <label for="programaOpcion2" 
+                class="col-md-5 control-label">Academic Program/Programa académico (2)</label>
                 <div class="col-md-7">
                   <select [attr.disabled]="estadoComponenteInferior==4 ? true : false" [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (2)"]' class="form-control col-md-7" id="programaOpcion2">
                     <option value="" disabled selected>Select your option</option>
@@ -666,7 +668,6 @@
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputCartaPresentacion id="inputCartaPresentacion">
                   </div>
-                </div>
 
                 <div class="form-group">
                   <label for="inputCertificadoNotas" class="col-md-5 control-label">Certificate with grades in spanish
@@ -676,7 +677,6 @@
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputCertificadoNotas id="inputCertificadoNotas">
                   </div>
-                </div>
 
                 <div class="form-group">
                   <label for="inputConocimientoEspanol" class="col-md-5 control-label">Document attesting spanish
@@ -686,7 +686,6 @@
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputConocimientoEspanol id="inputConocimientoEspanol">
                   </div>
-                </div>
 
                 <div class="form-group">
                   <label for="inputCartaMotivacion" class="col-md-5 control-label">Motivation letter in spanish/Carta
@@ -695,7 +694,6 @@
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputCartaMotivacion id="inputCartaMotivacion">
                   </div>
-                </div>
 
                 <div class="form-group">
                   <label for="inputDocumentoID" class="col-md-5 control-label">Copy of passport or Cédula de
@@ -703,7 +701,6 @@
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputDocumentoID id="inputDocumentoID">
                   </div>
-                </div>
 
                 <div class="form-group">
                   <label for="inputFoto" class="col-md-5 control-label">3x4 cm photo, white background, JPF
@@ -711,13 +708,12 @@
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputFoto id="inputFoto">
                   </div>
-                </div>
 
-                <div class="form-group">
-                  <h4 for="inputFoto" class="col-md-5 ">REQUISITOS ADICIONALES</h4>
-                  <div class="col-md-7">
+                  <div class="form-group">
+                    <h4 class="col-md-5 ">REQUISITOS ADICIONALES</h4>
+                    <div class="col-md-7">
+                    </div>
                   </div>
-                </div>
 
                 <div class="form-group">
                   <label for="inputEuropassCV" class="col-md-5 control-label">Faculty of Health incoming students: you
@@ -735,24 +731,58 @@
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputFellows id="inputFellows">
                   </div>
                 </div>
-
                 <!-- FILES DONWLOAD -->
-                <div class="form-group" *ngIf="(this.solicitud['CartaPresentacion']!='' && this.solicitud['CartaPresentacion']!=undefined)">
-                    <label >Carta Presentacion 1</label>
-    
+                <div *ngIf="(estadoComponenteInferior == 3 || estadoComponenteInferior == 2)">
+                  <div class="form-group" *ngIf="(this.solicitud['CartaPresentacion']!=undefined && this.solicitud['CartaPresentacion']!='')">
+                    <label>Carta presentacion</label>
+
                     <a href="{{this.solicitud['CartaPresentacion']}}" target="_blank">link</a>
                   </div>
-                  <!-- <div class="form-group" *ngIf="(&& this.solicitud['CertificadoNotas']!='' && this.solicitud['CertificadoNotas']!=undefined)">
-                    <label >Certificado de notas</label>
-    
+
+                  <div class="form-group" *ngIf="( this.solicitud['CertificadoNotas']!=undefined && this.solicitud['CertificadoNotas']!='')">
+                    <label>Certificado de notas</label>
+
                     <a href="{{this.solicitud['CertificadoNotas']}}" target="_blank"> link</a>
                   </div>
-                  <div class="form-group" *ngIf="(&& this.solicitud['ConocimientoEspanol']!='' && this.solicitud['ConocimientoEspanol']!=undefined)">
-                    <label >Carta motivación</label>
-    
-                    <a href="{{this.solicitud['ConocimientoEspanol']}}" target="_blank"> link</a>
-                  </div> -->
 
+                  <div class="form-group" *ngIf="( this.solicitud['ConocimientoEspanol']!=undefined && this.solicitud['ConocimientoEspanol']!='')">
+                    <label>Certificado español</label>
+
+                    <a href="{{this.solicitud['ConocimientoEspanol']}}" target="_blank"> link</a>
+                  </div>
+
+
+
+                  <div class="form-group" *ngIf="( this.solicitud['CartaMotivacion']!=undefined && this.solicitud['CartaMotivacion']!='')">
+                    <label>Carta motivación</label>
+
+                    <a href="{{this.solicitud['CartaMotivacion']}}" target="_blank"> link</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['DocumentoID']!=undefined && this.solicitud['DocumentoID']!='')">
+                    <label>Documento de identidadI</label>
+
+                    <a href="{{this.solicitud['DocumentoID']}}" target="_blank"> link</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['Foto']!=undefined && this.solicitud['Foto']!='')">
+                    <label>Foto</label>
+
+                    <a href="{{this.solicitud['Foto']}}" target="_blank"> link</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['EuropassCV']!=undefined && this.solicitud['EuropassCV']!='')">
+                    <label>Europass CV</label>
+
+                    <a href="{{this.solicitud['EuropassCV']}}" target="_blank"> link</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['Fellows']!=undefined && this.solicitud['Fellows']!='')">
+                    <label>Fellows</label>
+
+                    <a href="{{this.solicitud['Fellows']}}" target="_blank"> link</a>
+                  </div>
+                </div>
               </div>
 
               <div *ngIf="(solicitud['MODALIDAD']==='Internship / Pasantía internacional' || solicitud['MODALIDAD']==='Estancia de Investigación')">
@@ -762,7 +792,6 @@
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputCartaTutor id="inputCartaTutor">
                   </div>
-                </div>
 
                 <div class="form-group">
                   <label for="inputCartaProfesorUV" class="col-md-5 control-label">Letter of invitation from an
@@ -771,7 +800,6 @@
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputCartaProfesorUV id="inputCartaProfesorUV">
                   </div>
-                </div>
 
                 <div class="form-group">
                   <label for="inputDescripcionProyecto" class="col-md-5 control-label">Brief description of the
@@ -780,7 +808,6 @@
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputDescripcionProyecto id="inputDescripcionProyecto">
                   </div>
-                </div>
 
                 <div class="form-group">
                   <label for="inputDocumentoID" class="col-md-5 control-label">Copy of passport or Cédula de
@@ -788,7 +815,6 @@
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputDocumentoID id="inputDocumentoID">
                   </div>
-                </div>
 
                 <div class="form-group">
                   <label for="inputFoto" class="col-md-5 control-label">3x4 cm photo, white background, JPF
@@ -799,8 +825,44 @@
                 </div>
 
 
+                <div *ngIf="(estadoComponenteInferior == 3 || estadoComponenteInferior == 2)">
+                  <div class="form-group" *ngIf="(this.solicitud['CartaTutor']!=undefined && this.solicitud['CartaTutor']!='')">
+                    <label>Carta de tutor</label>
+
+                    <a href="{{this.solicitud['CartaTutor']}}" target="_blank">Carta de tutor</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['CartaProfesorUV']!=undefined && this.solicitud['CartaProfesorUV']!='')">
+                    <label>Carta invitación</label>
+
+                    <a href="{{this.solicitud['CartaProfesorUV']}}" target="_blank"> Carta invitación</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['DescripcionProyecto']!=undefined && this.solicitud['DescripcionProyecto']!='')">
+                    <label>proyecto </label>
+
+                    <a href="{{this.solicitud['DescripcionProyecto']}}" target="_blank"> proyecto </a>
+                  </div>
+
+
+
+                  <div class="form-group" *ngIf="( this.solicitud['DocumentoID']!=undefined && this.solicitud['DocumentoID']!='')">
+                    <label>Documento de identidadI</label>
+
+                    <a href="{{this.solicitud['DocumentoID']}}" target="_blank"> link</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['Foto']!=undefined && this.solicitud['Foto']!='')">
+                    <label>Foto</label>
+
+                    <a href="{{this.solicitud['Foto']}}" target="_blank"> Foto</a>
+                  </div>
+                </div>
+
 
               </div>
+
+
               <div *ngIf="solicitud['MODALIDAD']==='Clinical Rotation / Rotación clínica'">
                 <div class="form-group">
                   <label for="inputCartaPresentacion" class="col-md-5 control-label">Presentation letter from home
@@ -814,7 +876,6 @@
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputCartaPresentacion id="inputCartaPresentacion">
                   </div>
-                </div>
 
                 <div class="form-group">
                   <label for="inputCertificadoNotas" class="col-md-5 control-label">Certificate with grades in spanish
@@ -824,7 +885,6 @@
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputCertificadoNotas id="inputCertificadoNotas">
                   </div>
-                </div>
 
                 <div class="form-group">
                   <label for="inputConocimientoEspanol" class="col-md-5 control-label">Document attesting spanish
@@ -834,7 +894,6 @@
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputConocimientoEspanol id="inputConocimientoEspanol">
                   </div>
-                </div>
 
                 <div class="form-group">
                   <label for="inputCartaMotivacion" class="col-md-5 control-label">Motivation letter in spanish/Carta
@@ -843,7 +902,6 @@
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputCartaMotivacion id="inputCartaMotivacion">
                   </div>
-                </div>
 
                 <div class="form-group">
                   <label for="inputDocumentoID" class="col-md-5 control-label">Copy of passport or Cédula de
@@ -851,7 +909,6 @@
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputDocumentoID id="inputDocumentoID">
                   </div>
-                </div>
 
                 <div class="form-group">
                   <label for="inputFoto" class="col-md-5 control-label">3x4 cm photo, white background, JPF
@@ -859,7 +916,6 @@
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputFoto id="inputFoto">
                   </div>
-                </div>
 
 
                 <div class="form-group">
@@ -871,13 +927,82 @@
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputEuropassCV id="inputEuropassCV">
                   </div>
                 </div>
+                <div *ngIf="(estadoComponenteInferior == 3 || estadoComponenteInferior == 2)">
+                  <div class="form-group" *ngIf="(this.solicitud['CartaPresentacion']!=undefined && this.solicitud['CartaPresentacion']!='')">
+                    <label>Carta presentacion</label>
 
+                    <a href="{{this.solicitud['CartaPresentacion']}}" target="_blank">link</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['CertificadoNotas']!=undefined && this.solicitud['CertificadoNotas']!='')">
+                    <label>Certificado de notas</label>
+
+                    <a href="{{this.solicitud['CertificadoNotas']}}" target="_blank"> link</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['ConocimientoEspanol']!=undefined && this.solicitud['ConocimientoEspanol']!='')">
+                    <label>Certificado español</label>
+
+                    <a href="{{this.solicitud['ConocimientoEspanol']}}" target="_blank"> link</a>
+                  </div>
+
+
+
+                  <div class="form-group" *ngIf="( this.solicitud['CartaMotivacion']!=undefined && this.solicitud['CartaMotivacion']!='')">
+                    <label>Carta motivación</label>
+
+                    <a href="{{this.solicitud['CartaMotivacion']}}" target="_blank"> link</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['DocumentoID']!=undefined && this.solicitud['DocumentoID']!='')">
+                    <label>Documento de identidadI</label>
+
+                    <a href="{{this.solicitud['DocumentoID']}}" target="_blank"> link</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['Foto']!=undefined && this.solicitud['Foto']!='')">
+                    <label>Foto</label>
+
+                    <a href="{{this.solicitud['Foto']}}" target="_blank"> link</a>
+                  </div>
+
+                  <div class="form-group" *ngIf="( this.solicitud['EuropassCV']!=undefined && this.solicitud['EuropassCV']!='')">
+                    <label>Europass CV</label>
+
+                    <a href="{{this.solicitud['EuropassCV']}}" target="_blank"> link</a>
+                  </div>
+
+
+                </div>
 
               </div>
-              
+
 
             </mat-expansion-panel>
 
+
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Comentarios
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div class="form-group" *ngIf="( this.solicitud['comentariosDRI']!=undefined && this.solicitud['comentariosDRI']!='')">
+                <label>Comentarios del DRI</label>
+                <textarea class="form-control" rows="3" [(ngModel)]='solicitud["comentariosDRI"]' readonly></textarea>
+              </div>
+              <div class="form-group" *ngIf="( this.solicitud['comentariosDirector']!=undefined && this.solicitud['comentariosDirector']!='')">
+                <label>Comentarios del Director</label>
+                <textarea class="form-control" rows="3" [(ngModel)]='solicitud["comentariosDirector"]' readonly></textarea>
+              </div>
+              <div class="form-group" >
+                <label>Comentarios del Estudiante</label>
+                <textarea class="form-control" rows="3"
+                [attr.readonly]="estadoComponenteInferior==2 ? '' : null"
+                [(ngModel)]='solicitud["comentariosEstudiante"]'></textarea>
+              </div>
+            </mat-expansion-panel>
           </mat-accordion>
 
           <br><br>
@@ -913,7 +1038,7 @@
           </button>
         </div>
       </div>
-      <!-- <div class="row" *ngIf="solicitud.nombre!==''">
+      <!-- <div class="row" *ngIf="solicitud.nombre!==undefined">
         <div class="col-md-6">
             <button type="button" class="btn btn-block btn-danger" (click)="denegar()">Negar</button>
         </div>

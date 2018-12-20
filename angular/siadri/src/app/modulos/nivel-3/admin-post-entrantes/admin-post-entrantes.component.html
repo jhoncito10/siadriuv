@@ -160,7 +160,7 @@
 
 
 
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+            <mat-expansion-panel >
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Información personal:
@@ -256,7 +256,7 @@
             </mat-expansion-panel>
 
 
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+            <mat-expansion-panel >
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Contact address/dirección postal de contacto:
@@ -301,7 +301,7 @@
               </div>
             </mat-expansion-panel>
 
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+            <mat-expansion-panel >
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   Mobilidad:
@@ -330,15 +330,15 @@
                 <label for="Postal" class="col-md-5 control-label">Lenght of the mobility/Duración de la Movilidad</label>
 
                 <mat-form-field class="col-md-3">
-                  <input [(ngModel)]='inicioMobilidad' matInput [matDatepicker]="fechaInicioMobilidad" placeholder="From/desde" [attr.readonly]="true ? '' : null" (dateInput)="calculaDias('input', $event)"
-                    (dateChange)="calculaDias('change', $event)">
+                  <input [(ngModel)]='inicioMobilidad' matInput [matDatepicker]="fechaInicioMobilidad" placeholder="From/desde" [attr.readonly]="true ? '' : null" (dateInput)="calculaDias()"
+                    (dateChange)="calculaDias()">
                   <mat-datepicker-toggle matSuffix [for]="fechaInicioMobilidad"></mat-datepicker-toggle>
                   <mat-datepicker #fechaInicioMobilidad disabled="false"></mat-datepicker>
                 </mat-form-field>
 
                 <mat-form-field class="col-md-3">
-                  <input [(ngModel)]='finMobilidad' matInput [matDatepicker]="fechaFinMobilidad" placeholder="To/hasta" [attr.readonly]="true ? '' : null" (dateInput)="calculaDias('input', $event)"
-                    (dateChange)="calculaDias('change', $event)">
+                  <input [(ngModel)]='finMobilidad' matInput [matDatepicker]="fechaFinMobilidad" placeholder="To/hasta" [attr.readonly]="true ? '' : null" (dateInput)="calculaDias()"
+                    (dateChange)="calculaDias()">
                   <mat-datepicker-toggle matSuffix [for]="fechaFinMobilidad"></mat-datepicker-toggle>
                   <mat-datepicker #fechaFinMobilidad disabled="true"></mat-datepicker>
                 </mat-form-field>
@@ -352,7 +352,7 @@
               </div>
 
             </mat-expansion-panel>
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = true">
+            <mat-expansion-panel >
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   ACADEMIC INFORMATION/INFORMACIÓN ACADÉMICA:
@@ -541,7 +541,7 @@
             </mat-expansion-panel>
 
             <!-- MOBILITY FUNDING INFOTMATION/INFORMACIÓN DE FINANCIAMIENTO DE LA MOVILIDAD -->
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel >
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   MOBILITY FUNDING INFOTMATION/INFORMACIÓN DE FINANCIAMIENTO DE LA MOVILIDAD:
@@ -628,7 +628,7 @@
             <!-- /MOBILITY FUNDING INFOTMATION/INFORMACIÓN DE FINANCIAMIENTO DE LA MOVILIDAD -->
 
 
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+            <mat-expansion-panel >
               <mat-expansion-panel-header>
                 <mat-panel-title>
                   REQUIRED DOCUMENTS / DOCUMENTOS SOLICITADOS:
