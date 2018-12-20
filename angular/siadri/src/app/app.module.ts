@@ -110,6 +110,7 @@ import { AdminConveniosComponent } from './modulos/nivel-3/admin-convenios/admin
 
 import { NgxEditorModule } from 'ngx-editor';
 import { DialogComponent } from './modulos/nivel-3/admin-post-entrantes/dialog/dialog.component';
+import { DialogEstudianteComponent } from './modulos/nivel-2/estudiantes-postulaciones/dialog-estudiante/dialog-estudiante.component';
 
 @NgModule({
   declarations: [
@@ -166,7 +167,8 @@ import { DialogComponent } from './modulos/nivel-3/admin-post-entrantes/dialog/d
     AdminPostSalientesComponent,
     SideBarMenuPostulacionesComponent,
     AdminConveniosComponent,
-    DialogComponent
+    DialogComponent,
+    DialogEstudianteComponent
 
   ],
   imports: [
@@ -227,6 +229,6 @@ import { DialogComponent } from './modulos/nivel-3/admin-post-entrantes/dialog/d
     NativeFirebaseService
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ DialogComponent ]
+  entryComponents: [ DialogComponent, DialogEstudianteComponent ]
 })
 export class AppModule { }

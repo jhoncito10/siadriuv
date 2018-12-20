@@ -4,7 +4,7 @@ import { FirebaseApp } from 'angularfire2';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import swal from 'sweetalert2';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
-import { MailServiceService } from "../../../shared/services/main-service.service";
+import { MailServiceService, MixedFunctions } from "../../../shared/services/main-service.service";
 import * as  moment from "moment";
 
 
@@ -41,10 +41,20 @@ export class DirectoresProgramaUvComponent implements OnInit {
   @ViewChild('panelSuperiorButton') panelSuperiorButton: ElementRef;
   @ViewChild('panelinferiorButton') panelinferiorButton: ElementRef;
 
+  paises = [];
+
+  programas: any
+  arrayProgramas = []
+  arrayFacultades = []
+
+  arrayProgramas2 = []
+  arrayFacultades2 = []
+
   constructor(private _angularfire: AngularFireDatabase,
     private localSt: LocalStorageService,
     @Inject(FirebaseApp) firebaseApp: any,
-    private _mailServiceService: MailServiceService) {
+    private _mailServiceService: MailServiceService,
+    private _MixedFunctions: MixedFunctions) {
     this.db = firebaseApp.database();
     this.solicitudes = {}
     this.estadoComponent = 0
@@ -59,11 +69,14 @@ export class DirectoresProgramaUvComponent implements OnInit {
 
       }
 
-    })
+    });
+
+    this.getPaises();
+    this.getProgramas();
 
   }
   consultaDatosTabla() {
-this.estadoComponenteInferior = 0 
+    this.estadoComponenteInferior = 0
 
     for (let index = 0; index < this.programaDir.length; index++) {
       const element = this.programaDir[index];
@@ -79,7 +92,7 @@ this.estadoComponenteInferior = 0
             console.log(dato['PROGRAMA ACADÉMICO DE DESTINO (1)'])
             if (
               dato['TIPO DE MOVILIDAD'] == 'ENTRANTE' &&
-              dato['estado'] =='En espera de aprobación dirección de programa'
+              dato['estado'] == 'En espera de aprobación dirección de programa'
             ) {
               this.solicitudes[solicitudSnap.key] = dato
               let correo = dato['Correo electrónico'] || ''
@@ -99,10 +112,10 @@ this.estadoComponenteInferior = 0
               })
             }
           })
-            this.dataSource = new MatTableDataSource(this.dataTablaSolicitudes);
+          this.dataSource = new MatTableDataSource(this.dataTablaSolicitudes);
 
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         }).catch((error) => console.log(`${error}`))
     }
     if (this.tablaSolicitudesCarrera.nativeElement.classList.contains('collapsed-box')) {
@@ -110,6 +123,70 @@ this.estadoComponenteInferior = 0
     }
 
   }
+
+
+  getPaises() {
+    this.paises = []
+    return this.db.ref('/paises/')
+      .orderByChild('nombre_pais')
+      .once('value')
+      .then(paisesSnap => {
+        paisesSnap.forEach(pais => {
+          this.paises.push(pais.val().nombre_pais)
+
+        })
+
+      })
+      .catch(erro => {
+        console.log(erro)
+      })
+
+  }
+  getProgramas() {
+    const programs = this.db.ref('/programasAcademicos/')
+    return programs.once('value').then(snapProgramas => {
+      this.programas = snapProgramas.val()
+      return snapProgramas.forEach(programa => {
+        this.arrayFacultades.push(programa.val()['FACULTAD-INSTITUTO'])
+        this.arrayFacultades2.push(programa.val()['FACULTAD-INSTITUTO'])
+
+      })
+    })
+      .then(resolve => {
+        this.arrayFacultades = this._MixedFunctions.removeDuplicadesArray(this.arrayFacultades)
+        this.arrayFacultades2 = this._MixedFunctions.removeDuplicadesArray(this.arrayFacultades2)
+
+      })
+  }
+
+  getProgramasPorFacultad() {
+    this.arrayProgramas = []
+    for (const prog in this.programas) {
+      if (this.programas.hasOwnProperty(prog)) {
+        const element = this.programas[prog];
+
+        if (element['FACULTAD-INSTITUTO'] === this.solicitud['Facultad']) {
+          this.arrayProgramas.push(element['NOMBRE PROGRAMA ACADEMICO'])
+        }
+
+      }
+    }
+  }
+
+  getProgramasPorFacultad2() {
+    this.arrayProgramas2 = []
+    for (const prog in this.programas) {
+      if (this.programas.hasOwnProperty(prog)) {
+        const element = this.programas[prog];
+
+        if (element['FACULTAD-INSTITUTO'] === this.solicitud['Facultad2']) {
+          this.arrayProgramas2.push(element['NOMBRE PROGRAMA ACADEMICO'])
+        }
+
+      }
+    }
+  }
+
 
 
   getProgramasDir() {
@@ -149,6 +226,9 @@ this.estadoComponenteInferior = 0
       this.panelinferiorButton.nativeElement.click()
     }
     this.panelInferior.nativeElement.scrollIntoView();
+
+    this.getProgramasPorFacultad();
+    this.getProgramasPorFacultad2();
 
   }
 

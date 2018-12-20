@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef, Inject } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseApp } from 'angularfire2';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 
 import swal from 'sweetalert2';
 import { LocalStorageService } from 'ngx-webstorage';
@@ -9,6 +9,7 @@ import { MailServiceService, NativeFirebaseService, MixedFunctions } from "../..
 import * as  moment from "moment";
 import { environment } from "../../../../environments/environment";
 import * as firebase from "firebase";
+import { DialogEstudianteComponent } from './dialog-estudiante/dialog-estudiante.component';
 
 @Component({
   selector: 'app-estudiantes-postulaciones',
@@ -84,7 +85,8 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     @Inject(FirebaseApp) firebaseApp: any,
     private _mailServiceService: MailServiceService,
     private _NativeFirebaseService: NativeFirebaseService,
-    private _MixedFunctions: MixedFunctions
+    private _MixedFunctions: MixedFunctions,
+    private dialog: MatDialog
   ) {
     this.db = firebaseApp.database();
     this.firebaseStorage = this._NativeFirebaseService.fb.storage();
@@ -189,7 +191,9 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       case 'Aprobada por DRI UV':
         this.estadoComponenteInferior = 3
         break;
-
+        case 'En curso':
+        this.estadoComponenteInferior = 4
+        break;
       default:
         this.estadoComponenteInferior = 2
         break;
@@ -206,8 +210,6 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
 
   }
-
-
 
   setsolicitud() {
     this.solicitud = {
@@ -680,5 +682,27 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       }
     }
 
+  }
+
+
+
+  openDialog(item) {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      id: this.solicitud.key,
+      curso1: this.solicitud['curso1'],
+      curso2: this.solicitud['curso2'],
+      curso3: this.solicitud['curso3'],
+      curso4: this.solicitud['curso4'],
+      curso5: this.solicitud['curso5'],
+      curso6: this.solicitud['curso6']
+    };
+
+    this.dialog.open(DialogEstudianteComponent, dialogConfig);
   }
 }
