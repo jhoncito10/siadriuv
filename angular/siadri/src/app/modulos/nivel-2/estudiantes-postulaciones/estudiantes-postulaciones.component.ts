@@ -54,6 +54,41 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   inicioMobilidad: any
   finMobilidad: any
 
+  valoresMovilidad:{}
+
+  ref: any
+  cursos = [{
+    codigo: "",
+    equivalente: "",
+    grupo: "",
+    nombre: ""
+  }, {
+    codigo: "",
+    equivalente: "",
+    grupo: "",
+    nombre: ""
+  }, {
+    codigo: "",
+    equivalente: "",
+    grupo: "",
+    nombre: ""
+  }, {
+    codigo: "",
+    equivalente: "",
+    grupo: "",
+    nombre: ""
+  }, {
+    codigo: "",
+    equivalente: "",
+    grupo: "",
+    nombre: ""
+  }, {
+    codigo: "",
+    equivalente: "",
+    grupo: "",
+    nombre: ""
+  },]
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('panelSuperior') tablaSolicitudesCarrera: ElementRef;
@@ -93,19 +128,22 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     this.solicitudes = {}
     this.year = moment().year()
     this.setsolicitud()
+    this.ref = this.db.ref('/postulaciones/')
+
   }
 
   ngOnInit() {
-    var ref = this.db.ref('/postulaciones/')
-    var _this = this
-    var onValueChange = ref.on('child_changed', function (dataSnapshot) {
-      _this.consultaDatosTabla()
-    });
+
     // Sometime later...
-    ref.off('value', onValueChange);
     this.consultaDatosTabla()
     this.getPaises()
     this.getProgramas()
+    this.getValoresMovilidad()
+  }
+
+  ngAfterViewInit() {
+
+
   }
 
   consultaDatosTabla() {
@@ -182,7 +220,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   }
   selectSolicitud(row) {
     this.rowSelected = row;
-    
+
     const estado = row['estado']
     switch (estado) {
       case 'Aprobada por DRI UV':
@@ -205,6 +243,41 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     }
     this.panelInferior.nativeElement.scrollIntoView();
 
+    if (this.solicitud.hasOwnProperty('cursos')) {
+      this.cursos = this.solicitud.cursos
+    } else {
+      this.cursos = [{
+        codigo: "",
+        equivalente: "",
+        grupo: "",
+        nombre: ""
+      }, {
+        codigo: "",
+        equivalente: "",
+        grupo: "",
+        nombre: ""
+      }, {
+        codigo: "",
+        equivalente: "",
+        grupo: "",
+        nombre: ""
+      }, {
+        codigo: "",
+        equivalente: "",
+        grupo: "",
+        nombre: ""
+      }, {
+        codigo: "",
+        equivalente: "",
+        grupo: "",
+        nombre: ""
+      }, {
+        codigo: "",
+        equivalente: "",
+        grupo: "",
+        nombre: ""
+      },]
+    }
     this.getProgramasPorFacultad()
     this.getProgramasPorFacultad2()
   }
@@ -258,12 +331,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       "ESTADO_PROVINCIA_REGION": "",
       "INSTITUCION_MEDICA": "",
       "matriculaIngles": "no",
-      "curso1": "",
-      "curso2": "",
-      "curso3": "",
-      "curso4": "",
-      "curso5": "",
-      "curso6": "",
+      "cursos": [],
       "finaciacionBeca_rango": "",
       "finaciacionInstitucionNacional": "",
       "finaciacionPaisInstitucionNacional": "",
@@ -288,6 +356,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     this.solicitud.actualizadoPor = this.user.email
 
     this.solicitud.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
+    this.solicitud.cursos = this.cursos
     let reader = new FileReader();
     var arrayPromesasFiles = []
 
@@ -594,6 +663,8 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     this.solicitud.actualizadoPor = this.user.email
 
     this.solicitud.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
+    this.solicitud.cursos = this.cursos
+
     let reader = new FileReader();
     var arrayPromesasFiles = []
 
@@ -842,5 +913,14 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     };
 
     this.dialog.open(DialogEstudianteComponent, dialogConfig);
+  }
+
+  getValoresMovilidad() {
+    let valores = this.db.ref('/valoresMovilidad/')
+    return valores.once('value').then(snapProgramas => {
+      this.valoresMovilidad = snapProgramas.val()
+    
+    })
+      
   }
 }
