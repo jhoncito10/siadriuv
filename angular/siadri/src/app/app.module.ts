@@ -27,7 +27,8 @@ import {
   MatDividerModule,
   MatExpansionModule,
   MatAutocompleteModule,
-  MatDialogModule
+  MatDialogModule,
+  MatListModule
 
 } from '@angular/material';
 
@@ -201,6 +202,7 @@ import { DialogEstudianteComponent } from './modulos/nivel-2/estudiantes-postula
     MatDividerModule,
     MatExpansionModule,
     MatAutocompleteModule,
+    MatListModule,
     MatDialogModule,
     Ng2Webstorage
   ],

@@ -7,275 +7,103 @@
     </div>
     <div class="box-body">
       <div class="form-horizontal">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="row">
-              <div class="col-md-2">
-                <div class="form-group">
+        <div class="col-md-12">
 
-                  <div class="col-md-12">
-                    <label for="institucion"></label>
-                  </div>
+          <div class="row">
 
-                </div>
-              </div>
-              <div class="col-md-5">
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <label for="institucion">Materias actuales</label>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col-md-5">
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <label for="institucion">Materias par agregar</label>
-                  </div>
-
-                </div>
+            <div class="form-group">
+              <div class="col-md-12">
+                <label for="institucion">Seleccione la materia que desea cambiar</label>
+                <select [formControl]="select" id="" class="form-control" (change)="CambiarInputs()">
+                  <option *ngFor="let item of this.array; let i = index;" [value]="i">{{item.codigo}} - {{item.nombre}}</option>
+                </select>
               </div>
             </div>
+          </div>
 
-            <div class="row">
-              <div class="col-md-2">
-
+          <div class="row">
+            <div class="form-group">
+              <div class="col-md-12">
                 <div class="form-group">
-
                   <div class="col-md-12">
-                    <input [formControl]="myControlChecks['curso1']" type="checkbox">
                   </div>
-
-                </div>
-
-
-              </div>
-              <div class="col-md-5">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlComent['curso1']" type="text" class="form-control" placeholder="Curso 1">
+                  <div class="col-md-3">
+                    <label for="institucion">Nombre</label>
+                    <input [formControl]="this.inputs.nombre" type="text">
                   </div>
-
-                </div>
-
-
-              </div>
-              <div class="col-md-5">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlComent['curso1']" type="text" class="form-control" placeholder="Curso 1">
+                  <div class="col-md-3">
+                    <label for="institucion">Codigo</label>
+                    <input [formControl]="this.inputs.codigo" type="text">
                   </div>
-
+                  <div class="col-md-3">
+                    <label for="institucion">Grupo</label>
+                    <input [formControl]="this.inputs.grupo" type="text">
+                  </div>
+                  <div class="col-md-3">
+                    <label for="institucion">Equivalente</label>
+                    <input [formControl]="this.inputs.equivalente" type="text">
+                  </div>
                 </div>
-
-
               </div>
+
             </div>
-
-            <div class="row">
-              <div class="col-md-2">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlChecks['curso2']" type="checkbox">
-                  </div>
-
-                </div>
-
-
-              </div>
-              <div class="col-md-5">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlComent['curso2']" type="text" class="form-control" placeholder="Curso 1">
-                  </div>
-
-                </div>
-
-
-              </div>
-              <div class="col-md-5">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlComent['curso2']" type="text" class="form-control" placeholder="Curso 1">
-                  </div>
-
-                </div>
-
-
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-2">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlChecks['curso3']" type="checkbox">
-                  </div>
-
-                </div>
-
-
-              </div>
-              <div class="col-md-5">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlComent['curso3']" type="text" class="form-control" placeholder="Curso 1">
-                  </div>
-
-                </div>
-
-
-              </div>
-              <div class="col-md-5">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlComent['curso3']" type="text" class="form-control" placeholder="Curso 1">
-                  </div>
-
-                </div>
-
-
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-2">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlChecks['curso4']" type="checkbox">
-                  </div>
-
-                </div>
-
-
-              </div>
-              <div class="col-md-5">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlComent['curso4']" type="text" class="form-control" placeholder="Curso 1">
-                  </div>
-
-                </div>
-
-
-              </div>
-              <div class="col-md-5">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlComent['curso4']" type="text" class="form-control" placeholder="Curso 1">
-                  </div>
-
-                </div>
-
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-2">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlChecks['curso5']" type="checkbox">
-                  </div>
-
-                </div>
-
-
-              </div>
-              <div class="col-md-5">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlComent['curso5']" type="text" class="form-control" placeholder="Curso 1">
-                  </div>
-
-                </div>
-
-
-              </div>
-              <div class="col-md-5">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlComent['curso5']" type="text" class="form-control" placeholder="Curso 1">
-                  </div>
-
-                </div>
-
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-2">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlChecks['curso6']" type="checkbox">
-                  </div>
-
-                </div>
-
-
-              </div>
-              <div class="col-md-5">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlComent['curso6']" type="text" class="form-control" placeholder="Curso 1">
-                  </div>
-
-                </div>
-
-
-              </div>
-              <div class="col-md-5">
-
-                <div class="form-group">
-
-                  <div class="col-md-12">
-                    <input [formControl]="myControlComent['curso6']" type="text" class="form-control" placeholder="Curso 1">
-                  </div>
-
-                </div>
-
-
-              </div>
-            </div>
-
-
           </div>
 
 
+          <div class="row" style="margin-top: 20px;">
+            <div class="form-group">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="col-md-12">
+                    <label for="institucion">INGRESE LOS DATOS DE LA MATERIA QUE VA A AGREGAR</label>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="institucion">Nombre</label>
+                    <input [formControl]="this.inputsNueva.nombre" type="text">
+                  </div>
+                  <div class="col-md-3">
+                    <label for="institucion">Codigo</label>
+                    <input [formControl]="this.inputsNueva.codigo" type="text">
+                  </div>
+                  <div class="col-md-3">
+                    <label for="institucion">Grupo</label>
+                    <input [formControl]="this.inputsNueva.grupo" type="text">
+                  </div>
+                  <div class="col-md-3">
+                    <label for="institucion">Equivalente</label>
+                    <input [formControl]="this.inputsNueva.equivalente" type="text">
+                  </div>
+                  <div class="col-md-12" style="margin-top: 20px;">
+                      <button style="float: right;" type="button" class="btn btn-success" (click)="agregar()">Agregar
+                          <i class="fa fa-plus"></i>
+                        </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div *ngIf="this.arrayCambios.length != 0" class="row" style="margin-top: 20px;">
+              <div class="form-group">
+                <div class="col-md-12">
+                    <label for="institucion">Lista de cambios</label>
+
+                    <mat-list role="list">
+                        <mat-list-item *ngFor="let item of this.arrayCambios" role="listitem">{{item.cancelar.nombre}} por {{item.nueva.nombre}}</mat-list-item>
+
+                      </mat-list>
+
+                </div>
+  
+              </div>
+            </div>
+
+
         </div>
+
+
+
 
 
       </div>

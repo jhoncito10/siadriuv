@@ -39,27 +39,29 @@ export class DialogEstudianteComponent implements OnInit {
   programa = '';
   programa2 = '';
 
+  select = new FormControl();
+  array = [];
 
-  myControlChecks = {
-    curso1: new FormControl({value: false}),
-    curso2: new FormControl({value: false}),
-    curso3: new FormControl({value: false}),
-    curso4: new FormControl({value: false}),
-    curso5: new FormControl({value: false}),
-    curso6: new FormControl({value: false}),
+  inputs = {
+    nombre: new FormControl({ value: '', disabled: true }),
+    codigo: new FormControl({ value: '', disabled: true }),
+    equivalente: new FormControl({ value: '', disabled: true }),
+    grupo: new FormControl({ value: '', disabled: true })
   };
 
+  arrayCambios = [];
 
-  myControlComent = {
-    curso1: new FormControl({value: '', disabled: true}),
-    curso2: new FormControl({value: '', disabled: true}),
-    curso3: new FormControl({value: '', disabled: true}),
-    curso4: new FormControl({value: '', disabled: true}),
-    curso5: new FormControl({value: '', disabled: true}),
-    curso6: new FormControl({value: '', disabled: true}),
+  inputsNueva = {
+    nombre: new FormControl({ value: '', disabled: false }),
+    codigo: new FormControl({ value: '', disabled: false }),
+    equivalente: new FormControl({ value: '', disabled: false }),
+    grupo: new FormControl({ value: '', disabled: false })
   };
+
 
   correo = '';
+  identificacion = '';
+  nombre = '';
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<DialogComponent>,
@@ -69,12 +71,11 @@ export class DialogEstudianteComponent implements OnInit {
 
     this.identificador = data.id;
 
-    this.myControlComent.curso1.setValue(data.curso1);
-    this.myControlComent.curso2.setValue(data.curso2);
-    this.myControlComent.curso3.setValue(data.curso3);
-    this.myControlComent.curso4.setValue(data.curso4);
-    this.myControlComent.curso5.setValue(data.curso5);
-    this.myControlComent.curso6.setValue(data.curso6);
+    this.array = data.cursos;
+    this.identificacion = data.identificacion;
+    this.nombre = data.nombre;
+    this.correo = data.correo;
+    console.log(this.array);
   }
 
 
@@ -88,8 +89,69 @@ export class DialogEstudianteComponent implements OnInit {
 
   }
 
+  CambiarInputs() {
+    console.log(this.select.value);
+    const item = this.array[this.select.value];
+    this.inputs.nombre.setValue(item.nombre);
+    this.inputs.codigo.setValue(item.codigo)
+    this.inputs.equivalente.setValue(item.equivalente)
+    this.inputs.grupo.setValue(item.grupo)
+  }
+
+  agregar() {
+    const cambio = {
+      id: this.select.value,
+      cancelar: {
+        nombre: this.inputs.nombre.value,
+        codigo: this.inputs.codigo.value,
+        grupo: this.inputs.grupo.value,
+        equivalente: this.inputs.equivalente.value
+      },
+      nueva: {
+        nombre: this.inputsNueva.nombre.value,
+        codigo: this.inputsNueva.codigo.value,
+        grupo: this.inputsNueva.grupo.value,
+        equivalente: this.inputsNueva.equivalente.value
+      }
+    };
+
+    if (!this.norepetido()) {
+      if (this.validar() || this.select.value === '') {
+        swal('Por favor diligencie todos los datos', '', 'error');
+      } else {
+        this.arrayCambios.push(cambio);
+      }
+    } else {
+      swal('no puede cambiar sobre una materia ya agregada', '', 'error');
+    }
 
 
+  }
+
+  norepetido() {
+    let a = false;
+    for (let i = 0; i < this.arrayCambios.length; i++) {
+      const element = this.arrayCambios[i].id;
+      if (this.select.value === element) {
+        a = true;
+      }
+    }
+    return a;
+  }
+
+  validar() {
+    let vol = false;
+    for (const key in this.inputsNueva) {
+      if (this.inputsNueva.hasOwnProperty(key)) {
+        const element = this.inputsNueva[key].value;
+        if (element === '') {
+          vol = true;
+        }
+      }
+    }
+
+    return vol;
+  }
 
   enviar() {
     swal({
@@ -103,25 +165,24 @@ export class DialogEstudianteComponent implements OnInit {
 
       if (result.value) {
 
-        // this.enviarCorreoPrograma();
-        // this.service.updateSolicitud(this.identificador, {
-        //   'estado': 'Aprobada  por  DRI  UV'
-        // }).then(() => {
+        this.service.updateSolicitud(this.identificador, {
+          'solicitudCursos': this.arrayCambios
+        }).then(() => {
 
-        //   this.enviarCorreoEstudiante();
-        //   this.dialogRef.close();
-        //   swal(
-        //     'Exito',
-        //     '',
-        //     'success'
-        //   );
-        // }).catch(() => {
-        //   swal(
-        //     'En este momento no es posible guardar los cambios.',
-        //     '',
-        //     'error'
-        //   );
-        // });
+          this.enviarCorreo();
+          this.dialogRef.close();
+          swal(
+            'Exito',
+            '',
+            'success'
+          );
+        }).catch(() => {
+          swal(
+            'En este momento no es posible guardar los cambios.',
+            '',
+            'error'
+          );
+        });
       } else {
         swal(
           'Cancelado',
@@ -131,42 +192,69 @@ export class DialogEstudianteComponent implements OnInit {
       }
 
     });
-  
+
   }
 
-  enviarCorreoPrograma() {
-    const array1 = this.facultades.find(o => o['prog'] === this.programa);
-    const array2 = this.facultades.find(o => o['prog'] === this.programa2);
 
-    const arra = [array1['correo']];
+  enviarCorreo() {
 
-    let email = array1['correo'];
-    if (array2) {
-      email += ',' + array2['correo'];
-      arra.push(array2['correo']);
+    const fecha = new Date().toISOString().split('T')[0];
+
+    const mensaje = ' Se le notifica que su solicitud de cambio de materias a la postulacion "' + this.identificador + '" ha sido enviada.'
+      + ' esta solicitud fue generada en la fecha: ' + fecha;
+
+    let mensaje2 = ' Se le notifica que se ha generado una solicitud de cambio de materias. por favor revisela.'
+      + ' la solicitud fue hecha a la postulacion con codigo: "' + this.identificador + '" perteneciente a el estudiante'
+      + 'con identificacion: "' + this.identificacion + '", nombre: "' + this.nombre + '" y correo: "' + this.correo + '"'
+      + '<br><br><br> <h2>Materias para cancelar</h2><br> <table style="width:100%"><tr><th>Codigo</th>'
+      + '<th>Nombre</th> <th>Grupo</th><th>Equivalente</th></tr>';
+
+    for (let index = 0; index < this.arrayCambios.length; index++) {
+      const element = this.arrayCambios[index].cancelar;
+      mensaje2 += '<tr>';
+
+      mensaje2 += '<td style="text-align: center;">' + element.codigo + '</td>';
+      mensaje2 += '<td style="text-align: center;">' + element.nombre + '</td>';
+      mensaje2 += '<td style="text-align: center;">' + element.grupo + '</td>';
+      mensaje2 += '<td style="text-align: center;">' + element.equivalente + '</td>';
+
+      mensaje2 += '</tr>';
     }
-    const fecha = new Date().toISOString().split('T')[0];
 
-    const mensaje = ' Se ha generado una nueva solicitud entrante para su programa academico.'
-      + ' la solicitud tiene el codigo: "' + this.identificador + '" y fue generada en la fecha: '
-      + fecha;
+    mensaje2 += '</table><br><br><br> <h2>Materias para agregar</h2><br> <table style="width:100%"><tr><th>Codigo</th>'
+    + '<th>Nombre</th> <th>Grupo</th><th>Equivalente</th></tr><tr>';
 
-    this.email.send(email, 'SE HA GENERADO UNA NUEVA SOLICITUD ENTRANTE', mensaje);
-    this.email.AnycrearNotifications(arra, mensaje);
-    console.log(email);
+    for (let index = 0; index < this.arrayCambios.length; index++) {
+      const element = this.arrayCambios[index].nueva;
+      mensaje2 += '<tr>';
+      mensaje2 += '<td style="text-align: center;">' + element.codigo + '</td>';
+      mensaje2 += '<td style="text-align: center;">' + element.nombre + '</td>';
+      mensaje2 += '<td style="text-align: center;">' + element.grupo + '</td>';
+      mensaje2 += '<td style="text-align: center;">' + element.equivalente + '</td>';
+      mensaje2 += '</tr>';
+    }
 
-  }
+    mensaje2 += '</table>';
 
-  enviarCorreoEstudiante() {
+    console.log(mensaje, mensaje2, this.correo);
 
-    const fecha = new Date().toISOString().split('T')[0];
+    const noti =  'Se le notifica que se ha generado una solicitud de cambio de materias. por favor revisela.'
+    + ' la solicitud fue hecha a la postulacion con codigo: "' + this.identificador + '" perteneciente a el estudiante'
+    + 'con identificacion: "' + this.identificacion + '", nombre: "' + this.nombre + '" y correo: "' + this.correo + '"';
 
-    const mensaje = ' Se le notifica que su solicitud ha sido retornada. por favor revisela.'
-      + ' la solicitud tiene el codigo: "' + this.identificador + '" y fue generada en la fecha: '
-      + fecha;
+    this.email.send(this.correo, 'SOLICITUD DE CAMBIO DE MATERIAS', mensaje).subscribe(data => {
+      console.log('envio correo');
+    });
+    this.email.crearNotification(this.correo, mensaje).subscribe(data => {
+      console.log('envio notificaciones');
+    });
 
-    this.email.send(this.correo, 'NOTIFICACION DE RETORNO DE SOLICITUD', mensaje);
-    this.email.crearNotification(this.correo, mensaje);
+    this.email.sendMailNivel3('SOLICITUD DE CAMBIO DE MATERIAS', mensaje2).subscribe(data => {
+      console.log('envio correo');
+    });
+    this.email.createNotificationNivel3(noti).subscribe(data => {
+      console.log('envio notificaciones');
+    });
 
   }
 
