@@ -54,6 +54,41 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   inicioMobilidad: any
   finMobilidad: any
 
+  valoresMovilidad:{}
+
+  ref: any
+  cursos = [{
+    codigo: "",
+    equivalente: "",
+    grupo: "",
+    nombre: ""
+  }, {
+    codigo: "",
+    equivalente: "",
+    grupo: "",
+    nombre: ""
+  }, {
+    codigo: "",
+    equivalente: "",
+    grupo: "",
+    nombre: ""
+  }, {
+    codigo: "",
+    equivalente: "",
+    grupo: "",
+    nombre: ""
+  }, {
+    codigo: "",
+    equivalente: "",
+    grupo: "",
+    nombre: ""
+  }, {
+    codigo: "",
+    equivalente: "",
+    grupo: "",
+    nombre: ""
+  },]
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('panelSuperior') tablaSolicitudesCarrera: ElementRef;
@@ -93,19 +128,22 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     this.solicitudes = {}
     this.year = moment().year()
     this.setsolicitud()
+    this.ref = this.db.ref('/postulaciones/')
+
   }
 
   ngOnInit() {
-    var ref = this.db.ref('/postulaciones/')
-    var _this = this
-    var onValueChange = ref.on('child_changed', function (dataSnapshot) {
-      _this.consultaDatosTabla()
-    });
+
     // Sometime later...
-    ref.off('value', onValueChange);
     this.consultaDatosTabla()
     this.getPaises()
     this.getProgramas()
+    this.getValoresMovilidad()
+  }
+
+  ngAfterViewInit() {
+
+
   }
 
   consultaDatosTabla() {
@@ -205,79 +243,109 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     }
     this.panelInferior.nativeElement.scrollIntoView();
 
+    if (this.solicitud.hasOwnProperty('cursos')) {
+      this.cursos = this.solicitud.cursos
+    } else {
+      this.cursos = [{
+        codigo: "",
+        equivalente: "",
+        grupo: "",
+        nombre: ""
+      }, {
+        codigo: "",
+        equivalente: "",
+        grupo: "",
+        nombre: ""
+      }, {
+        codigo: "",
+        equivalente: "",
+        grupo: "",
+        nombre: ""
+      }, {
+        codigo: "",
+        equivalente: "",
+        grupo: "",
+        nombre: ""
+      }, {
+        codigo: "",
+        equivalente: "",
+        grupo: "",
+        nombre: ""
+      }, {
+        codigo: "",
+        equivalente: "",
+        grupo: "",
+        nombre: ""
+      },]
+    }
     this.getProgramasPorFacultad()
     this.getProgramasPorFacultad2()
   }
 
   setsolicitud() {
     this.solicitud = {
-      'NOMBRE': '',
-      'ID_SEXO_BIOLOGICO': '',
-      'ID_ESTADO_CIVIL': '',
-      'FECHA_NACIMIENTO': '',
-      'Correo electrónico': '',
-      'TIPO DE IDENTIFICACIÓN': '',
-      'NÚMERO DE IDENTIFICACIÓN': '',
-      'FECHA_EXPIRACION_DOCUMENTO': '',
-      'LUGAR_NACIMIENTO': '',
-      'PAIS_NACIMIENTO': '',
-      'NACIONALIDAD': '',
-      'CÓDIGO DEL ESTUDIANTE EN UNIVALLE': '',
-      'PERIODO ACADÉMICO': 0,
-      'TIPO DE MOVILIDAD': 'ENTRANTE',
-      'TIPO DE CONVENIO': '',
-      'CODIGO_CONVENIO': '',
-      'MODALIDAD': '',
-      'NUM_DIAS_MOVILIDAD': '',
-      'TIPO DE PROGRAMA - CONVOCATORIA': '',
-      'NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN': '',
-      'NIVEL DE FORMACIÓN DE LA MOVILIDAD': '',
-      'PAÍS DE ORIGEN': '',
-      'UNIVERSIDAD DE PROCEDENCIA': '',
-      'CIUDAD-SEDE': '',
-      'PAÍS DE DESTINO': '',
-      'UNIVERSIDAD - INSTITUCIÓN RECEPTORA': '',
-      'PROGRAMA ACADÉMICO DE ORIGEN': '',
-      'PROGRAMA ACADÉMICO DE ORIGEN 2': '',
-      'CÓDIGO DEL PROGRAMA': '',
-      'PROGRAMA ACADÉMICO DE DESTINO (1)': '',
-      'PROGRAMA ACADÉMICO DE DESTINO (2)': '',
-      'Facultad': '',
-      'Facultad2': '',
-      'FINANCIAMIENTO': '',
-      'VALOR_FINANCIACION_NACIONAL': '',
-      'ID_FUENTE_INTERNACIONAL': '',
-      'ID_PAIS_FINANCIADOR': '',
-      'VALOR_FINANCIACION_INTERNAC': '',
-      'fechaActualizado': '',
-      'estado': '',
-      'DIRECCION': '',
-      'PAIS_DIRECCION': '',
-      'CIUDAD_DIRECCION': '',
-      'POSTAL_CODE_DIRECCION': '',
-      'ESTADO_PROVINCIA_REGION': '',
-      'INSTITUCION_MEDICA': '',
-      'matriculaIngles': 'no',
-      'curso1': '',
-      'curso2': '',
-      'curso3': '',
-      'curso4': '',
-      'curso5': '',
-      'curso6': '',
-      'finaciacionBeca_rango': '',
-      'finaciacionInstitucionNacional': '',
-      'finaciacionPaisInstitucionNacional': '',
-      'finaciacionInstitucionInternacional': '',
-      'finaciacionPaisInstitucionInternacional': '',
-      'finaciacionONG': '',
-      'CartaPresentacion': '',
-      'CertificadoNotas': '',
-      'ConocimientoEspanol': '',
-      'CartaMotivacion': '',
-      'DocumentoID': '',
-      'Foto': '',
-      'EuropassCV': '',
-      'Fellows': ''
+      "NOMBRE": "",
+      "ID_SEXO_BIOLOGICO": "",
+      "ID_ESTADO_CIVIL": "",
+      "FECHA_NACIMIENTO": "",
+      "Correo electrónico": "",
+      "TIPO DE IDENTIFICACIÓN": "",
+      "NÚMERO DE IDENTIFICACIÓN": "",
+      "FECHA_EXPIRACION_DOCUMENTO": "",
+      "LUGAR_NACIMIENTO": "",
+      "PAIS_NACIMIENTO": "",
+      "NACIONALIDAD": "",
+      "CÓDIGO DEL ESTUDIANTE EN UNIVALLE": "",
+      "PERIODO ACADÉMICO": 0,
+      "TIPO DE MOVILIDAD": "ENTRANTE",
+      "TIPO DE CONVENIO": "",
+      "CODIGO_CONVENIO": "",
+      "MODALIDAD": "",
+      "NUM_DIAS_MOVILIDAD": "",
+      "TIPO DE PROGRAMA - CONVOCATORIA": "",
+      "NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN": "",
+      "NIVEL DE FORMACIÓN DE LA MOVILIDAD": "",
+      "PAÍS DE ORIGEN": "",
+      "UNIVERSIDAD DE PROCEDENCIA": "",
+      "CIUDAD-SEDE": "",
+      "PAÍS DE DESTINO": "",
+      "UNIVERSIDAD - INSTITUCIÓN RECEPTORA": "",
+      "PROGRAMA ACADÉMICO DE ORIGEN": "",
+      "PROGRAMA ACADÉMICO DE ORIGEN 2": "",
+      "CÓDIGO DEL PROGRAMA": "",
+      "PROGRAMA ACADÉMICO DE DESTINO (1)": "",
+      "PROGRAMA ACADÉMICO DE DESTINO (2)": "",
+      "Facultad": "",
+      "Facultad2": "",
+      "FINANCIAMIENTO": "",
+      "VALOR_FINANCIACION_NACIONAL": "",
+      "ID_FUENTE_INTERNACIONAL": "",
+      "ID_PAIS_FINANCIADOR": "",
+      "VALOR_FINANCIACION_INTERNAC": "",
+      "fechaActualizado": "",
+      "estado": "",
+      "DIRECCION": "",
+      "PAIS_DIRECCION": "",
+      "CIUDAD_DIRECCION": "",
+      "POSTAL_CODE_DIRECCION": "",
+      "ESTADO_PROVINCIA_REGION": "",
+      "INSTITUCION_MEDICA": "",
+      "matriculaIngles": "no",
+      "cursos": [],
+      "finaciacionBeca_rango": "",
+      "finaciacionInstitucionNacional": "",
+      "finaciacionPaisInstitucionNacional": "",
+      "finaciacionInstitucionInternacional": "",
+      "finaciacionPaisInstitucionInternacional": "",
+      "finaciacionONG": "",
+      "CartaPresentacion": "",
+      "CertificadoNotas": "",
+      "ConocimientoEspanol": "",
+      "CartaMotivacion": "",
+      "DocumentoID": "",
+      "Foto": "",
+      "EuropassCV": "",
+      "Fellows": ""
 
     }
   }
@@ -288,8 +356,9 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     this.solicitud.actualizadoPor = this.user.email
 
     this.solicitud.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
-    const reader = new FileReader();
-    const arrayPromesasFiles = []
+    this.solicitud.cursos = this.cursos
+    let reader = new FileReader();
+    var arrayPromesasFiles = []
 
     if (this.fileInputCartaPresentacion &&
       this.fileInputCartaPresentacion.nativeElement.files
@@ -594,8 +663,10 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     this.solicitud.actualizadoPor = this.user.email
 
     this.solicitud.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
-    const reader = new FileReader();
-    const arrayPromesasFiles = []
+    this.solicitud.cursos = this.cursos
+
+    let reader = new FileReader();
+    var arrayPromesasFiles = []
 
     if (this.fileInputCartaPresentacion &&
       this.fileInputCartaPresentacion.nativeElement.files
@@ -842,6 +913,12 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     this.dialog.open(DialogEstudianteComponent, dialogConfig);
   }
 
-
-
+  getValoresMovilidad() {
+    let valores = this.db.ref('/valoresMovilidad/')
+    return valores.once('value').then(snapProgramas => {
+      this.valoresMovilidad = snapProgramas.val()
+    
+    })
+      
+  }
 }

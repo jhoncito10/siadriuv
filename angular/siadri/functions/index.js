@@ -7,6 +7,7 @@ const admin = require('firebase-admin');
 global.window = { document: { createElementNS: () => { return {} } } };
 global.navigator = {};
 global.btoa = () => { };
+const html2pdf = require('html2pdf');
 const jsPDF = require('jspdf');
 const fs = require('fs');
 
@@ -200,8 +201,7 @@ var verificaFechas = (req, res) => {
         });
 
 };
-console.log(moment().utcOffset("-05:00"));
-// setInterval(verificaFechas, INTERVAL_TIME);
+
 
 exports.validarConvenios = functions.https.onRequest((req, res) => {
     console.log('ENTRANDO');
@@ -308,8 +308,6 @@ var verificaFechasPostulaciones = (req, res) => {
         });
 
 };
-console.log(moment().utcOffset("-05:00"));
-// setInterval(verificaFechas, INTERVAL_TIME);
 
 exports.validarPostulaciones = functions.https.onRequest((req, res) => {
     console.log('ENTRANDO');

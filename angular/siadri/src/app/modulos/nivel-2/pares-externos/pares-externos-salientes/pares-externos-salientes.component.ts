@@ -74,18 +74,15 @@ export class ParesExternosSalientesComponent implements OnInit {
     this.solicitudes = {}
     this.year = moment().year()
     this.setsolicitud()
+    var ref = this.db.ref('/postulaciones/')
+   
   }
 
   ngOnInit() {
     // Or you can save a line of code by using an inline function
     // and on()'s return value.
-    var ref = this.db.ref('/postulaciones/')
-    var _this = this
-    var onValueChange = ref.on('child_changed', function (dataSnapshot) {
-      _this.consultaDatosTabla()
-    });
+    
     // Sometime later...
-    ref.off('value', onValueChange);
     this.consultaDatosTabla()
 
     this.consultarProgramas()
@@ -417,7 +414,6 @@ export class ParesExternosSalientesComponent implements OnInit {
       "VALOR_FINANCIACION_INTERNAC": "",
       "CAMPUS": "Meléndez",
       "creadoPor": this.user.email,
-      " ": "",
       "fechaActualizado": "",
       "estado": "En espera de aprobación DRI",
       "comentariosDRI":"",

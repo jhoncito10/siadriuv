@@ -76,16 +76,13 @@ export class AdminPostEntrantesComponent implements OnInit {
     this.solicitudes = {}
     this.year = moment().year()
     this.setsolicitud()
+    const ref = this.db.ref('/postulaciones/')
+  
   }
 
   ngOnInit() {
-    const ref = this.db.ref('/postulaciones/')
-    const _sthis = this
-    const onValueChange = ref.on('child_changed', function (dataSnapshot) {
-      _sthis.consultaDatosTabla()
-    });
+    
     // Sometime later...
-    ref.off('value', onValueChange);
     this.consultaDatosTabla()
 
     this.getPaises();

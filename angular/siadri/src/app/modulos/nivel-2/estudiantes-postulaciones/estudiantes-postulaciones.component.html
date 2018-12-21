@@ -473,11 +473,20 @@
 
               </div>
               <div class="form-group">
-                <div class="col-md-3">
-                  <label for="">Name/Nombre</label>
+                <div class="col-md-5"></div>
+
+                <div class="col-md-7">
+                  <input [(ngModel)]='cursos[0]["nombre"]' type="text" class="form-control" placeholder="Curso 1"
+                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
                 </div>
-                <div class="col-md-3">
-                  <label for="">Code/Codigo</label>
+
+              </div>
+              <div class="form-group">
+                <div class="col-md-5"></div>
+
+                <div class="col-md-7">
+                  <input [(ngModel)]='cursos[1]["nombre"]' type="text" class="form-control" placeholder="Curso 2"
+                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
                 </div>
                 <div class="col-md-3">
                   <label for="">Group/Grupo</label>
@@ -489,19 +498,36 @@
               <div *ngFor="let item of solicitud['cursos']" class="form-group">
                 <div class="col-md-3">
 
-                  <input [(ngModel)]='item["nombre"]' type="text" class="form-control" placeholder="Nombre" [attr.disabled]="estadoComponenteInferior==4 ? true : false">
+                <div class="col-md-7">
+                  <input [(ngModel)]='cursos[2]["nombre"]' type="text" class="form-control" placeholder="Curso 3"
+                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
                 </div>
 
-                <div class="col-md-3">
-                  <input [(ngModel)]='item["codigo"]' type="text" class="form-control" placeholder="Codigo" [attr.disabled]="estadoComponenteInferior==4 ? true : false">
+              </div>
+              <div class="form-group">
+                <div class="col-md-5"></div>
+
+                <div class="col-md-7">
+                  <input [(ngModel)]='cursos[3]["nombre"]' type="text" class="form-control" placeholder="Curso 4"
+                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
                 </div>
 
-                <div class="col-md-3">
-                  <input [(ngModel)]='item["grupo"]' type="text" class="form-control" placeholder="Grupo" [attr.disabled]="estadoComponenteInferior==4 ? true : false">
+              </div>
+              <div class="form-group">
+                <div class="col-md-5"></div>
+
+                <div class="col-md-7">
+                  <input [(ngModel)]='cursos[4]["nombre"]' type="text" class="form-control" placeholder="Curso 5"
+                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
                 </div>
 
-                <div class="col-md-3">
-                  <input [(ngModel)]='item["equivalente"]' type="text" class="form-control" placeholder="Materia equivalente" [attr.disabled]="estadoComponenteInferior==4 ? true : false">
+              </div>
+              <div class="form-group">
+                <div class="col-md-5"></div>
+
+                <div class="col-md-7">
+                  <input [(ngModel)]='cursos[5]["nombre"]' type="text" class="form-control" placeholder="Curso 6"
+                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
                 </div>
 
               </div>
