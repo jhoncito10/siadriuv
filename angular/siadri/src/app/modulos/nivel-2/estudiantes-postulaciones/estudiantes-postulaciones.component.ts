@@ -841,4 +841,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
 
     this.dialog.open(DialogEstudianteComponent, dialogConfig);
   }
+
+
+
 }
