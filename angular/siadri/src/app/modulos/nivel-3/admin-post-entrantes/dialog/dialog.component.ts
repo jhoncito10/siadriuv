@@ -208,22 +208,29 @@ export class DialogComponent implements OnInit {
     const array1 = this.facultades.find(o => o['prog'] === this.programa);
     const array2 = this.facultades.find(o => o['prog'] === this.programa2);
 
-    const arra = [array1['correo']];
+    if (array1) {
+      const arra = [array1['correo']];
 
-    let email = array1['correo'];
-    if (array2) {
-      email += ',' + array2['correo'];
-      arra.push(array2['correo']);
+      let email = array1['correo'];
+      if (array2) {
+        email += ',' + array2['correo'];
+        arra.push(array2['correo']);
+      }
+      const fecha = new Date().toISOString().split('T')[0];
+  
+      const mensaje = ' Se ha generado una nueva solicitud entrante para su programa academico.'
+        + ' la solicitud tiene el codigo: "' + this.identificador + '" y fue generada en la fecha: '
+        + fecha;
+  
+      this.email.send(email, 'SE HA GENERADO UNA NUEVA SOLICITUD ENTRANTE', mensaje).subscribe(data => {
+        console.log(data);
+      });
+      this.email.AnycrearNotifications(arra, mensaje).subscribe(data => {
+        console.log(data);
+      });
+      console.log(email);
     }
-    const fecha = new Date().toISOString().split('T')[0];
 
-    const mensaje = ' Se ha generado una nueva solicitud entrante para su programa academico.'
-      + ' la solicitud tiene el codigo: "' + this.identificador + '" y fue generada en la fecha: '
-      + fecha;
-
-    this.email.send(email, 'SE HA GENERADO UNA NUEVA SOLICITUD ENTRANTE', mensaje);
-    this.email.AnycrearNotifications(arra, mensaje);
-    console.log(email);
 
   }
 
@@ -235,8 +242,12 @@ export class DialogComponent implements OnInit {
       + ' la solicitud tiene el codigo: "' + this.identificador + '" y fue generada en la fecha: '
       + fecha;
 
-    this.email.send(this.correo, 'NOTIFICACION DE RETORNO DE SOLICITUD', mensaje);
-    this.email.crearNotification(this.correo, mensaje);
+    this.email.send(this.correo, 'NOTIFICACION DE RETORNO DE SOLICITUD', mensaje).subscribe(data => {
+      console.log(data);
+    });
+    this.email.crearNotification(this.correo, mensaje).subscribe(data => {
+      console.log(data);
+    });
 
   }
 

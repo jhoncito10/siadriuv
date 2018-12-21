@@ -95,4 +95,31 @@ export class MailServiceService {
     };
     return this._http.post(url, bodyNotification)
   }
+
+
+  metodo(asunto, message, messageEngli, nombre, correo, link?) {
+    const mensaje = '<html>' +
+    '<head></head><body> <h2>Estimado(a) ' + nombre + '</h2> <br><br>' +
+    '<p>' + message + '</p><br><br> Saludos Cordiales, <br><br>Coordinación de movilidad internacional<br>'
+    + '*************************************************************************************************************<br><br><br>' +
+    '<h2>Dear ' + nombre + '</h2><br><br>' +
+    '<p>' + messageEngli + '</p><br><br> Best regards, <br><br>International mobility coordination<br>'
+    + '</body>' +
+    '</html>';
+
+    this.send(correo, asunto, mensaje).subscribe(data => {
+      console.log(data);
+    });
+  }
+
+
+  prueba() {
+    const as = 'UNIVALLE Online application approval / Nominacion en linea UNIVALLE';
+    const message = 'Hemos recibido la nominacion del estudiante Jhon Jairo a quien contactaremos'
+                  + 'para que complete su solicitud en linea';
+    const messageEng = 'We have received the nomination of your student Jhon Jairo '
+    + 'we will contact in order to complete her/his application online.';
+    const cor = 'jhondiaz077@gmail.com'
+    this.metodo(as, message, messageEng, 'Jhon Jairo', cor);
+  }
 }

@@ -500,8 +500,7 @@
                 <div class="col-md-5"></div>
 
                 <div class="col-md-7">
-                  <input [(ngModel)]='cursos[0]["nombre"]' type="text" class="form-control" placeholder="Curso 1"
-                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
+                  <input [(ngModel)]='cursos[0]["nombre"]' type="text" class="form-control" placeholder="Curso 1" [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
                 </div>
 
               </div>
@@ -509,51 +508,47 @@
                 <div class="col-md-5"></div>
 
                 <div class="col-md-7">
-                  <input [(ngModel)]='cursos[1]["nombre"]' type="text" class="form-control" placeholder="Curso 2"
-                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
+                  <input [(ngModel)]='cursos[1]["nombre"]' type="text" class="form-control" placeholder="Curso 2" [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
                 </div>
 
               </div>
               <div class="form-group">
                 <div class="col-md-5"></div>
 
-                <div class="col-md-7">
-                  <input [(ngModel)]='cursos[2]["nombre"]' type="text" class="form-control" placeholder="Curso 3"
-                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
+                  <div class="col-md-7">
+                    <input [(ngModel)]='cursos[2]["nombre"]' type="text" class="form-control" placeholder="Curso 3" [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
+                  </div>
+
                 </div>
+                <div class="form-group">
+                  <div class="col-md-5"></div>
 
-              </div>
-              <div class="form-group">
-                <div class="col-md-5"></div>
+                  <div class="col-md-7">
+                    <input [(ngModel)]='cursos[3]["nombre"]' type="text" class="form-control" placeholder="Curso 4" [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
+                  </div>
 
-                <div class="col-md-7">
-                  <input [(ngModel)]='cursos[3]["nombre"]' type="text" class="form-control" placeholder="Curso 4"
-                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
                 </div>
+                <div class="form-group">
+                  <div class="col-md-5"></div>
 
-              </div>
-              <div class="form-group">
-                <div class="col-md-5"></div>
+                  <div class="col-md-7">
+                    <input [(ngModel)]='cursos[4]["nombre"]' type="text" class="form-control" placeholder="Curso 5" [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
+                  </div>
 
-                <div class="col-md-7">
-                  <input [(ngModel)]='cursos[4]["nombre"]' type="text" class="form-control" placeholder="Curso 5"
-                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
                 </div>
+                <div class="form-group">
+                  <div class="col-md-5"></div>
 
-              </div>
-              <div class="form-group">
-                <div class="col-md-5"></div>
+                  <div class="col-md-7">
+                    <input [(ngModel)]='cursos[5]["nombre"]' type="text" class="form-control" placeholder="Curso 6" [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
+                  </div>
 
-                <div class="col-md-7">
-                  <input [(ngModel)]='cursos[5]["nombre"]' type="text" class="form-control" placeholder="Curso 6"
-                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
                 </div>
-
               </div>
 
-              <!-- Desea matricular ingles-->
+                <!-- Desea matricular ingles-->
 
-              <mat-divider></mat-divider>
+                <mat-divider></mat-divider>
 
               <div class="form-group">
                 <label class="col-md-5 control-label">Are you interested in attending a spanish course during your
@@ -575,7 +570,7 @@
                 </div>
 
 
-              </div>
+                </div>
 
             </mat-expansion-panel>
 
@@ -1095,8 +1090,9 @@
           <br>
 
 
-        </div>
+          </div>
 
+        </div>
       </div>
     </div>
     <div class="box-footer">
@@ -1120,15 +1116,15 @@
         </div>
       </div>
 
-      <div *ngIf="estadoComponenteInferior==4" class="row">
-        <div class="col-md-12">
-          <button type="button" class="col-md-4 btn btn-block btn-success" (click)="openDialog()">
-            Solicitar cambio de materias
-            <i class="fa fa-arrow-circle-up"></i>
-          </button>
+        <div *ngIf="estadoComponenteInferior==4" class="row">
+          <div class="col-md-12">
+            <button type="button" class="col-md-4 btn btn-block btn-success" (click)="openDialog()">
+              Solicitar cambio de materias
+              <i class="fa fa-arrow-circle-up"></i>
+            </button>
+          </div>
         </div>
-      </div>
-      <!-- <div class="row" *ngIf="solicitud.nombre!==undefined">
+        <!-- <div class="row" *ngIf="solicitud.nombre!==undefined">
         <div class="col-md-6">
             <button type="button" class="btn btn-block btn-danger" (click)="denegar()">Negar</button>
         </div>
@@ -1136,7 +1132,11 @@
             <button type="button" class="btn btn-block btn-success" (click)="aprobar()">Success</button>
         </div>
       </div> -->
+      </div>
     </div>
+
   </div>
 
-</div>
+  <button (click)="prueba()">
+    Click
+  </button>
