@@ -54,7 +54,9 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   inicioMobilidad: any
   finMobilidad: any
 
-  valoresMovilidad:{}
+  valoresMovilidad: {}
+
+  convenios: any
 
   ref: any
   cursos = [{
@@ -121,7 +123,8 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     private _mailServiceService: MailServiceService,
     private _NativeFirebaseService: NativeFirebaseService,
     private _MixedFunctions: MixedFunctions,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private storage: LocalStorageService
   ) {
     this.db = firebaseApp.database();
     this.firebaseStorage = this._NativeFirebaseService.fb.storage();
@@ -129,7 +132,8 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     this.year = moment().year()
     this.setsolicitud()
     this.ref = this.db.ref('/postulaciones/')
-
+    this.convenios = this.storage.retrieve('convenios');
+    console.log(this.convenios)
   }
 
   ngOnInit() {
@@ -224,9 +228,10 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     const estado = row['estado']
     switch (estado) {
       case 'Aprobada por DRI UV':
+        this.calculaValorerMovilidad()
         this.estadoComponenteInferior = 3
         break;
-        case 'En curso':
+      case 'En curso':
         this.estadoComponenteInferior = 4
         break;
       default:
@@ -917,8 +922,12 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     let valores = this.db.ref('/valoresMovilidad/')
     return valores.once('value').then(snapProgramas => {
       this.valoresMovilidad = snapProgramas.val()
-    
+
     })
-      
+
+  }
+  calculaValorerMovilidad() {
+    // let conveniosEstudiante = this.convenios[this.solicitud['CODIGO_CONVENIO']]
+    console.log(this.solicitud['CODIGO_CONVENIO'])
   }
 }
