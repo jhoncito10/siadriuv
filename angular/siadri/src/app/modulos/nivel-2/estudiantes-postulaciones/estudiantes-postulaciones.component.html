@@ -476,8 +476,7 @@
                 <div class="col-md-5"></div>
 
                 <div class="col-md-7">
-                  <input [(ngModel)]='cursos[0]["nombre"]' type="text" class="form-control" placeholder="Curso 1"
-                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
+                  <input [(ngModel)]='cursos[0]["nombre"]' type="text" class="form-control" placeholder="Curso 1" [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
                 </div>
 
               </div>
@@ -485,8 +484,7 @@
                 <div class="col-md-5"></div>
 
                 <div class="col-md-7">
-                  <input [(ngModel)]='cursos[1]["nombre"]' type="text" class="form-control" placeholder="Curso 2"
-                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
+                  <input [(ngModel)]='cursos[1]["nombre"]' type="text" class="form-control" placeholder="Curso 2" [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
                 </div>
                 <div class="col-md-3">
                   <label for="">Group/Grupo</label>
@@ -498,62 +496,59 @@
               <div *ngFor="let item of solicitud['cursos']" class="form-group">
                 <div class="col-md-3">
 
-                <div class="col-md-7">
-                  <input [(ngModel)]='cursos[2]["nombre"]' type="text" class="form-control" placeholder="Curso 3"
-                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
-                </div>
-
-              </div>
-              <div class="form-group">
-                <div class="col-md-5"></div>
-
-                <div class="col-md-7">
-                  <input [(ngModel)]='cursos[3]["nombre"]' type="text" class="form-control" placeholder="Curso 4"
-                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
-                </div>
-
-              </div>
-              <div class="form-group">
-                <div class="col-md-5"></div>
-
-                <div class="col-md-7">
-                  <input [(ngModel)]='cursos[4]["nombre"]' type="text" class="form-control" placeholder="Curso 5"
-                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
-                </div>
-
-              </div>
-              <div class="form-group">
-                <div class="col-md-5"></div>
-
-                <div class="col-md-7">
-                  <input [(ngModel)]='cursos[5]["nombre"]' type="text" class="form-control" placeholder="Curso 6"
-                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
-                </div>
-
-              </div>
-
-              <!-- Desea matricular ingles-->
-
-              <mat-divider></mat-divider>
-
-              <div class="form-group">
-                <label class="col-md-5 control-label">Are you interested in attending a spanish course during your stay at UniValle? (only available for semester
-                  stay)/Está interesado en matricular español como lengua extranjera? </label>
-                <div class="col-md-7">
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="matriculaIngles" [(ngModel)]='solicitud["matriculaIngles"]' value="si" [attr.disabled]="estadoComponenteInferior==4 ? true : false"> Yes/si
-                    </label>
+                  <div class="col-md-7">
+                    <input [(ngModel)]='cursos[2]["nombre"]' type="text" class="form-control" placeholder="Curso 3" [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
                   </div>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="matriculaIngles" [(ngModel)]='solicitud["matriculaIngles"]' value="no" [attr.disabled]="estadoComponenteInferior==4 ? true : false"> No/no
-                    </label>
-                  </div>
+
                 </div>
+                <div class="form-group">
+                  <div class="col-md-5"></div>
 
+                  <div class="col-md-7">
+                    <input [(ngModel)]='cursos[3]["nombre"]' type="text" class="form-control" placeholder="Curso 4" [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
+                  </div>
 
+                </div>
+                <div class="form-group">
+                  <div class="col-md-5"></div>
+
+                  <div class="col-md-7">
+                    <input [(ngModel)]='cursos[4]["nombre"]' type="text" class="form-control" placeholder="Curso 5" [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
+                  </div>
+
+                </div>
+                <div class="form-group">
+                  <div class="col-md-5"></div>
+
+                  <div class="col-md-7">
+                    <input [(ngModel)]='cursos[5]["nombre"]' type="text" class="form-control" placeholder="Curso 6" [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
+                  </div>
+
+                </div>
               </div>
+
+                <!-- Desea matricular ingles-->
+
+                <mat-divider></mat-divider>
+
+                <div class="form-group">
+                  <label class="col-md-5 control-label">Are you interested in attending a spanish course during your stay at UniValle? (only available for semester
+                    stay)/Está interesado en matricular español como lengua extranjera? </label>
+                  <div class="col-md-7">
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="matriculaIngles" [(ngModel)]='solicitud["matriculaIngles"]' value="si" [attr.disabled]="estadoComponenteInferior==4 ? true : false"> Yes/si
+                      </label>
+                    </div>
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="matriculaIngles" [(ngModel)]='solicitud["matriculaIngles"]' value="no" [attr.disabled]="estadoComponenteInferior==4 ? true : false"> No/no
+                      </label>
+                    </div>
+                  </div>
+
+
+                </div>
 
             </mat-expansion-panel>
 
@@ -809,7 +804,8 @@
 
                 <div class="form-group">
                   <label for="inputDocumentoID" class="col-md-5 control-label">Copy of passport or Cédula de Ciudadanía for Colombian citizens/Fotocopia del pasaporte o cédula de ciudadanía para
-                    colombianos</label>
+                    colombianos
+                  </label>
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputDocumentoID id="inputDocumentoID">
                   </div>
@@ -867,7 +863,8 @@
                     ID for colombian citizens enrolled in a foreign university, dates for the exchange/rotation and specific
                     field or area of knowledge)/Carta de presentación de la universidad de origen (debe incluir nombres y
                     apellidos, número de pasaporte o de C.C. para nacionales colombianos, fechas del intercambio y programa
-                    académico).</label>
+                    académico).
+                  </label>
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputCartaPresentacion id="inputCartaPresentacion">
                   </div>
@@ -898,7 +895,8 @@
 
                 <div class="form-group">
                   <label for="inputDocumentoID" class="col-md-5 control-label">Copy of passport or Cédula de Ciudadanía for Colombian citizens/Fotocopia del pasaporte o cédula de ciudadanía para
-                    colombianos</label>
+                    colombianos
+                  </label>
                   <div class="col-md-7">
                     <input [attr.disabled]="estadoComponenteInferior==4 ? true : false" type="file" #fileInputDocumentoID id="inputDocumentoID">
                   </div>
@@ -999,38 +997,38 @@
           <br>
 
 
+          </div>
+
+        </div>
+      </div>
+      <div class="box-footer">
+        <div *ngIf="estadoComponenteInferior==3" class="row">
+          <div class="col-md-4">
+            <button type="button" class="col-md-4 btn btn-block btn-danger" (click)="cancelarSolicitud()">Cancelar solicitud
+              <i class="fa fa-arrow-circle-up"></i>
+            </button>
+          </div>
+          <div class="col-md-4">
+            <button type="button" class="col-md-4 btn btn-block btn-info" (click)="guardarSolicitud()">Guardar solicitud
+              <i class="fa fa-arrow-circle-up"></i>
+            </button>
+          </div>
+          <div class="col-md-4">
+            <button type="button" class="col-md-4 btn btn-block btn-success" (click)="actualizarSolicitud()">Actualizar solicitud
+              <i class="fa fa-arrow-circle-up"></i>
+            </button>
+          </div>
         </div>
 
-      </div>
-    </div>
-    <div class="box-footer">
-      <div *ngIf="estadoComponenteInferior==3" class="row">
-        <div class="col-md-4">
-          <button type="button" class="col-md-4 btn btn-block btn-danger" (click)="cancelarSolicitud()">Cancelar solicitud
-            <i class="fa fa-arrow-circle-up"></i>
-          </button>
+        <div *ngIf="estadoComponenteInferior==4" class="row">
+          <div class="col-md-12">
+            <button type="button" class="col-md-4 btn btn-block btn-success" (click)="openDialog()">
+              Solicitar cambio de materias
+              <i class="fa fa-arrow-circle-up"></i>
+            </button>
+          </div>
         </div>
-        <div class="col-md-4">
-          <button type="button" class="col-md-4 btn btn-block btn-info" (click)="guardarSolicitud()">Guardar solicitud
-            <i class="fa fa-arrow-circle-up"></i>
-          </button>
-        </div>
-        <div class="col-md-4">
-          <button type="button" class="col-md-4 btn btn-block btn-success" (click)="actualizarSolicitud()">Actualizar solicitud
-            <i class="fa fa-arrow-circle-up"></i>
-          </button>
-        </div>
-      </div>
-
-      <div *ngIf="estadoComponenteInferior==4" class="row">
-        <div class="col-md-12">
-          <button type="button" class="col-md-4 btn btn-block btn-success" (click)="openDialog()">
-            Solicitar cambio de materias
-            <i class="fa fa-arrow-circle-up"></i>
-          </button>
-        </div>
-      </div>
-      <!-- <div class="row" *ngIf="solicitud.nombre!==undefined">
+        <!-- <div class="row" *ngIf="solicitud.nombre!==undefined">
         <div class="col-md-6">
             <button type="button" class="btn btn-block btn-danger" (click)="denegar()">Negar</button>
         </div>
@@ -1038,11 +1036,11 @@
             <button type="button" class="btn btn-block btn-success" (click)="aprobar()">Success</button>
         </div>
       </div> -->
+      </div>
     </div>
+
   </div>
 
-</div>
-
-<button (click)="prueba()">
-  Click
-</button>
+  <button (click)="prueba()">
+    Click
+  </button>

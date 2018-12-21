@@ -54,7 +54,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   inicioMobilidad: any
   finMobilidad: any
 
-  valoresMovilidad:{}
+  valoresMovilidad: {}
 
   ref: any
   cursos = [{
@@ -226,7 +226,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       case 'Aprobada por DRI UV':
         this.estadoComponenteInferior = 3
         break;
-        case 'En curso':
+      case 'En curso':
         this.estadoComponenteInferior = 4
         break;
       default:
@@ -917,8 +917,8 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     let valores = this.db.ref('/valoresMovilidad/')
     return valores.once('value').then(snapProgramas => {
       this.valoresMovilidad = snapProgramas.val()
-    
+
     })
-      
+
   }
 }
