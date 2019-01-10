@@ -32,7 +32,6 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   displayedColumns = ['key', 'correo', 'fechaCreado', 'destino', 'nombre', 'estado'];
   dataSource: MatTableDataSource<any>;
 
-  universidadProcedencia = 'BENEMÉRITA UNIVERSIDAD AUTÓNOMA DE PUEBLA'
 
   estadoComponenteInferior = 0 //0 = ninguno; 1 =  nueva solicitud; 2 = datos solicitud
 
@@ -132,8 +131,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     this.year = moment().year()
     this.setsolicitud()
     this.ref = this.db.ref('/postulaciones/')
-    this.convenios = this.storage.retrieve('convenios');
-    console.log(this.convenios)
+    console.log('135',this.convenios)
   }
 
   ngOnInit() {
@@ -143,6 +141,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     this.getPaises()
     this.getProgramas()
     this.getValoresMovilidad()
+    this.getConvenios()
   }
 
   ngAfterViewInit() {
@@ -224,7 +223,9 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   }
   selectSolicitud(row) {
     this.rowSelected = row;
+    this.solicitud = this.solicitudes[row.key];
 
+    this.solicitud.key = row.key
     const estado = row['estado']
     switch (estado) {
       case 'Aprobada por DRI UV':
@@ -239,10 +240,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
         break;
     }
 
-    this.solicitud = this.solicitudes[row.key];
-
-    console.log(this.solicitud)
-    this.solicitud.key = row.key
+    
     if (this.panelInferior.nativeElement.classList.contains('collapsed-box')) {
       this.panelinferiorButton.nativeElement.click()
     }
@@ -926,8 +924,15 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     })
 
   }
+  getConvenios(){
+    let conveniosRef = this.db.ref('/convenios/')
+    return conveniosRef.once('value').then(snapOconvenios => {
+      this.convenios = snapOconvenios.val()
+    })
+  }
   calculaValorerMovilidad() {
-    // let conveniosEstudiante = this.convenios[this.solicitud['CODIGO_CONVENIO']]
-    console.log(this.solicitud['CODIGO_CONVENIO'])
+     let conveniosEstudiante = this.convenios[this.solicitud['CODIGO_CONVENIO']];
+    console.log('936',conveniosEstudiante);
+
   }
 }
