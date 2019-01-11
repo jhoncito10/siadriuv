@@ -179,7 +179,7 @@ export class AdminParesExternosComponent implements OnInit {
 
         if (consultaConvenios.hasOwnProperty(key)) {
           const element = consultaConvenios[key];
-          if (element.Archivo == 'Activo') {
+          if (element.Estado === 'Activo') {
             this.instituciones.push(element['Institucion'])
           }
 
@@ -196,7 +196,7 @@ export class AdminParesExternosComponent implements OnInit {
 
             if (data.hasOwnProperty(key)) {
               const element = data[key];
-              if (element.Archivo == 'Activo') {
+              if (element.Estado === 'Activo') {
                 this.instituciones.push(element['Institucion'])
               }
             }

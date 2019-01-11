@@ -182,15 +182,16 @@ export class AdminConveniosComponent implements OnInit, AfterViewInit {
 
       this._angularfire.list('convenios', {
         query: {
-          orderByChild: 'Pais',
+          orderByChild: 'País',
           equalTo: this.convenio.Pais
         },
         preserveSnapshot: true
       }).subscribe(data => {
         if (cont === 1) {
           if (this.validador()) {
+            console.log(data.length);
             if (data.length !== 0) {
-              acron = data[0].key.substr(0, 3);
+              acron = data[0].key.split('0')[0];
 
               const tam = (data.length + 1);
 
@@ -201,37 +202,25 @@ export class AdminConveniosComponent implements OnInit, AfterViewInit {
               } else {
                 acron += '' + tam;
               }
+              const ref = 'convenios/' + acron;
+              this.crearConvenio(ref, acron);
+
             } else {
-              acron = this.convenio.Pais.toUpperCase().substr(0, 3) + '001';
+              this._angularfire.list('paises', {
+                query: {
+                  orderByChild: 'nombre_pais',
+                  equalTo: this.convenio.Pais
+                },
+                preserveSnapshot: true
+              }).subscribe(pais => {
+                console.log(pais[0].val() );
+                  acron = pais[0].val()['codigo_pais'].split('|')[0] + '001';
+
+                  const ref = 'convenios/' + acron;
+
+                  this.crearConvenio(ref, acron);
+              });
             }
-            const ref = 'convenios/' + acron;
-
-
-            this._angularfire.object(ref).set(this.convenio).then(() => {
-              swal(
-                'Exito, convenio creado',
-                '',
-                'success');
-
-              if (this.file) {
-                this.fileStorage(acron).then(url => {
-                  const obj = {
-                    'Archivo': url.a.downloadURLs[0]
-                  };
-
-                  this._angularfire.object(ref).update(obj);
-
-                });
-              }
-            }).catch(error => {
-
-              swal(
-                '' + error,
-                '',
-                'error');
-            });
-
-
 
           } else {
             swal(
@@ -248,11 +237,32 @@ export class AdminConveniosComponent implements OnInit, AfterViewInit {
 
 
     }
+  }
 
+  crearConvenio(ref, acron) {
+    this._angularfire.object(ref).set(this.convenio).then(() => {
+      swal(
+        'Exito, convenio creado',
+        '',
+        'success');
 
+      if (this.file) {
+        this.fileStorage(acron).then(url => {
+          const obj = {
+            'Archivo': url.a.downloadURLs[0]
+          };
 
+          this._angularfire.object(ref).update(obj);
 
+        });
+      }
+    }).catch(error => {
 
+      swal(
+        '' + error,
+        '',
+        'error');
+    });
   }
 
   onFileChange(event) {

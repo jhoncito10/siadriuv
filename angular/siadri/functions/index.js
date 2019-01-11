@@ -7,7 +7,7 @@ const admin = require('firebase-admin');
 global.window = { document: { createElementNS: () => { return {} } } };
 global.navigator = {};
 global.btoa = () => { };
-const html2pdf = require('html2pdf');
+
 const jsPDF = require('jspdf');
 const fs = require('fs');
 
@@ -506,7 +506,6 @@ var correoPrograma = (programa) => {
         .once('value')
 }
 
-
 exports.createLetter = functions.https.onRequest((req, res) => {
     console.log('485', req.body)
     cors(req, res, () => {
@@ -528,12 +527,12 @@ exports.createLetter = functions.https.onRequest((req, res) => {
                 var stringSubjk = (req.body.estado == 'aceptada') ? 'aceptacion' : 'denegacion';
                 console.log(correos)
                 var cuerpoPDF = `${req.body.nombre} tu solicitud a sido ${req.body.estado}.
-              Estos son los datos de tu solicitud
-              ${req.body.fechaNacimiento}
-              ${req.body.nacionalidad}
-              ${req.body.numeroDocumento}
-              ${req.body.genero}
-              ${req.body.areaDestino}`;
+                Estos son los datos de tu solicitud
+                ${req.body.fechaNacimiento}
+                ${req.body.nacionalidad}
+                ${req.body.numeroDocumento}
+                ${req.body.genero}
+                ${req.body.areaDestino}`;
                 const doc = new jsPDF();
                 doc.setLanguage("es-CO")
                 doc.text(`Detalles de la solicitud `, 70, 40);
@@ -577,6 +576,7 @@ exports.createLetter = functions.https.onRequest((req, res) => {
 
     });
 });
+
 
 exports.enviarCorreoPrograma = functions.https.onRequest((req, res) => {
     cors(req, res, () => {
