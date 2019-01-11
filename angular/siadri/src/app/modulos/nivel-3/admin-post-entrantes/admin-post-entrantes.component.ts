@@ -77,11 +77,11 @@ export class AdminPostEntrantesComponent implements OnInit {
     this.year = moment().year()
     this.setsolicitud()
     const ref = this.db.ref('/postulaciones/')
-  
+
   }
 
   ngOnInit() {
-    
+
     // Sometime later...
     this.consultaDatosTabla()
 
@@ -186,6 +186,9 @@ export class AdminPostEntrantesComponent implements OnInit {
         break;
       case 'Solicitud completada por estudiante':
         this.estadoComponenteInferior = 4
+        break;
+      case 'Aprobada por DRI UV':
+        this.estadoComponenteInferior = 1
         break;
       default:
         this.estadoComponenteInferior = 0
