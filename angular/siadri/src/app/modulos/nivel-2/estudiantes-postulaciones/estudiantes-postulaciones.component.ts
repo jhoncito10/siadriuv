@@ -54,6 +54,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   finMobilidad: any
 
   valoresMovilidad: {}
+  valorMovilidad: any
 
   convenios: any
 
@@ -131,7 +132,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     this.year = moment().year()
     this.setsolicitud()
     this.ref = this.db.ref('/postulaciones/')
-    console.log('135',this.convenios)
+    console.log('135', this.convenios)
   }
 
   ngOnInit() {
@@ -240,7 +241,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
         break;
     }
 
-    
+
     if (this.panelInferior.nativeElement.classList.contains('collapsed-box')) {
       this.panelinferiorButton.nativeElement.click()
     }
@@ -348,230 +349,241 @@ export class EstudiantesPostulacionesComponent implements OnInit {
       "DocumentoID": "",
       "Foto": "",
       "EuropassCV": "",
-      "Fellows": ""
+      "Fellows": "",
+      "costoPeriodo": "",
+      "aceptaCosto": ""
 
     }
   }
   actualizarSolicitud() {
-    swal.showLoading()
-    // var _this = this
-    this.solicitud.estado = 'Solicitud completada por estudiante'
-    this.solicitud.actualizadoPor = this.user.email
+    if (this.solicitud['aceptaCosto']) {
+      swal.showLoading()
+      // var _this = this
+      this.solicitud.estado = 'Solicitud completada por estudiante'
+      this.solicitud.actualizadoPor = this.user.email
 
-    this.solicitud.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
-    this.solicitud.cursos = this.cursos
-    let reader = new FileReader();
-    var arrayPromesasFiles = []
+      this.solicitud.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
+      this.solicitud.cursos = this.cursos
+      let reader = new FileReader();
+      var arrayPromesasFiles = []
 
-    if (this.fileInputCartaPresentacion &&
-      this.fileInputCartaPresentacion.nativeElement.files
-      && this.fileInputCartaPresentacion.nativeElement.files.length > 0
-    ) {
-      const file = this.fileInputCartaPresentacion.nativeElement.files[0];
-      const extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
-      const storageRef = this.firebaseStorage.ref();
-      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaPresentacion.${extention[extention.length - 1]}`);
+      if (this.fileInputCartaPresentacion &&
+        this.fileInputCartaPresentacion.nativeElement.files
+        && this.fileInputCartaPresentacion.nativeElement.files.length > 0
+      ) {
+        const file = this.fileInputCartaPresentacion.nativeElement.files[0];
+        const extention = this.fileInputCartaPresentacion.nativeElement.files[0].name.split('.')
+        const storageRef = this.firebaseStorage.ref();
+        const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaPresentacion.${extention[extention.length - 1]}`);
 
-      arrayPromesasFiles.push(mountainsRef.put(file))
-    }
-
-    if (this.fileInputCertificadoNotas &&
-      this.fileInputCertificadoNotas.nativeElement.files
-      && this.fileInputCertificadoNotas.nativeElement.files.length > 0
-    ) {
-      const file = this.fileInputCertificadoNotas.nativeElement.files[0];
-      const extention = this.fileInputCertificadoNotas.nativeElement.files[0].name.split('.')
-
-      const storageRef = this.firebaseStorage.ref();
-      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CertificadoNotas.${extention[extention.length - 1]}`);
-
-      arrayPromesasFiles.push(mountainsRef.put(file))
-    }
-    if (this.fileInputConocimientoEspanol &&
-      this.fileInputConocimientoEspanol.nativeElement.files
-      && this.fileInputConocimientoEspanol.nativeElement.files.length > 0
-    ) {
-      const file = this.fileInputConocimientoEspanol.nativeElement.files[0];
-      const extention = this.fileInputConocimientoEspanol.nativeElement.files[0].name.split('.')
-
-      const storageRef = this.firebaseStorage.ref();
-      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/ConocimientoEspanol.${extention[extention.length - 1]}`);
-
-      arrayPromesasFiles.push(mountainsRef.put(file))
-    }
-    if (this.fileInputCartaMotivacion &&
-      this.fileInputCartaMotivacion.nativeElement.files
-      && this.fileInputCartaMotivacion.nativeElement.files.length > 0
-    ) {
-      const file = this.fileInputCartaMotivacion.nativeElement.files[0];
-      const extention = this.fileInputCartaMotivacion.nativeElement.files[0].name.split('.')
-      const storageRef = this.firebaseStorage.ref();
-      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaMotivacion.${extention[extention.length - 1]}`);
-
-      arrayPromesasFiles.push(mountainsRef.put(file))
-    }
-    if (this.fileInputDocumentoID &&
-      this.fileInputDocumentoID.nativeElement.files
-      && this.fileInputDocumentoID.nativeElement.files.length > 0
-    ) {
-      const file = this.fileInputDocumentoID.nativeElement.files[0];
-      const extention = this.fileInputDocumentoID.nativeElement.files[0].name.split('.')
-
-      const storageRef = this.firebaseStorage.ref();
-      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/DocumentoID.${extention[extention.length - 1]}`);
-
-      arrayPromesasFiles.push(mountainsRef.put(file))
-    }
-    if (this.fileInputFoto &&
-      this.fileInputFoto.nativeElement.files
-      && this.fileInputFoto.nativeElement.files.length > 0
-    ) {
-      const file = this.fileInputFoto.nativeElement.files[0];
-      const extention = this.fileInputFoto.nativeElement.files[0].name.split('.')
-
-      const storageRef = this.firebaseStorage.ref();
-      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/Foto.${extention[extention.length - 1]}`);
-
-      arrayPromesasFiles.push(mountainsRef.put(file))
-    }
-    if (this.fileInputEuropassCV &&
-      this.fileInputEuropassCV.nativeElement.files
-      && this.fileInputEuropassCV.nativeElement.files.length > 0
-    ) {
-      const file = this.fileInputEuropassCV.nativeElement.files[0];
-      const extention = this.fileInputEuropassCV.nativeElement.files[0].name.split('.')
-
-      const storageRef = this.firebaseStorage.ref();
-      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/EuropassCV.${extention[extention.length - 1]}`);
-
-      arrayPromesasFiles.push(mountainsRef.put(file))
-    }
-    if (this.fileInputFellows &&
-      this.fileInputFellows.nativeElement.files
-      && this.fileInputFellows.nativeElement.files.length > 0
-    ) {
-      const file = this.fileInputFellows.nativeElement.files[0];
-      const extention = this.fileInputFellows.nativeElement.files[0].name.split('.')
-
-      const storageRef = this.firebaseStorage.ref();
-      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/Fellows.${extention[extention.length - 1]}`);
-
-      arrayPromesasFiles.push(mountainsRef.put(file))
-    }
-    if (this.fileInputCartaTutor && this.fileInputCartaTutor.nativeElement.files
-      && this.fileInputCartaTutor.nativeElement.files.length > 0
-    ) {
-      const file = this.fileInputCartaTutor.nativeElement.files[0];
-      const extention = this.fileInputCartaTutor.nativeElement.files[0].name.split('.')
-
-      const storageRef = this.firebaseStorage.ref();
-      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaTutor.${extention[extention.length - 1]}`);
-
-      arrayPromesasFiles.push(mountainsRef.put(file))
-    }
-    if (this.fileInputDescripcionProyecto &&
-      this.fileInputDescripcionProyecto.nativeElement.files
-      && this.fileInputDescripcionProyecto.nativeElement.files.length > 0
-    ) {
-      const file = this.fileInputDescripcionProyecto.nativeElement.files[0];
-      const extention = this.fileInputDescripcionProyecto.nativeElement.files[0].name.split('.')
-
-      const storageRef = this.firebaseStorage.ref();
-      const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/DescripcionProyecto.${extention[extention.length - 1]}`);
-
-      arrayPromesasFiles.push(mountainsRef.put(file))
-    }
-    Promise.all(arrayPromesasFiles).then((values) => {
-
-      for (let index = 0; index < values.length; index++) {
-        const element = values[index];
-        const name = element.a.name.split('.')
-        console.log(element)
-        this.solicitud[`${name[0]}`] = element.a.downloadURLs[0]
-
+        arrayPromesasFiles.push(mountainsRef.put(file))
       }
-      const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update(this.solicitud);
-      return promise
-        .then(res => {
-          if (this.solicitud['Correo electrónico'] !== '') {
-            const body = 'cuerpo del correo de En espera de aprobación dirección de programa'
-            const correos = `${this.solicitud['Correo electrónico']}, ${environment.mails.dirDRI}`
-            this._mailServiceService.sendMailprograma
-              (this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'], 'El estado de tu solicitud ha sido actualizada : "En espera de aprobación dirección de programa"', body)
+
+      if (this.fileInputCertificadoNotas &&
+        this.fileInputCertificadoNotas.nativeElement.files
+        && this.fileInputCertificadoNotas.nativeElement.files.length > 0
+      ) {
+        const file = this.fileInputCertificadoNotas.nativeElement.files[0];
+        const extention = this.fileInputCertificadoNotas.nativeElement.files[0].name.split('.')
+
+        const storageRef = this.firebaseStorage.ref();
+        const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CertificadoNotas.${extention[extention.length - 1]}`);
+
+        arrayPromesasFiles.push(mountainsRef.put(file))
+      }
+      if (this.fileInputConocimientoEspanol &&
+        this.fileInputConocimientoEspanol.nativeElement.files
+        && this.fileInputConocimientoEspanol.nativeElement.files.length > 0
+      ) {
+        const file = this.fileInputConocimientoEspanol.nativeElement.files[0];
+        const extention = this.fileInputConocimientoEspanol.nativeElement.files[0].name.split('.')
+
+        const storageRef = this.firebaseStorage.ref();
+        const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/ConocimientoEspanol.${extention[extention.length - 1]}`);
+
+        arrayPromesasFiles.push(mountainsRef.put(file))
+      }
+      if (this.fileInputCartaMotivacion &&
+        this.fileInputCartaMotivacion.nativeElement.files
+        && this.fileInputCartaMotivacion.nativeElement.files.length > 0
+      ) {
+        const file = this.fileInputCartaMotivacion.nativeElement.files[0];
+        const extention = this.fileInputCartaMotivacion.nativeElement.files[0].name.split('.')
+        const storageRef = this.firebaseStorage.ref();
+        const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaMotivacion.${extention[extention.length - 1]}`);
+
+        arrayPromesasFiles.push(mountainsRef.put(file))
+      }
+      if (this.fileInputDocumentoID &&
+        this.fileInputDocumentoID.nativeElement.files
+        && this.fileInputDocumentoID.nativeElement.files.length > 0
+      ) {
+        const file = this.fileInputDocumentoID.nativeElement.files[0];
+        const extention = this.fileInputDocumentoID.nativeElement.files[0].name.split('.')
+
+        const storageRef = this.firebaseStorage.ref();
+        const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/DocumentoID.${extention[extention.length - 1]}`);
+
+        arrayPromesasFiles.push(mountainsRef.put(file))
+      }
+      if (this.fileInputFoto &&
+        this.fileInputFoto.nativeElement.files
+        && this.fileInputFoto.nativeElement.files.length > 0
+      ) {
+        const file = this.fileInputFoto.nativeElement.files[0];
+        const extention = this.fileInputFoto.nativeElement.files[0].name.split('.')
+
+        const storageRef = this.firebaseStorage.ref();
+        const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/Foto.${extention[extention.length - 1]}`);
+
+        arrayPromesasFiles.push(mountainsRef.put(file))
+      }
+      if (this.fileInputEuropassCV &&
+        this.fileInputEuropassCV.nativeElement.files
+        && this.fileInputEuropassCV.nativeElement.files.length > 0
+      ) {
+        const file = this.fileInputEuropassCV.nativeElement.files[0];
+        const extention = this.fileInputEuropassCV.nativeElement.files[0].name.split('.')
+
+        const storageRef = this.firebaseStorage.ref();
+        const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/EuropassCV.${extention[extention.length - 1]}`);
+
+        arrayPromesasFiles.push(mountainsRef.put(file))
+      }
+      if (this.fileInputFellows &&
+        this.fileInputFellows.nativeElement.files
+        && this.fileInputFellows.nativeElement.files.length > 0
+      ) {
+        const file = this.fileInputFellows.nativeElement.files[0];
+        const extention = this.fileInputFellows.nativeElement.files[0].name.split('.')
+
+        const storageRef = this.firebaseStorage.ref();
+        const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/Fellows.${extention[extention.length - 1]}`);
+
+        arrayPromesasFiles.push(mountainsRef.put(file))
+      }
+      if (this.fileInputCartaTutor && this.fileInputCartaTutor.nativeElement.files
+        && this.fileInputCartaTutor.nativeElement.files.length > 0
+      ) {
+        const file = this.fileInputCartaTutor.nativeElement.files[0];
+        const extention = this.fileInputCartaTutor.nativeElement.files[0].name.split('.')
+
+        const storageRef = this.firebaseStorage.ref();
+        const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/CartaTutor.${extention[extention.length - 1]}`);
+
+        arrayPromesasFiles.push(mountainsRef.put(file))
+      }
+      if (this.fileInputDescripcionProyecto &&
+        this.fileInputDescripcionProyecto.nativeElement.files
+        && this.fileInputDescripcionProyecto.nativeElement.files.length > 0
+      ) {
+        const file = this.fileInputDescripcionProyecto.nativeElement.files[0];
+        const extention = this.fileInputDescripcionProyecto.nativeElement.files[0].name.split('.')
+
+        const storageRef = this.firebaseStorage.ref();
+        const mountainsRef = storageRef.child(`postulaciones/${this.solicitud.key}/DescripcionProyecto.${extention[extention.length - 1]}`);
+
+        arrayPromesasFiles.push(mountainsRef.put(file))
+      }
+      Promise.all(arrayPromesasFiles).then((values) => {
+
+        for (let index = 0; index < values.length; index++) {
+          const element = values[index];
+          const name = element.a.name.split('.')
+          console.log(element)
+          this.solicitud[`${name[0]}`] = element.a.downloadURLs[0]
+
+        }
+        const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update(this.solicitud);
+        return promise
+          .then(res => {
+            if (this.solicitud['Correo electrónico'] !== '') {
+              const body = 'cuerpo del correo de En espera de aprobación dirección de programa'
+              const correos = `${this.solicitud['Correo electrónico']}, ${environment.mails.dirDRI}`
+              this._mailServiceService.sendMailprograma
+                (this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'], 'El estado de tu solicitud ha sido actualizada : "En espera de aprobación dirección de programa"', body)
+                .subscribe((responseData) => {
+                  console.log(responseData)
+
+                }, error => {
+
+                  console.log(error)
+                })
+
+              return this.enviarCorreo(correos, 'El estado de tu solicitud ha sido actualizada : "En espera de aprobación dirección de programa"', body)
+                .subscribe((responseData) => {
+                  console.log(responseData)
+
+                  if (responseData) {
+                    swal({
+                      title: `Solicitud actualizada`
+                    })
+                  } else {
+                    swal({
+                      title: `Solicitud actualizada`
+                    })
+                  }
+
+                }, error => {
+
+                  console.log(error)
+                })
+            } else {
+              swal({
+                title: `Solicitud actualizada`
+              })
+              return
+            }
+
+
+          })
+          .then(() => {
+            const notificationInfo = 'El estado de tu solicitud ha sido actualizada : "En espera de aprobación dirección de programa"'
+            this._mailServiceService
+              .crearNotification(this.solicitud['Correo electrónico'], notificationInfo)
               .subscribe((responseData) => {
                 console.log(responseData)
+              }, error => { console.log(error) })
+
+            this._mailServiceService
+              .createNotificationPrograma(this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'], notificationInfo)
+              .subscribe((responseData) => {
+                console.log(responseData)
+
+
 
               }, error => {
 
                 console.log(error)
               })
-
-            return this.enviarCorreo(correos, 'El estado de tu solicitud ha sido actualizada : "En espera de aprobación dirección de programa"', body)
-              .subscribe((responseData) => {
-                console.log(responseData)
-
-                if (responseData) {
-                  swal({
-                    title: `Solicitud actualizada`
-                  })
-                } else {
-                  swal({
-                    title: `Solicitud actualizada`
-                  })
-                }
-
-              }, error => {
-
-                console.log(error)
-              })
-          } else {
-            swal({
-              title: `Solicitud actualizada`
-            })
-            return
-          }
+            // let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
+            // this._mailServiceService.crearNotification(this.solicitud['Correo electrónico'],notificationInfo)
+            // let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
+            // this._mailServiceService.crearNotification(this.solicitud['Correo electrónico'],notificationInfo)
 
 
-        })
-        .then(() => {
-          const notificationInfo = 'El estado de tu solicitud ha sido actualizada : "En espera de aprobación dirección de programa"'
-          this._mailServiceService
-            .crearNotification(this.solicitud['Correo electrónico'], notificationInfo)
-            .subscribe((responseData) => {
-              console.log(responseData)
-            }, error => { console.log(error) })
+            this.consultaDatosTabla()
 
-          this._mailServiceService
-            .createNotificationPrograma(this.solicitud['PROGRAMA ACADÉMICO DE DESTINO (1)'], notificationInfo)
-            .subscribe((responseData) => {
-              console.log(responseData)
+          })
 
 
-
-            }, error => {
-
-              console.log(error)
-            })
-          // let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
-          // this._mailServiceService.crearNotification(this.solicitud['Correo electrónico'],notificationInfo)
-          // let notificationInfo = 'La solicitud ha sido Aprobada por DRI UV'
-          // this._mailServiceService.crearNotification(this.solicitud['Correo electrónico'],notificationInfo)
-
-
-          this.consultaDatosTabla()
-
-        })
+      }).catch(error => {
+        swal(
+          `${error}`,
+          '',
+          'error'
+        )
+        console.log(error)
+      })
 
 
-    }).catch(error => {
+    } else {
       swal(
-        `${error}`,
+        `Must accept mobility costs/Debe aceptar los costos de movilidad `,
         '',
         'error'
       )
-      console.log(error)
-    })
-
+    }
 
 
   }
@@ -662,6 +674,7 @@ export class EstudiantesPostulacionesComponent implements OnInit {
   }
   guardarSolicitud() {
     swal.showLoading()
+    console.log(this.solicitud['aceptaCosto'])
     // var _this = this
     this.solicitud.actualizadoPor = this.user.email
 
@@ -924,15 +937,96 @@ export class EstudiantesPostulacionesComponent implements OnInit {
     })
 
   }
-  getConvenios(){
+  getConvenios() {
     let conveniosRef = this.db.ref('/convenios/')
     return conveniosRef.once('value').then(snapOconvenios => {
       this.convenios = snapOconvenios.val()
     })
   }
   calculaValorerMovilidad() {
-     let conveniosEstudiante = this.convenios[this.solicitud['CODIGO_CONVENIO']];
-    console.log('936',conveniosEstudiante);
+    var conveniosEstudiante;
+    if (this.solicitud['CODIGO_CONVENIO'] == 'SIN CONVENIO') {
+      conveniosEstudiante = 'SIN CONVENIO'
+    } else {
+      conveniosEstudiante = this.convenios[this.solicitud['CODIGO_CONVENIO']];
+
+    }
+    // console.log('936', conveniosEstudiante, this.solicitud);
+    console.log(this.valoresMovilidad);
+
+    let modalidadConvenio = this.solicitud['MODALIDAD']
+    let gradoFormacionConvenio = this.solicitud['NIVEL DE FORMACIÓN DEL ESTUDIANTE DE ORIGEN']
+    let periodoAcademicoConvenio = this.solicitud['PERIODO ACADÉMICO']
+    var postgrado = null;
+    var pasantia = null;
+    var periodo = null;
+    var codigo = 0;
+
+    console.log(gradoFormacionConvenio)
+
+    if ((gradoFormacionConvenio == 'Technical/Technological / Pregrado tecnológico') ||
+      (gradoFormacionConvenio == 'Grade / Pregrado profesional')) {
+      postgrado = false;
+    } else {
+      postgrado = true;
+
+    }
+
+    if (conveniosEstudiante == 'SIN CONVENIO') {
+      if (postgrado) {
+        codigo = 4006;
+      } else {
+        codigo = 4004;
+      }
+    } else {
+      if (postgrado) {
+        codigo = 4005;
+      } else {
+        codigo = 4003;
+      }
+    }
+
+    switch (modalidadConvenio) {
+      case 'Academic exchange / Intercambio académico':
+        pasantia = 'INTERCAMBIO';
+        break;
+      case 'Short course / Curso corto':
+        pasantia = 'PASANTÍA';
+        break;
+      case 'Internship / Pasantía internacional':
+        pasantia = 'PASANTÍA';
+        break;
+      case 'Clinical Rotation / Rotación clínica':
+        pasantia = 'PASANTÍA';
+        break;
+      case 'Research Stay / Estancia de Investigación':
+        pasantia = 'INTERCAMBIO';
+        break;
+    }
+
+    switch (periodoAcademicoConvenio) {
+      case 'Fall Semester (August – December) / Otoño (Agosto – Diciembre)':
+        periodo = 'AGOSTO-DICIEMBRE';
+        break;
+      case 'Spring Semester (February – June) / Primavera (Febrero – Junio)':
+        periodo = 'FEBRERO-JUNIO';
+        break;
+      case 'Middle term 1 (January – March) / Periodo intermedio (Enero - Marzo)':
+        periodo = 'ENERO-MARZO';
+        break;
+      case 'Middle term 2 (April – June) / Periodo intermedio (Abril - Junio)':
+        periodo = 'ABRIL-JUNIO';
+        break;
+      case 'Middle term 3 (July – September) / Periodo intermedio (Julio - Septiembre)':
+        periodo = 'JULIO-SEPTIEMBRE';
+        break;
+      case 'Middle term 4 (October – December) / Periodo intermedio (Octubre - Diciembre)':
+        periodo = 'OCTUBRE-DICIEMBRE';
+        break;
+    }
+
+    this.valorMovilidad = this.valoresMovilidad[periodo][codigo][pasantia]
+    this.solicitud['costoPeriodo'] = this.valorMovilidad
 
   }
 }

@@ -669,7 +669,28 @@
                 </div>
 
               </div>
+              <div class="form-group">
+                <label for="genero" class="col-md-5 control-label">
+                  Cost of enrollment per period, in Colombian currency/Costo de matricula por periodo, en moneda colombiana</label>
 
+                <div class="col-md-7">
+                  <input [(ngModel)]='solicitud["costoPeriodo"]' type="text" class="form-control" 
+                    readonly>
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                <label for="convenio" class="col-md-5 control-label">Aprueba el costo de la movilidad/Approves the cost of mobility </label>
+                <div class="col-md-7">
+                  <div class="checkbox" >
+                    <label>
+                      <input type="checkbox" [(ngModel)]="solicitud['aceptaCosto']"></label>
+                  </div>
+    
+                </div>
+    
+              </div>
             </mat-expansion-panel>
             <!-- /MOBILITY FUNDING INFOTMATION/INFORMACIÓN DE FINANCIAMIENTO DE LA MOVILIDAD -->
 

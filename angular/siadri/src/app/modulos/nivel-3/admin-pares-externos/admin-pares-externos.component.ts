@@ -174,12 +174,14 @@ export class AdminParesExternosComponent implements OnInit {
   getInstituciones() {
     let consultaConvenios = this.localSt.retrieve('convenios');
     console.log('local', consultaConvenios);
+    this.instituciones.push('OTRA')
+
     if (consultaConvenios) {
       for (const key in consultaConvenios) {
 
         if (consultaConvenios.hasOwnProperty(key)) {
           const element = consultaConvenios[key];
-          if (element.Archivo == 'Activo') {
+          if (element.Estado == 'Activo') {
             this.instituciones.push(element['Institucion'])
           }
 
@@ -196,7 +198,7 @@ export class AdminParesExternosComponent implements OnInit {
 
             if (data.hasOwnProperty(key)) {
               const element = data[key];
-              if (element.Archivo == 'Activo') {
+              if (element.Estado == 'Activo') {
                 this.instituciones.push(element['Institucion'])
               }
             }
@@ -213,7 +215,10 @@ export class AdminParesExternosComponent implements OnInit {
 
   getConveniosInstitucion(insti) {
     this.spinnerConvenios = true
-    this.convenios = []
+    this.convenios = [{
+      id: 'SIN CONVENIO',
+      data: 'SIN CONVENIO'
+    }]
     console.log(insti)
     return this.db.ref('/convenios/')
       .orderByChild('Institucion')
@@ -281,7 +286,7 @@ export class AdminParesExternosComponent implements OnInit {
 
     this.getConveniosInstitucion(this.cuenta['institucion']).then(() => {
       this.conveniosSeleccionados = this.cuentasParesExt[row.key].convenio
-      console.log('209', this.conveniosSeleccionados, this.cuentasParesExt[row.key].convenio)
+      // console.log('209', this.conveniosSeleccionados, this.cuentasParesExt[row.key].convenio)
     })
 
     if (this.panelInferior.nativeElement.classList.contains('collapsed-box')) {

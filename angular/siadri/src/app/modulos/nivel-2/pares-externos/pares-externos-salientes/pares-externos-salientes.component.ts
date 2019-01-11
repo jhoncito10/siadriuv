@@ -75,13 +75,13 @@ export class ParesExternosSalientesComponent implements OnInit {
     this.year = moment().year()
     this.setsolicitud()
     var ref = this.db.ref('/postulaciones/')
-   
+
   }
 
   ngOnInit() {
     // Or you can save a line of code by using an inline function
     // and on()'s return value.
-    
+
     // Sometime later...
     this.consultaDatosTabla()
 
@@ -194,14 +194,19 @@ export class ParesExternosSalientesComponent implements OnInit {
           for (const conv in this.datosParExt.convenio) {
             if (this.datosParExt.convenio.hasOwnProperty(conv)) {
               const element = this.datosParExt.convenio[conv];
+              if (conv == 'SIN CONVENIO') {
+                this.conveniosPar.push(conv)
+              } else {
 
-              this.db.ref(`/convenios/${conv}`).once('value').then(snapConv => {
+                this.db.ref(`/convenios/${conv}`).once('value').then(snapConv => {
 
-                if (snapConv.val()['Estado'] == 'Activo') {
-                  this.conveniosPar.push(conv)
+                  if (snapConv.val()['Estado'] == 'Activo') {
+                    this.conveniosPar.push(conv)
 
-                }
-              })
+                  }
+                })
+              }
+
 
             }
           }
@@ -416,10 +421,10 @@ export class ParesExternosSalientesComponent implements OnInit {
       "creadoPor": this.user.email,
       "fechaActualizado": "",
       "estado": "En espera de aprobación DRI",
-      "comentariosDRI":"",
-      "comentariosDirector":"",
-      "comentariosEstudiante":"",
-      "comentariosPar":""
+      "comentariosDRI": "",
+      "comentariosDirector": "",
+      "comentariosEstudiante": "",
+      "comentariosPar": ""
     }
     console.log(this.solicitud)
   }

@@ -23,7 +23,7 @@
       <div class="example-container mat-elevation-z8">
 
         <mat-table [dataSource]="dataSource" matSort>
-          
+
           <!-- Name Column -->
           <ng-container matColumnDef="key">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Código </mat-header-cell>
@@ -98,17 +98,17 @@
             <div class="col-md-7">
               <select [(ngModel)]='solicitud["PERIODO ACADÉMICO"]' [attr.disabled]="estadoComponenteInferior==2 ? '' : null"
                 id="periodo" class="form-control col-md-7">
-                <option> Fall Semester (August – December) / Otoño (Agosto – Diciembre)</option>
+                <option>Fall Semester (August – December) / Otoño (Agosto – Diciembre)</option>
 
-                <option> Spring Semester (February – June) / Primavera (Febrero – Junio)</option>
+                <option>Spring Semester (February – June) / Primavera (Febrero – Junio)</option>
 
-                <option> Middle term 1 (January – March) / Periodo intermedio (Enero - Marzo)</option>
+                <option>Middle term 1 (January – March) / Periodo intermedio (Enero - Marzo)</option>
 
-                <option> Middle term 2 (April – June) / Periodo intermedio (Abril - Junio)</option>
+                <option>Middle term 2 (April – June) / Periodo intermedio (Abril - Junio)</option>
 
-                <option> Middle term 3 (July – September) / Periodo intermedio (Julio - Septiembre)</option>
+                <option>Middle term 3 (July – September) / Periodo intermedio (Julio - Septiembre)</option>
 
-                <option> Middle term 4 (October – December) / Periodo intermedio (Octubre - Diciembre)</option>
+                <option>Middle term 4 (October – December) / Periodo intermedio (Octubre - Diciembre)</option>
 
               </select>
             </div>
@@ -120,15 +120,15 @@
             <div class="col-md-7">
               <select [(ngModel)]='solicitud["MODALIDAD"]' [attr.disabled]="estadoComponenteInferior==2 ? '' : null" id="modalidad"
                 class="form-control col-md-7">
-                <option> Academic exchange / Intercambio académico</option>
+                <option>Academic exchange / Intercambio académico</option>
 
-                <option> Internship / Pasantía internacional</option>
+                <option>Internship / Pasantía internacional</option>
 
-                <option> Research Stay / Estancia de Investigación</option>
+                <option>Research Stay / Estancia de Investigación</option>
 
-                <option> Short course / Curso corto</option>
+                <option>Short course / Curso corto</option>
 
-                <option> Clinical Rotation / Rotación clínica</option>
+                <option>Clinical Rotation / Rotación clínica</option>
 
               </select>
             </div>
@@ -192,13 +192,13 @@
                 id="nivelacademico" class="form-control col-md-7">
                 <option>Technical/Technological / Pregrado tecnológico</option>
 
-                <option> Grade / Pregrado profesional</option>
+                <option>Grade / Pregrado profesional</option>
 
-                <option> Master / Posgrado Maestría</option>
+                <option>Master / Posgrado Maestría</option>
 
-                <option> PhD / Posgrado Doctrado</option>
+                <option>PhD / Posgrado Doctrado</option>
 
-                <option> Medical Specialty / Posgrado Especialización Clínico Quirúrgica</option>
+                <option>Medical Specialty / Posgrado Especialización Clínico Quirúrgica</option>
 
 
               </select>

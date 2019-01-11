@@ -129,6 +129,14 @@
             </div>
 
           </div>
+          <div class="form-group" *ngIf='cuenta["institucion"]=="OTRA"'>
+            <label for="otraInstitucion" class="col-md-5 control-label">Nombre de la institución</label>
+
+            <div class="col-md-7">
+              <input [(ngModel)]='cuenta["otraInstitucion"]' type="text" class="form-control" id="otraInstitucion" placeholder="Correo electronico"
+                >
+            </div>
+          </div>
 
           <div class="form-group">
             <label for="pais" class="col-md-5 control-label">País de Universidad / Entidad Socia</label>
