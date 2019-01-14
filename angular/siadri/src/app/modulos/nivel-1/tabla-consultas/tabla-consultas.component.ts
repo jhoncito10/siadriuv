@@ -105,7 +105,7 @@ export class TablaConsultasComponent implements OnInit {
     const _convenioSelected = this.convenios[conv.key];
     this.convenio = {
       cod: _convenioSelected['$key'],
-      pais: _convenioSelected.Pais,
+      pais: _convenioSelected.País,
       institucion: _convenioSelected.Institucion,
       documentacion: _convenioSelected['Archivo'],
       site: _convenioSelected['Página Web'] || '',
@@ -159,7 +159,7 @@ export class TablaConsultasComponent implements OnInit {
 function createConvenio(_key: any, el: any): Convenio {
   const key = _key
   const numcon = el['$key'];
-  const pais = el.Pais || ''
+  const pais = el.País || ''
   const institucion = el.Institucion || ''
   const facultad = el.Facultad || ''
   const vigencia = el['Fecha de vencimiento'] || ''

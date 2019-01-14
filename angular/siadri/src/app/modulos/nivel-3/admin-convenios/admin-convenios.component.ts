@@ -9,6 +9,12 @@ import { NativeFirebaseService } from '../../../shared/services/main-service.ser
 import { FirebaseApp } from 'angularfire2';
 import { Http } from '@angular/http';
 
+import { Observable } from 'rxjs/Observable';
+import { FormControl } from '@angular/forms';
+
+import { startWith } from 'rxjs/operators/startWith';
+import { map } from 'rxjs/operators/map';
+
 @Component({
   selector: 'app-admin-convenios',
   templateUrl: './admin-convenios.component.html',
@@ -39,28 +45,33 @@ export class AdminConveniosComponent implements OnInit, AfterViewInit {
   @ViewChild('descripcionConvenioButton') descripcionConvenioButton: ElementRef;
 
 
+
+  filteredOptions: Observable<string[]>;
+  myControl: FormControl = new FormControl();
+
   constructor(private _angularfire: AngularFireDatabase, private localSt: LocalStorageService,
     private _NativeFirebaseService: NativeFirebaseService, private http: Http) {
     this.spiner = true;
-
-    this.convenio = {
-      pais: '',
-      institucion: '',
-      documentacion: '',
-      site: '',
-      cooperacion: '',
-      objeto: '',
-      email: '',
-      tipo: '',
-      facultad: ''
-    }
   }
   ngOnInit(): void {
 
     this.cargarPaises();
 
     this.firebaseStorage = this._NativeFirebaseService.fb.storage();
+
+    this.filteredOptions = this.myControl.valueChanges
+    .pipe(
+      startWith(''),
+      map(val => this.filter(val))
+    );
   }
+
+
+  filter(val: string): string[] {
+    return this.paises.filter(option =>
+      option.trim().toLowerCase().indexOf(val.trim().toLowerCase()) !== -1);
+  }
+
   /**
    * Set the paginator and sort after the view init since this component will
    * be able to query its view for the initialized paginator and sort.
@@ -96,7 +107,7 @@ export class AdminConveniosComponent implements OnInit, AfterViewInit {
       'Dirección': '', 'Email': '', 'Estado': 'Activo', 'FAI': '', 'Facultad': '',
       'Fecha de firma': '', 'Fecha de vencimiento': '', 'HUMANIDADES': '',
       'INGENIERIA': '', 'INSTITUTO DE PEDAGOGIA': '', 'INSTITUTO DE PSICOLOGIA': '',
-      'Institucion': '', 'Objetivo': '', 'Objeto': '', 'Pais': '', 'Profesor': '',
+      'Institucion': '', 'Objetivo': '', 'Objeto': '', 'País': '', 'Profesor': '',
       'Profesores encargados segun Area': '', 'Página Web': '', 'SALUD': '', 'Tipo': '',
       'Tipo de específico': '', 'URL of agreement': '', 'Unidad Academica': '', 'Vencidos': '',
       'email': ''
@@ -183,7 +194,7 @@ export class AdminConveniosComponent implements OnInit, AfterViewInit {
       this._angularfire.list('convenios', {
         query: {
           orderByChild: 'País',
-          equalTo: this.convenio.Pais
+          equalTo: this.convenio.País
         },
         preserveSnapshot: true
       }).subscribe(data => {
@@ -209,7 +220,7 @@ export class AdminConveniosComponent implements OnInit, AfterViewInit {
               this._angularfire.list('paises', {
                 query: {
                   orderByChild: 'nombre_pais',
-                  equalTo: this.convenio.Pais
+                  equalTo: this.convenio.País
                 },
                 preserveSnapshot: true
               }).subscribe(pais => {
@@ -273,7 +284,7 @@ export class AdminConveniosComponent implements OnInit, AfterViewInit {
   validador() {
     let bool = false;
     if (this.convenio['Fecha de firma'] !== '' && this.convenio['Tipo'] !== '' &&
-      this.convenio['Institucion'] !== '' && this.convenio['Pais'] !== '' &&
+      this.convenio['Institucion'] !== '' && this.convenio['País'] !== '' &&
       this.convenio['Facultad'] !== '' && this.convenio['Objeto'] !== '') {
       bool = true;
     }
