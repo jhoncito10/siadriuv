@@ -190,6 +190,12 @@ export class AdminPostEntrantesComponent implements OnInit {
       case 'Aprobada por DRI UV':
         this.estadoComponenteInferior = 1
         break;
+      case 'En espera de aprobación dirección de programa':
+        this.estadoComponenteInferior = 1
+        break;
+      case 'En curso':
+        this.estadoComponenteInferior = 1
+        break;
       default:
         this.estadoComponenteInferior = 0
         break;
@@ -589,6 +595,35 @@ export class AdminPostEntrantesComponent implements OnInit {
         this.solicitud['NUM_DIAS_MOVILIDAD'] = dias
       }
     }
+
+  }
+  actualizarDatos() {
+    swal.showLoading()
+    this.solicitud.actualizadoPor = this.user.email
+    this.solicitud.fechaActualizado = moment().format('DD/MM/YYYY HH:mm')
+    const promise = this._angularfire.object(`/postulaciones/${this.solicitud.key}/`).update(this.solicitud);
+
+    promise
+      .then(res => {
+
+        swal({
+          title: `Solicitud actualizada`
+        })
+        this.consultaDatosTabla()
+
+
+      })
+
+      .catch(err => {
+        swal({
+          title: `${err}`
+        })
+        console.log(err, 'You dont have access!')
+      });
+
+
+
+
 
   }
 }

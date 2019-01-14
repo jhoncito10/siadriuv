@@ -170,8 +170,7 @@
               <div class="form-group">
                 <label for="ID_ESTADO_CIVIL" class="col-md-5 control-label">Marital status/Estado civil</label>
                 <div class="col-md-7">
-                  <select [(ngModel)]='solicitud["ID_ESTADO_CIVIL"]' [attr.disabled]="estadoComponenteInferior != 3 ? true : null"
-                    id="ID_ESTADO_CIVIL" class="form-control col-md-7">
+                  <select [(ngModel)]='solicitud["ID_ESTADO_CIVIL"]' id="ID_ESTADO_CIVIL" class="form-control col-md-7">
                     <option>Single</option>
 
                     <option>Married</option>
@@ -187,8 +186,7 @@
 
                 <div class="col-md-7">
 
-                  <select [(ngModel)]='solicitud["TIPO DE IDENTIFICACIÓN"]' [attr.disabled]="estadoComponenteInferior != 3 ? true : null"
-                    id="TIPO_DE_INDENTIFICACION" class="form-control col-md-7">
+                  <select [(ngModel)]='solicitud["TIPO DE IDENTIFICACIÓN"]' id="TIPO_DE_INDENTIFICACION" class="form-control col-md-7">
                     <option>Passport</option>
 
                     <option>Colombian National ID</option>
@@ -205,8 +203,7 @@
                 </label>
 
                 <div class="col-md-7">
-                  <input [(ngModel)]='solicitud["NÚMERO DE IDENTIFICACIÓN"]' type="text" class="form-control" id="NUMERO_DE_IDENTIFICACION"
-                    [attr.readonly]="estadoComponenteInferior != 3 ? true : null">
+                  <input [(ngModel)]='solicitud["NÚMERO DE IDENTIFICACIÓN"]' type="text" class="form-control" id="NUMERO_DE_IDENTIFICACION">
                 </div>
               </div>
 
@@ -218,7 +215,7 @@
                   <input [(ngModel)]='solicitud["FECHA_EXPIRACION_DOCUMENTO"]' matInput [matDatepicker]="exp_doc_date"
                     id="exp_doc_date" readonly>
                   <mat-datepicker-toggle matSuffix [for]="exp_doc_date"></mat-datepicker-toggle>
-                  <mat-datepicker #exp_doc_date [disabled]="estadoComponenteInferior != 3 ? true : null"></mat-datepicker>
+                  <mat-datepicker #exp_doc_date></mat-datepicker>
                 </mat-form-field>
               </div>
 
@@ -228,8 +225,8 @@
                 <mat-form-field class="col-md-7">
                   <input [(ngModel)]='solicitud["FECHA_NACIMIENTO"]' matInput [matDatepicker]="FECHA_NACIMIENTO" id="FECHA_NACIMIENTO"
                     readonly>
-                  <mat-datepicker-toggle [attr.disabled]="estadoComponenteInferior != 3 ? true : null" matSuffix [for]="FECHA_NACIMIENTO"></mat-datepicker-toggle>
-                  <mat-datepicker #FECHA_NACIMIENTO [disabled]="estadoComponenteInferior != 3 ? true : null"></mat-datepicker>
+                  <mat-datepicker-toggle matSuffix [for]="FECHA_NACIMIENTO"></mat-datepicker-toggle>
+                  <mat-datepicker #FECHA_NACIMIENTO></mat-datepicker>
                 </mat-form-field>
               </div>
 
@@ -237,15 +234,13 @@
                 <label for="LUGAR_NACIMIENTO" class="col-md-5 control-label">Place of birth/Lugar de nacimiento</label>
 
                 <div class="col-md-7">
-                  <input [(ngModel)]='solicitud["LUGAR_NACIMIENTO"]' type="text" class="form-control" id="LUGAR_NACIMIENTO"
-                    [attr.readonly]="estadoComponenteInferior != 3 ? true : null">
+                  <input [(ngModel)]='solicitud["LUGAR_NACIMIENTO"]' type="text" class="form-control" id="LUGAR_NACIMIENTO">
                 </div>
               </div>
               <div class="form-group">
                 <label for="pais" class="col-md-5 control-label">Country/País</label>
                 <div class="col-md-7">
-                  <select [attr.disabled]="estadoComponenteInferior != 3 ? true : null" [(ngModel)]='solicitud["PAIS_NACIMIENTO"]'
-                    class="form-control col-md-7" id="pais">
+                  <select [(ngModel)]='solicitud["PAIS_NACIMIENTO"]' class="form-control col-md-7" id="pais">
                     <option *ngFor="let pais of paises ; index as i;" [ngValue]="pais"> {{pais}}</option>
                   </select>
                 </div>
@@ -256,8 +251,7 @@
                 <label for="NACIONALIDAD" class="col-md-5 control-label">Nationality/Nacionalidad</label>
 
                 <div class="col-md-7">
-                  <input [(ngModel)]='solicitud["NACIONALIDAD"]' type="text" class="form-control" id="NACIONALIDAD"
-                    [attr.readonly]="estadoComponenteInferior != 3 ? true : null">
+                  <input [(ngModel)]='solicitud["NACIONALIDAD"]' type="text" class="form-control" id="NACIONALIDAD">
                 </div>
               </div>
 
@@ -274,39 +268,34 @@
                 <label for="Address" class="col-md-5 control-label">Address - Dirección</label>
 
                 <div class="col-md-7">
-                  <input [(ngModel)]='solicitud["DIRECCION"]' type="text" class="form-control" id="Address"
-                    [attr.readonly]="estadoComponenteInferior != 3 ? true : null">
+                  <input [(ngModel)]='solicitud["DIRECCION"]' type="text" class="form-control" id="Address">
                 </div>
               </div>
               <div class="form-group">
                 <label for="City" class="col-md-5 control-label">City - Ciudad</label>
 
                 <div class="col-md-7">
-                  <input [(ngModel)]='solicitud["CIUDAD_DIRECCION"]' type="text" class="form-control" id="City"
-                    [attr.readonly]="estadoComponenteInferior != 3 ? true : null">
+                  <input [(ngModel)]='solicitud["CIUDAD_DIRECCION"]' type="text" class="form-control" id="City">
                 </div>
               </div>
               <div class="form-group">
                 <label for="Postal" class="col-md-5 control-label">Postal Code - Código postal</label>
 
                 <div class="col-md-7">
-                  <input [(ngModel)]='solicitud["POSTAL_CODE_DIRECCION"]' type="text" class="form-control" id="Postal"
-                    [attr.readonly]="estadoComponenteInferior != 3 ? true : null">
+                  <input [(ngModel)]='solicitud["POSTAL_CODE_DIRECCION"]' type="text" class="form-control" id="Postal">
                 </div>
               </div>
               <div class="form-group">
                 <label for="Region" class="col-md-5 control-label">State/Province/Region - Estado/Provincia/Región</label>
 
                 <div class="col-md-7">
-                  <input [(ngModel)]='solicitud["ESTADO_PROVINCIA_REGION"]' type="text" class="form-control" id="Region"
-                    [attr.readonly]="estadoComponenteInferior != 3 ? true : null">
+                  <input [(ngModel)]='solicitud["ESTADO_PROVINCIA_REGION"]' type="text" class="form-control" id="Region">
                 </div>
               </div>
               <div class="form-group">
                 <label for="pais" class="col-md-5 control-label">Country/País</label>
                 <div class="col-md-7">
-                  <select [attr.disabled]="estadoComponenteInferior != 3 ? true : null" [(ngModel)]='solicitud["PAIS_DIRECCION"]'
-                    class="form-control col-md-7" id="pais">
+                  <select [(ngModel)]='solicitud["PAIS_DIRECCION"]' class="form-control col-md-7" id="pais">
                     <option *ngFor="let pais of paises ; index as i;" [ngValue]="pais"> {{pais}}</option>
                   </select>
                 </div>
@@ -324,15 +313,13 @@
                 <label for="ciudadMobilidad" class="col-md-5 control-label">City/ciudad</label>
 
                 <div class="col-md-7">
-                  <input [(ngModel)]='solicitud["CIUDAD_MOBILIDAD"]' type="text" class="form-control" id="ciudadMobilidad"
-                    [attr.readonly]="estadoComponenteInferior != 3 ? true : null">
+                  <input [(ngModel)]='solicitud["CIUDAD_MOBILIDAD"]' type="text" class="form-control" id="ciudadMobilidad">
                 </div>
               </div>
               <div class="form-group">
                 <label for="paisMobilidad" class="col-md-5 control-label">Country/País</label>
                 <div class="col-md-7">
-                  <select [attr.disabled]="estadoComponenteInferior != 3 ? true : null" [(ngModel)]='solicitud["PAIS_MOBILIDAD"]'
-                    class="form-control col-md-7" id="paisMobilidad">
+                  <select [(ngModel)]='solicitud["PAIS_MOBILIDAD"]' class="form-control col-md-7" id="paisMobilidad">
                     <option *ngFor="let pais of paises ; index as i;" [ngValue]="pais"> {{pais}}</option>
                   </select>
                 </div>
@@ -348,14 +335,14 @@
                   <input [(ngModel)]='inicioMobilidad' matInput [matDatepicker]="fechaInicioMobilidad" placeholder="From/desde"
                     readonly (dateInput)="calculaDias('input', $event)" (dateChange)="calculaDias('change', $event)">
                   <mat-datepicker-toggle matSuffix [for]="fechaInicioMobilidad"></mat-datepicker-toggle>
-                  <mat-datepicker #fechaInicioMobilidad [disabled]="estadoComponenteInferior != 3 ? true : null"></mat-datepicker>
+                  <mat-datepicker #fechaInicioMobilidad></mat-datepicker>
                 </mat-form-field>
 
                 <mat-form-field class="col-md-3">
                   <input [(ngModel)]='finMobilidad' matInput [matDatepicker]="fechaFinMobilidad" placeholder="To/hasta"
                     readonly (dateInput)="calculaDias('input', $event)" (dateChange)="calculaDias('change', $event)">
                   <mat-datepicker-toggle matSuffix [for]="fechaFinMobilidad"></mat-datepicker-toggle>
-                  <mat-datepicker #fechaFinMobilidad [disabled]="estadoComponenteInferior != 3 ? true : null"></mat-datepicker>
+                  <mat-datepicker #fechaFinMobilidad></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="form-group">
@@ -383,7 +370,7 @@
 
                 <div class="col-md-7">
                   <input [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE ORIGEN"]' type="text" class="form-control" id="programaOrigen"
-                    placeholder="OPTION 1 / OPCIÓN 1" [attr.readonly]="estadoComponenteInferior != 3 ? true : null">
+                    placeholder="OPTION 1 / OPCIÓN 1">
                 </div>
               </div>
               <div class="form-group">
@@ -393,7 +380,7 @@
 
                 <div class="col-md-7">
                   <input [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE ORIGEN 2"]' type="text" class="form-control" id="programaOrigen2"
-                    placeholder="OPTION 2 / OPCIÓN 2" [attr.readonly]="estadoComponenteInferior != 3 ? true : null">
+                    placeholder="OPTION 2 / OPCIÓN 2">
                 </div>
               </div>
               <div class="form-group">
@@ -405,7 +392,7 @@
 
                 <div class="col-md-7">
                   <input [(ngModel)]='solicitud["INSTITUCION_MEDICA"]' type="text" class="form-control" id="institucionMedica"
-                    placeholder="institution" [attr.readonly]="estadoComponenteInferior != 3 ? true : null">
+                    placeholder="institution">
                 </div>
               </div>
 
@@ -425,8 +412,8 @@
               <div class="form-group">
                 <label for="facultadOpcion1" class="col-md-5 control-label">School/Facultad/Instituto</label>
                 <div class="col-md-7">
-                  <select [attr.disabled]="estadoComponenteInferior != 3 ? true : null" [(ngModel)]='solicitud["Facultad"]'
-                    class="form-control col-md-7" id="facultadOpcion1" (click)="getProgramasPorFacultad()">
+                  <select [(ngModel)]='solicitud["Facultad"]' class="form-control col-md-7" id="facultadOpcion1"
+                    (click)="getProgramasPorFacultad()">
                     <option value="" disabled selected>Select your option</option>
                     <option *ngFor="let facultad of arrayFacultades ; index as i;" [ngValue]="facultad"> {{facultad}}</option>
 
@@ -437,8 +424,7 @@
               <div class="form-group">
                 <label for="programaOpcion1" class="col-md-5 control-label">Academic Program/Programa académico</label>
                 <div class="col-md-7">
-                  <select [attr.disabled]="estadoComponenteInferior != 3 ? true : null" [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (1)"]'
-                    class="form-control col-md-7" id="programaOpcion1">
+                  <select [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (1)"]' class="form-control col-md-7" id="programaOpcion1">
                     <option value="" disabled selected>Select your option</option>
                     <option *ngFor="let prog of arrayProgramas ; index as i;" [ngValue]="prog"> {{prog}}</option>
 
@@ -462,8 +448,8 @@
               <div class="form-group">
                 <label for="facultadOpcion2" class="col-md-5 control-label">School/Facultad/Instituto (2)</label>
                 <div class="col-md-7">
-                  <select [attr.disabled]="estadoComponenteInferior != 3 ? true : null" [(ngModel)]='solicitud["Facultad2"]'
-                    class="form-control col-md-7" id="facultadOpcion2" (click)="getProgramasPorFacultad2()">
+                  <select [(ngModel)]='solicitud["Facultad2"]' class="form-control col-md-7" id="facultadOpcion2"
+                    (click)="getProgramasPorFacultad2()">
                     <option value="" disabled selected>Select your option</option>
                     <option *ngFor="let facultad of arrayFacultades2 ; index as i;" [ngValue]="facultad"> {{facultad}}</option>
 
@@ -474,8 +460,7 @@
               <div class="form-group">
                 <label for="programaOpcion2" class="col-md-5 control-label">Academic Program/Programa académico (2)</label>
                 <div class="col-md-7">
-                  <select [attr.disabled]="estadoComponenteInferior != 3 ? true : null" [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (2)"]'
-                    class="form-control col-md-7" id="programaOpcion2">
+                  <select [(ngModel)]='solicitud["PROGRAMA ACADÉMICO DE DESTINO (2)"]' class="form-control col-md-7" id="programaOpcion2">
                     <option value="" disabled selected>Select your option</option>
                     <option *ngFor="let prog of arrayProgramas2 ; index as i;" [ngValue]="prog"> {{prog}}</option>
 
@@ -499,16 +484,15 @@
                 <label class="col-md-5 control-label">{{ curso["nombre"] }}</label>
 
                 <div class="col-md-7">
-                  <input  [(ngModel)]='curso["nombre"]' type="text" class="form-control" 
-                    [attr.readonly]="estadoComponenteInferior==2 ? '' : null">
+                  <input [(ngModel)]='curso["nombre"]' type="text" class="form-control">
                 </div>
 
               </div>
-              
-              
-              
-             
-              
+
+
+
+
+
 
               <!-- Desea matricular ingles-->
 
@@ -521,14 +505,14 @@
                 <div class="col-md-7">
                   <div class="radio">
                     <label>
-                      <input type="radio" name="matriculaIngles" [(ngModel)]='solicitud["matriculaIngles"]' value="si"
-                        [attr.readonly]="estadoComponenteInferior != 3 ? true : null"> Yes/si
+                      <input type="radio" name="matriculaIngles" [(ngModel)]='solicitud["matriculaIngles"]' value="si">
+                      Yes/si
                     </label>
                   </div>
                   <div class="radio">
                     <label>
-                      <input type="radio" name="matriculaIngles" [(ngModel)]='solicitud["matriculaIngles"]' value="no"
-                        [attr.readonly]="estadoComponenteInferior != 3 ? true : null"> No/no
+                      <input type="radio" name="matriculaIngles" [(ngModel)]='solicitud["matriculaIngles"]' value="no">
+                      No/no
                     </label>
                   </div>
                 </div>
@@ -551,8 +535,7 @@
               <div class="form-group">
                 <label for="genero" class="col-md-5 control-label">FUNDING/FINANCIAMIENTO</label>
                 <div class="col-md-7">
-                  <select [(ngModel)]='solicitud["FINANCIAMIENTO"]' [attr.disabled]="estadoComponenteInferior != 3 ? true : null"
-                    id="genero" class="form-control col-md-7">
+                  <select [(ngModel)]='solicitud["FINANCIAMIENTO"]' id="genero" class="form-control col-md-7">
                     <option>Personal funds/Recursos Propios</option>
 
                     <option> Scholarship/Beca</option>
@@ -573,8 +556,7 @@
                   el rango de la cantidad recibida</label>
 
                 <div class="col-md-7">
-                  <input [(ngModel)]='solicitud["finaciacionBeca_rango"]' type="text" class="form-control" placeholder="Range"
-                    [attr.readonly]="estadoComponenteInferior != 3 ? true : null">
+                  <input [(ngModel)]='solicitud["finaciacionBeca_rango"]' type="text" class="form-control" placeholder="Range">
                 </div>
 
               </div>
@@ -592,12 +574,11 @@
               <div class="form-group">
                 <div class="col-md-6">
                   <input [(ngModel)]='solicitud["finaciacionInstitucionNacional"]' type="text" class="form-control"
-                    placeholder="National institution/Institución Nacional" [attr.readonly]="estadoComponenteInferior != 3 ? true : null">
+                    placeholder="National institution/Institución Nacional">
                 </div>
 
                 <div class="col-md-6">
-                  <select [attr.disabled]="estadoComponenteInferior != 3 ? true : null" [(ngModel)]='solicitud["finaciacionPaisInstitucionNacional"]'
-                    class="form-control">
+                  <select [(ngModel)]='solicitud["finaciacionPaisInstitucionNacional"]' class="form-control">
                     <option *ngFor="let pais of paises ; index as i;" [ngValue]="pais"> {{pais}}</option>
                   </select>
                 </div>
@@ -606,12 +587,11 @@
               <div class="form-group">
                 <div class="col-md-6">
                   <input [(ngModel)]='solicitud["finaciacionInstitucionInternacional"]' type="text" class="form-control"
-                    placeholder="International institution/Institución Internacional" [attr.readonly]="estadoComponenteInferior != 3 ? true : null">
+                    placeholder="International institution/Institución Internacional">
                 </div>
 
                 <div class="col-md-6">
-                  <select [attr.disabled]="estadoComponenteInferior != 3 ? true : null" [(ngModel)]='solicitud["finaciacionPaisInstitucionInternacional"]'
-                    class="form-control ">
+                  <select [(ngModel)]='solicitud["finaciacionPaisInstitucionInternacional"]' class="form-control ">
                     <option *ngFor="let pais of paises ; index as i;" [ngValue]="pais"> {{pais}}</option>
                   </select>
                 </div>
@@ -619,8 +599,7 @@
               </div>
               <div class="form-group">
                 <div class="col-md-6">
-                  <input [(ngModel)]='solicitud["finaciacionONG"]' type="text" class="form-control" placeholder="NGO/ONG"
-                    [attr.readonly]="estadoComponenteInferior != 3 ? true : null">
+                  <input class="form-control" placeholder="NGO/ONG">
                 </div>
 
                 <div class="col-md-6">
@@ -662,104 +641,7 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <div *ngIf="solicitud['MODALIDAD']==='Academic exchange / Intercambio académico'">
-                <!-- INPUTS FILES UPLOAD -->
-                <div *ngIf="(estadoComponenteInferior == 3)">
-                  <div class="form-group">
-                    <label for="inputCartaPresentacion" class="col-md-5 control-label">Presentation letter from home
-                      university (It must include: name, last name, passport number, colombian
-                      ID for colombian citizens enrolled in a foreign university, dates for the exchange/rotation and
-                      specific
-                      field or area of knowledge)/Carta de presentación de la universidad de origen (debe incluir
-                      nombres
-                      y
-                      apellidos, número de pasaporte o de C.C. para nacionales colombianos, fechas del intercambio y
-                      programa
-                      académico).
-                    </label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputCartaPresentacion id="inputCartaPresentacion">
-                    </div>
-                  </div>
 
-                  <div class="form-group">
-                    <label for="inputCertificadoNotas" class="col-md-5 control-label">Certificate with grades in
-                      spanish
-                      (official translation is not required)/Certificado de notas (traducido
-                      al español, no se requiere una traducción oficial).</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputCertificadoNotas id="inputCertificadoNotas">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="inputConocimientoEspanol" class="col-md-5 control-label">Document attesting spanish
-                      knowledge (B2) for non-native spanish speakers/Documento que avale un conocimiento
-                      suficiente de español (B2) para estudiantes que sean de lengua extranjera o distinta al español.</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputConocimientoEspanol id="inputConocimientoEspanol">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="inputCartaMotivacion" class="col-md-5 control-label">Motivation letter in spanish/Carta
-                      de Motivación en español</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputCartaMotivacion id="inputCartaMotivacion">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="inputDocumentoID" class="col-md-5 control-label">Copy of passport or Cédula de
-                      Ciudadanía
-                      for Colombian citizens/Fotocopia del pasaporte o cédula de ciudadanía para
-                      colombianos
-                    </label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputDocumentoID id="inputDocumentoID">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="inputFoto" class="col-md-5 control-label">3x4 cm photo, white background, JPF
-                      format/Foto
-                      3x4 cm fondo blanco en .JPG.</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file" #fileInputFoto
-                        id="inputFoto">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <h4 class="col-md-5 ">REQUISITOS ADICIONALES</h4>
-                    <div class="col-md-7">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="inputEuropassCV" class="col-md-5 control-label">Faculty of Health incoming students:
-                      you
-                      must also upload Europass CV/Para estudiantes visitantes internacionales
-                      en la Facultad de Salud: adicionar el Europass CV.</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputEuropassCV id="inputEuropassCV">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputFellows" class="col-md-5 control-label">Fellows: please send the undergraduate and
-                      posgraduate diploma/Para Fellows: enviar los diplomas de pregrado
-                      y posgrado</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputFellows id="inputFellows">
-                    </div>
-                  </div>
-                </div>
 
                 <!-- FILES DONWLOAD -->
                 <div *ngIf="(estadoComponenteInferior == 3 || estadoComponenteInferior == 2)">
@@ -816,61 +698,7 @@
               </div>
 
               <div *ngIf="(solicitud['MODALIDAD']==='Internship / Pasantía internacional' || solicitud['MODALIDAD']==='Estancia de Investigación')">
-                <div *ngIf="(estadoComponenteInferior == 3)">
-                  <div class="form-group">
-                    <label for="inputCartaTutor" class="col-md-5 control-label">Letter of introduction from the tutor
-                      at
-                      home university./Carta de presentación del Tutor en la universidad
-                      de origen.</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputCartaTutor id="inputCartaTutor">
-                    </div>
-                  </div>
 
-                  <div class="form-group">
-                    <label for="inputCartaProfesorUV" class="col-md-5 control-label">Letter of invitation from an
-                      appointed professor of Universidad del Valle, supported by a work schedule./Carta
-                      de invitación de un profesor nombrado de la Universidad del Valle, anexando el cronograma de
-                      trabajo.</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputCartaProfesorUV id="inputCartaProfesorUV">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="inputDescripcionProyecto" class="col-md-5 control-label">Brief description of the
-                      project to be developed (in English or Spanish)/Breve exposición del proyecto a
-                      realizar (inglés o español).
-                    </label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputDescripcionProyecto id="inputDescripcionProyecto">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="inputDocumentoID" class="col-md-5 control-label">Copy of passport or Cédula de
-                      Ciudadanía
-                      for Colombian citizens/Fotocopia del pasaporte o cédula de ciudadanía para
-                      colombianos</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputDocumentoID id="inputDocumentoID">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="inputFoto" class="col-md-5 control-label">3x4 cm photo, white background, JPF
-                      format/Foto
-                      3x4 cm fondo blanco en .JPG.</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file" #fileInputFoto
-                        id="inputFoto">
-                    </div>
-                  </div>
-                </div>
 
                 <div>
                   <div class="form-group" *ngIf="(this.solicitud['CartaTutor']!=undefined && this.solicitud['CartaTutor']!='')">
@@ -911,90 +739,6 @@
 
 
               <div *ngIf="solicitud['MODALIDAD']==='Clinical Rotation / Rotación clínica'">
-                <div *ngIf="(estadoComponenteInferior == 3)">
-
-                  <div class="form-group">
-                    <label for="inputCartaPresentacion" class="col-md-5 control-label">Presentation letter from home
-                      university (It must include: name, last name, passport number, colombian
-                      ID for colombian citizens enrolled in a foreign university, dates for the exchange/rotation and
-                      specific
-                      field or area of knowledge)/Carta de presentación de la universidad de origen (debe incluir
-                      nombres
-                      y
-                      apellidos, número de pasaporte o de C.C. para nacionales colombianos, fechas del intercambio y
-                      programa
-                      académico).</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputCartaPresentacion id="inputCartaPresentacion">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="inputCertificadoNotas" class="col-md-5 control-label">Certificate with grades in
-                      spanish
-                      (official translation is not required)/Certificado de notas (traducido
-                      al español, no se requiere una traducción oficial).</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputCertificadoNotas id="inputCertificadoNotas">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="inputConocimientoEspanol" class="col-md-5 control-label">Document attesting spanish
-                      knowledge (B2) for non-native spanish speakers/Documento que avale un conocimiento
-                      suficiente de español (B2) para estudiantes que sean de lengua extranjera o distinta al español.</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputConocimientoEspanol id="inputConocimientoEspanol">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="inputCartaMotivacion" class="col-md-5 control-label">Motivation letter in spanish/Carta
-                      de Motivación en español</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputCartaMotivacion id="inputCartaMotivacion">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="inputDocumentoID" class="col-md-5 control-label">Copy of passport or Cédula de
-                      Ciudadanía
-                      for Colombian citizens/Fotocopia del pasaporte o cédula de ciudadanía para
-                      colombianos</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputDocumentoID id="inputDocumentoID">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="inputFoto" class="col-md-5 control-label">3x4 cm photo, white background, JPF
-                      format/Foto
-                      3x4 cm fondo blanco en .JPG.</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file" #fileInputFoto
-                        id="inputFoto">
-                    </div>
-                  </div>
-
-
-                  <div class="form-group">
-                    <label for="inputEuropassCV" class="col-md-5 control-label">Faculty of Health incoming students:
-                      you
-                      must also upload Europass CV/Para estudiantes visitantes internacionales
-                      en la Facultad de Salud: adicionar el Europass CV.</label>
-                    <div class="col-md-7">
-                      <input [attr.readonly]="estadoComponenteInferior != 3 ? true : null" type="file"
-                        #fileInputEuropassCV id="inputEuropassCV">
-                    </div>
-                  </div>
-                </div>
-
-
                 <div>
                   <div class="form-group" *ngIf="(this.solicitud['CartaPresentacion']!=undefined && this.solicitud['CartaPresentacion']!='')">
                     <label>Carta presentacion</label>
@@ -1056,9 +800,9 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
 
-              <div class="form-group" *ngIf="( this.solicitud['comentariosDRI']!=undefined && this.solicitud['comentariosDRI']!='')">
+              <div class="form-group">
                 <label>Comentarios del DRI</label>
-                <textarea class="form-control" rows="3" [(ngModel)]='solicitud["comentariosDRI"]' readonly></textarea>
+                <textarea class="form-control" rows="3" [(ngModel)]='solicitud["comentariosDRI"]'></textarea>
               </div>
               <div class="form-group" *ngIf="( this.solicitud['comentariosDirector']!=undefined && this.solicitud['comentariosDirector']!='')">
                 <label>Comentarios del Director</label>
@@ -1066,10 +810,38 @@
               </div>
               <div class="form-group">
                 <label>Comentarios del Estudiante</label>
-                <textarea class="form-control" rows="3" [attr.readonly]="estadoComponenteInferior==2 ? '' : null"
-                  [(ngModel)]='solicitud["comentariosEstudiante"]'></textarea>
+                <textarea class="form-control" rows="3" readonly [(ngModel)]='solicitud["comentariosEstudiante"]'></textarea>
               </div>
             </mat-expansion-panel>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    ESTADO
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="form-group">
+                    <label for="estado" class="col-md-5 control-label">Estado: </label>
+                    <div class="col-md-7">
+                      <select [(ngModel)]='solicitud["estado"]' 
+                        id="estado" class="form-control col-md-7">
+                        <option>En espera de aprobación DRI</option>
+        
+                        <option>Aprobada por dirección de programa</option>
+        
+                        <option>Denegada por dirección de programa</option>
+        
+                        <option>Denegada por DRI UV</option>
+        
+                        <option>Solicitud completada por estudiante</option>
+        
+                        <option>Aprobada por DRI UV</option>
+        
+                      </select>
+                    </div>
+        
+                  </div>
+               
+              </mat-expansion-panel>
           </mat-accordion>
 
           <br>
@@ -1081,6 +853,15 @@
       </div>
     </div>
     <div class="box-footer">
+      <div class="row" *ngIf="(estadoComponenteInferior!=0)">
+
+        <div class="col-md-12">
+          <button type="button" class="btn btn-block btn-primary" (click)="actualizarDatos()">Actualizar solicitud
+            <i class="fa fa-arrow-circle-up"></i>
+          </button>
+        </div>
+
+      </div>
       <div class="row" *ngIf="estadoComponenteInferior==2">
         <div class="col-md-6">
           <button type="button" class="btn btn-block btn-danger" (click)="denegarSolicitud()">Denegar solicitud
