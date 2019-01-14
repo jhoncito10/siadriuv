@@ -2,8 +2,9 @@
   <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
     <!-- menu -->
     <ul class="nav nav-tabs " style="cursor:pointer;">
-      <li class="active "><a >Inicio</a></li>
-      <li><a  onClick="$('#loginbox').hide(); $('#signupbox').show()">Registrar</a></li>
+      <li class="active"><a >Inicio</a></li>
+      <li><a  onClick="$('#loginbox').hide(); $('#signrecup').hide(); $('#signupbox').show()">Registrar</a></li>
+      <li><a  onClick="$('#loginbox').hide(); $('#signrecup').show(); $('#signupbox').hide()">Recuperar</a></li>
     </ul>
     <div class="panel panel-custom-l-red animated fadeIn">
       <div class="panel-heading">
@@ -43,8 +44,9 @@
   <!-- REGISTRO DEL USUARIO    -->
   <div id="signupbox" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 animate fadeIn">
     <ul class="nav nav-tabs" style="cursor:pointer;">
-      <li><a onclick="$('#signupbox').hide(); $('#loginbox').show()">Inicio</a></li>
-      <li class="active"><a onClick="$('#loginbox').hide(); $('#signupbox').show()">Registrar</a></li>
+      <li><a onclick="$('#signupbox').hide(); $('#signrecup').hide(); $('#loginbox').show()">Inicio</a></li>
+      <li class="active"><a onClick="$('#loginbox').hide(); $('#signrecup').hide(); $('#signupbox').show()">Registrar</a></li>
+      <li><a onClick="$('#loginbox').hide(); $('#signrecup').show(); $('#signupbox').hide()">Recuperar</a></li>
     </ul>
     <div class="panel panel-custom-l-red animated fadeIn">
       <div class="panel-heading">
@@ -86,5 +88,38 @@
       </div>
     </div>
   </div>
+
+
+    <!-- RECUPERACION CONTRASEÑA    -->
+    <div id="signrecup" style="display:none; margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 animate fadeIn">
+      <ul class="nav nav-tabs" style="cursor:pointer;">
+        <li><a onclick="$('#signupbox').hide(); $('#signrecup').hide(); $('#loginbox').show()">Inicio</a></li>
+        <li><a onClick="$('#loginbox').hide(); $('#signrecup').hide(); $('#signupbox').show()">Registrar</a></li>
+        <li class="active"><a onClick="$('#loginbox').hide(); $('#signrecup').show(); $('#signupbox').hide()">Recuperar</a></li>
+      </ul>
+      <div class="panel panel-custom-l-red animated fadeIn">
+        <div class="panel-heading">
+          <div class="panel-title text-center">Recuperacion de contraseña </div>
+        </div>
+        <div class="panel-body">
+          <form id="signrec" class="form-horizontal" role="form">
+
+            <div class="form-group">
+              <label for="firstname" class="col-md-3 control-label">Email</label>
+              <div class="col-md-9">
+                <input [(ngModel)]="emailrecuperar" type="text" class="form-control" name="email" placeholder="Email">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <!-- Button -->
+              <div class="col-md-offset-3 col-md-9">
+                <button (click)="recuperar()" id="btn-sigrecup"  type="button" class="btn btn-success"><i class="icon-hand-right"></i>Enviar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 </div>
 

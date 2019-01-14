@@ -15,18 +15,18 @@ export class LoginService {
   public rol: any = null;
 
   constructor(public afAuth: AngularFireAuth, public ruta: Router, private rule: RuleservicesService) {
-      if (localStorage.getItem('usuario')) {
-        this.usuario = JSON.parse(localStorage.getItem('usuario'));
-        this.obtenerRol(this.usuario).then(() => {
-          localStorage.setItem('rol', JSON.stringify(this.rol));
-        });
+    if (localStorage.getItem('usuario')) {
+      this.usuario = JSON.parse(localStorage.getItem('usuario'));
+      this.obtenerRol(this.usuario).then(() => {
+        localStorage.setItem('rol', JSON.stringify(this.rol));
+      });
     }
   }
 
-    // LOGIN CON GOOGLE
-    login() {
-      // tslint:disable-next-line:prefer-const
-      let promise = new Promise((resolve, reject) => {
+  // LOGIN CON GOOGLE
+  login() {
+    // tslint:disable-next-line:prefer-const
+    let promise = new Promise((resolve, reject) => {
       this.afAuth.auth
         .signInWithPopup(new firebase.auth.GoogleAuthProvider())
         .then(resp => {
@@ -34,7 +34,7 @@ export class LoginService {
           this.obtenerRol(this.usuario).then(() => {
 
             resolve();
-          }).catch(function() {
+          }).catch(function () {
             swal({
               type: 'error',
               title: 'Error',
@@ -43,7 +43,7 @@ export class LoginService {
             });
           });
 
-        }).catch(function() {
+        }).catch(function () {
           swal({
             type: 'error',
             title: 'Error',
@@ -51,69 +51,75 @@ export class LoginService {
             showConfirmButton: true,
           });
         });
-      });
-      return promise;
-      }
-
-      obtenerRol(user) {
-        const promise = new Promise((resolve, reject) => {
-          const instancia = this;
-          localStorage.setItem('usuario', JSON.stringify(user));
-          this.rule.getConsultaRol(user.uid).then(() => {
-            this.rule.getAtrRol(this.rule.getRolEsp()).subscribe(datarol => {
-              this.rol = datarol.$key;
-              localStorage.setItem('rol', JSON.stringify(this.rol));
-              if (this.rol == null) {
-                this.obtenerRol(user);
-              } else {
-                resolve();
-              }
-            });
-          }).catch(function() {
-            instancia.obtenerRol(user);
-          });
-        });
-        return promise;
-      }
-
-      
-      // LOGIN CON EMAIL Y PASSWORD
-      loginEmail(email: string, pass: string) {
-            // tslint:disable-next-line:prefer-const
-            let promise = new Promise((resolve, reject) => {
-              this.afAuth.auth.signInWithEmailAndPassword(email, pass)
-              .then(data => {
-                this.usuario = data;
-                if (this.usuario.emailVerified) {
-                 this.obtenerRol(data);
-                  resolve();
-                } else {
-                  reject();
-                }
-              })
-              .catch(() => {
-                swal({
-                  type: 'error',
-                  title: 'Error',
-                  text: 'Clave o Usuario invalido',
-                  showConfirmButton: true,
-                });
-              })
-              ;
-            });
-            return promise;
-    }
-
-   // CERRAR SESION EN EL SISTEMA
-   logout() {
-      localStorage.removeItem('usuario');
-      localStorage.removeItem('rol');
-      this.usuario = null ;
-      this.afAuth.auth.signOut().then(() => {
-        this.ruta.navigate(['login']);
-      });
-
-      }
+    });
+    return promise;
   }
+
+  obtenerRol(user) {
+    const promise = new Promise((resolve, reject) => {
+      const instancia = this;
+      localStorage.setItem('usuario', JSON.stringify(user));
+      this.rule.getConsultaRol(user.uid).then(() => {
+        this.rule.getAtrRol(this.rule.getRolEsp()).subscribe(datarol => {
+          this.rol = datarol.$key;
+          localStorage.setItem('rol', JSON.stringify(this.rol));
+          if (this.rol == null) {
+            this.obtenerRol(user);
+          } else {
+            resolve();
+          }
+        });
+      }).catch(function () {
+        instancia.obtenerRol(user);
+      });
+    });
+    return promise;
+  }
+
+
+  // LOGIN CON EMAIL Y PASSWORD
+  loginEmail(email: string, pass: string) {
+    // tslint:disable-next-line:prefer-const
+    let promise = new Promise((resolve, reject) => {
+      this.afAuth.auth.signInWithEmailAndPassword(email, pass)
+        .then(data => {
+          this.usuario = data;
+          if (this.usuario.emailVerified) {
+            this.obtenerRol(data);
+            resolve();
+          } else {
+            reject();
+          }
+        })
+        .catch(() => {
+          swal({
+            type: 'error',
+            title: 'Error',
+            text: 'Clave o Usuario invalido',
+            showConfirmButton: true,
+          });
+        })
+        ;
+    });
+    return promise;
+  }
+
+  // CERRAR SESION EN EL SISTEMA
+  logout() {
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('rol');
+    this.usuario = null;
+    this.afAuth.auth.signOut().then(() => {
+      this.ruta.navigate(['login']);
+    });
+
+  }
+
+  recoverPassword(email) {
+    return this.afAuth.auth.sendPasswordResetEmail(email);
+  }
+
+
+}
 
 

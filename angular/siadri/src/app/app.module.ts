@@ -113,6 +113,7 @@ import { NgxEditorModule } from 'ngx-editor';
 import { DialogComponent } from './modulos/nivel-3/admin-post-entrantes/dialog/dialog.component';
 import { DialogEstudianteComponent } from './modulos/nivel-2/estudiantes-postulaciones/dialog-estudiante/dialog-estudiante.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
