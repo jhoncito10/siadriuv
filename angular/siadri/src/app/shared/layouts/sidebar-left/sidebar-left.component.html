@@ -19,7 +19,7 @@
       <li class="header" align="center">Menu de navegacion</li>
       <!-- Componentes traidos del sidebar componentes -->
       <app-agreements ></app-agreements>
-      <app-inscripcion *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-inscripcion>
+      <!-- <app-inscripcion *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-inscripcion> -->
       <app-side-bar-menu-estudiantes *ngIf="estudiante"></app-side-bar-menu-estudiantes>
       <app-side-bar-menu-directores *ngIf="dir"></app-side-bar-menu-directores>
       <app-side-bar-menu-pares-externos *ngIf="par"></app-side-bar-menu-pares-externos>  

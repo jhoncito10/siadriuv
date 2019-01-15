@@ -33,6 +33,9 @@ export class DirectoresProgramaUvComponent implements OnInit {
 
   estadoComponent
 
+  spinnerTablaDirectores: boolean;
+
+
   rowSelected
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -58,6 +61,8 @@ export class DirectoresProgramaUvComponent implements OnInit {
     this.db = firebaseApp.database();
     this.solicitudes = {}
     this.estadoComponent = 0
+    this.spinnerTablaDirectores = false;
+
 
     this.setsolicitud()
   }
@@ -77,12 +82,13 @@ export class DirectoresProgramaUvComponent implements OnInit {
   }
   consultaDatosTabla() {
     this.estadoComponenteInferior = 0
+    this.spinnerTablaDirectores = true;
 
     for (let index = 0; index < this.programaDir.length; index++) {
       const element = this.programaDir[index];
       this.dataTablaSolicitudes = [];
 
-      this.db.ref('/postulaciones/')
+      let refPrograma1 = this.db.ref('/postulaciones/')
         .orderByChild("PROGRAMA ACADÉMICO DE DESTINO (1)")
         .equalTo(element)
         .once('value')
@@ -113,10 +119,60 @@ export class DirectoresProgramaUvComponent implements OnInit {
             }
           })
           this.dataSource = new MatTableDataSource(this.dataTablaSolicitudes);
+          this.spinnerTablaDirectores = false;
 
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         }).catch((error) => console.log(`${error}`))
+
+        let refPrograma2 = this.db.ref('/postulaciones/')
+        .orderByChild("PROGRAMA ACADÉMICO DE DESTINO (2)")
+        .equalTo(element)
+        .once('value')
+        .then(solicitudesSnap => {
+          solicitudesSnap.forEach((solicitudSnap) => {
+            let dato = solicitudSnap.val()
+            console.log(dato['PROGRAMA ACADÉMICO DE DESTINO (2)'])
+            if (
+              dato['TIPO DE MOVILIDAD'] == 'ENTRANTE' &&
+              dato['estado'] == 'En espera de aprobación dirección de programa'
+            ) {
+              this.solicitudes[solicitudSnap.key] = dato
+              let correo = dato['Correo electrónico'] || ''
+              let ano = dato['AÑO'] || ''
+              let nombre = dato['NOMBRE'] || ''
+              let estado = dato.estado || 'Pendiente'
+              let destino = dato['PROGRAMA ACADÉMICO DE DESTINO (2)'] || 'Ninguno'
+              let comentarioDenegacion = dato['comentarioDenegacion'] || ''
+              this.dataTablaSolicitudes.push({
+                correo: correo,
+                ano: ano,
+                destino: destino,
+                nombre: nombre,
+                key: solicitudSnap.key,
+                estado: estado,
+                comentarioDenegacion: comentarioDenegacion
+              })
+            }
+          })
+       
+        })
+
+
+        
+        
+        Promise.all([refPrograma1, refPrograma2]).then(values => { 
+          console.log(values); // [3, 1337, "foo"] 
+
+          this.dataSource = new MatTableDataSource(this.dataTablaSolicitudes);
+          this.spinnerTablaDirectores = false;
+
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }).catch((error) => console.log(`${error}`));
+
+
+
     }
     if (this.tablaSolicitudesCarrera.nativeElement.classList.contains('collapsed-box')) {
       this.panelSuperiorButton.nativeElement.click()

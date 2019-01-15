@@ -8,13 +8,14 @@
     <ul class="treeview-menu">
 
       <li>
-        <a [routerLink]="['consultas']" style="cursor: pointer;" tabindex="-1" >
+        <a [routerLink]="['consultas']" style="cursor: pointer;" tabindex="-1">
           <i class="fa fa-circle-o"></i>Consultar</a>
       </li>
-      
-  
-     
-      
+
+      <li (click)="inicializarFormulario()"><a [routerLink]="['dashnivel2/inscripciones']" class='menubusqueda' id="roles"><i
+            class="fa fa-circle-o"></i>formato covenio juridico</a></li>
+
+
     </ul>
   </li>
 </ul>

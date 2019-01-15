@@ -481,10 +481,19 @@
 
               </div>
               <div class="form-group" *ngFor='let curso of solicitud["cursos"] ; index as i;'>
-                <label class="col-md-5 control-label">{{ curso["nombre"] }}</label>
-
-                <div class="col-md-7">
-                  <input [(ngModel)]='curso["nombre"]' type="text" class="form-control">
+                <label class="col-md-6 control-label">Detalles del curso {{ curso["nombre"] }}</label>
+                <div class="col-md-6"></div>
+                <div class="col-md-6">
+                  <input [(ngModel)]='curso["codigo"]' type="text" class="form-control" placeholder="Codigo">
+                </div>
+                <div class="col-md-6">
+                  <input [(ngModel)]='curso["nombre"]' type="text" class="form-control" placeholder="Nombre curso">
+                </div>
+                <div class="col-md-6">
+                  <input [(ngModel)]='curso["equivalente"]' type="text" class="form-control" placeholder="Nombre curso equivalente">
+                </div>
+                <div class="col-md-6">
+                  <input [(ngModel)]='curso["grupo"]' type="text" class="form-control" placeholder="Grupo">
                 </div>
 
               </div>
@@ -814,34 +823,33 @@
               </div>
             </mat-expansion-panel>
             <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    ESTADO
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="form-group">
-                    <label for="estado" class="col-md-5 control-label">Estado: </label>
-                    <div class="col-md-7">
-                      <select [(ngModel)]='solicitud["estado"]' 
-                        id="estado" class="form-control col-md-7">
-                        <option>En espera de aprobación DRI</option>
-        
-                        <option>Aprobada por dirección de programa</option>
-        
-                        <option>Denegada por dirección de programa</option>
-        
-                        <option>Denegada por DRI UV</option>
-        
-                        <option>Solicitud completada por estudiante</option>
-        
-                        <option>Aprobada por DRI UV</option>
-        
-                      </select>
-                    </div>
-        
-                  </div>
-               
-              </mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  ESTADO
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="form-group">
+                <label for="estado" class="col-md-5 control-label">Estado: </label>
+                <div class="col-md-7">
+                  <select [(ngModel)]='solicitud["estado"]' id="estado" class="form-control col-md-7">
+                    <option>En espera de aprobación DRI</option>
+
+                    <option>Aprobada por dirección de programa</option>
+
+                    <option>Denegada por dirección de programa</option>
+
+                    <option>Denegada por DRI UV</option>
+
+                    <option>Solicitud completada por estudiante</option>
+
+                    <option>Aprobada por DRI UV</option>
+
+                  </select>
+                </div>
+
+              </div>
+
+            </mat-expansion-panel>
           </mat-accordion>
 
           <br>
