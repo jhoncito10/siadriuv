@@ -2,47 +2,108 @@
 <aside class="main-sidebar">
   <!-- sidebar: style can be found in sidebar.less -->
   <section class="sidebar">
-      <div *ngIf="this.datosUser" class="user-panel top">
-          <div class="pull-left image">
-              <img *ngIf="this.datosUser.photoURL" src="{{this.datosUser.photoURL}}" id="my_image" class="img-circle" alt="User Image">
-              <!-- <img *ngIf="!this.datosUser.photoURL" src="https://image.flaticon.com/icons/png/128/32/32438.png" id="my_image" class="img-circle" alt="User Image"> -->
-          </div>
-          <div class="pull-left info">
-            <p id="msg">{{this.datosUser.displayName}}</p>
-            <a href="#">
-              <i class="fa fa-circle text-success"></i> Online</a>
-          </div>
-        </div>
+    <div *ngIf="this.datosUser" class="user-panel top">
+      <div class="pull-left image">
+        <img *ngIf="this.datosUser.photoURL" src="{{this.datosUser.photoURL}}" id="my_image" class="img-circle" alt="User Image">
+        <!-- <img *ngIf="!this.datosUser.photoURL" src="https://image.flaticon.com/icons/png/128/32/32438.png" id="my_image" class="img-circle" alt="User Image"> -->
+      </div>
+      <div class="pull-left info">
+        <p id="msg">{{this.datosUser.displayName}}</p>
+        <a href="#">
+          <i class="fa fa-circle text-success"></i> Online</a>
+      </div>
+    </div>
     <!-- /.search form -->
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
       <li class="header" align="center">Menu de navegacion</li>
       <!-- Componentes traidos del sidebar componentes -->
-      <app-agreements ></app-agreements>
-      <!-- <app-inscripcion *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-inscripcion> -->
-      <app-side-bar-menu-estudiantes *ngIf="estudiante"></app-side-bar-menu-estudiantes>
-      <app-side-bar-menu-directores *ngIf="dir"></app-side-bar-menu-directores>
-      <app-side-bar-menu-pares-externos *ngIf="par"></app-side-bar-menu-pares-externos>  
-      <app-side-bar-menu-admin-directores *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-side-bar-menu-admin-directores>
-      <app-side-bar-menu-postulaciones *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-side-bar-menu-postulaciones>
-      <app-borradores *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-borradores>
-      <app-solicitudes *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-solicitudes>
-      <app-renovacion *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-renovacion>
-      <app-investigacion *ngIf="this.univalle || this.rol == 'ADMIN' || this.rol == 'NIVEL3'"></app-investigacion>
-      <app-tablainvestigacion *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-tablainvestigacion>
-      <app-graficos *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-graficos>
-      <app-admin *ngIf="this.rol == 'ADMIN'"></app-admin>
-      <app-correo *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-correo>
+      <!-- -->
+      <!-- 
+      
+    -->
 
-      <div *ngIf="this.rol == '' && this.datosUser != undefined" class="spinner" style="margin-top: 40px;">
+
+      <!-- <div *ngIf="this.rol == '' && this.datosUser != undefined" class="spinner" style="margin-top: 40px;">
         </div>
         <div *ngIf="this.rol == '' && this.datosUser != undefined" style="text-align: center; color: rgb(3, 3, 3);">
             <h4>Cargando.....</h4>
-      </div>
+      </div> -->
+      <ul class="sidebar-menu">
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-globe"></i>
+            <span>MENU convenios</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
 
-      <li><a class='menubusqueda' tabindex="-1" href="#" id="menu-contacto"><i class="fa fa-mouse-pointer"></i>  <span>Contactenos</span></a></li>
+            <app-agreements></app-agreements> 
+
+            <app-borradores *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-borradores>
+            <app-inscripcion *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-inscripcion>
+            <app-renovacion *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-renovacion>
+            <app-solicitudes *ngIf="this.rol == 'NIVEL2' || this.rol == 'ADMIN'"></app-solicitudes>
+
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-globe"></i>
+            <span>MENU CIAM</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <app-investigacion *ngIf="this.univalle || this.rol == 'ADMIN' || this.rol == 'NIVEL3'"></app-investigacion>
+            <app-tablainvestigacion *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-tablainvestigacion>
+
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-globe"></i>
+            <span>MENU MOVILIDAD</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <app-side-bar-menu-estudiantes *ngIf="estudiante"></app-side-bar-menu-estudiantes>
+            <app-side-bar-menu-directores *ngIf="dir"></app-side-bar-menu-directores>
+            <app-side-bar-menu-pares-externos *ngIf="par"></app-side-bar-menu-pares-externos>
+            <app-side-bar-menu-admin-directores *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-side-bar-menu-admin-directores>
+            <app-side-bar-menu-postulaciones *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-side-bar-menu-postulaciones>
+          </ul>
+        </li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fa fa-globe"></i>
+            <span>MENU ADMIN</span>
+            <i class="fa fa-angle-left pull-right"></i>
+          </a>
+          <ul class="treeview-menu">
+            <app-graficos *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-graficos>
+            <app-admin *ngIf="this.rol == 'ADMIN'"></app-admin>
+            <app-correo *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-correo>
+          </ul>
+        </li>
+      </ul>
+      <!-- <ul class="sidebar-menu">
+        <li><a>One Level</a></li>
+        <li class="treeview">
+          <a>Multilevel</a>
+          <ul class="treeview-menu">
+            <li><a>Level 2 </a>
+              <ul class="treeview-menu">
+                <li><a>Level 3</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul> -->
+
+
+      <li><a class='menubusqueda' tabindex="-1" href="#" id="menu-contacto"><i class="fa fa-mouse-pointer"></i> <span>Contactenos</span></a></li>
 
     </ul>
   </section>
-    <!-- /.sidebar -->
+  <!-- /.sidebar -->
 </aside>

@@ -76,6 +76,7 @@ export class InscripcionesComponent implements OnInit {
         this.programasAcademicos = this.removeDups(array);
         console.log(this.programasAcademicos);
       });
+      this.inicializarFormulario()
   }
 
      //METODO QUE CAMBIA LA VARIABLE OBSERVABLE FORMULARIO QUE SE ENCUENTRA EN EL MODALSERVICE

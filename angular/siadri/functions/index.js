@@ -8,8 +8,9 @@ global.window = { document: { createElementNS: () => { return {} } } };
 global.navigator = {};
 global.btoa = () => { };
 
-const jsPDF = require('jspdf');
-const fs = require('fs');
+
+const PDFDocument = require('pdfkit');
+
 
 
 const CUT_OFF_TIME = 6 * 30 * 24 * 60 * 60 * 1000; // 6 months in milliseconds.
@@ -506,76 +507,7 @@ var correoPrograma = (programa) => {
         .once('value')
 }
 
-exports.createLetter = functions.https.onRequest((req, res) => {
-    console.log('485', req.body)
-    cors(req, res, () => {
-
-        correoPrograma(req.body.areaDestino).then(function (correPro) {
-            console.log('488', correPro.val())
-
-            correPro.forEach(function (programaSnap) {
-                console.log('491', programaSnap)
-
-                var correoPrograma = programaSnap.val()['correo']
-                var correos = ''
-                if (isEmail(correoPrograma)) {
-                    correos = `${req.body.email},${correoPrograma}`
-                } else {
-                    correos = `${req.body.email}`
-
-                }
-                var stringSubjk = (req.body.estado == 'aceptada') ? 'aceptacion' : 'denegacion';
-                console.log(correos)
-                var cuerpoPDF = `${req.body.nombre} tu solicitud a sido ${req.body.estado}.
-                Estos son los datos de tu solicitud
-                ${req.body.fechaNacimiento}
-                ${req.body.nacionalidad}
-                ${req.body.numeroDocumento}
-                ${req.body.genero}
-                ${req.body.areaDestino}`;
-                const doc = new jsPDF();
-                doc.setLanguage("es-CO")
-                doc.text(`Detalles de la solicitud `, 70, 40);
-                doc.setFontSize(12);
-                doc.text(`${req.body.nombre} tu solicitud ha sido ${req.body.estado}`, 10, 60);
-                doc.text(`Fecha de nacimiento: ${req.body.fechaNacimiento} `, 10, 70);
-                doc.text(`Nacionalidad: ${req.body.nacionalidad}`, 10, 80);
-                doc.text(`Numero de documento: ${req.body.numeroDocumento}`, 10, 90);
-                doc.text(`Genero: ${req.body.genero}`, 10, 100);
-                doc.text(`Area de destino: ${req.body.areaDestino}`, 10, 110);
-                const pdf = doc.output();
-                console.log('datos del pdf', pdf);
-
-                const mailsolicitante = {
-                    from: 'SIADRI <sistema.siadri@correounivalle.edu.co>',
-                    bcc: `${correos}`,
-                    subject: `Carta de ${stringSubjk} "${req.body.nombre}"`,
-                    attachments: [{
-                        filename: 'solicitud.pdf',
-                        content: pdf
-                    }]
-                };
-                try {
-                    mailTrasport.sendMail(mailsolicitante);
-                    if (res) {
-                        res.status(200).json({ status: 200, mensaje: 'correo enviado correctamente' });
-                    }
-                }
-                catch (error) {
-                    console.log(`${error}`);
-                    res.status(204).json({ status: 204, mensaje: 'Error en el correo' });
-
-                }
-
-
-
-
-            });
-
-        })
-
-    });
-});
+// 
 
 
 exports.enviarCorreoPrograma = functions.https.onRequest((req, res) => {
@@ -594,3 +526,88 @@ exports.enviarCorreoPrograma = functions.https.onRequest((req, res) => {
     });
 });
 
+exports.createLetter = functions.https.onRequest((req, res) => {
+    cors(req, res, () => {
+
+        correoPrograma(req.body.areaDestino).then(function (correPro) {
+            console.log('488', correPro.val())
+
+            correPro.forEach(function (programaSnap) {
+                console.log('491', programaSnap)
+
+                var correoPrograma = programaSnap.val()['correo']
+                var correos = ''
+                if (isEmail(correoPrograma)) {
+                    correos = `${req.body.email},${correoPrograma}`
+                } else {
+                    correos = `${req.body.email}`
+
+                }
+                var stringSubjk = (req.body.estado == 'aceptada') ? 'aceptacion' : 'denegacion';
+
+                let pdf = new PDFDocument();
+
+                let buffers = [];
+                pdf.on('data', buffers.push.bind(buffers));
+                pdf.on('end', () => {
+
+                    let pdfData = Buffer.concat(buffers);
+
+                    const mailsolicitante = {
+                        from: 'SIADRI <sistema.siadri@correounivalle.edu.co>',
+                        bcc: `${correos}`,
+                        subject: `Carta de ${stringSubjk} "${req.body.nombre}"`,
+                        attachments: [{
+                            filename: 'solicitud.pdf',
+                            content: pdfData
+                        }]
+                    };
+
+
+                    try {
+                        mailTrasport.sendMail(mailsolicitante);
+                        if (res) {
+                            res.status(200).json({ status: 200, mensaje: 'correo enviado correctamente' });
+                        }
+                    }
+                    catch (error) {
+                        console.log(`${error}`);
+                        res.status(204).json({ status: 204, mensaje: 'Error en el correo' });
+
+                    }
+
+
+                });
+
+                pdf.text(`Detalles de la solicitud `, 70, 40).moveDown(1);
+                pdf.text(``, 70, 40).moveDown(0.5);
+
+                pdf.fontSize(18).moveDown(0.5);
+                pdf.text(`${req.body.nombre} tu solicitud ha sido ${req.body.estado}`, 10, 60).moveDown(1);
+                pdf.text(`Fecha de nacimiento: ${req.body.fechaNacimiento} `, 10, 70).moveDown(1);
+                pdf.text(`Nacionalidad: ${req.body.nacionalidad}`, 10, 80).moveDown(1);
+                pdf.text(`Numero de documento: ${req.body.numeroDocumento}`, 10, 90).moveDown(1);
+                pdf.text(`Genero: ${req.body.genero}`, 10, 100).moveDown(1);
+                pdf.text(`Area de destino: ${req.body.areaDestino}`, 10, 110).moveDown(1);
+                pdf.end()
+
+
+
+                // let doc = new PDFDocument
+                // doc.addPage()
+
+                // const pdf = doc.pipe();
+                // console.log('datos del pdf', doc);
+
+
+
+
+
+
+                /************************* */
+            });
+
+        })
+
+    });
+});
