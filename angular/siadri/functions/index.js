@@ -578,17 +578,30 @@ exports.createLetter = functions.https.onRequest((req, res) => {
 
 
                 });
+                pdf.fontSize(16);
 
-                pdf.text(`Detalles de la solicitud `, 70, 40).moveDown(1);
-                pdf.text(``, 70, 40).moveDown(0.5);
+                pdf.text(`Detalles de la solicitud `, 100, 20).moveDown()
 
-                pdf.fontSize(18).moveDown(0.5);
-                pdf.text(`${req.body.nombre} tu solicitud ha sido ${req.body.estado}`, 10, 60).moveDown(1);
-                pdf.text(`Fecha de nacimiento: ${req.body.fechaNacimiento} `, 10, 70).moveDown(1);
-                pdf.text(`Nacionalidad: ${req.body.nacionalidad}`, 10, 80).moveDown(1);
-                pdf.text(`Numero de documento: ${req.body.numeroDocumento}`, 10, 90).moveDown(1);
-                pdf.text(`Genero: ${req.body.genero}`, 10, 100).moveDown(1);
-                pdf.text(`Area de destino: ${req.body.areaDestino}`, 10, 110).moveDown(1);
+                .fontSize(14)
+                .text(`${req.body.nombre} tu solicitud ha sido ${req.body.estado}`, 20, 60).moveDown()
+                .text(`Fecha de nacimiento: ${req.body.fechaNacimiento} `, 20, 80).moveDown()
+                .text(`Nacionalidad: ${req.body.nacionalidad}`, 20, 100).moveDown()
+                .text(`Numero de documento: ${req.body.numeroDocumento}`, 20, 120).moveDown()
+                .text(`Genero: ${req.body.genero}`, 20, 140).moveDown()
+                .text(`Area de destino: ${req.body.areaDestino}`, 20, 160).moveDown()
+                // .text('And here is some wrapped text...', 100, 300)
+                //     .font('Times-Roman', 13)
+                //     .moveDown()
+                //     .text(lorem, {
+                //         width: 412,
+                //         align: 'justify',
+                //         indent: 30,
+                //         columns: 2,
+                //         height: 300,
+                //         ellipsis: true
+                //     });
+
+
                 pdf.end()
 
 
