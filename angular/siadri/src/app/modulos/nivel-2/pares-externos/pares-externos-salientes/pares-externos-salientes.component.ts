@@ -298,9 +298,36 @@ export class ParesExternosSalientesComponent implements OnInit {
               console.log(error)
             })
 
-          var bodyPar = 'cuerpo del correo de para el Par de la creacion de postulacion'
+          const bodyPar = `<html>
+            <head></head><body> 
+            <h2>Estimado(a) ${this.user.displayName} </h2> 
+            <br><br>
+
+          <p>
+          Hemos recibido la nominación del estudiante ${this.solicitud['NOMBRE']} ${this.solicitud['APELLIDOS']}.  a quien contactaremos para que complete su solicitud en línea. 
+
+          </p>
+          <br>
+          <br> 
+          Saludos Cordiales, <br><br>Coordinación de movilidad internacional
+          <br>
+            ************************************************************************************************************* 
+            <br>
+            <br>
+            <br>
+            <h2>Dear ${this.user.displayName} </h2>
+            <br><br>
+
+            <p>We have received the nomination of your student ${this.solicitud['NOMBRE']} ${this.solicitud['APELLIDOS']}. We will contact in order to complete her/his application online. </p>
+            <br><br> 
+            Best regards, 
+            <br><br>
+            International mobility coordination
+            <br>
+            </body>
+            </html>`;
           var correos = `${this.solicitud['creadoPor']}`
-          this.enviarCorreo(correos, "asunto para el Par de la creacion de postulación", body)
+          this.enviarCorreo(correos, "UNIVALLE Online application approval / Nominación en línea UNIVALLE", bodyPar)
             .subscribe((responseData) => {
               console.log(responseData)
             }, error => {

@@ -258,9 +258,43 @@ export class AdminPostEntrantesComponent implements OnInit {
           title: `Solicitud actualizada`
         })
         if (this.solicitud['Correo electrónico'] !== '') {
-          const body = 'cuerpo del correo de aceptacion para estudiante'
+          const bodyEstudiante = `<html>
+            <head></head>
+            <body> 
+            <h2>
+            Estimado(a) ${this.solicitud['NOMBRE']} ${this.solicitud['APELLIDOS']} 
+            </h2 > 
+            <br><br>
+
+          <p>
+          Hemos recibido su nominación de movilidad entrante a la Universidad del Valle por parte de su universidad de origen.  Por favor continúe su proceso de aplicación en:
+          <a href="https://siadri-dev.firebaseapp.com/#/inicio">Siadri</a>
+
+          </p>
+          <br>
+          <br> 
+          Saludos Cordiales, <br><br>Coordinación de movilidad internacional
+          <br>
+            ************************************************************************************************************* 
+            <br>
+            <br>
+            <br>
+            <h2>Dear ${this.solicitud['NOMBRE']} ${this.solicitud['APELLIDOS']} </h2><br><br>
+
+            <p>
+            We have received your nomination for incoming mobility from your home university.  Please click on the following link in order to complete your application online.
+            <a href="https://siadri-dev.firebaseapp.com/#/inicio">Siadri</a>
+
+            </p>
+            <br><br> 
+            Best regards, 
+            <br><br>
+            International mobility coordination
+            <br>
+            </body>
+            </html>`;
           const correos = `${this.solicitud['Correo electrónico']}`
-          this.enviarCorreo(this.solicitud['Correo electrónico'], 'Aprobada por DRI UV', body)
+          this.enviarCorreo(this.solicitud['Correo electrónico'], 'UNIVALLE incoming mobility application/Aplicación movilidad entrante UNIVALLE', bodyEstudiante)
             .subscribe((responseData) => {
               console.log(responseData)
             }, error => { console.log(error) })
