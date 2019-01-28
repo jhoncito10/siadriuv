@@ -30,7 +30,7 @@
             <h4>Cargando.....</h4>
       </div> -->
       <ul class="sidebar-menu">
-        <li class="treeview">
+        <li class="treeview" >
           <a href="#">
             <i class="fa fa-globe"></i>
             <span>MENU convenios</span>
@@ -47,7 +47,7 @@
 
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview" *ngIf="this.univalle || this.rol == 'ADMIN' || this.rol == 'NIVEL3'">
           <a href="#">
             <i class="fa fa-globe"></i>
             <span>MENU CIAM</span>
@@ -59,7 +59,7 @@
 
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview" *ngIf="estudiante || dir || par || (this.rol == 'NIVEL3' || this.rol == 'ADMIN')">
           <a href="#">
             <i class="fa fa-globe"></i>
             <span>MENU MOVILIDAD</span>
@@ -73,7 +73,7 @@
             <app-side-bar-menu-postulaciones *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'"></app-side-bar-menu-postulaciones>
           </ul>
         </li>
-        <li class="treeview">
+        <li class="treeview" *ngIf="this.rol == 'NIVEL3' || this.rol == 'ADMIN'">
           <a href="#">
             <i class="fa fa-globe"></i>
             <span>MENU ADMIN</span>
